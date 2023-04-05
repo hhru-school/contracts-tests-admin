@@ -1,0 +1,10 @@
+FROM node:16.19.0-alpine
+WORKDIR /contracts-test-admin-fronted
+COPY package.json /contracts-tests-admin-fronted/package.json
+RUN npm install
+
+COPY . /contracts-tests-admin-fronted
+RUN npm run build
+
+EXPOSE 3001
+CMD ["npm", "start"]
