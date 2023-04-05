@@ -39,5 +39,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://contracts-test-admin:8085"
+  "proxy": "http://contracts-tests-admin:8085"
 }
