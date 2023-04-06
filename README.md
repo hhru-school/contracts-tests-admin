@@ -13,7 +13,7 @@ validator
 команду в корне проекта:
 mvn clean install
 Для локальной сборки образа и запуска сервиса выполнить команду:
-docker-compose up --build.
+docker-compose up -d --build.
 Подключиться к админке можно по адресу http://localhost:3001
 
 Запуск и отладка в IDEA. Для бэкенда нажать run для конфигурации

@@ -1,4 +1,4 @@
 FROM eclipse-temurin:17-alpine
 MAINTAINER hh.com
 COPY target/contracts-tests-admin.jar contracts-tests-admin.jar
-ENTRYPOINT ["java","-jar","/contracts-tests-admin.jar"
+ENTRYPOINT ["java","-jar","/contracts-tests-admin.jar"]
