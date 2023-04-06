@@ -5,7 +5,6 @@ services:
     mem_limit: 1000m
     container_name: contracts-tests-admin
     build:
-      context: ./app
       dockerfile: ./DockerFile
     ports:
       - "8085:8085"
