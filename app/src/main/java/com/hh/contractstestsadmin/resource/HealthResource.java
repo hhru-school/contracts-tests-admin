@@ -11,10 +11,10 @@ import java.util.Map;
 @Path("api")
 public class HealthResource {
 
-    @GET
-    @Path("health")
-    @Produces(value = MediaType.APPLICATION_JSON)
-    public Response getHealth() {
-        return Response.ok().entity(Map.of("value", "hello")).build();
-    }
+  @GET
+  @Path("health")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response getHealth() {
+    return Response.ok().entity(Map.of("value", "hello")).build();
+  }
 }
