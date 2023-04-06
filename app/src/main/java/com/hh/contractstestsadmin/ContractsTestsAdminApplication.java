@@ -7,11 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import({ JerseyConfig.class })
+@Import({JerseyConfig.class})
 public class ContractsTestsAdminApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ContractsTestsAdminApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(ContractsTestsAdminApplication.class, args);
+  }
 
 }
