@@ -1,0 +1,18 @@
+version: '2.4'
+
+services:
+  contracts-tests-admin:
+    mem_limit: 1000m
+    container_name: contracts-tests-admin
+    build:
+      context: .
+      dockerfile: ./DockerFile
+    ports:
+      - "8085:8085"
+  front-admin:
+    container_name: front-admin
+    build:
+      context: ./frontend
+      dockerfile: ./DockerFile
+    ports:
+      - "3001:3001"
