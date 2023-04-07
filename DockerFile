@@ -6,6 +6,6 @@ RUN mvn -f pom.xml dependency:go-offline -B
 COPY . .
 RUN mvn -f pom.xml clean package -Dmaven.test.skip -DskipTests -T 4C
 
-FROM openjdk:17-alpine3.14
+FROM eclipse-temurin:17-jdk
 COPY --from=build /cdc-test-app/app/target/contracts-tests-admin.jar /contracts-tests-admin.jar
 ENTRYPOINT ["java","-jar","/contracts-tests-admin.jar"]
