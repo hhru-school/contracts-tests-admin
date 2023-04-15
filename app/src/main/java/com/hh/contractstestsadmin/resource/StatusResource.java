@@ -29,7 +29,7 @@ public class StatusResource {
         return Response.ok(new ArrayList<ServiceDto>()).build();
     }
 
-    @Path("stands/release/services")
+    @Path("release/services")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getReleaseServices(){
