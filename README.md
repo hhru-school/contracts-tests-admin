@@ -18,6 +18,7 @@ mvn clean install
 docker-compose up -d --build.
 
 Подключиться к админке можно по адресу http://localhost:3001
+
 Подключиться к файловому хранилищу MinIO можно по адресу http://localhost:9001 
 пользователем hhtech c паролем hhtech123.
 
