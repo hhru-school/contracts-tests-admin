@@ -9,9 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -23,13 +23,9 @@ import org.hibernate.annotations.TypeDefs;
 @Table(name = "verification_history")
 public class VerificationHistory {
   @Id
-  @GeneratedValue(generator = "UUID")
-  @GenericGenerator(
-      name = "UUID",
-      strategy = "org.hibernate.id.UUIDGenerator"
-  )
-  @Column(name = "id", nullable = false)
-  private UUID id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "verification_history_id", nullable = false)
+  private Long id;
 
   @Column(name = "stand_id")
   private UUID standId;
@@ -57,11 +53,11 @@ public class VerificationHistory {
   public VerificationHistory() {
   }
 
-  public UUID getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(UUID id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

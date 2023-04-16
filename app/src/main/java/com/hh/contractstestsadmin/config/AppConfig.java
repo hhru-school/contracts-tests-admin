@@ -1,5 +1,6 @@
 package com.hh.contractstestsadmin.config;
 
+import com.hh.contractstestsadmin.dao.VerificationHistoryDao;
 import java.util.Properties;
 import javax.sql.DataSource;
 import org.hibernate.cfg.Environment;
@@ -34,6 +35,11 @@ public class AppConfig {
 
   @Value("${hibernate.show.sql}")
   private String hibernateShowSql;
+
+  @Bean
+  public VerificationHistoryDao verificationHistoryDao() {
+    return new VerificationHistoryDao(sessionFactory().getObject());
+  }
 
   @Bean
   public DataSource dataSource() {
