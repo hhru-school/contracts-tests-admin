@@ -22,17 +22,10 @@ public class StatusResource {
         return new ArrayList<>();
     }
 
-    @Path("stands/{standId}/services")
+    @Path("services")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getServices(@PathParam("standId") Long standId){
-        return Response.ok(new ArrayList<ServiceDto>()).build();
-    }
-
-    @Path("release/services")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getReleaseServices(){
+    public Response getServices(@QueryParam("standId") Long standId){
         return Response.ok(new ArrayList<ServiceDto>()).build();
     }
 
