@@ -3,7 +3,6 @@ package com.hh.contractstestsadmin.model;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import java.time.LocalDateTime;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -29,9 +28,6 @@ public class VerificationHistory {
 
   @Column(name = "stand_name")
   private String standName;
-
-  @Column(name = "verification_history_name")
-  private String name;
 
   @Column(name = "execute_date")
   private LocalDateTime executeDate;
@@ -91,14 +87,6 @@ public class VerificationHistory {
 
   public void setStandName(String standName) {
     this.standName = standName;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public LocalDateTime getExecuteDate() {
