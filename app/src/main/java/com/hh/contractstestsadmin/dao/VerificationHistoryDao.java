@@ -2,6 +2,7 @@ package com.hh.contractstestsadmin.dao;
 
 import com.hh.contractstestsadmin.model.VerificationHistory;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import javax.inject.Inject;
 import org.hibernate.Session;
@@ -32,9 +33,9 @@ public class VerificationHistoryDao {
     }
   }
 
-  public VerificationHistory getVerificationHistoryById(UUID verificationHistoryId) {
+  public Optional<VerificationHistory> getVerificationHistoryById(UUID verificationHistoryId) {
     Session session = sessionFactory.getCurrentSession();
-    return session.get(VerificationHistory.class, verificationHistoryId);
+    return Optional.ofNullable(session.get(VerificationHistory.class, verificationHistoryId));
   }
 
   public List<VerificationHistory> getAllVerificationHistories() {

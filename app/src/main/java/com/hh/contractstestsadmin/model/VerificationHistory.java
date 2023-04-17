@@ -27,10 +27,10 @@ public class VerificationHistory {
   @Column(name = "verification_history_id", nullable = false)
   private Long id;
 
-  @Column(name = "stand_id")
-  private UUID standId;
+  @Column(name = "stand_name")
+  private String standName;
 
-  @Column(name = "name")
+  @Column(name = "verification_history_name")
   private String name;
 
   @Column(name = "execute_date")
@@ -85,12 +85,12 @@ public class VerificationHistory {
     this.errorCount = errorCount;
   }
 
-  public UUID getStandId() {
-    return standId;
+  public String getStandName() {
+    return standName;
   }
 
-  public void setStandId(UUID standId) {
-    this.standId = standId;
+  public void setStandName(String standName) {
+    this.standName = standName;
   }
 
   public String getName() {

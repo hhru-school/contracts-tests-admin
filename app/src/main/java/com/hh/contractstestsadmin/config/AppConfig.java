@@ -37,8 +37,8 @@ public class AppConfig {
   private String hibernateShowSql;
 
   @Bean
-  public VerificationHistoryDao verificationHistoryDao() {
-    return new VerificationHistoryDao(sessionFactory().getObject());
+  public VerificationHistoryDao verificationHistoryDao(LocalSessionFactoryBean sessionFactoryBean) {
+    return new VerificationHistoryDao(sessionFactoryBean.getObject());
   }
 
   @Bean
@@ -69,10 +69,9 @@ public class AppConfig {
   }
 
   @Bean
-  public PlatformTransactionManager hibernateTransactionManager() {
+  public PlatformTransactionManager hibernateTransactionManager(LocalSessionFactoryBean sessionFactoryBean) {
     HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-    transactionManager.setSessionFactory(sessionFactory().getObject());
-
+    transactionManager.setSessionFactory(sessionFactoryBean.getObject());
     return transactionManager;
   }
 
