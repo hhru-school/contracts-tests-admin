@@ -6,6 +6,8 @@ public class ValidationPreviewDto {
 
     private String date;
 
+    private String releaseVersion;
+
     private ValidationStatus status;
 
     private Integer errorCount;
@@ -24,6 +26,14 @@ public class ValidationPreviewDto {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getReleaseVersion() {
+        return releaseVersion;
+    }
+
+    public void setReleaseVersion(String releaseVersion) {
+        this.releaseVersion = releaseVersion;
     }
 
     public ValidationStatus getStatus() {

@@ -6,6 +6,8 @@ public class StandsContainerDto {
 
     private String releaseId;
 
+    private String releaseVersion;
+
     private List<StandDto> stands;
 
     public String getReleaseId() {
@@ -14,6 +16,14 @@ public class StandsContainerDto {
 
     public void setReleaseId(String releaseId) {
         this.releaseId = releaseId;
+    }
+
+    public String getReleaseVersion() {
+        return releaseVersion;
+    }
+
+    public void setReleaseVersion(String releaseVersion) {
+        this.releaseVersion = releaseVersion;
     }
 
     public List<StandDto> getStands() {
