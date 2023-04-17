@@ -18,8 +18,8 @@ public class StatusResource {
     @Path("stands")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<StandDto> getStands(){
-        return new ArrayList<>();
+    public StandsContainerDto getStands(){
+        return new StandsContainerDto();
     }
 
     @Path("services")
