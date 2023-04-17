@@ -2,11 +2,7 @@ package com.hh.contractstestsadmin.dto;
 
 public class ServiceDto {
 
-    private Long id;
-
-    private String name;
-
-    private String version;
+    private String id;
 
     private String jiraLink;
 
@@ -22,28 +18,12 @@ public class ServiceDto {
 
     private String schemaPublishDate;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
     }
 
     public String getJiraLink() {

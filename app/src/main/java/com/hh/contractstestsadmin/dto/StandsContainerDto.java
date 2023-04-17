@@ -4,15 +4,15 @@ import java.util.List;
 
 public class StandsContainerDto {
 
-    private Long releaseId;
+    private String releaseId;
 
     private List<StandDto> stands;
 
-    public Long getReleaseId() {
+    public String getReleaseId() {
         return releaseId;
     }
 
-    public void setReleaseId(Long releaseId) {
+    public void setReleaseId(String releaseId) {
         this.releaseId = releaseId;
     }
 
