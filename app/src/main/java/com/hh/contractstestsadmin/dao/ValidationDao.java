@@ -33,19 +33,19 @@ public class ValidationDao {
     }
   }
 
-  public Optional<Validation> getVerificationHistoryById(UUID verificationHistoryId) {
+  public Optional<Validation> getValidationById(UUID validationId) {
     Session session = sessionFactory.getCurrentSession();
-    return Optional.ofNullable(session.get(Validation.class, verificationHistoryId));
+    return Optional.ofNullable(session.get(Validation.class, validationId));
   }
 
-  public List<Validation> getAllVerificationHistories() {
+  public List<Validation> getAllValidations() {
     Session session = sessionFactory.getCurrentSession();
     return session.createQuery("select vh from Validation vh", Validation.class).getResultList();
   }
 
-  public void delete(UUID verificationHistoryId) {
+  public void delete(UUID validationId) {
     Session session = sessionFactory.getCurrentSession();
-    Validation validationToRemoved = session.get(Validation.class, verificationHistoryId);
+    Validation validationToRemoved = session.get(Validation.class, validationId);
     if (validationToRemoved == null) {
       return;
     }
