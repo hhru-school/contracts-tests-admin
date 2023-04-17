@@ -10,10 +10,6 @@ public class ValidationPreviewDto {
 
     private Integer errorCount;
 
-    private Integer totalWarningsCount;
-
-    private Integer localWarningsCount;
-
     public Long getId() {
         return id;
     }
@@ -46,19 +42,4 @@ public class ValidationPreviewDto {
         this.errorCount = errorCount;
     }
 
-    public Integer getTotalWarningsCount() {
-        return totalWarningsCount;
-    }
-
-    public void setTotalWarningsCount(Integer totalWarningsCount) {
-        this.totalWarningsCount = totalWarningsCount;
-    }
-
-    public Integer getLocalWarningsCount() {
-        return localWarningsCount;
-    }
-
-    public void setLocalWarningsCount(Integer localWarningsCount) {
-        this.localWarningsCount = localWarningsCount;
-    }
 }
