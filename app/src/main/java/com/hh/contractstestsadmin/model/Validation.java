@@ -19,11 +19,11 @@ import org.hibernate.annotations.TypeDefs;
 @TypeDefs({
     @TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
 })
-@Table(name = "verification_history")
-public class VerificationHistory {
+@Table(name = "validation")
+public class Validation {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "verification_history_id", nullable = false)
+  @Column(name = "validation_id", nullable = false)
   private Long id;
 
   @Column(name = "stand_name")
@@ -46,7 +46,7 @@ public class VerificationHistory {
   @Column(name = "error_count")
   private int errorCount;
 
-  public VerificationHistory() {
+  public Validation() {
   }
 
   public Long getId() {

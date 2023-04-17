@@ -1,6 +1,6 @@
 package com.hh.contractstestsadmin.config;
 
-import com.hh.contractstestsadmin.dao.VerificationHistoryDao;
+import com.hh.contractstestsadmin.dao.ValidationDao;
 import java.util.Properties;
 import javax.sql.DataSource;
 import org.hibernate.cfg.Environment;
@@ -37,8 +37,8 @@ public class AppConfig {
   private String hibernateShowSql;
 
   @Bean
-  public VerificationHistoryDao verificationHistoryDao(LocalSessionFactoryBean sessionFactoryBean) {
-    return new VerificationHistoryDao(sessionFactoryBean.getObject());
+  public ValidationDao verificationHistoryDao(LocalSessionFactoryBean sessionFactoryBean) {
+    return new ValidationDao(sessionFactoryBean.getObject());
   }
 
   @Bean
