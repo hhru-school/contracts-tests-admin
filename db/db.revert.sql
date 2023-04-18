@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS verification_history;
+DROP TABLE IF EXISTS validation;

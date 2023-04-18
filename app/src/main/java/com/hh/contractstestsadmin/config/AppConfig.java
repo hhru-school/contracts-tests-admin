@@ -37,7 +37,7 @@ public class AppConfig {
   private String hibernateShowSql;
 
   @Bean
-  public ValidationDao verificationHistoryDao(LocalSessionFactoryBean sessionFactoryBean) {
+  public ValidationDao validationDao(LocalSessionFactoryBean sessionFactoryBean) {
     return new ValidationDao(sessionFactoryBean.getObject());
   }
 

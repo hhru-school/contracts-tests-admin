@@ -3,7 +3,6 @@ package com.hh.contractstestsadmin.dao;
 import com.hh.contractstestsadmin.model.Validation;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import javax.inject.Inject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,7 +32,7 @@ public class ValidationDao {
     }
   }
 
-  public Optional<Validation> getValidationById(UUID validationId) {
+  public Optional<Validation> getValidationById(long validationId) {
     Session session = sessionFactory.getCurrentSession();
     return Optional.ofNullable(session.get(Validation.class, validationId));
   }
@@ -43,7 +42,7 @@ public class ValidationDao {
     return session.createQuery("select vh from Validation vh", Validation.class).getResultList();
   }
 
-  public void delete(UUID validationId) {
+  public void delete(long validationId) {
     Session session = sessionFactory.getCurrentSession();
     Validation validationToRemoved = session.get(Validation.class, validationId);
     if (validationToRemoved == null) {
