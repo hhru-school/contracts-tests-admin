@@ -4,18 +4,18 @@ import java.util.List;
 
 public class StandsContainerDto {
 
-    private String releaseId;
+    private String releaseName;
 
     private String releaseVersion;
 
     private List<StandDto> stands;
 
-    public String getReleaseId() {
-        return releaseId;
+    public String getReleaseName() {
+        return releaseName;
     }
 
-    public void setReleaseId(String releaseId) {
-        this.releaseId = releaseId;
+    public void setReleaseName(String releaseName) {
+        this.releaseName = releaseName;
     }
 
     public String getReleaseVersion() {
