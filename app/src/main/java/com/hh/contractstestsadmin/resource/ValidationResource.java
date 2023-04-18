@@ -15,17 +15,17 @@ import java.util.ArrayList;
 @Path("api")
 public class ValidationResource {
 
-    @Path("stand/{standId}/validations/preview")
+    @Path("stand/{standName}/validations/preview")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getHistoryPreview(@PathParam("standId") Long standId,
+    public Response getHistoryPreview(@PathParam("standName") String standName,
                                       @QueryParam("sizeLimit") Long sizeLimit){
         return Response.ok(new ArrayList<ValidationPreviewDto>()).build();
     }
 
-    @Path("stand/{standId}/validations")
+    @Path("stand/{standName}/validations")
     @POST
-    public Response runValidation(@PathParam("standId") Long standId){
+    public Response runValidation(@PathParam("standName") String standName){
         return Response.ok().build();
     }
 

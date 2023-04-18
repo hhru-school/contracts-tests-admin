@@ -25,7 +25,7 @@ public class StatusResource {
     @Path("services")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getServices(@QueryParam("standId") String standId){
+    public Response getServices(@QueryParam("standName") String standName){
         return Response.ok(new ArrayList<ServiceDto>()).build();
     }
 
