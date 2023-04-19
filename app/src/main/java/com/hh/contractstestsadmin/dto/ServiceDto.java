@@ -6,8 +6,6 @@ public class ServiceDto {
 
     private String version;
 
-    private String jiraLink;
-
     private Boolean isConsumer;
 
     private String expectationLink;
@@ -34,14 +32,6 @@ public class ServiceDto {
 
     public void setVersion(String version) {
         this.version = version;
-    }
-
-    public String getJiraLink() {
-        return jiraLink;
-    }
-
-    public void setJiraLink(String jiraLink) {
-        this.jiraLink = jiraLink;
     }
 
     public Boolean getConsumer() {
