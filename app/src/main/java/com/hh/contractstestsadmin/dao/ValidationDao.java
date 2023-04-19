@@ -42,6 +42,12 @@ public class ValidationDao {
     return session.createQuery("select vh from Validation vh", Validation.class).getResultList();
   }
 
+  public List<Validation> getAllValidationsByStandName(String standName) {
+    Session session = sessionFactory.getCurrentSession();
+    return session.createQuery("select vh from Validation vh where vh.standName =:standName", Validation.class)
+        .setParameter("standName", standName).getResultList();
+  }
+
   public void delete(long validationId) {
     Session session = sessionFactory.getCurrentSession();
     Validation validationToRemoved = session.get(Validation.class, validationId);
