@@ -7,7 +7,13 @@
         "JSX": true
     },
     "rules": {
-        "import/prefer-default-export": "off"
+        "import/prefer-default-export": "off",
+        "prettier/prettier": [
+            "error",
+            {
+              "endOfLine": "auto"
+            }
+        ]  
     },
     "overrides": [
         {
