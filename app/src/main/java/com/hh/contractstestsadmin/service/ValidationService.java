@@ -10,7 +10,7 @@ public class ValidationService {
     public ArrayList<ValidationPreviewDto>  getHistoryPreview(
             String standName,
             Long sizeLimit)
-            throws StandNotFoundException{
+            throws StandNotFoundException {
         return new ArrayList<>();
     }
 

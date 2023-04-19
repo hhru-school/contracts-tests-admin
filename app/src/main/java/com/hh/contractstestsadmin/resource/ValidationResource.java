@@ -1,8 +1,6 @@
 package com.hh.contractstestsadmin.resource;
 
-import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
-import com.hh.contractstestsadmin.service.StatusService;
 import com.hh.contractstestsadmin.service.ValidationService;
 
 import javax.inject.Inject;
@@ -14,7 +12,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 
 @Path("api")
 public class ValidationResource {

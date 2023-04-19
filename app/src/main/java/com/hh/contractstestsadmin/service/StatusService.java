@@ -9,11 +9,11 @@ import java.util.List;
 
 public class StatusService {
 
-    public StandsContainerDto getStandsInfo(){
+    public StandsContainerDto getStands(){
         return new StandsContainerDto();
     }
 
-    public List<ServiceDto> getServicesInfo(String standName) throws StandNotFoundException {
+    public List<ServiceDto> getServices(String standName) throws StandNotFoundException {
         return new ArrayList<>();
     }
 
