@@ -40,7 +40,7 @@ public class ValidationResource {
     public Response runValidation(@PathParam("standName") String standName){
         try {
             validationService.runValidation(standName);
-            return Response.ok().build();
+            return Response.status(Response.Status.ACCEPTED).build();
         } catch (StandNotFoundException exception){
             return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
         }
