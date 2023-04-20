@@ -1,9 +1,17 @@
-FROM node:16.19.0-alpine
-WORKDIR /contracts-tests-admin-fronted
-COPY package.json /contracts-tests-admin-fronted/package.json
+# build environment
+FROM node:16.19.0-alpine as build
+WORKDIR /app
+ENV PATH /node_modules/.bin:$PATH
+COPY package.json /app/package.json
 RUN npm install
 
-COPY . /contracts-tests-admin-fronted
+COPY . /app
+RUN npm run build
 
-EXPOSE 3001
-CMD ["npm", "start"]
+# production environment
+FROM nginx:latest
+COPY --from=build /app/build /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
