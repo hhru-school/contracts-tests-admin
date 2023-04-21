@@ -9,11 +9,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * The test will be workable in case the Minio Storage has already been deployed.
  * So it will be possible after the application was deployed from docker.
  */
+@SpringBootTest
 class ContractsDaoTest {
 
   private static MinioClient minioClient;
@@ -31,7 +33,7 @@ class ContractsDaoTest {
       assertNotNull(blist);
       assertTrue(blist.size() > 0);
     } catch (MinioException e) {
-      System.out.println("Connection failed: " + e.getMessage());
+      e.printStackTrace();
       fail();
     } catch (Exception e) {
       e.printStackTrace();
@@ -41,7 +43,7 @@ class ContractsDaoTest {
 
   private static MinioClient connect() {
     MinioClient minioClient = MinioClient.builder()
-        .endpoint("http://minio:9000")
+        .endpoint("http://localhost:9000")
         .credentials("hhtech", "hhtech123")
         .build();
 
