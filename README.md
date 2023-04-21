@@ -14,8 +14,10 @@ validator
 команду в корне проекта:
 mvn clean install
 
-Для локальной сборки образа и запуска сервисов выполнить команду:
-docker-compose up -d --build.
+Для локальной сборки образа и запуска сервисов выполнить:
+1 запустить скрипт - запуск postgres и minio: run-initial.sh
+2 запустить cкрипт сборки run-build.sh 
+3 запустить скрипт - сборка и запуск сервисов contracts-tests-admin и front-admin: run-services.sh 
 
 Подключиться к админке можно по адресу http://localhost:3001
 
