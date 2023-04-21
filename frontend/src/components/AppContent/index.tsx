@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom';
 import { AppToolBar } from 'components/AppToolBar';
 import { AppHistory } from 'components/AppHistory';
 
