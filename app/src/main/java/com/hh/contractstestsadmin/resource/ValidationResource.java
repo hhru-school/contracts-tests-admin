@@ -1,6 +1,7 @@
 package com.hh.contractstestsadmin.resource;
 
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
+import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.service.ValidationService;
 
 import javax.inject.Inject;
@@ -30,8 +31,10 @@ public class ValidationResource {
                                       @QueryParam("sizeLimit") Long sizeLimit){
         try {
             return Response.ok(validationService.getHistoryPreview(standName, sizeLimit)).build();
-        } catch (StandNotFoundException exception){
+        } catch (ValidationHistoryNotFoundException exception) {
             return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
+        } catch (Exception exception) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
         }
     }
 
@@ -43,6 +46,8 @@ public class ValidationResource {
             return Response.status(Response.Status.ACCEPTED).build();
         } catch (StandNotFoundException exception){
             return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
+        } catch (Exception exception) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
         }
     }
 

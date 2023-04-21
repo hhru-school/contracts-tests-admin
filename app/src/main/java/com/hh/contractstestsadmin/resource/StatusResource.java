@@ -25,8 +25,12 @@ public class StatusResource {
     @Path("stands")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public StandsContainerDto getStands(){
-        return statusService.getStands();
+    public Response getStands(){
+        try {
+            return Response.ok(statusService.getStands()).build();
+        } catch (Exception exception){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
+        }
     }
 
     @Path("services")
@@ -37,6 +41,8 @@ public class StatusResource {
             return Response.ok(statusService.getServices(standName)).build();
         } catch (StandNotFoundException exception){
             return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
+        } catch (Exception exception){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
         }
     }
 
