@@ -6,7 +6,7 @@ public class StandsContainerDto {
 
     private String releaseName;
 
-    private String releaseVersion;
+    private String releaseLink;
 
     private List<StandDto> stands;
 
@@ -18,12 +18,12 @@ public class StandsContainerDto {
         this.releaseName = releaseName;
     }
 
-    public String getReleaseVersion() {
-        return releaseVersion;
+    public String getReleaseLink() {
+        return releaseLink;
     }
 
-    public void setReleaseVersion(String releaseVersion) {
-        this.releaseVersion = releaseVersion;
+    public void setReleaseLink(String releaseLink) {
+        this.releaseLink = releaseLink;
     }
 
     public List<StandDto> getStands() {

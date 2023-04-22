@@ -1,6 +1,6 @@
 {
   "releaseName": "release",
-  "releaseVersion": "https://www.atlassian.com/ru/software/jira/11",
+  "releaseLink": "https://www.atlassian.com/ru/software/jira/11",
   "stands": [
     {
       "name": "release"
