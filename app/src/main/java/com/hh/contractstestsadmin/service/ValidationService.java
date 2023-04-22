@@ -11,11 +11,12 @@ import java.util.List;
 
 public class ValidationService {
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     public List<ValidationPreviewDto> getHistoryPreview(
             String standName,
             Long sizeLimit)
             throws StandNotFoundException, IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("test-data/validation-preview-list-exemple.json").getFile());
         List<ValidationPreviewDto> result = objectMapper.readValue(file, new TypeReference<>(){});
