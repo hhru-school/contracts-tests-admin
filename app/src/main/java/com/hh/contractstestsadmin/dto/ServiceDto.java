@@ -34,11 +34,11 @@ public class ServiceDto {
         this.version = version;
     }
 
-    public Boolean getConsumer() {
+    public Boolean getIsConsumer() {
         return isConsumer;
     }
 
-    public void setConsumer(Boolean consumer) {
+    public void setIsConsumer(Boolean consumer) {
         isConsumer = consumer;
     }
 
@@ -58,11 +58,11 @@ public class ServiceDto {
         this.expectationPublishDate = expectationPublishDate;
     }
 
-    public Boolean getProducer() {
+    public Boolean getIsProducer() {
         return isProducer;
     }
 
-    public void setProducer(Boolean producer) {
+    public void setIsProducer(Boolean producer) {
         isProducer = producer;
     }
 

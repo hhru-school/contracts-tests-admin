@@ -1,0 +1,606 @@
+{
+  "releaseName": "release",
+  "releaseVersion": "https://www.atlassian.com/ru/software/jira/11",
+  "stands": [
+    {
+      "name": "release"
+    },
+    {
+      "name": "stand1"
+    },
+    {
+      "name": "stand2"
+    },
+    {
+      "name": "stand3"
+    },
+    {
+      "name": "stand4"
+    },
+    {
+      "name": "stand5"
+    },
+    {
+      "name": "stand6"
+    },
+    {
+      "name": "stand7"
+    },
+    {
+      "name": "stand8"
+    },
+    {
+      "name": "stand9"
+    },
+    {
+      "name": "stand10"
+    },
+    {
+      "name": "stand11"
+    },
+    {
+      "name": "stand12"
+    },
+    {
+      "name": "stand13"
+    },
+    {
+      "name": "stand14"
+    },
+    {
+      "name": "stand15"
+    },
+    {
+      "name": "stand16"
+    },
+    {
+      "name": "stand17"
+    },
+    {
+      "name": "stand18"
+    },
+    {
+      "name": "stand19"
+    },
+    {
+      "name": "stand20"
+    },
+    {
+      "name": "stand21"
+    },
+    {
+      "name": "stand22"
+    },
+    {
+      "name": "stand23"
+    },
+    {
+      "name": "stand24"
+    },
+    {
+      "name": "stand25"
+    },
+    {
+      "name": "stand26"
+    },
+    {
+      "name": "stand27"
+    },
+    {
+      "name": "stand28"
+    },
+    {
+      "name": "stand29"
+    },
+    {
+      "name": "stand30"
+    },
+    {
+      "name": "stand31"
+    },
+    {
+      "name": "stand32"
+    },
+    {
+      "name": "stand33"
+    },
+    {
+      "name": "stand34"
+    },
+    {
+      "name": "stand35"
+    },
+    {
+      "name": "stand36"
+    },
+    {
+      "name": "stand37"
+    },
+    {
+      "name": "stand38"
+    },
+    {
+      "name": "stand39"
+    },
+    {
+      "name": "stand40"
+    },
+    {
+      "name": "stand41"
+    },
+    {
+      "name": "stand42"
+    },
+    {
+      "name": "stand43"
+    },
+    {
+      "name": "stand44"
+    },
+    {
+      "name": "stand45"
+    },
+    {
+      "name": "stand46"
+    },
+    {
+      "name": "stand47"
+    },
+    {
+      "name": "stand48"
+    },
+    {
+      "name": "stand49"
+    },
+    {
+      "name": "stand50"
+    },
+    {
+      "name": "stand51"
+    },
+    {
+      "name": "stand52"
+    },
+    {
+      "name": "stand53"
+    },
+    {
+      "name": "stand54"
+    },
+    {
+      "name": "stand55"
+    },
+    {
+      "name": "stand56"
+    },
+    {
+      "name": "stand57"
+    },
+    {
+      "name": "stand58"
+    },
+    {
+      "name": "stand59"
+    },
+    {
+      "name": "stand60"
+    },
+    {
+      "name": "stand61"
+    },
+    {
+      "name": "stand62"
+    },
+    {
+      "name": "stand63"
+    },
+    {
+      "name": "stand64"
+    },
+    {
+      "name": "stand65"
+    },
+    {
+      "name": "stand66"
+    },
+    {
+      "name": "stand67"
+    },
+    {
+      "name": "stand68"
+    },
+    {
+      "name": "stand69"
+    },
+    {
+      "name": "stand70"
+    },
+    {
+      "name": "stand71"
+    },
+    {
+      "name": "stand72"
+    },
+    {
+      "name": "stand73"
+    },
+    {
+      "name": "stand74"
+    },
+    {
+      "name": "stand75"
+    },
+    {
+      "name": "stand76"
+    },
+    {
+      "name": "stand77"
+    },
+    {
+      "name": "stand78"
+    },
+    {
+      "name": "stand79"
+    },
+    {
+      "name": "stand80"
+    },
+    {
+      "name": "stand81"
+    },
+    {
+      "name": "stand82"
+    },
+    {
+      "name": "stand83"
+    },
+    {
+      "name": "stand84"
+    },
+    {
+      "name": "stand85"
+    },
+    {
+      "name": "stand86"
+    },
+    {
+      "name": "stand87"
+    },
+    {
+      "name": "stand88"
+    },
+    {
+      "name": "stand89"
+    },
+    {
+      "name": "stand90"
+    },
+    {
+      "name": "stand91"
+    },
+    {
+      "name": "stand92"
+    },
+    {
+      "name": "stand93"
+    },
+    {
+      "name": "stand94"
+    },
+    {
+      "name": "stand95"
+    },
+    {
+      "name": "stand96"
+    },
+    {
+      "name": "stand97"
+    },
+    {
+      "name": "stand98"
+    },
+    {
+      "name": "stand99"
+    },
+    {
+      "name": "stand100"
+    },
+    {
+      "name": "stand101"
+    },
+    {
+      "name": "stand102"
+    },
+    {
+      "name": "stand103"
+    },
+    {
+      "name": "stand104"
+    },
+    {
+      "name": "stand105"
+    },
+    {
+      "name": "stand106"
+    },
+    {
+      "name": "stand107"
+    },
+    {
+      "name": "stand108"
+    },
+    {
+      "name": "stand109"
+    },
+    {
+      "name": "stand110"
+    },
+    {
+      "name": "stand111"
+    },
+    {
+      "name": "stand112"
+    },
+    {
+      "name": "stand113"
+    },
+    {
+      "name": "stand114"
+    },
+    {
+      "name": "stand115"
+    },
+    {
+      "name": "stand116"
+    },
+    {
+      "name": "stand117"
+    },
+    {
+      "name": "stand118"
+    },
+    {
+      "name": "stand119"
+    },
+    {
+      "name": "stand120"
+    },
+    {
+      "name": "stand121"
+    },
+    {
+      "name": "stand122"
+    },
+    {
+      "name": "stand123"
+    },
+    {
+      "name": "stand124"
+    },
+    {
+      "name": "stand125"
+    },
+    {
+      "name": "stand126"
+    },
+    {
+      "name": "stand127"
+    },
+    {
+      "name": "stand128"
+    },
+    {
+      "name": "stand129"
+    },
+    {
+      "name": "stand130"
+    },
+    {
+      "name": "stand131"
+    },
+    {
+      "name": "stand132"
+    },
+    {
+      "name": "stand133"
+    },
+    {
+      "name": "stand134"
+    },
+    {
+      "name": "stand135"
+    },
+    {
+      "name": "stand136"
+    },
+    {
+      "name": "stand137"
+    },
+    {
+      "name": "stand138"
+    },
+    {
+      "name": "stand139"
+    },
+    {
+      "name": "stand140"
+    },
+    {
+      "name": "stand141"
+    },
+    {
+      "name": "stand142"
+    },
+    {
+      "name": "stand143"
+    },
+    {
+      "name": "stand144"
+    },
+    {
+      "name": "stand145"
+    },
+    {
+      "name": "stand146"
+    },
+    {
+      "name": "stand147"
+    },
+    {
+      "name": "stand148"
+    },
+    {
+      "name": "stand149"
+    },
+    {
+      "name": "stand150"
+    },
+    {
+      "name": "stand151"
+    },
+    {
+      "name": "stand152"
+    },
+    {
+      "name": "stand153"
+    },
+    {
+      "name": "stand154"
+    },
+    {
+      "name": "stand155"
+    },
+    {
+      "name": "stand156"
+    },
+    {
+      "name": "stand157"
+    },
+    {
+      "name": "stand158"
+    },
+    {
+      "name": "stand159"
+    },
+    {
+      "name": "stand160"
+    },
+    {
+      "name": "stand161"
+    },
+    {
+      "name": "stand162"
+    },
+    {
+      "name": "stand163"
+    },
+    {
+      "name": "stand164"
+    },
+    {
+      "name": "stand165"
+    },
+    {
+      "name": "stand166"
+    },
+    {
+      "name": "stand167"
+    },
+    {
+      "name": "stand168"
+    },
+    {
+      "name": "stand169"
+    },
+    {
+      "name": "stand170"
+    },
+    {
+      "name": "stand171"
+    },
+    {
+      "name": "stand172"
+    },
+    {
+      "name": "stand173"
+    },
+    {
+      "name": "stand174"
+    },
+    {
+      "name": "stand175"
+    },
+    {
+      "name": "stand176"
+    },
+    {
+      "name": "stand177"
+    },
+    {
+      "name": "stand178"
+    },
+    {
+      "name": "stand179"
+    },
+    {
+      "name": "stand180"
+    },
+    {
+      "name": "stand181"
+    },
+    {
+      "name": "stand182"
+    },
+    {
+      "name": "stand183"
+    },
+    {
+      "name": "stand184"
+    },
+    {
+      "name": "stand185"
+    },
+    {
+      "name": "stand186"
+    },
+    {
+      "name": "stand187"
+    },
+    {
+      "name": "stand188"
+    },
+    {
+      "name": "stand189"
+    },
+    {
+      "name": "stand190"
+    },
+    {
+      "name": "stand191"
+    },
+    {
+      "name": "stand192"
+    },
+    {
+      "name": "stand193"
+    },
+    {
+      "name": "stand194"
+    },
+    {
+      "name": "stand195"
+    },
+    {
+      "name": "stand196"
+    },
+    {
+      "name": "stand197"
+    },
+    {
+      "name": "stand198"
+    },
+    {
+      "name": "stand199"
+    }
+  ]
+}
