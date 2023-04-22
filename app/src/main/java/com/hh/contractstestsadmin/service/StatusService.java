@@ -16,7 +16,7 @@ public class StatusService {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("stand-container-exemple.json").getFile());
+            File file = new File(classLoader.getResource("test-data/stand-container-exemple.json").getFile());
             return objectMapper.readValue(file, StandsContainerDto.class);
         } catch (Exception e){
             return new StandsContainerDto();
@@ -27,7 +27,7 @@ public class StatusService {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("service-list-exemple.json").getFile());
+            File file = new File(classLoader.getResource("test-data/service-list-exemple.json").getFile());
             return objectMapper.readValue(file, new TypeReference<>(){});
         } catch (Exception e){
             return new ArrayList<>();

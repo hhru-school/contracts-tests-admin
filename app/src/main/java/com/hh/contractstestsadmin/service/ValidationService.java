@@ -18,7 +18,7 @@ public class ValidationService {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("validation-preview-list-exemple.json").getFile());
+            File file = new File(classLoader.getResource("test-data/validation-preview-list-exemple.json").getFile());
             List<ValidationPreviewDto> result = objectMapper.readValue(file, new TypeReference<>(){});
             if (sizeLimit == null) {
                 sizeLimit = 5L;
