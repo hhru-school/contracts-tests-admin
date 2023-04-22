@@ -7,31 +7,23 @@ import com.hh.contractstestsadmin.dto.StandsContainerDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 public class StatusService {
 
-    public StandsContainerDto getStands(){
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("test-data/stand-container-exemple.json").getFile());
-            return objectMapper.readValue(file, StandsContainerDto.class);
-        } catch (Exception e){
-            return new StandsContainerDto();
-        }
+    public StandsContainerDto getStands() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("test-data/stand-container-exemple.json").getFile());
+        return objectMapper.readValue(file, StandsContainerDto.class);
     }
 
-    public List<ServiceDto> getServices(String standName) throws StandNotFoundException {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("test-data/service-list-exemple.json").getFile());
-            return objectMapper.readValue(file, new TypeReference<>(){});
-        } catch (Exception e){
-            return new ArrayList<>();
-        }
+    public List<ServiceDto> getServices(String standName) throws StandNotFoundException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("test-data/service-list-exemple.json").getFile());
+        return objectMapper.readValue(file, new TypeReference<>(){});
     }
 
 }
