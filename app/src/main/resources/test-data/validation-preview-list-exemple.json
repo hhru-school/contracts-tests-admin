@@ -2,63 +2,63 @@
   {
     "id": 9,
     "date": "2023-04-10T17:19:11.503988200Z",
-    "releaseVersion": "https://www.atlassian.com/ru/software/jira/11",
+    "releaseLink": "https://www.atlassian.com/ru/software/jira/11",
     "status": "IN_PROGRESS",
     "errorCount": 0
   },
   {
     "id": 8,
     "date": "2023-04-10T17:19:11.503988200Z",
-    "releaseVersion": "https://www.atlassian.com/ru/software/jira/11",
+    "releaseLink": "https://www.atlassian.com/ru/software/jira/11",
     "status": "SUCCESS",
     "errorCount": 0
   },
   {
     "id": 7,
     "date": "2023-04-10T17:19:11.503988200Z",
-    "releaseVersion": "https://www.atlassian.com/ru/software/jira/10",
+    "releaseLink": "https://www.atlassian.com/ru/software/jira/10",
     "status": "FAILED",
     "errorCount": 6
   },
   {
     "id": 6,
     "date": "2023-04-10T17:19:11.503988200Z",
-    "releaseVersion": "https://www.atlassian.com/ru/software/jira/10",
+    "releaseLink": "https://www.atlassian.com/ru/software/jira/10",
     "status": "CANCELLED",
     "errorCount": 0
   },
   {
     "id": 5,
     "date": "2023-04-10T17:19:11.503988200Z",
-    "releaseVersion": "https://www.atlassian.com/ru/software/jira/9",
+    "releaseLink": "https://www.atlassian.com/ru/software/jira/9",
     "status": "SUCCESS",
     "errorCount": 0
   },
   {
     "id": 4,
     "date": "2023-04-10T17:19:11.503988200Z",
-    "releaseVersion": "https://www.atlassian.com/ru/software/jira/9",
+    "releaseLink": "https://www.atlassian.com/ru/software/jira/9",
     "status": "FAILED",
     "errorCount": 4
   },
   {
     "id": 3,
     "date": "2023-04-10T17:19:11.503988200Z",
-    "releaseVersion": "https://www.atlassian.com/ru/software/jira/9",
+    "releaseLink": "https://www.atlassian.com/ru/software/jira/9",
     "status": "SUCCESS",
     "errorCount": 0
   },
   {
     "id": 2,
     "date": "2023-04-10T17:19:11.503988200Z",
-    "releaseVersion": "https://www.atlassian.com/ru/software/jira/9",
+    "releaseLink": "https://www.atlassian.com/ru/software/jira/9",
     "status": "SUCCESS",
     "errorCount": 0
   },
   {
     "id": 1,
     "date": "2023-04-10T17:19:11.503988200Z",
-    "releaseVersion": "https://www.atlassian.com/ru/software/jira/9",
+    "releaseLink": "https://www.atlassian.com/ru/software/jira/9",
     "status": "FAILED",
     "errorCount": 8
   }
