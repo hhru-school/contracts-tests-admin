@@ -7,6 +7,7 @@ import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class ValidationService {
@@ -18,8 +19,8 @@ public class ValidationService {
             Long sizeLimit)
             throws StandNotFoundException, IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("test-data/validation-preview-list-exemple.json").getFile());
-        List<ValidationPreviewDto> result = objectMapper.readValue(file, new TypeReference<>(){});
+        InputStream inputStream = classLoader.getResourceAsStream("test-data/validation-preview-list-exemple.json");
+        List<ValidationPreviewDto> result = objectMapper.readValue(inputStream, new TypeReference<>(){});
         if (sizeLimit == null) {
             sizeLimit = 5L;
         }
