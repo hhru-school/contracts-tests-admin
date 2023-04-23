@@ -1,6 +1,8 @@
 package com.hh.contractstestsadmin.config;
 
+import com.hh.contractstestsadmin.dao.ContractsDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
+import io.minio.MinioClient;
 import java.util.Properties;
 import javax.sql.DataSource;
 import org.hibernate.cfg.Environment;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @PropertySource("classpath:hibernate.properties")
+@PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 public class AppConfig {
 
@@ -36,9 +39,32 @@ public class AppConfig {
   @Value("${hibernate.show.sql}")
   private String hibernateShowSql;
 
+  @Value("${spring.minio.url}")
+  private String minioUrl;
+
+  @Value("${spring.minio.access-key}")
+  private String minioAccessKey;
+
+  @Value("${spring.minio.secret-key}")
+  private String minioSecretKey;
+
   @Bean
   public ValidationDao validationDao(LocalSessionFactoryBean sessionFactoryBean) {
     return new ValidationDao(sessionFactoryBean.getObject());
+  }
+
+  @Bean
+  public MinioClient minioClient(LocalSessionFactoryBean sessionFactoryBean) {
+    MinioClient minioClient = MinioClient.builder()
+        .endpoint(minioUrl)
+        .credentials(minioAccessKey, minioSecretKey)
+        .build();
+    return minioClient;
+  }
+
+  @Bean
+  public ContractsDao contractsDao(LocalSessionFactoryBean sessionFactoryBean) {
+    return new ContractsDao();
   }
 
   @Bean
