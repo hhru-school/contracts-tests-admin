@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dto.ServiceDto;
 import com.hh.contractstestsadmin.dto.StandsContainerDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
+import org.springframework.core.io.ResourceLoader;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class StatusService {
@@ -16,14 +18,14 @@ public class StatusService {
 
     public StandsContainerDto getStands() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("test-data/stand-container-exemple.json").getFile());
-        return objectMapper.readValue(file, StandsContainerDto.class);
+        InputStream inputStream = classLoader.getResourceAsStream("test-data/stand-container-exemple.json");
+        return objectMapper.readValue(inputStream, StandsContainerDto.class);
     }
 
     public List<ServiceDto> getServices(String standName) throws StandNotFoundException, IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("test-data/service-list-exemple.json").getFile());
-        return objectMapper.readValue(file, new TypeReference<>(){});
+        InputStream inputStream = classLoader.getResourceAsStream("test-data/service-list-exemple.json");
+        return objectMapper.readValue(inputStream, new TypeReference<>(){});
     }
 
 }
