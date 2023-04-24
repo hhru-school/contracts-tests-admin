@@ -37,7 +37,7 @@ public class ValidationService {
     public List<ValidationPreviewDto> getHistoryPreview(
             String standName,
             Long sizeLimit)
-            throws ValidationHistoryNotFoundException, IOException, ContractsDaoException {
+            throws ValidationHistoryNotFoundException, ContractsDaoException {
         if(!isStandExists(standName)){
             throw new ValidationHistoryNotFoundException("Stand '" + standName + "' does not exist");
         }
