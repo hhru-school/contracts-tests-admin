@@ -14,10 +14,6 @@ public class ContractsDao {
   @Inject
   private MinioClient minioClient;
 
-  public void setMinioClient(MinioClient minioClient) {
-    this.minioClient = minioClient;
-  }
-
   public Optional<List<String>> getStandNames() throws ContractsDaoException {
     List<Bucket> bucketList;
     try {
