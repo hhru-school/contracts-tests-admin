@@ -1,5 +1,6 @@
 package com.hh.contractstestsadmin.dao;
 
+import com.hh.contractstestsadmin.exception.ContractsDaoException;
 import io.minio.MinioClient;
 import io.minio.messages.Bucket;
 import java.util.Collections;
