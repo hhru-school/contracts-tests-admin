@@ -54,16 +54,15 @@ public class AppConfig {
   }
 
   @Bean
-  public MinioClient minioClient(LocalSessionFactoryBean sessionFactoryBean) {
-    MinioClient minioClient = MinioClient.builder()
+  public MinioClient minioClient() {
+    return MinioClient.builder()
         .endpoint(minioUrl)
         .credentials(minioAccessKey, minioSecretKey)
         .build();
-    return minioClient;
   }
 
   @Bean
-  public ContractsDao contractsDao(LocalSessionFactoryBean sessionFactoryBean) {
+  public ContractsDao contractsDao() {
     return new ContractsDao();
   }
 

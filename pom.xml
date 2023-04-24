@@ -19,6 +19,7 @@
         <maven-checkstyle.version>3.2.0</maven-checkstyle.version>
         <puppycrawl.version>9.3</puppycrawl.version>
         <minio.version>8.5.2</minio.version>
+        <mockito.version>4.5.1</mockito.version>
     </properties>
 
     <dependencyManagement>
@@ -39,6 +40,11 @@
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

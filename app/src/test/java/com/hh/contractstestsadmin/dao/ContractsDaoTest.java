@@ -1,58 +1,55 @@
 package com.hh.contractstestsadmin.dao;
 
 import io.minio.MinioClient;
-import io.minio.errors.MinioException;
-import io.minio.messages.Bucket;
+import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
-import org.junit.Ignore;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * The test will be workable in case the Minio Storage has already been deployed.
- * So it will be possible after the application was deployed from docker.
- * Needs to be reimplemented with TestContainers usage to make possible running tests
- * during build process in docker
+ * Unit test for ContractsDao
  */
-@SpringBootTest
-class ContractsDaoTest {
+public class ContractsDaoTest {
 
-  Logger logger = LoggerFactory.getLogger(ContractsDaoTest.class);
+  private static final Logger logger = LoggerFactory.getLogger(ContractsDaoTest.class);
 
-  @Inject
-  MinioClient minioClient;
-
-  @Inject
-  ContractsDao contractsDao;
-
-  //@Test //The test is switched off as it need to be reimplemented with testcontainers
-  void getDataFromMinioStorage() {
+  @Test
+  void isPossibleToGetStandNamesWhenMinioReturnsNull() {
     try {
-      assertNotNull(minioClient);
-      List<Bucket> blist = minioClient.listBuckets();
-      assertNotNull(blist);
-      assertTrue(blist.size() > 0);
-    } catch (MinioException e) {
-      logger.error(e.getMessage(), e);
-      fail();
+      MinioClient minioClient = mock(MinioClient.class);
+      when(minioClient.listBuckets()).thenReturn(null);
+      ContractsDao contractsDao = new ContractsDao();
+      contractsDao.setMinioClient(minioClient);
+      Optional<List<String>> standNamesOpt = contractsDao.getStandNames();
+      boolean standNamesOptEmpty = standNamesOpt.isEmpty();
+      boolean standNamesOptContainsEmptyList = standNamesOpt.isPresent() && standNamesOpt.get().size() == 0;
+      assertTrue(standNamesOptEmpty || standNamesOptContainsEmptyList);
     } catch (Exception e) {
-      logger.error(e.getMessage(), e);
+      logger.error("The test preconditions are failed", e);
       fail();
     }
   }
 
-  //@Test //The test is switched off as it need to be reimplemented with testcontainers
-  void getStandNames() throws ContractsDaoException {
-    List<String> standNames = contractsDao.getStandNames();
-    assertNotNull(standNames);
-    assertTrue(standNames.size() > 0);
+  @Test
+  void isPossibleToGetStandNamesWhenMinioReturnsEmpty() {
+    try {
+      MinioClient minioClient = mock(MinioClient.class);
+      when(minioClient.listBuckets()).thenAnswer(a -> new ArrayList<String>());
+      ContractsDao contractsDao = new ContractsDao();
+      contractsDao.setMinioClient(minioClient);
+      Optional<List<String>> standNamesOpt = contractsDao.getStandNames();
+      boolean standNamesOptEmpty = standNamesOpt.isEmpty();
+      boolean standNamesOptContainsEmptyList = standNamesOpt.isPresent() && standNamesOpt.get().size() == 0;
+      assertTrue(standNamesOptEmpty || standNamesOptContainsEmptyList);
+    } catch (Exception e) {
+      logger.error("The test preconditions are failed", e);
+      fail();
+    }
   }
-
 }
