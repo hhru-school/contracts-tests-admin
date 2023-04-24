@@ -4,6 +4,10 @@ public class StandDto {
 
     private String name;
 
+    public StandDto(String name){
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
