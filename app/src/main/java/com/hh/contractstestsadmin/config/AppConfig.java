@@ -5,6 +5,9 @@ import com.hh.contractstestsadmin.dao.ValidationDao;
 import io.minio.MinioClient;
 import java.util.Properties;
 import javax.sql.DataSource;
+
+import com.hh.contractstestsadmin.service.StatusService;
+import com.hh.contractstestsadmin.service.ValidationService;
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -47,6 +50,16 @@ public class AppConfig {
 
   @Value("${spring.minio.secret-key}")
   private String minioSecretKey;
+
+  @Bean
+  public StatusService statusService(){
+    return new StatusService();
+  }
+
+  @Bean
+  public ValidationService validationService(){
+    return new ValidationService();
+  }
 
   @Bean
   public ValidationDao validationDao(LocalSessionFactoryBean sessionFactoryBean) {
