@@ -8,11 +8,7 @@ import com.hh.contractstestsadmin.dto.StandDto;
 import com.hh.contractstestsadmin.dto.StandsContainerDto;
 import com.hh.contractstestsadmin.exception.ContractsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
 
-import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
@@ -41,6 +37,7 @@ public class StatusService {
                 .getStandNames()
                 .orElseGet(Collections::emptyList)
                 .stream()
+                .sorted()
                 .map(StandDto::new)
                 .toList());
         return standsContainer;
