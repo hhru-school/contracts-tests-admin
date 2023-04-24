@@ -57,8 +57,8 @@ public class AppConfig {
   }
 
   @Bean
-  public ValidationService validationService(){
-    return new ValidationService();
+  public ValidationService validationService(ContractsDao contractsDao, ValidationDao validationDao){
+    return new ValidationService(contractsDao, validationDao);
   }
 
   @Bean
