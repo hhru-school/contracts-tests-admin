@@ -1,6 +1,5 @@
 package com.hh.contractstestsadmin.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dao.ContractsDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
@@ -8,11 +7,12 @@ import com.hh.contractstestsadmin.exception.ContractsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.model.Validation;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class ValidationService {
 
@@ -25,8 +25,6 @@ public class ValidationService {
         this.validationDao = validationDao;
     }
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
     private boolean isStandExists(String standName) throws ContractsDaoException {
         return contractsDao.getStandNames()
                 .orElseGet(Collections::emptyList)
@@ -34,6 +32,7 @@ public class ValidationService {
                 .anyMatch(s -> s.equals(standName));
     }
 
+    @Transactional
     public List<ValidationPreviewDto> getHistoryPreview(
             String standName,
             Long sizeLimit)
@@ -41,10 +40,14 @@ public class ValidationService {
         if(!isStandExists(standName)){
             throw new ValidationHistoryNotFoundException("Stand '" + standName + "' does not exist");
         }
-        return validationDao.getAllValidationsByStandName(standName).stream()
-                .sorted(Comparator.comparing(Validation::getCreatedDate).reversed())
+        Stream<ValidationPreviewDto> validationPreviewStream = validationDao.getAllValidationsByStandName(standName).stream()
+                    .sorted(Comparator.comparing(Validation::getCreatedDate).reversed())
+                    .map(ValidationMapper::map);
+        if(sizeLimit == null){
+            return validationPreviewStream.toList();
+        }
+        return validationPreviewStream
                 .limit(sizeLimit)
-                .map(ValidationMapper::map)
                 .toList();
     }
 
