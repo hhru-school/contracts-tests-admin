@@ -6,7 +6,7 @@ public class ValidationPreviewDto {
 
     private String date;
 
-    private String releaseVersion;
+    private String releaseLink;
 
     private ValidationStatus status;
 
@@ -28,12 +28,12 @@ public class ValidationPreviewDto {
         this.date = date;
     }
 
-    public String getReleaseVersion() {
-        return releaseVersion;
+    public String getReleaseLink() {
+        return releaseLink;
     }
 
-    public void setReleaseVersion(String releaseVersion) {
-        this.releaseVersion = releaseVersion;
+    public void setReleaseLink(String releaseLink) {
+        this.releaseLink = releaseLink;
     }
 
     public ValidationStatus getStatus() {
