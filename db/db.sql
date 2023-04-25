@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS validation (
     release_information_version varchar(255),
     validation_status varchar(30),
     error_count integer,
-    PRIMARY KEY (id)
+    PRIMARY KEY (validation_id)
 );
