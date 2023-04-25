@@ -35,7 +35,6 @@ public class StatusService {
         standsContainer.setReleaseName(releaseName);
         standsContainer.setStands(contractsDao
                 .getStandNames()
-                .orElseGet(Collections::emptyList)
                 .stream()
                 .sorted()
                 .map(StandDto::new)
