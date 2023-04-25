@@ -5,17 +5,17 @@ import io.minio.MinioClient;
 import io.minio.messages.Bucket;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import static java.util.Optional.of;
 import static java.util.Optional.ofNullable;
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 
 public class ContractsDao {
 
   @Inject
   private MinioClient minioClient;
 
-  public Optional<List<String>> getStandNames() throws ContractsDaoException {
+  @NotNull
+  public List<String> getStandNames() throws ContractsDaoException {
     List<Bucket> bucketList;
     try {
       bucketList = minioClient.listBuckets();
@@ -23,11 +23,11 @@ public class ContractsDao {
       throw new ContractsDaoException(e);
     }
 
-    return of(ofNullable(bucketList)
+    return ofNullable(bucketList)
         .orElseGet(Collections::emptyList)
         .stream()
         .map(Bucket::name)
-        .toList());
+        .toList();
   }
 
 }
