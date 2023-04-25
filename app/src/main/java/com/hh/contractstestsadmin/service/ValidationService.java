@@ -3,13 +3,13 @@ package com.hh.contractstestsadmin.service;
 import com.hh.contractstestsadmin.dao.ContractsDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
+import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.exception.ContractsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.model.Validation;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
@@ -25,21 +25,17 @@ public class ValidationService {
         this.validationDao = validationDao;
     }
 
-    private boolean isStandExists(String standName) throws ContractsDaoException {
-        return contractsDao.getStandNames()
-                .orElseGet(Collections::emptyList)
-                .stream()
-                .anyMatch(s -> s.equals(standName));
+    private void checkStandExistence(String standName) throws ContractsDaoException {
+        if(contractsDao.getStandNames().stream().noneMatch(s -> s.equals(standName))){
+            throw new ValidationHistoryNotFoundException("Stand '" + standName + "' does not exist");
+        }
     }
 
-    @Transactional
     public List<ValidationPreviewDto> getHistoryPreview(
             String standName,
             Long sizeLimit)
             throws ValidationHistoryNotFoundException, ContractsDaoException {
-        if(!isStandExists(standName)){
-            throw new ValidationHistoryNotFoundException("Stand '" + standName + "' does not exist");
-        }
+        checkStandExistence(standName);
         Stream<ValidationPreviewDto> validationPreviewStream = validationDao.getAllValidationsByStandName(standName).stream()
                     .sorted(Comparator.comparing(Validation::getCreatedDate).reversed())
                     .map(ValidationMapper::map);
@@ -51,7 +47,12 @@ public class ValidationService {
                 .toList();
     }
 
-    public void runValidation(String standName) throws StandNotFoundException {
-
+    public void runValidation(String standName) throws StandNotFoundException, ContractsDaoException {
+        checkStandExistence(standName);
+        Validation validation = new Validation();
+        validation.setCreatedDate(LocalDateTime.now());
+        validation.setStandName(standName);
+        validation.setStatus(ValidationStatus.IN_PROGRESS);
+        validationDao.save(validation);
     }
 }

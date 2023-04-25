@@ -10,7 +10,11 @@ public class ValidationMapper {
     public static ValidationPreviewDto map(Validation validation){
         ValidationPreviewDto validationPreviewDto = new ValidationPreviewDto();
         validationPreviewDto.setId(validation.getId());
-        validationPreviewDto.setDate(validation.getCreatedDate().format(DateTimeFormatter.ISO_INSTANT));
+        if(validation.getExecuteDate() == null) {
+            validationPreviewDto.setDate(validation.getExecuteDate().format(DateTimeFormatter.ISO_INSTANT));
+        } else {
+            validationPreviewDto.setDate(validation.getCreatedDate().format(DateTimeFormatter.ISO_INSTANT));
+        }
         validationPreviewDto.setStatus(validation.getStatus());
         validationPreviewDto.setReleaseLink(validation.getReleaseInformationVersion());
         validationPreviewDto.setErrorCount(validation.getErrorCount());
