@@ -19,6 +19,8 @@ public class StatusService {
 
     private String releaseName;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     public StatusService(ContractsDao contractsDao){
         this.contractsDao = contractsDao;
     }
@@ -26,8 +28,6 @@ public class StatusService {
     public void setReleaseName(String releaseName){
         this.releaseName = releaseName;
     }
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public StandsContainerDto getStands() throws ContractsDaoException {
         StandsContainerDto standsContainer = new StandsContainerDto();
