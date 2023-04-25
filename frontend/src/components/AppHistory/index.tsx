@@ -1,6 +1,6 @@
 export const AppHistory: React.FC = () => {
     return (
-        <div className="col-4 d-flex">
+        <div className="col-2 pt-3 d-flex justify-content-end">
             <ul className="list-group">
                 <li className="list-group-item d-flex justify-content-between align-items-center">
                     Предупреждений
