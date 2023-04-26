@@ -17,15 +17,12 @@ public class StatusService {
 
   private final ContractsDao contractsDao;
 
-  private String releaseName;
+  private final String releaseName;
 
   private final ObjectMapper objectMapper = new ObjectMapper();
 
-  public StatusService(ContractsDao contractsDao) {
+  public StatusService(ContractsDao contractsDao, String releaseName) {
     this.contractsDao = contractsDao;
-  }
-
-  public void setReleaseName(String releaseName) {
     this.releaseName = releaseName;
   }
 

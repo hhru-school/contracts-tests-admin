@@ -56,9 +56,7 @@ public class AppConfig {
 
   @Bean
   public StatusService statusService(ContractsDao contractsDao) {
-    StatusService statusService = new StatusService(contractsDao);
-    statusService.setReleaseName(releaseName);
-    return statusService;
+    return new StatusService(contractsDao, releaseName);
   }
 
   @Bean
