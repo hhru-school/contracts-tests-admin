@@ -58,7 +58,9 @@ public class AppConfig {
 
   @Bean
   public ValidationService validationService(ContractsDao contractsDao, ValidationDao validationDao){
-    return new ValidationService(contractsDao, validationDao);
+    ValidationService validationService = new ValidationService(contractsDao, validationDao);
+    validationService.setSelfReference(validationService);
+    return validationService;
   }
 
   @Bean
