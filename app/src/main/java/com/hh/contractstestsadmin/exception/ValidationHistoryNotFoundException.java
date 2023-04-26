@@ -5,8 +5,8 @@ import javax.ws.rs.NotFoundException;
 
 public class ValidationHistoryNotFoundException extends NotFoundException {
 
-    public ValidationHistoryNotFoundException(String s){
-        super(s);
-    }
+  public ValidationHistoryNotFoundException(String s) {
+    super(s);
+  }
 
 }

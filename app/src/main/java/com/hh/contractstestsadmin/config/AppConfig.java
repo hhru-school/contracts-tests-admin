@@ -55,14 +55,14 @@ public class AppConfig {
   private String releaseName;
 
   @Bean
-  public StatusService statusService(ContractsDao contractsDao){
+  public StatusService statusService(ContractsDao contractsDao) {
     StatusService statusService = new StatusService(contractsDao);
     statusService.setReleaseName(releaseName);
     return statusService;
   }
 
   @Bean
-  public ValidationService validationService(){
+  public ValidationService validationService() {
     return new ValidationService();
   }
 

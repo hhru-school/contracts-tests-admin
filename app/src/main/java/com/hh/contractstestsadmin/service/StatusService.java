@@ -15,36 +15,37 @@ import java.util.List;
 
 public class StatusService {
 
-    private final ContractsDao contractsDao;
+  private final ContractsDao contractsDao;
 
-    private String releaseName;
+  private String releaseName;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+  private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public StatusService(ContractsDao contractsDao){
-        this.contractsDao = contractsDao;
-    }
+  public StatusService(ContractsDao contractsDao) {
+    this.contractsDao = contractsDao;
+  }
 
-    public void setReleaseName(String releaseName){
-        this.releaseName = releaseName;
-    }
+  public void setReleaseName(String releaseName) {
+    this.releaseName = releaseName;
+  }
 
-    public StandsContainerDto getStands() throws ContractsDaoException {
-        StandsContainerDto standsContainer = new StandsContainerDto();
-        standsContainer.setReleaseName(releaseName);
-        standsContainer.setStands(contractsDao
-                .getStandNames()
-                .stream()
-                .sorted()
-                .map(StandDto::new)
-                .toList());
-        return standsContainer;
-    }
+  public StandsContainerDto getStands() throws ContractsDaoException {
+    StandsContainerDto standsContainer = new StandsContainerDto();
+    standsContainer.setReleaseName(releaseName);
+    standsContainer.setStands(contractsDao
+        .getStandNames()
+        .stream()
+        .sorted()
+        .map(StandDto::new)
+        .toList());
+    return standsContainer;
+  }
 
-    public List<ServiceDto> getServices(String standName) throws StandNotFoundException, IOException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream("test-data/service-list-exemple.json");
-        return objectMapper.readValue(inputStream, new TypeReference<>(){});
-    }
+  public List<ServiceDto> getServices(String standName) throws StandNotFoundException, IOException {
+    ClassLoader classLoader = getClass().getClassLoader();
+    InputStream inputStream = classLoader.getResourceAsStream("test-data/service-list-exemple.json");
+    return objectMapper.readValue(inputStream, new TypeReference<>() {
+    });
+  }
 
 }
