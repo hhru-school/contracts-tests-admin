@@ -51,7 +51,7 @@ public class AppConfig {
   @Value("${spring.minio.secret-key}")
   private String minioSecretKey;
 
-  @Value("${release.name}")
+  @Value("${release.stand.name}")
   private String releaseName;
 
   @Bean
