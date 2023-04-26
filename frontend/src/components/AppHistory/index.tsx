@@ -1,19 +1,30 @@
+import { Nav, NavItem, NavLink } from 'reactstrap';
+
 export const AppHistory: React.FC = () => {
     return (
-        <div className="col-2 pt-3 d-flex justify-content-end">
-            <ul className="list-group">
-                <li className="list-group-item d-flex justify-content-between align-items-center">
-                    Предупреждений
-                    <span className="badge bg-primary rounded-pill ms-2">5</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between align-items-center">
-                    Пройдено
-                </li>
-                <li className="list-group-item d-flex justify-content-between align-items-center">
-                    Предупреждений
-                    <span className="badge bg-primary rounded-pill ms-2">1</span>
-                </li>
-            </ul>
+        <div className="sidebar col-2 pt-3 justify-content-start">
+            <Nav vertical pills>
+                <NavItem>
+                    <NavLink className="link" href="#">
+                        Валидация 23.04.2023 11:22
+                        <button
+                            type="button"
+                            className="btn-close bg-danger ms-3"
+                            aria-label="Close"
+                        ></button>
+                    </NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink className="link" href="#">
+                        Валидация 23.04.2023 10:22
+                        <button
+                            type="button"
+                            className="btn-close bg-danger ms-3"
+                            aria-label="Close"
+                        ></button>
+                    </NavLink>
+                </NavItem>
+            </Nav>
         </div>
     );
 };

@@ -14,26 +14,6 @@ export const AppSidebar: React.FC = () => {
                         История Валидаций
                     </NavLink>
                 </NavItem>
-                <NavItem>
-                    <NavLink className="link" href="#">
-                        Валидация 23.04.2023 11:22
-                        <button
-                            type="button"
-                            className="btn-close bg-danger ms-3"
-                            aria-label="Close"
-                        ></button>
-                    </NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink className="link" href="#">
-                        Валидация 23.04.2023 10:22
-                        <button
-                            type="button"
-                            className="btn-close bg-danger ms-3"
-                            aria-label="Close"
-                        ></button>
-                    </NavLink>
-                </NavItem>
             </Nav>
         </div>
     );

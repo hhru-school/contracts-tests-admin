@@ -1,1 +1,5 @@
-export const fetchCustomData = (url: string) => fetch(url).then((res) => res.json()); // delay для симуляции прогресса запроса
+export const fetchCustomData = async (url: string) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+};
