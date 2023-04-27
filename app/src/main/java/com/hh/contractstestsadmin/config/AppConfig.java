@@ -51,13 +51,16 @@ public class AppConfig {
   @Value("${spring.minio.secret-key}")
   private String minioSecretKey;
 
+  @Value("${release.stand.name}")
+  private String releaseName;
+
   @Bean
-  public StatusService statusService(){
-    return new StatusService();
+  public StatusService statusService(ContractsDao contractsDao) {
+    return new StatusService(contractsDao, releaseName);
   }
 
   @Bean
-  public ValidationService validationService(){
+  public ValidationService validationService() {
     return new ValidationService();
   }
 
