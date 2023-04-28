@@ -3,7 +3,7 @@ package com.hh.contractstestsadmin.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dao.ContractsDao;
-import com.hh.contractstestsadmin.dto.ServiceDto;
+import com.hh.contractstestsadmin.dto.ServicesContainerDto;
 import com.hh.contractstestsadmin.dto.StandDto;
 import com.hh.contractstestsadmin.dto.StandsContainerDto;
 import com.hh.contractstestsadmin.exception.ContractsDaoException;
@@ -11,7 +11,6 @@ import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 public class StatusService {
 
@@ -38,7 +37,7 @@ public class StatusService {
     return standsContainer;
   }
 
-  public List<ServiceDto> getServices(String standName) throws StandNotFoundException, IOException {
+  public ServicesContainerDto getServices(String standName) throws StandNotFoundException, IOException {
     ClassLoader classLoader = getClass().getClassLoader();
     InputStream inputStream = classLoader.getResourceAsStream("test-data/service-list-exemple.json");
     return objectMapper.readValue(inputStream, new TypeReference<>() {
