@@ -1,7 +1,7 @@
 package com.hh.contractstestsadmin.service;
 
-import com.hh.contractstestsadmin.dao.ContractsDao;
-import com.hh.contractstestsadmin.dao.ValidationDao;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.exception.ContractsDaoException;

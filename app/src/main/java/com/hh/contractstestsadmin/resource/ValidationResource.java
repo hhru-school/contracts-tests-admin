@@ -17,38 +17,40 @@ import javax.ws.rs.core.Response;
 @Path("api")
 public class ValidationResource {
 
-    private final ValidationService validationService;
+  private final ValidationService validationService;
 
-    @Inject
-    public ValidationResource(ValidationService validationService){
-        this.validationService = validationService;
-    }
+  @Inject
+  public ValidationResource(ValidationService validationService) {
+    this.validationService = validationService;
+  }
 
-    @Path("stand/{standName}/validations/preview")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getHistoryPreview(@PathParam("standName") String standName,
-                                      @QueryParam("sizeLimit") Long sizeLimit){
-        try {
-            return Response.ok(validationService.getHistoryPreview(standName, sizeLimit)).build();
-        } catch (ValidationHistoryNotFoundException exception) {
-            return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
-        } catch (Exception exception) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
-        }
+  @Path("stand/{standName}/validations/preview")
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getHistoryPreview(
+      @PathParam("standName") String standName,
+      @QueryParam("sizeLimit") Long sizeLimit
+  ) {
+    try {
+      return Response.ok(validationService.getHistoryPreview(standName, sizeLimit)).build();
+    } catch (ValidationHistoryNotFoundException exception) {
+      return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
+    } catch (Exception exception) {
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
     }
+  }
 
-    @Path("stand/{standName}/validations")
-    @POST
-    public Response runValidation(@PathParam("standName") String standName){
-        try {
-            validationService.runValidation(standName);
-            return Response.status(Response.Status.ACCEPTED).build();
-        } catch (StandNotFoundException exception){
-            return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
-        } catch (Exception exception) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
-        }
+  @Path("stand/{standName}/validations")
+  @POST
+  public Response runValidation(@PathParam("standName") String standName) {
+    try {
+      validationService.runValidation(standName);
+      return Response.status(Response.Status.ACCEPTED).build();
+    } catch (StandNotFoundException exception) {
+      return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
+    } catch (Exception exception) {
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
     }
+  }
 
 }
