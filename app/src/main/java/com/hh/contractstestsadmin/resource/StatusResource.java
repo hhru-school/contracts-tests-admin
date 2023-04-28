@@ -4,6 +4,7 @@ import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.service.StatusService;
 
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -35,7 +36,7 @@ public class StatusResource {
   @Path("services")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getServices(@QueryParam("standName") String standName) {
+  public Response getServices(@NotNull @QueryParam("standName") String standName) {
     try {
       return Response.ok(statusService.getServices(standName)).build();
     } catch (StandNotFoundException exception) {
