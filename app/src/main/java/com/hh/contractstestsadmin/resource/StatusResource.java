@@ -1,9 +1,12 @@
 package com.hh.contractstestsadmin.resource;
 
+import com.hh.contractstestsadmin.dto.ServicesContainerDto;
+import com.hh.contractstestsadmin.dto.StandsContainerDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.service.StatusService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -23,6 +26,9 @@ public class StatusResource {
     this.statusService = statusService;
   }
 
+  @ApiOperation(
+      value = "Get list with stands",
+      response = StandsContainerDto.class)
   @Path("stands")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -34,6 +40,9 @@ public class StatusResource {
     }
   }
 
+  @ApiOperation(
+      value = "Get services related to the stand",
+      response = ServicesContainerDto.class)
   @Path("/stand/{standName}/services")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
