@@ -13,7 +13,7 @@ public class ValidationService {
 
   private final ObjectMapper objectMapper = new ObjectMapper();
 
-  public List<ValidationPreviewDto> getHistoryPreview(
+  public List<ValidationPreviewDto> getValidationsHistory(
       String standName,
       Long sizeLimit
   )
