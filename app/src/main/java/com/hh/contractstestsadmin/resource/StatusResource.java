@@ -32,7 +32,7 @@ public class StatusResource {
     }
   }
 
-  @Path("/stand/{standName}/services")
+  @Path("/stands/{standName}/services")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response getServices(@PathParam("standName") String standName) {
