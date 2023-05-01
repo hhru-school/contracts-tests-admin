@@ -38,9 +38,9 @@ public class StatusResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response getStatus(
       @PathParam("standName") String standName,
-      @QueryParam("sizeLimit") Long sizeLimit) {
+      @QueryParam("historySizeLimit") Long historySizeLimit) {
     try {
-      return Response.ok(statusService.getStatus(standName, sizeLimit)).build();
+      return Response.ok(statusService.getStatus(standName, historySizeLimit)).build();
     } catch (StandNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
     } catch (Exception exception) {

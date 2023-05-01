@@ -29,10 +29,10 @@ public class ValidationResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response getValidationsHistory(
       @PathParam("standName") String standName,
-      @QueryParam("sizeLimit") Long sizeLimit
+      @QueryParam("historySizeLimit") Long historySizeLimit
   ) {
     try {
-      return Response.ok(validationService.getValidationsHistory(standName, sizeLimit)).build();
+      return Response.ok(validationService.getValidationsHistory(standName, historySizeLimit)).build();
     } catch (ValidationHistoryNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
     } catch (Exception exception) {

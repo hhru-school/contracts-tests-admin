@@ -45,7 +45,7 @@ public class StatusService {
     });
   }
 
-  public StandStatusDto getStatus(String standName, Long sizeLimit) throws StandNotFoundException, IOException {
+  public StandStatusDto getStatus(String standName, Long historySizeLimit) throws StandNotFoundException, IOException {
     StandStatusDto standStatusDto = new StandStatusDto();
     standStatusDto.setReleaseServices(getServices(releaseName));
     if(!standName.equals(releaseName)){
@@ -55,7 +55,7 @@ public class StatusService {
     else {
       standStatusDto.setIsRelease(true);
     }
-    standStatusDto.setHistoryPreview(validationService.getValidationsHistory(standName,sizeLimit));
+    standStatusDto.setHistoryPreview(validationService.getValidationsHistory(standName,historySizeLimit));
     return standStatusDto;
   }
 
