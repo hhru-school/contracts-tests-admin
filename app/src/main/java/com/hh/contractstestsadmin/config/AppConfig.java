@@ -79,7 +79,7 @@ public class AppConfig {
 
   @Bean
   public ContractsDao contractsDao() {
-    return new ContractsDao();
+    return new ContractsDao(releaseName, minioClient());
   }
 
   @Bean

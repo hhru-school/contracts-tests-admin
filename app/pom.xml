@@ -102,6 +102,18 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin}</version>
+                <configuration>
+                    <excludes>
+                        <!-- There is a defect https://github.com/hhru-school/contracts-tests-admin/issues/53
+                              in the test. It can be included when the defect is fixed -->
+                        <exclude>AppApplicationTests.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
