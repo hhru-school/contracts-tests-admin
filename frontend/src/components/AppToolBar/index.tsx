@@ -1,27 +1,18 @@
 import play from '../../img/play.svg';
 import useSWR from 'swr';
-import { fetchCustomData } from './api';
 import React, { useState, KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
-import { ListGroup, ListGroupItem, Form, Input, Button } from 'reactstrap';
+import { ListGroup, ListGroupItem, Form, Input, Button, Alert } from 'reactstrap';
 export const AppToolBar: React.FC = () => {
-    const { data, error } = useSWR('/api/stands/', fetchCustomData);
+    const { isLoading, data, error } = useSWR('/api/stands/');
     const [selectedItem, setSelectedItem] = useState('');
     const [showList, setShowList] = useState(false);
     const [hoveredItem, setHoveredItem] = useState<string>('');
     const [currentPositionInList, setCurrentPositionInList] = useState(0);
-    if (!data) {
-        return (
-            <div className="alert alert-primary" role="alert">
-                Data is loading
-            </div>
-        );
+    if (isLoading) {
+        return <Alert color="primary"> Data is loading </Alert>;
     }
     if (error) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                Cant load data {error.message}
-            </div>
-        );
+        return <Alert color="danger"> Cant load data {error.message} </Alert>;
     }
 
     const handleHover = (item: string) => {
