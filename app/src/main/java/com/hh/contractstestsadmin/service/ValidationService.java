@@ -23,7 +23,7 @@ public class ValidationService {
     List<ValidationPreviewDto> result = objectMapper.readValue(inputStream, new TypeReference<>() {
     });
     if (historySizeLimit == null) {
-      historySizeLimit = 5L;
+      return result;
     }
     return result.stream().limit(historySizeLimit).toList();
   }
