@@ -32,15 +32,15 @@ public class ValidationResource {
       value = "Get list with stands",
       response = ValidationPreviewDto.class,
       responseContainer = "List")
-  @Path("stand/{standName}/validations/preview")
+  @Path("stand/{standName}/validations")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getHistoryPreview(
+  public Response getValidationsHistory(
       @PathParam("standName") String standName,
-      @QueryParam("sizeLimit") Long sizeLimit
+      @QueryParam("historySizeLimit") Long historySizeLimit
   ) {
     try {
-      return Response.ok(validationService.getHistoryPreview(standName, sizeLimit)).build();
+      return Response.ok(validationService.getValidationsHistory(standName, historySizeLimit)).build();
     } catch (ValidationHistoryNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
     } catch (Exception exception) {

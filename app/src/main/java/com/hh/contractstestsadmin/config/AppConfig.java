@@ -68,8 +68,8 @@ public class AppConfig {
   }
 
   @Bean
-  public StatusService statusService(ContractsDao contractsDao) {
-    return new StatusService(contractsDao, releaseName);
+  public StatusService statusService(ContractsDao contractsDao, ValidationService validationService) {
+    return new StatusService(contractsDao, releaseName, validationService);
   }
 
   @Bean
