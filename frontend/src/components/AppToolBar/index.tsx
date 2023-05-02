@@ -1,14 +1,14 @@
 import play from '../../img/play.svg';
 import useSWR from 'swr';
 import { fetchCustomData } from './api';
-import React, { useState } from 'react';
-import { Form, FormControl, ListGroup } from 'react-bootstrap';
-
+import React, { useState, KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
+import { ListGroup, ListGroupItem, Form, Input, Button } from 'reactstrap';
 export const AppToolBar: React.FC = () => {
     const { data, error } = useSWR('/api/stands/', fetchCustomData);
     const [selectedItem, setSelectedItem] = useState('');
-    const [showList, setShowList] = useState(true);
-    const [hoveredItem, setHoveredItem] = useState(null);
+    const [showList, setShowList] = useState(false);
+    const [hoveredItem, setHoveredItem] = useState<string>('');
+    const [currentPositionInList, setCurrentPositionInList] = useState(0);
     if (!data) {
         return (
             <div className="alert alert-primary" role="alert">
@@ -23,52 +23,91 @@ export const AppToolBar: React.FC = () => {
             </div>
         );
     }
-    const handleHover = (item) => {
+
+    const handleHover = (item: string) => {
         setHoveredItem(item);
     };
-    const handleSearch = (e) => {
+    const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSelectedItem(e.target.value);
         setShowList(true);
     };
     const filteredData = data.stands
-        .filter((item) => item['name'].toLowerCase().includes(selectedItem.toLowerCase()))
+        .map((item: any) => item['name'])
+        .filter((name: string) => name.toLowerCase().includes(selectedItem.toLowerCase()))
         .slice(0, 7);
 
-    const handleSelect = (item) => {
+    const selectElement = (item: string) => {
         setSelectedItem(item);
         setShowList(false);
+        setCurrentPositionInList(0);
+    };
+    const handleSelect = (item: MouseEvent<HTMLElement>) => {
+        selectElement(item.currentTarget.textContent as string);
+    };
+    const handleFocus = () => {
+        setShowList(true);
+    };
+    const handleBlur = () => {
+        selectElement(hoveredItem);
+    };
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+        console.log('handleKeyDown', event.key);
+        if (event.key === 'Escape') {
+            setShowList(false);
+        } else if (event.key === 'ArrowDown') {
+            if (currentPositionInList < filteredData.length) {
+                setCurrentPositionInList(currentPositionInList + 1);
+                const element = filteredData[currentPositionInList + 1].name;
+                handleHover(element);
+                //setSelectedItem(element);
+            }
+        } else if (event.key === 'ArrowUp') {
+            if (currentPositionInList > 0) {
+                setCurrentPositionInList(currentPositionInList - 1);
+                const element = filteredData[currentPositionInList - 1].name;
+                handleHover(element);
+                //setSelectedItem(element);
+            }
+        }
     };
     return (
         <div className="row mb-5">
             <div className="col-12 d-inline d-flex align-items-center justify-content-center">
                 <div className="d-block position-relative w-50">
                     <Form>
-                        <FormControl
+                        <Input
                             type="text"
                             placeholder="Search"
                             value={selectedItem}
                             onChange={handleSearch}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
+                            onKeyDown={handleKeyDown}
                         />
                     </Form>
                     {showList && (
-                        <ListGroup className="position-absolute w-100">
-                            {filteredData.map((item) => (
-                                <ListGroup.Item
-                                    key={item['name']}
-                                    onClick={() => handleSelect(item['name'])}
-                                    onMouseEnter={() => handleHover(item['name'])}
-                                    onMouseLeave={() => handleHover(null)}
-                                    className={hoveredItem === item['name'] ? 'active' : ''}
+                        <ListGroup
+                            className="position-absolute w-100"
+                            onSelect={handleSelect}
+                            onKeyDown={handleKeyDown}
+                        >
+                            {filteredData.map((item: string) => (
+                                <ListGroupItem
+                                    key={item}
+                                    onClick={() => selectElement(item)}
+                                    onMouseEnter={() => handleHover(item)}
+                                    onMouseLeave={() => handleHover('')}
+                                    className={hoveredItem === item ? 'active' : ''}
                                 >
-                                    {item['name']}
-                                </ListGroup.Item>
+                                    {item}
+                                </ListGroupItem>
                             ))}
                         </ListGroup>
                     )}
                 </div>
-                <button type="button" className="btn btn-primary ms-3">
-                    <img src={play} />
-                </button>
+                <Button color="primary" className="ms-3">
+                    <img src={play} /> Start
+                </Button>
             </div>
         </div>
     );

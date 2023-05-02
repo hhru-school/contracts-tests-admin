@@ -5,7 +5,7 @@ export const AppSidebar: React.FC = () => {
         <div className="sidebar col-2 pt-3 justify-content-start">
             <Nav vertical pills>
                 <NavItem>
-                    <NavLink className="link" href="/">
+                    <NavLink className="link active" href="/">
                         Статус
                     </NavLink>
                 </NavItem>
