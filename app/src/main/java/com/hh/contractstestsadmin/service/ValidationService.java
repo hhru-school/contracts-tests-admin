@@ -21,15 +21,9 @@ public class ValidationService {
 
     private final ValidationDao validationDao;
 
-    private ValidationService selfReference;
-
     public ValidationService(ContractsDao contractsDao, ValidationDao validationDao){
         this.contractsDao = contractsDao;
         this.validationDao = validationDao;
-    }
-
-    public void setSelfReference(ValidationService selfReference){
-        this.selfReference = selfReference;
     }
 
     private void checkStandExistence(String standName) throws ContractsDaoException {
