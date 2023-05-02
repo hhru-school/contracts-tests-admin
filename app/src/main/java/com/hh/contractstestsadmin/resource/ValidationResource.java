@@ -32,7 +32,7 @@ public class ValidationResource {
       value = "Get list with stands",
       response = ValidationPreviewDto.class,
       responseContainer = "List")
-  @Path("stand/{standName}/validations")
+  @Path("stands/{standName}/validations")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response getValidationsHistory(
@@ -52,7 +52,7 @@ public class ValidationResource {
       value = "Run validation",
       response = String.class,
       code = 202)
-  @Path("stand/{standName}/validations")
+  @Path("stands/{standName}/validations")
   @POST
   public Response runValidation(@PathParam("standName") String standName) {
     try {
