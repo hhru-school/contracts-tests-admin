@@ -61,9 +61,7 @@ public class AppConfig {
 
   @Bean
   public ValidationService validationService(ContractsDao contractsDao, ValidationDao validationDao){
-    ValidationService validationService = new ValidationService(contractsDao, validationDao);
-    validationService.setSelfReference(validationService);
-    return validationService;
+    return new ValidationService(contractsDao, validationDao);
   }
 
   @Bean
@@ -102,9 +100,9 @@ public class AppConfig {
   }
 
   @Bean
-  public LocalSessionFactoryBean sessionFactory() {
+  public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-    sessionFactory.setDataSource(dataSource());
+    sessionFactory.setDataSource(dataSource);
     sessionFactory.setPackagesToScan("com.hh.contractstestsadmin.model");
     sessionFactory.setHibernateProperties(hibernateProperties());
 

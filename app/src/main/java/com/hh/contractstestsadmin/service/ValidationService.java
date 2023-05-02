@@ -33,19 +33,19 @@ public class ValidationService {
     }
 
     @Transactional
-    public List<ValidationPreviewDto> getHistoryPreview(
+    public List<ValidationPreviewDto> getValidationsHistory(
             String standName,
-            Long sizeLimit)
+            Long historySizeLimit)
             throws ValidationHistoryNotFoundException, ContractsDaoException {
         checkStandExistence(standName);
         Stream<ValidationPreviewDto> validationPreviewStream = validationDao.getAllValidationsByStandName(standName).stream()
                     .sorted(Comparator.comparing(Validation::getCreatedDate).reversed())
                     .map(ValidationMapper::map);
-        if(sizeLimit == null){
+        if(historySizeLimit == null){
             return validationPreviewStream.toList();
         }
         return validationPreviewStream
-                .limit(sizeLimit)
+                .limit(historySizeLimit)
                 .toList();
     }
 

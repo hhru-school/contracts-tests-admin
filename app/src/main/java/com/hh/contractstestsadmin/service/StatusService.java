@@ -45,7 +45,7 @@ public class StatusService {
     });
   }
 
-  public StandStatusDto getStatus(String standName, Long historySizeLimit) throws StandNotFoundException, IOException {
+  public StandStatusDto getStatus(String standName, Long historySizeLimit) throws StandNotFoundException, IOException, ContractsDaoException {
     StandStatusDto standStatusDto = new StandStatusDto();
     standStatusDto.setReleaseServices(getServices(releaseName));
     if(!standName.equals(releaseName)){
