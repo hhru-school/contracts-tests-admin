@@ -1,18 +1,14 @@
 package com.hh.contractstestsadmin.dto;
 
-import java.util.List;
-
 public class StandStatusDto {
+
+  private String standName;
 
   private Boolean isRelease;
 
   private String releaseLink;
 
-  private List<ServiceDto> standServices;
-
-  private List<ServiceDto> releaseServices;
-
-  private List<ValidationPreviewDto> historyPreview;
+  private ServicesContainerDto services;
 
   public Boolean getIsRelease() {
     return isRelease;
@@ -20,14 +16,6 @@ public class StandStatusDto {
 
   public void setIsRelease(Boolean isRelease) {
     this.isRelease = isRelease;
-  }
-
-  public List<ServiceDto> getStandServices() {
-    return standServices;
-  }
-
-  public void setStandServices(List<ServiceDto> standServices) {
-    this.standServices = standServices;
   }
 
   public String getReleaseLink() {
@@ -38,19 +26,27 @@ public class StandStatusDto {
     this.releaseLink = releaseLink;
   }
 
-  public List<ServiceDto> getReleaseServices() {
-    return releaseServices;
+  public Boolean getRelease() {
+    return isRelease;
   }
 
-  public void setReleaseServices(List<ServiceDto> releaseServices) {
-    this.releaseServices = releaseServices;
+  public void setRelease(Boolean release) {
+    isRelease = release;
   }
 
-  public List<ValidationPreviewDto> getHistoryPreview() {
-    return historyPreview;
+  public ServicesContainerDto getServices() {
+    return services;
   }
 
-  public void setHistoryPreview(List<ValidationPreviewDto> historyPreview) {
-    this.historyPreview = historyPreview;
+  public void setServices(ServicesContainerDto services) {
+    this.services = services;
+  }
+
+  public String getStandName() {
+    return standName;
+  }
+
+  public void setStandName(String standName) {
+    this.standName = standName;
   }
 }
