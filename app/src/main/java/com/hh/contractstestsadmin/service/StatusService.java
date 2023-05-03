@@ -44,7 +44,7 @@ public class StatusService {
 
   public StandStatusDto getStatus(String standName) throws StandNotFoundException, IOException {
     StandStatusDto standStatusDto = new StandStatusDto();
-    standStatusDto.setStandName(standName);
+    standStatusDto.setName(standName);
     standStatusDto.setIsRelease(standName.equals(releaseName));
     standStatusDto.setServices(getServices(standName));
     return standStatusDto;

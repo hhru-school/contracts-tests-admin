@@ -2,7 +2,7 @@ package com.hh.contractstestsadmin.dto;
 
 public class StandStatusDto {
 
-  private String standName;
+  private String name;
 
   private Boolean isRelease;
 
@@ -10,12 +10,12 @@ public class StandStatusDto {
 
   private ServicesContainerDto services;
 
-  public String getStandName() {
-    return standName;
+  public String getName() {
+    return name;
   }
 
-  public void setStandName(String standName) {
-    this.standName = standName;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public Boolean getIsRelease() {
