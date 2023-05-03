@@ -2,13 +2,21 @@ package com.hh.contractstestsadmin.dto;
 
 public class StandStatusDto {
 
-  private String standName;
+  private String name;
 
   private Boolean isRelease;
 
   private String releaseLink;
 
   private ServicesContainerDto services;
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 
   public Boolean getIsRelease() {
     return isRelease;
@@ -26,14 +34,6 @@ public class StandStatusDto {
     this.releaseLink = releaseLink;
   }
 
-  public Boolean getRelease() {
-    return isRelease;
-  }
-
-  public void setRelease(Boolean release) {
-    isRelease = release;
-  }
-
   public ServicesContainerDto getServices() {
     return services;
   }
@@ -42,11 +42,4 @@ public class StandStatusDto {
     this.services = services;
   }
 
-  public String getStandName() {
-    return standName;
-  }
-
-  public void setStandName(String standName) {
-    this.standName = standName;
-  }
 }

@@ -42,7 +42,7 @@ public class StatusResource {
   }
 
   @ApiOperation(
-      value = "Get services related to the stand",
+      value = "Get stand status information",
       response = StandStatusDto.class)
   @Path("/stands/{standName}")
   @GET
