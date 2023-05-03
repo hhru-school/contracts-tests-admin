@@ -4,23 +4,23 @@ import java.util.List;
 
 public class ServicesContainerDto {
 
-  private List<ServiceDto> standServices;
+  private List<ServiceDto> stand;
 
-  private List<ServiceDto> releaseServices;
+  private List<ServiceDto> release;
 
-  public List<ServiceDto> getStandServices() {
-    return standServices;
+  public List<ServiceDto> getStand() {
+    return stand;
   }
 
-  public void setStandServices(List<ServiceDto> standServices) {
-    this.standServices = standServices;
+  public void setStand(List<ServiceDto> stand) {
+    this.stand = stand;
   }
 
-  public List<ServiceDto> getReleaseServices() {
-    return releaseServices;
+  public List<ServiceDto> getRelease() {
+    return release;
   }
 
-  public void setReleaseServices(List<ServiceDto> releaseServices) {
-    this.releaseServices = releaseServices;
+  public void setRelease(List<ServiceDto> release) {
+    this.release = release;
   }
 }

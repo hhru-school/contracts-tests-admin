@@ -32,12 +32,12 @@ public class StatusResource {
     }
   }
 
-  @Path("/stands/{standName}/services")
+  @Path("/stands/{standName}")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getServices(@PathParam("standName") String standName) {
+  public Response getStatus(@PathParam("standName") String standName) {
     try {
-      return Response.ok(statusService.getServices(standName)).build();
+      return Response.ok(statusService.getStatus(standName)).build();
     } catch (StandNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
     } catch (Exception exception) {
