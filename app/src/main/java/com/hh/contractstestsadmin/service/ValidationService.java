@@ -13,19 +13,19 @@ public class ValidationService {
 
   private final ObjectMapper objectMapper = new ObjectMapper();
 
-  public List<ValidationPreviewDto> getValidationsHistory(
+  public List<ValidationPreviewDto> getHistoryPreview(
       String standName,
-      Long historySizeLimit
+      Long sizeLimit
   )
       throws StandNotFoundException, IOException {
     ClassLoader classLoader = getClass().getClassLoader();
     InputStream inputStream = classLoader.getResourceAsStream("test-data/validation-preview-list-exemple.json");
     List<ValidationPreviewDto> result = objectMapper.readValue(inputStream, new TypeReference<>() {
     });
-    if (historySizeLimit == null) {
-      return result;
+    if (sizeLimit == null) {
+      sizeLimit = 5L;
     }
-    return result.stream().limit(historySizeLimit).toList();
+    return result.stream().limit(sizeLimit).toList();
   }
 
   public void runValidation(String standName) throws StandNotFoundException {

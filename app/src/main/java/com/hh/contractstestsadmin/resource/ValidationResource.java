@@ -24,15 +24,15 @@ public class ValidationResource {
     this.validationService = validationService;
   }
 
-  @Path("stands/{standName}/validations")
+  @Path("stand/{standName}/validations/preview")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getValidationsHistory(
+  public Response getHistoryPreview(
       @PathParam("standName") String standName,
-      @QueryParam("historySizeLimit") Long historySizeLimit
+      @QueryParam("sizeLimit") Long sizeLimit
   ) {
     try {
-      return Response.ok(validationService.getValidationsHistory(standName, historySizeLimit)).build();
+      return Response.ok(validationService.getHistoryPreview(standName, sizeLimit)).build();
     } catch (ValidationHistoryNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
     } catch (Exception exception) {
@@ -40,7 +40,7 @@ public class ValidationResource {
     }
   }
 
-  @Path("stands/{standName}/validations")
+  @Path("stand/{standName}/validations")
   @POST
   public Response runValidation(@PathParam("standName") String standName) {
     try {
