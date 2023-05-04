@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 public class ServiceListMapper {
 
   @NotNull
-  public static List<Service> map(Iterable<Result<Item>> bucketObjects) {
+  public static List<Service> map(Iterable<Result<Item>> bucketItems) {
     return Collections.emptyList();
   }
 }

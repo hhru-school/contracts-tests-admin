@@ -40,13 +40,13 @@ public class ContractsDao {
 
   @NotNull
   public List<Service> getServicesInfo(@NotNull String standName) throws ContractsDaoException, StandNotFoundException {
-    Iterable<Result<Item>> bucketObjects = getBucketObjects(standName);
-    return ServiceListMapper.map(bucketObjects);
+    Iterable<Result<Item>> bucketItems = getBucketItems(standName);
+    return ServiceListMapper.map(bucketItems);
   }
 
   @NotNull
-  private Iterable<Result<Item>> getBucketObjects(@NotNull String bucketName) throws ContractsDaoException, StandNotFoundException {
-    Iterable<Result<Item>> bucketObjects;
+  private Iterable<Result<Item>> getBucketItems(@NotNull String bucketName) throws ContractsDaoException, StandNotFoundException {
+    Iterable<Result<Item>> bucketItems;
 
     // We need this check as in case the bucket does not exist Minio return
     // Result<Item> with an error inside and 'bucketObjects' variable is not empty
@@ -59,12 +59,12 @@ public class ContractsDao {
           .bucket(bucketName)
           .recursive(true)
           .build();
-      bucketObjects = minioClient.listObjects(listObjectsArgs);
+      bucketItems = minioClient.listObjects(listObjectsArgs);
     } catch (Exception e) {
       throw new ContractsDaoException(e);
     }
 
-    return bucketObjects;
+    return bucketItems;
   }
 
   private boolean isBucketExistent(String bucketName) throws ContractsDaoException {
