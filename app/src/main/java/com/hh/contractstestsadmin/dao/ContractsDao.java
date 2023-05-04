@@ -17,10 +17,7 @@ public class ContractsDao {
 
   private final MinioClient minioClient;
 
-  private final String releaseStandName;
-
-  public ContractsDao(String releaseStandName, MinioClient minioClient) {
-    this.releaseStandName = releaseStandName;
+  public ContractsDao(MinioClient minioClient) {
     this.minioClient = minioClient;
   }
 
@@ -38,11 +35,6 @@ public class ContractsDao {
         .stream()
         .map(Bucket::name)
         .toList();
-  }
-
-  @NotNull
-  public Iterable<Result<Item>> getReleaseServicesInfo() throws ContractsDaoException, StandNotFoundException {
-    return getBucketObjects(releaseStandName);
   }
 
   @NotNull

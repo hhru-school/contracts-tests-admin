@@ -8,7 +8,6 @@ import io.minio.MinioClient;
 import io.minio.Result;
 import io.minio.messages.Item;
 import java.util.Collections;
-import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -32,8 +31,8 @@ class ContractsDaoTest {
           .build();
 
       when(minioClient.bucketExists(bucketExistsArgs)).thenReturn(false);
-      ContractsDao contractsDao = new ContractsDao("contracts-release", minioClient);
-      Iterable<Result<Item>> servicesItems = contractsDao.getServicesInfo(bucketName);
+      ContractsDao contractsDao = new ContractsDao(minioClient);
+      contractsDao.getServicesInfo(bucketName);
     });
     assertEquals("Minio Storage does not contain '" + bucketName + "' bucket", exception.getMessage());
     assertEquals(StandNotFoundException.class, exception.getClass());
@@ -51,7 +50,6 @@ class ContractsDaoTest {
 
     try {
       when(minioClient.bucketExists(bucketExistsArgs)).thenReturn(true);
-      List<Result<Item>> emptyList = Collections.emptyList();
     } catch (Exception e) {
       fail();
     }
@@ -61,12 +59,12 @@ class ContractsDaoTest {
           .bucket(bucketName)
           .recursive(true)
           .build();
-      when(minioClient.listObjects(listObjectsArgs)).thenReturn(Collections.<Result<Item>>emptyList());
+      when(minioClient.listObjects(listObjectsArgs)).thenReturn(Collections.emptyList());
     } catch (Exception e) {
       fail();
     }
 
-    ContractsDao contractsDao = new ContractsDao("contracts-release", minioClient);
+    ContractsDao contractsDao = new ContractsDao(minioClient);
     try {
       Iterable<Result<Item>> servicesList = contractsDao.getServicesInfo(bucketName);
       assertNotNull(servicesList);
