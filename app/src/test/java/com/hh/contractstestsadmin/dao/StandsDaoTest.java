@@ -1,6 +1,7 @@
 package com.hh.contractstestsadmin.dao;
 
-import com.hh.contractstestsadmin.exception.ContractsDaoException;
+import com.hh.contractstestsadmin.dao.minio.StandsDao;
+import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.model.Service;
 import io.minio.BucketExistsArgs;
@@ -17,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class ContractsDaoTest {
+class StandsDaoTest {
 
   @Test()
   void standNotFountExceptionIfStandNonExistent() {
@@ -31,8 +32,8 @@ class ContractsDaoTest {
           .build();
 
       when(minioClient.bucketExists(bucketExistsArgs)).thenReturn(false);
-      ContractsDao contractsDao = new ContractsDao(minioClient);
-      contractsDao.getServicesInfo(bucketName);
+      StandsDao standsDao = new StandsDao(minioClient);
+      standsDao.getServicesInfo(bucketName);
     });
     assertEquals("Minio Storage does not contain '" + bucketName + "' bucket", exception.getMessage());
     assertEquals(StandNotFoundException.class, exception.getClass());
@@ -64,12 +65,12 @@ class ContractsDaoTest {
       fail();
     }
 
-    ContractsDao contractsDao = new ContractsDao(minioClient);
+    StandsDao standsDao = new StandsDao(minioClient);
     try {
-      List<Service> servicesList = contractsDao.getServicesInfo(bucketName);
+      List<Service> servicesList = standsDao.getServicesInfo(bucketName);
       assertNotNull(servicesList);
-      assertFalse(contractsDao.getServicesInfo(bucketName).iterator().hasNext());
-    } catch (ContractsDaoException e) {
+      assertFalse(standsDao.getServicesInfo(bucketName).iterator().hasNext());
+    } catch (StandsDaoException e) {
       fail();
     }
   }

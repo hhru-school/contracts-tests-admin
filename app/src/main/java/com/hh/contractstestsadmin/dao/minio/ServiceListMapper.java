@@ -1,4 +1,4 @@
-package com.hh.contractstestsadmin.dao;
+package com.hh.contractstestsadmin.dao.minio;
 
 import com.hh.contractstestsadmin.model.Service;
 import io.minio.Result;

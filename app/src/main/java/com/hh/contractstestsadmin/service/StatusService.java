@@ -2,33 +2,33 @@ package com.hh.contractstestsadmin.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hh.contractstestsadmin.dao.ContractsDao;
+import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dto.ServicesContainerDto;
 import com.hh.contractstestsadmin.dto.StandDto;
 import com.hh.contractstestsadmin.dto.StandsContainerDto;
-import com.hh.contractstestsadmin.exception.ContractsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
+import com.hh.contractstestsadmin.exception.StandsDaoException;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class StatusService {
 
-  private final ContractsDao contractsDao;
+  private final StandsDao standsDao;
 
   private final String releaseName;
 
   private final ObjectMapper objectMapper = new ObjectMapper();
 
-  public StatusService(ContractsDao contractsDao, String releaseName) {
-    this.contractsDao = contractsDao;
+  public StatusService(StandsDao standsDao, String releaseName) {
+    this.standsDao = standsDao;
     this.releaseName = releaseName;
   }
 
-  public StandsContainerDto getStands() throws ContractsDaoException {
+  public StandsContainerDto getStands() throws StandsDaoException {
     StandsContainerDto standsContainer = new StandsContainerDto();
     standsContainer.setReleaseName(releaseName);
-    standsContainer.setStands(contractsDao
+    standsContainer.setStands(standsDao
         .getStandNames()
         .stream()
         .sorted()

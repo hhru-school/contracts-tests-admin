@@ -1,6 +1,6 @@
 package com.hh.contractstestsadmin.config;
 
-import com.hh.contractstestsadmin.dao.ContractsDao;
+import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import io.minio.MinioClient;
 import java.util.Properties;
@@ -55,8 +55,8 @@ public class AppConfig {
   private String releaseName;
 
   @Bean
-  public StatusService statusService(ContractsDao contractsDao) {
-    return new StatusService(contractsDao, releaseName);
+  public StatusService statusService(StandsDao standsDao) {
+    return new StatusService(standsDao, releaseName);
   }
 
   @Bean
@@ -78,8 +78,8 @@ public class AppConfig {
   }
 
   @Bean
-  public ContractsDao contractsDao() {
-    return new ContractsDao(minioClient());
+  public StandsDao standsDao() {
+    return new StandsDao(minioClient());
   }
 
   @Bean

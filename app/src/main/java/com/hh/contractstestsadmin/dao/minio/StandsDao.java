@@ -1,7 +1,7 @@
-package com.hh.contractstestsadmin.dao;
+package com.hh.contractstestsadmin.dao.minio;
 
-import com.hh.contractstestsadmin.exception.ContractsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
+import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.model.Service;
 import io.minio.BucketExistsArgs;
 import io.minio.ListObjectsArgs;
@@ -14,21 +14,21 @@ import java.util.List;
 import static java.util.Optional.ofNullable;
 import javax.validation.constraints.NotNull;
 
-public class ContractsDao {
+public class StandsDao {
 
   private final MinioClient minioClient;
 
-  public ContractsDao(MinioClient minioClient) {
+  public StandsDao(MinioClient minioClient) {
     this.minioClient = minioClient;
   }
 
   @NotNull
-  public List<String> getStandNames() throws ContractsDaoException {
+  public List<String> getStandNames() throws StandsDaoException {
     List<Bucket> bucketList;
     try {
       bucketList = minioClient.listBuckets();
     } catch (Exception e) {
-      throw new ContractsDaoException(e);
+      throw new StandsDaoException(e);
     }
 
     return ofNullable(bucketList)
@@ -39,13 +39,13 @@ public class ContractsDao {
   }
 
   @NotNull
-  public List<Service> getServicesInfo(@NotNull String standName) throws ContractsDaoException, StandNotFoundException {
+  public List<Service> getServicesInfo(@NotNull String standName) throws StandsDaoException, StandNotFoundException {
     Iterable<Result<Item>> bucketItems = getBucketItems(standName);
     return ServiceListMapper.map(bucketItems);
   }
 
   @NotNull
-  private Iterable<Result<Item>> getBucketItems(@NotNull String bucketName) throws ContractsDaoException, StandNotFoundException {
+  private Iterable<Result<Item>> getBucketItems(@NotNull String bucketName) throws StandsDaoException, StandNotFoundException {
     Iterable<Result<Item>> bucketItems;
 
     // We need this check as in case the bucket does not exist Minio return
@@ -61,13 +61,13 @@ public class ContractsDao {
           .build();
       bucketItems = minioClient.listObjects(listObjectsArgs);
     } catch (Exception e) {
-      throw new ContractsDaoException(e);
+      throw new StandsDaoException(e);
     }
 
     return bucketItems;
   }
 
-  private boolean isBucketExistent(String bucketName) throws ContractsDaoException {
+  private boolean isBucketExistent(String bucketName) throws StandsDaoException {
     BucketExistsArgs bucketExistsArgs = BucketExistsArgs
         .builder()
         .bucket(bucketName)
@@ -78,7 +78,7 @@ public class ContractsDao {
         return true;
       }
     } catch (Exception e) {
-      throw new ContractsDaoException(e);
+      throw new StandsDaoException(e);
     }
 
     return false;
