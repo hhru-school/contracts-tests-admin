@@ -2,6 +2,7 @@ package com.hh.contractstestsadmin.dao;
 
 import com.hh.contractstestsadmin.exception.ContractsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
+import com.hh.contractstestsadmin.model.Service;
 import io.minio.BucketExistsArgs;
 import io.minio.ListObjectsArgs;
 import io.minio.MinioClient;
@@ -38,8 +39,9 @@ public class ContractsDao {
   }
 
   @NotNull
-  public Iterable<Result<Item>> getServicesInfo(@NotNull String standName) throws ContractsDaoException, StandNotFoundException {
-    return getBucketObjects(standName);
+  public List<Service> getServicesInfo(@NotNull String standName) throws ContractsDaoException, StandNotFoundException {
+    Iterable<Result<Item>> bucketObjects = getBucketObjects(standName);
+    return ServiceListMapper.map(bucketObjects);
   }
 
   @NotNull

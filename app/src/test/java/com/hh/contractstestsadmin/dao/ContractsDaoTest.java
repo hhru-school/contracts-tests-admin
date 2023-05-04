@@ -2,12 +2,12 @@ package com.hh.contractstestsadmin.dao;
 
 import com.hh.contractstestsadmin.exception.ContractsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
+import com.hh.contractstestsadmin.model.Service;
 import io.minio.BucketExistsArgs;
 import io.minio.ListObjectsArgs;
 import io.minio.MinioClient;
-import io.minio.Result;
-import io.minio.messages.Item;
 import java.util.Collections;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -66,7 +66,7 @@ class ContractsDaoTest {
 
     ContractsDao contractsDao = new ContractsDao(minioClient);
     try {
-      Iterable<Result<Item>> servicesList = contractsDao.getServicesInfo(bucketName);
+      List<Service> servicesList = contractsDao.getServicesInfo(bucketName);
       assertNotNull(servicesList);
       assertFalse(contractsDao.getServicesInfo(bucketName).iterator().hasNext());
     } catch (ContractsDaoException e) {
