@@ -15,9 +15,9 @@ import javax.validation.constraints.NotNull;
 
 public class ContractsDao {
 
-  private MinioClient minioClient;
+  private final MinioClient minioClient;
 
-  private String releaseStandName;
+  private final String releaseStandName;
 
   public ContractsDao(String releaseStandName, MinioClient minioClient) {
     this.releaseStandName = releaseStandName;
@@ -53,23 +53,10 @@ public class ContractsDao {
   @NotNull
   private Iterable<Result<Item>> getBucketObjects(@NotNull String bucketName) throws ContractsDaoException, StandNotFoundException {
     Iterable<Result<Item>> bucketObjects;
-    BucketExistsArgs bucketExistsArgs = BucketExistsArgs
-        .builder()
-        .bucket(bucketName)
-        .build();
 
-    boolean isBucketExistent = false;
-    try {
-      // We need this check as in case the bucket does not exist Minio return
-      // Result<Item> with an error inside and 'bucketObjects' variable is not empty
-      if (minioClient.bucketExists(bucketExistsArgs)) {
-        isBucketExistent = true;
-      }
-    } catch (Exception e) {
-      throw new ContractsDaoException(e);
-    }
-
-    if (!isBucketExistent) {
+    // We need this check as in case the bucket does not exist Minio return
+    // Result<Item> with an error inside and 'bucketObjects' variable is not empty
+    if (!isBucketExistent(bucketName)) {
       throw new StandNotFoundException("Minio Storage does not contain '" + bucketName + "' bucket");
     }
 
@@ -86,5 +73,21 @@ public class ContractsDao {
     return bucketObjects;
   }
 
+  private boolean isBucketExistent(String bucketName) throws ContractsDaoException {
+    BucketExistsArgs bucketExistsArgs = BucketExistsArgs
+        .builder()
+        .bucket(bucketName)
+        .build();
+
+    try {
+      if (minioClient.bucketExists(bucketExistsArgs)) {
+        return true;
+      }
+    } catch (Exception e) {
+      throw new ContractsDaoException(e);
+    }
+
+    return false;
+  }
 }
 
