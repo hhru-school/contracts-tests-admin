@@ -1,18 +1,22 @@
 package com.hh.contractstestsadmin.dto;
 
-import java.util.List;
-
 public class StandStatusDto {
+
+  private String name;
 
   private Boolean isRelease;
 
   private String releaseLink;
 
-  private List<ServiceDto> standServices;
+  private ServicesContainerDto services;
 
-  private List<ServiceDto> releaseServices;
+  public String getName() {
+    return name;
+  }
 
-  private List<ValidationPreviewDto> historyPreview;
+  public void setName(String name) {
+    this.name = name;
+  }
 
   public Boolean getIsRelease() {
     return isRelease;
@@ -20,14 +24,6 @@ public class StandStatusDto {
 
   public void setIsRelease(Boolean isRelease) {
     this.isRelease = isRelease;
-  }
-
-  public List<ServiceDto> getStandServices() {
-    return standServices;
-  }
-
-  public void setStandServices(List<ServiceDto> standServices) {
-    this.standServices = standServices;
   }
 
   public String getReleaseLink() {
@@ -38,19 +34,12 @@ public class StandStatusDto {
     this.releaseLink = releaseLink;
   }
 
-  public List<ServiceDto> getReleaseServices() {
-    return releaseServices;
+  public ServicesContainerDto getServices() {
+    return services;
   }
 
-  public void setReleaseServices(List<ServiceDto> releaseServices) {
-    this.releaseServices = releaseServices;
+  public void setServices(ServicesContainerDto services) {
+    this.services = services;
   }
 
-  public List<ValidationPreviewDto> getHistoryPreview() {
-    return historyPreview;
-  }
-
-  public void setHistoryPreview(List<ValidationPreviewDto> historyPreview) {
-    this.historyPreview = historyPreview;
-  }
 }
