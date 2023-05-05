@@ -5,6 +5,7 @@ import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.service.ValidationService;
 import io.minio.MinioClient;
+import io.swagger.jaxrs.config.BeanConfig;
 import java.util.Properties;
 import javax.sql.DataSource;
 
@@ -55,6 +56,19 @@ public class AppConfig {
 
   @Value("${release.stand.name}")
   private String releaseName;
+
+  @Bean
+  public BeanConfig configureSwagger(){
+    BeanConfig swaggerConfigBean = new BeanConfig();
+    swaggerConfigBean.setTitle("Contract tests backend");
+    swaggerConfigBean.setSchemes(new String[] { "http" });
+    swaggerConfigBean.setBasePath("/");
+    swaggerConfigBean.setVersion("1.0.0");
+    swaggerConfigBean.setResourcePackage("com.hh.contractstestsadmin.resource");
+    swaggerConfigBean.setPrettyPrint(true);
+    swaggerConfigBean.setScan(true);
+    return swaggerConfigBean;
+  }
 
   @Bean
   public ReleaseVersionDao releaseVersionDao() {

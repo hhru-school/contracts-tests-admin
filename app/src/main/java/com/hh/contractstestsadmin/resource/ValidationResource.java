@@ -1,9 +1,12 @@
 package com.hh.contractstestsadmin.resource;
 
+import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.service.ValidationHistoryService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,6 +17,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@Api
 @Path("api")
 public class ValidationResource {
 
@@ -24,6 +28,10 @@ public class ValidationResource {
     this.validationHistoryService = validationHistoryService;
   }
 
+  @ApiOperation(
+      value = "Get list with stands",
+      response = ValidationPreviewDto.class,
+      responseContainer = "List")
   @Path("stands/{standName}/validations")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -40,6 +48,10 @@ public class ValidationResource {
     }
   }
 
+  @ApiOperation(
+      value = "Run validation",
+      response = String.class,
+      code = 202)
   @Path("stands/{standName}/validations")
   @POST
   public Response runValidation(@PathParam("standName") String standName) {
