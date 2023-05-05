@@ -1,15 +1,12 @@
 package com.hh.contractstestsadmin.service;
 
-import com.hh.contractstestsadmin.dao.ContractsDao;
+import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
-import com.hh.contractstestsadmin.exception.ContractsDaoException;
-import com.hh.contractstestsadmin.exception.StandNotFoundException;
-import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.model.Validation;
-
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
@@ -17,45 +14,38 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class ValidationService {
 
-    private final ContractsDao contractsDao;
+  private final ValidationDao validationDao;
 
-    private final ValidationDao validationDao;
+  private final ReleaseVersionDao releaseVersionDao;
 
-    public ValidationService(ContractsDao contractsDao, ValidationDao validationDao){
-        this.contractsDao = contractsDao;
-        this.validationDao = validationDao;
+  public ValidationService(ValidationDao validationDao, ReleaseVersionDao releaseVersionDao) {
+    this.validationDao = validationDao;
+    this.releaseVersionDao = releaseVersionDao;
+  }
+
+  @Transactional
+  public List<ValidationPreviewDto> getLatestValidationPreviews(String standName, Long validationPreviewsCount) {
+    Stream<ValidationPreviewDto> validationPreviewStream = validationDao
+        .getAllValidationsByStandName(standName)
+        .stream()
+        .map(ValidationMapper::map)
+        .sorted(Comparator.comparing(ValidationPreviewDto::getDate).reversed());
+    if (validationPreviewsCount == null) {
+      return validationPreviewStream.toList();
     }
+    return validationPreviewStream
+        .limit(validationPreviewsCount)
+        .toList();
+  }
 
-    private void checkStandExistence(String standName) throws ContractsDaoException {
-        if(contractsDao.getStandNames().stream().noneMatch(s -> s.equals(standName))){
-            throw new ValidationHistoryNotFoundException("Stand '" + standName + "' does not exist");
-        }
-    }
-
-    @Transactional
-    public List<ValidationPreviewDto> getValidationsHistory(
-            String standName,
-            Long historySizeLimit)
-            throws ValidationHistoryNotFoundException, ContractsDaoException {
-        checkStandExistence(standName);
-        Stream<ValidationPreviewDto> validationPreviewStream = validationDao.getAllValidationsByStandName(standName).stream()
-                    .sorted(Comparator.comparing(Validation::getCreatedDate).reversed())
-                    .map(ValidationMapper::map);
-        if(historySizeLimit == null){
-            return validationPreviewStream.toList();
-        }
-        return validationPreviewStream
-                .limit(historySizeLimit)
-                .toList();
-    }
-
-    @Transactional
-    public void runValidation(String standName) throws StandNotFoundException, ContractsDaoException {
-        checkStandExistence(standName);
-        Validation validation = new Validation();
-        validation.setCreatedDate(LocalDateTime.now());
-        validation.setStandName(standName);
-        validation.setStatus(ValidationStatus.IN_PROGRESS);
-        validationDao.save(validation);
-    }
+  @Transactional
+  public Validation createValidation(String standName) {
+    Validation validation = new Validation();
+    validation.setCreatedDate(LocalDateTime.now(ZoneOffset.UTC));
+    validation.setStandName(standName);
+    validation.setStatus(ValidationStatus.IN_PROGRESS);
+    validation.setReleaseInformationVersion(releaseVersionDao.getCurrentReleaseVersion());
+    validationDao.save(validation);
+    return validation;
+  }
 }

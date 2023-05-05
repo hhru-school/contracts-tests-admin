@@ -2,7 +2,7 @@ package com.hh.contractstestsadmin.resource;
 
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
-import com.hh.contractstestsadmin.service.ValidationService;
+import com.hh.contractstestsadmin.service.ValidationHistoryService;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -17,11 +17,11 @@ import javax.ws.rs.core.Response;
 @Path("api")
 public class ValidationResource {
 
-  private final ValidationService validationService;
+  private final ValidationHistoryService validationHistoryService;
 
   @Inject
-  public ValidationResource(ValidationService validationService) {
-    this.validationService = validationService;
+  public ValidationResource(ValidationHistoryService validationHistoryService) {
+    this.validationHistoryService = validationHistoryService;
   }
 
   @Path("stands/{standName}/validations")
@@ -32,7 +32,7 @@ public class ValidationResource {
       @QueryParam("sizeLimit") Long sizeLimit
   ) {
     try {
-      return Response.ok(validationService.getValidationHistory(standName, sizeLimit)).build();
+      return Response.ok(validationHistoryService.getValidationHistory(standName, sizeLimit)).build();
     } catch (ValidationHistoryNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
     } catch (Exception exception) {
@@ -44,7 +44,7 @@ public class ValidationResource {
   @POST
   public Response runValidation(@PathParam("standName") String standName) {
     try {
-      validationService.runValidation(standName);
+      validationHistoryService.runValidation(standName);
       return Response.status(Response.Status.ACCEPTED).build();
     } catch (StandNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();

@@ -1,13 +1,15 @@
 package com.hh.contractstestsadmin.config;
 
 import com.hh.contractstestsadmin.dao.ContractsDao;
+import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
+import com.hh.contractstestsadmin.service.ValidationService;
 import io.minio.MinioClient;
 import java.util.Properties;
 import javax.sql.DataSource;
 
 import com.hh.contractstestsadmin.service.StatusService;
-import com.hh.contractstestsadmin.service.ValidationService;
+import com.hh.contractstestsadmin.service.ValidationHistoryService;
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -55,13 +57,23 @@ public class AppConfig {
   private String releaseName;
 
   @Bean
-  public StatusService statusService(ContractsDao contractsDao) {
-    return new StatusService(contractsDao, releaseName);
+  public ReleaseVersionDao releaseVersionDao() {
+    return new ReleaseVersionDao();
   }
 
   @Bean
-  public ValidationService validationService(ContractsDao contractsDao, ValidationDao validationDao){
-    return new ValidationService(contractsDao, validationDao);
+  public StatusService statusService(ContractsDao contractsDao, ReleaseVersionDao releaseVersionDao) {
+    return new StatusService(contractsDao, releaseName, releaseVersionDao);
+  }
+
+  @Bean
+  public ValidationService validationService(ValidationDao validationDao, ReleaseVersionDao releaseVersionDao) {
+    return new ValidationService(validationDao, releaseVersionDao);
+  }
+
+  @Bean
+  public ValidationHistoryService validationHistoryService(ContractsDao contractsDao, ValidationService validationService) {
+    return new ValidationHistoryService(contractsDao, validationService);
   }
 
   @Bean
