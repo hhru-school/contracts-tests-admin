@@ -3,6 +3,7 @@ package com.hh.contractstestsadmin.model;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import java.time.LocalDateTime;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +11,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -43,6 +46,10 @@ public class Validation {
   @Column(name = "validation_status")
   private ValidationStatus status;
 
+  @OneToOne(mappedBy = "validation", cascade = CascadeType.ALL)
+  @PrimaryKeyJoinColumn
+  private ValidationInfo validationInfo;
+
   @Column(name = "error_count")
   private int errorCount;
 
@@ -67,6 +74,14 @@ public class Validation {
 
   public ValidationStatus getStatus() {
     return status;
+  }
+
+  public ValidationInfo getValidationInfo() {
+    return validationInfo;
+  }
+
+  public void setValidationInfo(ValidationInfo validationInfo) {
+    this.validationInfo = validationInfo;
   }
 
   public void setStatus(ValidationStatus status) {
