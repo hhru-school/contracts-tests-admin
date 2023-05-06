@@ -12,6 +12,7 @@ import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 public class StatusService {
 
@@ -26,10 +27,12 @@ public class StatusService {
     this.releaseName = releaseName;
   }
 
-  public List<StandInfoDto> getStands() throws ContractsDaoException {
+  public List<StandInfoDto> getStands(String search) throws ContractsDaoException {
     return contractsDao
         .getStandNames()
         .stream()
+        .filter(standName ->
+            standName.contains(Optional.ofNullable(search).orElse("")))
         .sorted()
         .map((standName) -> new StandInfoDto(standName, standName.equals(releaseName)))
         .toList();
