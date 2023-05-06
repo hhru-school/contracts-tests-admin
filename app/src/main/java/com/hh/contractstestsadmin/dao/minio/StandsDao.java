@@ -50,7 +50,7 @@ public class StandsDao {
 
     // We need this check as in case the bucket does not exist Minio return
     // Result<Item> with an error inside and 'bucketObjects' variable is not empty
-    if (!isBucketExistent(bucketName)) {
+    if (!bucketExists(bucketName)) {
       throw new StandNotFoundException("Minio Storage does not contain '" + bucketName + "' bucket");
     }
 
@@ -67,7 +67,7 @@ public class StandsDao {
     return bucketItems;
   }
 
-  private boolean isBucketExistent(String bucketName) throws StandsDaoException {
+  private boolean bucketExists(String bucketName) throws StandsDaoException {
     BucketExistsArgs bucketExistsArgs = BucketExistsArgs
         .builder()
         .bucket(bucketName)
