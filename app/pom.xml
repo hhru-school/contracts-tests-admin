@@ -110,7 +110,7 @@
                     <excludes>
                         <!-- There is a defect https://github.com/hhru-school/contracts-tests-admin/issues/53
                               in the test. It can be included when the defect is fixed -->
-                        <exclude>AppApplicationTests.java</exclude>
+                        <exclude>StandsDaoIntegrationTest.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
