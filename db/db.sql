@@ -1,5 +1,6 @@
 CREATE TYPE validation_status AS ENUM ('IN_PROGRESS', 'SUCCESS', 'FAILED', 'CANCELLED');
 CREATE TYPE service_type AS ENUM ('CONSUMER', 'PRODUCER', 'CONSUMER_AND_PRODUCER', 'NOT_DEFINED');
+CREATE TYPE error_level AS ENUM ('ERROR', 'WARN', 'INFO', 'FATAL');
 
 CREATE TABLE IF NOT EXISTS validation (
     validation_id BIGINT GENERATED ALWAYS AS IDENTITY not null,
@@ -24,23 +25,27 @@ CREATE TABLE IF NOT EXISTS service (
     PRIMARY KEY (service_id)
 );
 
-CREATE TABLE IF NOT EXISTS validation_info (
-    created_date timestamp not null,
-    validation_id BIGINT,
+CREATE TABLE IF NOT EXISTS error (
+    error_id BIGINT GENERATED ALWAYS AS IDENTITY not null,
+    error_type_id BIGINT,
+    comments varchar(2048),
     consumer_id BIGINT,
     producer_id BIGINT,
-    PRIMARY KEY (validation_id),
-    FOREIGN KEY (validation_id) REFERENCES validation (validation_id),
-    FOREIGN KEY (consumer_id) REFERENCES service (service_id),
-    FOREIGN KEY (producer_id) REFERENCES service (service_id)
-);
-
-CREATE TABLE IF NOT EXISTS error_info (
-    error_info_id BIGINT GENERATED ALWAYS AS IDENTITY not null,
-    error_key varchar(2048),
-    comments varchar(2048),
+    http_method varchar(255),
+    request_patch varchar(255),
+    error_level error_level,
+    expected_request varchar(4096),
+    expected_response varchar(4096),
     error jsonb,
     validation_id BIGINT,
-    PRIMARY KEY (error_info_id),
-    FOREIGN KEY (validation_id) REFERENCES validation_info (validation_info_id)
+    PRIMARY KEY (error_id),
+    FOREIGN KEY (validation_id) REFERENCES validation (validation_id)
 );
+
+CREATE TABLE IF NOT EXISTS error_type (
+    error_type_id BIGINT GENERATED ALWAYS AS IDENTITY not null,
+    error_key varchar(2048),
+    comments varchar(2048),
+    error_id BIGINT,
+    PRIMARY KEY (error_type_id)
+    );

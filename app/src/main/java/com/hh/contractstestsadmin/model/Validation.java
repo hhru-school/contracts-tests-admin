@@ -3,6 +3,8 @@ package com.hh.contractstestsadmin.model;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +13,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -46,12 +47,11 @@ public class Validation {
   @Column(name = "validation_status")
   private ValidationStatus status;
 
-  @OneToOne(mappedBy = "validation", cascade = CascadeType.ALL)
-  @PrimaryKeyJoinColumn
-  private ValidationInfo validationInfo;
-
   @Column(name = "error_count")
   private int errorCount;
+
+  @OneToMany(mappedBy = "validation", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<ContractTestError> errors = new ArrayList<>();
 
   public Validation() {
   }
@@ -74,14 +74,6 @@ public class Validation {
 
   public ValidationStatus getStatus() {
     return status;
-  }
-
-  public ValidationInfo getValidationInfo() {
-    return validationInfo;
-  }
-
-  public void setValidationInfo(ValidationInfo validationInfo) {
-    this.validationInfo = validationInfo;
   }
 
   public void setStatus(ValidationStatus status) {
@@ -118,5 +110,13 @@ public class Validation {
 
   public void setReleaseInformationVersion(String releaseInformationVersion) {
     this.releaseInformationVersion = releaseInformationVersion;
+  }
+
+  public List<ContractTestError> getErrors() {
+    return errors;
+  }
+
+  public void setErrors(List<ContractTestError> errors) {
+    this.errors = errors;
   }
 }
