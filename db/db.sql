@@ -1,6 +1,7 @@
 CREATE TYPE validation_status AS ENUM ('IN_PROGRESS', 'SUCCESS', 'FAILED', 'CANCELLED');
 CREATE TYPE service_type AS ENUM ('CONSUMER', 'PRODUCER', 'CONSUMER_AND_PRODUCER', 'NOT_DEFINED');
 CREATE TYPE error_level AS ENUM ('ERROR', 'WARN', 'INFO', 'FATAL');
+CREATE TYPE http_method AS ENUM ('GET', 'POST', 'DELETE', 'PUT', 'HEAD', 'PATCH', 'OPTIONS');
 
 CREATE TABLE IF NOT EXISTS validation (
     validation_id BIGINT GENERATED ALWAYS AS IDENTITY not null,
@@ -29,8 +30,7 @@ CREATE TABLE IF NOT EXISTS error (
     error_id BIGINT GENERATED ALWAYS AS IDENTITY not null,
     error_type_id BIGINT,
     comments varchar(2048),
-    consumer_id BIGINT,
-    producer_id BIGINT,
+    expectation_id BIGINT,
     http_method varchar(255),
     request_patch varchar(255),
     error_level error_level,
@@ -42,10 +42,22 @@ CREATE TABLE IF NOT EXISTS error (
     FOREIGN KEY (validation_id) REFERENCES validation (validation_id)
 );
 
+CREATE TABLE IF NOT EXISTS expectation (
+    expectation_id BIGINT GENERATED ALWAYS AS IDENTITY not null,
+    http_method http_method,
+    request_path varchar(2048),
+    request_headers varchar(2048),
+    query_params varchar(2048),
+    request_body varchar(4096),
+    response_status smallint,
+    response_headers(2048),
+    response_body varchar(4096)
+    PRIMARY KEY (expectation_id)
+)
+
 CREATE TABLE IF NOT EXISTS error_type (
     error_type_id BIGINT GENERATED ALWAYS AS IDENTITY not null,
     error_key varchar(2048),
     comments varchar(2048),
-    error_id BIGINT,
     PRIMARY KEY (error_type_id)
     );

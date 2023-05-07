@@ -39,8 +39,7 @@ public class ContractTestError {
   @JoinColumn(name = "producer_id")
   private Service producer;
 
-  @OneToOne
-  @JoinColumn(name = "error_type_id")
+  @ManyToOne(fetch = FetchType.LAZY)
   private ErrorType errorType;
 
   @Type(type = "jsonb")
@@ -58,10 +57,8 @@ public class ContractTestError {
   @JoinColumn(name = "error_level")
   private  ErrorLevel level;
 
-  @Column(name = "expected_request")
-  private String expectedRequest;
-  @Column(name = "expected_response")
-  private String expectedResponse;
+  @ManyToOne(fetch = FetchType.LAZY)
+  Expectation expectation;
 
   @ManyToOne(fetch = FetchType.LAZY)
   private Validation validation;
@@ -101,20 +98,12 @@ public class ContractTestError {
     this.level = level;
   }
 
-  public String getExpectedRequest() {
-    return expectedRequest;
+  public Expectation getExpectation() {
+    return expectation;
   }
 
-  public void setExpectedRequest(String expectedRequest) {
-    this.expectedRequest = expectedRequest;
-  }
-
-  public String getExpectedResponse() {
-    return expectedResponse;
-  }
-
-  public void setExpectedResponse(String expectedResponse) {
-    this.expectedResponse = expectedResponse;
+  public void setExpectation(Expectation expectation) {
+    this.expectation = expectation;
   }
 
   public ValidatorError getError() {

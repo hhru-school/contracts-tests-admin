@@ -1,12 +1,14 @@
 package com.hh.contractstestsadmin.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,9 +24,8 @@ public class ErrorType {
   @Column(name = "comments")
   private String comments;
 
-  @OneToOne
-  @JoinColumn(name = "error_id")
-  private ContractTestError errorInfo;
+  @OneToMany(mappedBy = "errorType", orphanRemoval = true, cascade = CascadeType.ALL)
+  private List<ContractTestError> errorInfo = new ArrayList<>();
 
   public ErrorType() {
   }
@@ -53,12 +54,11 @@ public class ErrorType {
     this.comments = comments;
   }
 
-  public ContractTestError getErrorInfo() {
+  public List<ContractTestError> getErrorInfo() {
     return errorInfo;
   }
 
-  public void setErrorInfo(ContractTestError errorInfo) {
+  public void setErrorInfo(List<ContractTestError> errorInfo) {
     this.errorInfo = errorInfo;
   }
-
 }
