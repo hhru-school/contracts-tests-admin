@@ -26,10 +26,11 @@ public class StatusService {
     this.releaseName = releaseName;
   }
 
-  public List<StandInfoDto> getStands() throws ContractsDaoException {
+  public List<StandInfoDto> getStands(String search) throws ContractsDaoException {
     return contractsDao
         .getStandNames()
         .stream()
+        .filter(standName -> search == null || standName.contains(search))
         .sorted()
         .map((standName) -> new StandInfoDto(standName, standName.equals(releaseName)))
         .toList();
