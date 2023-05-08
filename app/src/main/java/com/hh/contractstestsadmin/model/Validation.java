@@ -56,7 +56,7 @@ public class Validation {
 
   @Type(type = "jsonb")
   @Column(name = "validator_error", columnDefinition = "jsonb")
-  private String errors;
+  private String validatorErrors;
 
   @OneToMany(mappedBy = "validation", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Expectation> expectations = new ArrayList<>();
@@ -129,11 +129,11 @@ public class Validation {
     this.expectations = expectations;
   }
 
-  public String getErrors() {
-    return errors;
+  public String getValidatorErrors() {
+    return validatorErrors;
   }
 
-  public void setErrors(String errors) {
-    this.errors = errors;
+  public void setValidatorErrors(String errors) {
+    this.validatorErrors = errors;
   }
 }
