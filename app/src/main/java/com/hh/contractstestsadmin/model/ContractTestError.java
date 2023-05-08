@@ -1,7 +1,6 @@
 package com.hh.contractstestsadmin.model;
 
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,8 +18,7 @@ import org.hibernate.annotations.TypeDefs;
 
 @Table(name = "error")
 @TypeDefs({
-    @TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class),
-    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+    @TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
 })
 @Entity
 public class ContractTestError {
@@ -32,10 +30,6 @@ public class ContractTestError {
 
   @ManyToOne(fetch = FetchType.LAZY)
   private ErrorType errorType;
-
-  @Type(type = "jsonb")
-  @Column(name = "error", columnDefinition = "jsonb")
-  private ValidatorError error;
   @Enumerated(EnumType.STRING)
   @Type(type = "pgsql_enum")
   @JoinColumn(name = "error_level")
@@ -70,15 +64,6 @@ public class ContractTestError {
   public void setExpectation(Expectation expectation) {
     this.expectation = expectation;
   }
-
-  public ValidatorError getError() {
-    return error;
-  }
-
-  public void setError(ValidatorError error) {
-    this.error = error;
-  }
-
   public ErrorType getErrorType() {
     return errorType;
   }

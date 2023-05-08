@@ -3,6 +3,7 @@ package com.hh.contractstestsadmin.model;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,8 @@ import org.hibernate.annotations.TypeDefs;
 
 @Entity
 @TypeDefs({
-    @TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
+    @TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class),
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 })
 @Table(name = "validation")
 public class Validation {
@@ -51,6 +53,10 @@ public class Validation {
 
   @Column(name = "error_count")
   private int errorCount;
+
+  @Type(type = "jsonb")
+  @Column(name = "validator_error", columnDefinition = "jsonb")
+  private String errors;
 
   @OneToMany(mappedBy = "validation", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Expectation> expectations = new ArrayList<>();
@@ -121,5 +127,13 @@ public class Validation {
 
   public void setExpectations(List<Expectation> expectations) {
     this.expectations = expectations;
+  }
+
+  public String getErrors() {
+    return errors;
+  }
+
+  public void setErrors(String errors) {
+    this.errors = errors;
   }
 }
