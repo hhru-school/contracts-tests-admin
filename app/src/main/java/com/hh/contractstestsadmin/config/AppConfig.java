@@ -10,7 +10,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import com.hh.contractstestsadmin.service.StatusService;
-import com.hh.contractstestsadmin.service.ValidationHistoryService;
+import com.hh.contractstestsadmin.service.StandValidationService;
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -58,12 +58,12 @@ public class AppConfig {
   private String releaseName;
 
   @Bean
-  public BeanConfig configureSwagger(){
+  public BeanConfig configureSwagger() {
     BeanConfig swaggerConfigBean = new BeanConfig();
     swaggerConfigBean.setTitle("Contract tests backend");
-    swaggerConfigBean.setSchemes(new String[] { "http" });
+    swaggerConfigBean.setSchemes(new String[]{"http"});
     swaggerConfigBean.setBasePath("/");
-    swaggerConfigBean.setVersion("1.0.0");
+    swaggerConfigBean.setVersion("1.0.2");
     swaggerConfigBean.setResourcePackage("com.hh.contractstestsadmin.resource");
     swaggerConfigBean.setPrettyPrint(true);
     swaggerConfigBean.setScan(true);
@@ -86,8 +86,8 @@ public class AppConfig {
   }
 
   @Bean
-  public ValidationHistoryService validationHistoryService(ContractsDao contractsDao, ValidationService validationService) {
-    return new ValidationHistoryService(contractsDao, validationService);
+  public StandValidationService standValidationService(ContractsDao contractsDao, ValidationService validationService) {
+    return new StandValidationService(contractsDao, validationService);
   }
 
   @Bean

@@ -9,13 +9,13 @@ import com.hh.contractstestsadmin.model.Validation;
 
 import java.util.List;
 
-public class ValidationHistoryService {
+public class StandValidationService {
 
   private final ContractsDao contractsDao;
 
   private final ValidationService validationService;
 
-  public ValidationHistoryService(ContractsDao contractsDao, ValidationService validationService) {
+  public StandValidationService(ContractsDao contractsDao, ValidationService validationService) {
     this.contractsDao = contractsDao;
     this.validationService = validationService;
   }
@@ -28,7 +28,7 @@ public class ValidationHistoryService {
 
   public List<ValidationPreviewDto> getValidationHistory(
       String standName,
-      Long sizeLimit
+      Integer sizeLimit
   ) throws ValidationHistoryNotFoundException, ContractsDaoException {
     checkValidationHistoryExistence(standName);
     return validationService.getLatestValidationPreviews(standName, sizeLimit);

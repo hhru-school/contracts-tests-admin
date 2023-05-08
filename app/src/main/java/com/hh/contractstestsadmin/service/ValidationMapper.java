@@ -11,12 +11,11 @@ public class ValidationMapper {
   public static ValidationPreviewDto map(Validation validation) {
     ValidationPreviewDto validationPreviewDto = new ValidationPreviewDto();
     validationPreviewDto.setId(validation.getId());
+    validationPreviewDto.setCreatedDate(validation.getCreatedDate()
+        .atOffset(ZoneOffset.UTC)
+        .format(DateTimeFormatter.ISO_INSTANT));
     if (validation.getExecuteDate() != null) {
-      validationPreviewDto.setDate(validation.getExecuteDate()
-          .atOffset(ZoneOffset.UTC)
-          .format(DateTimeFormatter.ISO_INSTANT));
-    } else {
-      validationPreviewDto.setDate(validation.getCreatedDate()
+      validationPreviewDto.setExecuteDate(validation.getExecuteDate()
           .atOffset(ZoneOffset.UTC)
           .format(DateTimeFormatter.ISO_INSTANT));
     }

@@ -4,7 +4,9 @@ public class ValidationPreviewDto {
 
   private Long id;
 
-  private String date;
+  private String createdDate;
+
+  private String executeDate;
 
   private String releaseLink;
 
@@ -20,12 +22,20 @@ public class ValidationPreviewDto {
     this.id = id;
   }
 
-  public String getDate() {
-    return date;
+  public String getCreatedDate() {
+    return createdDate;
   }
 
-  public void setDate(String date) {
-    this.date = date;
+  public void setCreatedDate(String createdDate) {
+    this.createdDate = createdDate;
+  }
+
+  public String getExecuteDate() {
+    return executeDate;
+  }
+
+  public void setExecuteDate(String executeDate) {
+    this.executeDate = executeDate;
   }
 
   public String getReleaseLink() {

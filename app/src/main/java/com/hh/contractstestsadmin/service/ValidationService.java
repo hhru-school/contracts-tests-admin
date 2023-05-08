@@ -7,9 +7,7 @@ import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.model.Validation;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Stream;
 import org.springframework.transaction.annotation.Transactional;
 
 public class ValidationService {
@@ -24,17 +22,11 @@ public class ValidationService {
   }
 
   @Transactional
-  public List<ValidationPreviewDto> getLatestValidationPreviews(String standName, Long validationPreviewsCount) {
-    Stream<ValidationPreviewDto> validationPreviewStream = validationDao
-        .getAllValidationsByStandName(standName)
+  public List<ValidationPreviewDto> getLatestValidationPreviews(String standName, Integer validationPreviewsCount) {
+    return validationDao
+        .getLatestValidations(standName, validationPreviewsCount)
         .stream()
         .map(ValidationMapper::map)
-        .sorted(Comparator.comparing(ValidationPreviewDto::getDate).reversed());
-    if (validationPreviewsCount == null) {
-      return validationPreviewStream.toList();
-    }
-    return validationPreviewStream
-        .limit(validationPreviewsCount)
         .toList();
   }
 

@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 
 public class ValidationDao {
@@ -46,6 +47,19 @@ public class ValidationDao {
     Session session = sessionFactory.getCurrentSession();
     return session.createQuery("select vh from Validation vh where vh.standName =:standName", Validation.class)
         .setParameter("standName", standName).getResultList();
+  }
+
+  public List<Validation> getLatestValidations(String standName, Integer validationPreviewsCount) {
+    Session session = sessionFactory.getCurrentSession();
+    Query<Validation> query = session.createQuery(
+            "select vh from Validation vh where vh.standName =:standName order by vh.createdDate desc",
+            Validation.class
+        )
+        .setParameter("standName", standName);
+    if (validationPreviewsCount != null) {
+      query.setMaxResults(validationPreviewsCount);
+    }
+    return query.getResultList();
   }
 
   public void delete(long validationId) {
