@@ -2,6 +2,7 @@ package com.hh.contractstestsadmin.model;
 
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -51,7 +53,8 @@ public class Validation {
   private int errorCount;
 
   @OneToMany(mappedBy = "validation", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<ContractTestError> errors = new ArrayList<>();
+  private List<Expectation> expectations = new ArrayList<>();
+
 
   public Validation() {
   }
@@ -112,11 +115,11 @@ public class Validation {
     this.releaseInformationVersion = releaseInformationVersion;
   }
 
-  public List<ContractTestError> getErrors() {
-    return errors;
+  public List<Expectation> getExpectations() {
+    return expectations;
   }
 
-  public void setErrors(List<ContractTestError> errors) {
-    this.errors = errors;
+  public void setExpectations(List<Expectation> expectations) {
+    this.expectations = expectations;
   }
 }

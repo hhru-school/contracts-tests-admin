@@ -6,9 +6,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.Type;
@@ -26,6 +29,14 @@ public class Expectation {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "expectation_id")
   private Long id;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "consumer_id")
+  private Service consumer;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "producer_id")
+  private Service producer;
 
   @Type(type = "pgsql_enum")
   @Column(name = "http_method")
@@ -51,6 +62,9 @@ public class Expectation {
 
   @Column(name = "response_body")
   private String responseBody;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  private Validation validation;
 
   @OneToMany(mappedBy = "expectation", orphanRemoval = true, cascade = CascadeType.ALL)
   private List<ContractTestError> contractTestErrors = new ArrayList<>();
@@ -137,5 +151,29 @@ public class Expectation {
 
   public void setResponseBody(String responseBody) {
     this.responseBody = responseBody;
+  }
+
+  public Service getConsumer() {
+    return consumer;
+  }
+
+  public void setConsumer(Service consumer) {
+    this.consumer = consumer;
+  }
+
+  public Service getProducer() {
+    return producer;
+  }
+
+  public void setProducer(Service producer) {
+    this.producer = producer;
+  }
+
+  public Validation getValidation() {
+    return validation;
+  }
+
+  public void setValidation(Validation validation) {
+    this.validation = validation;
   }
 }

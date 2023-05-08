@@ -1,7 +1,12 @@
 package com.hh.contractstestsadmin.model;
 
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -9,7 +14,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -24,13 +31,13 @@ public class Service {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long serviceId;
 
-  @JoinColumn(name = "created_time")
+  @Column(name = "created_time")
   private LocalDateTime createdTime;
 
-  @JoinColumn(name = "service_name")
+  @Column(name = "service_name")
   private String serviceName;
 
-  @JoinColumn(name = "stand_name")
+  @Column(name = "stand_name")
   private String StandName;
 
   @Enumerated(EnumType.STRING)
@@ -38,13 +45,19 @@ public class Service {
   @JoinColumn(name = "service_type")
   private ServiceType serviceType;
 
-  @JoinColumn(name = "tag")
+  @Column(name = "tag")
   private String tag;
 
-  @JoinColumn(name = "expectation_link")
+  @Column(name = "expectation_link")
   private String expectationLink;
-  @JoinColumn(name = "shema_link")
-  private String shemaLink;
+  @Column(name = "link_schema")
+  private String linkSchema;
+
+  @OneToMany(mappedBy = "consumer", orphanRemoval = true, cascade = CascadeType.ALL)
+  private List<Expectation> expectationsConsumer = new ArrayList<>();
+
+  @OneToMany(mappedBy = "producer", orphanRemoval = true, cascade = CascadeType.ALL)
+  private List<Expectation> expectationsProducer = new ArrayList<>();
 
   public Service() {
   }
@@ -105,11 +118,27 @@ public class Service {
     this.expectationLink = expectationLink;
   }
 
-  public String getShemaLink() {
-    return shemaLink;
+  public String getLinkSchema() {
+    return linkSchema;
   }
 
-  public void setShemaLink(String shemaLink) {
-    this.shemaLink = shemaLink;
+  public void setLinkSchema(String shemaLink) {
+    this.linkSchema = shemaLink;
+  }
+
+  public List<Expectation> getExpectationsProducer() {
+    return expectationsProducer;
+  }
+
+  public void setExpectationsProducer(List<Expectation> expectationsProducer) {
+    this.expectationsProducer = expectationsProducer;
+  }
+
+  public List<Expectation> getExpectationsConsumer() {
+    return expectationsConsumer;
+  }
+
+  public void setExpectationsConsumer(List<Expectation> expectationsConsumer) {
+    this.expectationsConsumer = expectationsConsumer;
   }
 }
