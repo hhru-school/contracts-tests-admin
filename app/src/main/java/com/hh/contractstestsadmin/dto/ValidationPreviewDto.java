@@ -1,12 +1,14 @@
 package com.hh.contractstestsadmin.dto;
 
+import java.time.OffsetDateTime;
+
 public class ValidationPreviewDto {
 
   private Long id;
 
-  private String createdDate;
+  private OffsetDateTime createdDate;
 
-  private String executeDate;
+  private OffsetDateTime executeDate;
 
   private String releaseLink;
 
@@ -22,19 +24,19 @@ public class ValidationPreviewDto {
     this.id = id;
   }
 
-  public String getCreatedDate() {
+  public OffsetDateTime getCreatedDate() {
     return createdDate;
   }
 
-  public void setCreatedDate(String createdDate) {
+  public void setCreatedDate(OffsetDateTime createdDate) {
     this.createdDate = createdDate;
   }
 
-  public String getExecuteDate() {
+  public OffsetDateTime getExecuteDate() {
     return executeDate;
   }
 
-  public void setExecuteDate(String executeDate) {
+  public void setExecuteDate(OffsetDateTime executeDate) {
     this.executeDate = executeDate;
   }
 

@@ -1,6 +1,5 @@
 package com.hh.contractstestsadmin.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dao.ContractsDao;
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
@@ -22,12 +21,13 @@ public class StatusService {
 
   private final ReleaseVersionDao releaseVersionDao;
 
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final ObjectMapper objectMapper;
 
-  public StatusService(ContractsDao contractsDao, String releaseName, ReleaseVersionDao releaseVersionDao) {
+  public StatusService(ContractsDao contractsDao, String releaseName, ReleaseVersionDao releaseVersionDao, ObjectMapper objectMapper) {
     this.contractsDao = contractsDao;
     this.releaseName = releaseName;
     this.releaseVersionDao = releaseVersionDao;
+    this.objectMapper = objectMapper;
   }
 
   public List<StandInfoDto> getStands() throws ContractsDaoException {
@@ -42,8 +42,7 @@ public class StatusService {
   public ServicesContainerDto getServices(String standName) throws StandNotFoundException, IOException {
     ClassLoader classLoader = getClass().getClassLoader();
     InputStream inputStream = classLoader.getResourceAsStream("test-data/service-list-exemple.json");
-    return objectMapper.readValue(inputStream, new TypeReference<>() {
-    });
+    return objectMapper.readValue(inputStream, ServicesContainerDto.class);
   }
 
   public StandStatusDto getStatus(String standName) throws StandNotFoundException, IOException {

@@ -1,5 +1,7 @@
 package com.hh.contractstestsadmin.dto;
 
+import java.time.OffsetDateTime;
+
 public class ServiceDto {
 
   private String name;
@@ -10,13 +12,13 @@ public class ServiceDto {
 
   private String expectationLink;
 
-  private String expectationPublishDate;
+  private OffsetDateTime expectationPublishDate;
 
   private Boolean isProducer;
 
   private String schemaLink;
 
-  private String schemaPublishDate;
+  private OffsetDateTime schemaPublishDate;
 
   public String getName() {
     return name;
@@ -50,11 +52,11 @@ public class ServiceDto {
     this.expectationLink = expectationLink;
   }
 
-  public String getExpectationPublishDate() {
+  public OffsetDateTime getExpectationPublishDate() {
     return expectationPublishDate;
   }
 
-  public void setExpectationPublishDate(String expectationPublishDate) {
+  public void setExpectationPublishDate(OffsetDateTime expectationPublishDate) {
     this.expectationPublishDate = expectationPublishDate;
   }
 
@@ -74,11 +76,11 @@ public class ServiceDto {
     this.schemaLink = schemaLink;
   }
 
-  public String getSchemaPublishDate() {
+  public OffsetDateTime getSchemaPublishDate() {
     return schemaPublishDate;
   }
 
-  public void setSchemaPublishDate(String schemaPublishDate) {
+  public void setSchemaPublishDate(OffsetDateTime schemaPublishDate) {
     this.schemaPublishDate = schemaPublishDate;
   }
 }

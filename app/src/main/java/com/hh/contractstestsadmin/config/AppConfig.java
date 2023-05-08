@@ -1,5 +1,6 @@
 package com.hh.contractstestsadmin.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dao.ContractsDao;
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
@@ -76,8 +77,8 @@ public class AppConfig {
   }
 
   @Bean
-  public StatusService statusService(ContractsDao contractsDao, ReleaseVersionDao releaseVersionDao) {
-    return new StatusService(contractsDao, releaseName, releaseVersionDao);
+  public StatusService statusService(ContractsDao contractsDao, ReleaseVersionDao releaseVersionDao, ObjectMapper objectMapper) {
+    return new StatusService(contractsDao, releaseName, releaseVersionDao, objectMapper);
   }
 
   @Bean

@@ -4,7 +4,6 @@ import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
 import com.hh.contractstestsadmin.model.Validation;
 
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 
 public class ValidationMapper {
 
@@ -12,12 +11,10 @@ public class ValidationMapper {
     ValidationPreviewDto validationPreviewDto = new ValidationPreviewDto();
     validationPreviewDto.setId(validation.getId());
     validationPreviewDto.setCreatedDate(validation.getCreatedDate()
-        .atOffset(ZoneOffset.UTC)
-        .format(DateTimeFormatter.ISO_INSTANT));
+        .atOffset(ZoneOffset.UTC));
     if (validation.getExecuteDate() != null) {
       validationPreviewDto.setExecuteDate(validation.getExecuteDate()
-          .atOffset(ZoneOffset.UTC)
-          .format(DateTimeFormatter.ISO_INSTANT));
+          .atOffset(ZoneOffset.UTC));
     }
     validationPreviewDto.setStatus(validation.getStatus());
     validationPreviewDto.setReleaseLink(validation.getReleaseInformationVersion());
