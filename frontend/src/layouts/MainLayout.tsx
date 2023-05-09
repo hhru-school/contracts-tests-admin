@@ -1,7 +1,6 @@
-import { AppContent } from 'components/AppContent';
 import { AppFooter } from 'components/AppFooter/Index';
 import { AppHeader } from 'components/AppHeader';
-import { AppSidebar } from 'components/AppSidebar';
+import { AppToolBar } from 'components/AppToolBar';
 
 export const MainLayout = () => {
     return (
@@ -9,8 +8,9 @@ export const MainLayout = () => {
             <AppHeader />
             <div className="container-fluid">
                 <div className="row">
-                    <AppSidebar />
-                    <AppContent />
+                    <AppToolBar />
+                </div>
+                <div className="row">
                     <AppFooter />
                 </div>
             </div>
