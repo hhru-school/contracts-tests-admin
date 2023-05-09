@@ -62,8 +62,8 @@ public class Service {
     return createdDate;
   }
 
-  public void setCreatedDate(LocalDateTime createdTime) {
-    this.createdDate = createdTime;
+  public void setCreatedDate(LocalDateTime createdDate) {
+    this.createdDate = createdDate;
   }
 
   public String getServiceName() {
