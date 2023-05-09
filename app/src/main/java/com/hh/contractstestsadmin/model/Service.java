@@ -37,7 +37,7 @@ public class Service {
   private String serviceName;
 
   @Column(name = "stand_name")
-  private String StandName;
+  private String standName;
 
   @Enumerated(EnumType.STRING)
   @Type(type = "pgsql_enum")
@@ -86,11 +86,11 @@ public class Service {
   }
 
   public String getStandName() {
-    return StandName;
+    return standName;
   }
 
   public void setStandName(String standName) {
-    StandName = standName;
+    this.standName = standName;
   }
 
   public ServiceType getServiceType() {
