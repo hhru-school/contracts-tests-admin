@@ -1,18 +1,27 @@
-import play from '../../img/play.svg';
+import { ReactComponent as PlayIcon } from './img/play.svg';
 import useSWR from 'swr';
 import React, { useState, KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
 import { ListGroup, ListGroupItem, Input, Button, Alert } from 'reactstrap';
+import { ApiResponse } from './types/Response';
+import { HandleKeys } from './types/HandleKeys';
+
 export const AppToolBar: React.FC = () => {
-    const { isLoading, data, error } = useSWR('/api/stands/');
+    const { isLoading, data, error } = useSWR<ApiResponse>('/api/stands/');
     const [selectedItem, setSelectedItem] = useState('');
     const [showList, setShowList] = useState(false);
     const [hoveredItem, setHoveredItem] = useState<string>('');
     const [currentPositionInList, setCurrentPositionInList] = useState(0);
+
     if (isLoading) {
         return <Alert color="primary"> Data is loading </Alert>;
     }
+
     if (error) {
         return <Alert color="danger"> Cant load data {error.message} </Alert>;
+    }
+
+    if (!data) {
+        return null;
     }
 
     const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -20,8 +29,8 @@ export const AppToolBar: React.FC = () => {
         setShowList(true);
     };
     const filteredData = data.stands
-        .map((item: any) => item['name'])
-        .filter((name: string) => name.toLowerCase().includes(selectedItem.toLowerCase()));
+        .map((item) => item.name)
+        .filter((name) => name.toLowerCase().includes(selectedItem.toLowerCase()));
 
     const handleHover = (item: string) => {
         setHoveredItem(item);
@@ -44,26 +53,23 @@ export const AppToolBar: React.FC = () => {
         selectElement(hoveredItem);
     };
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-        console.log('handleKeyDown', event.key);
-        if (event.key === 'Escape') {
+        if (event.key === HandleKeys.Escape) {
             setShowList(false);
-        } else if (event.key === 'Enter') {
+        } else if (event.key === HandleKeys.Enter) {
             const element = filteredData[currentPositionInList];
             setSelectedItem(element);
             setShowList(false);
-        } else if (event.key === 'ArrowDown') {
+        } else if (event.key === HandleKeys.ArrowDown) {
             if (currentPositionInList < filteredData.length) {
                 setCurrentPositionInList(currentPositionInList + 1);
                 const element = filteredData[currentPositionInList + 1];
                 handleHover(element);
-                //setSelectedItem(element);
             }
-        } else if (event.key === 'ArrowUp') {
+        } else if (event.key === HandleKeys.ArrowUp) {
             if (currentPositionInList > 0) {
                 setCurrentPositionInList(currentPositionInList - 1);
                 const element = filteredData[currentPositionInList - 1];
                 handleHover(element);
-                //setSelectedItem(element);
             }
         }
     };
@@ -100,8 +106,8 @@ export const AppToolBar: React.FC = () => {
                         </ListGroup>
                     )}
                 </div>
-                <Button color="primary" className="ms-3">
-                    <img src={play} /> Start
+                <Button color="primary" className="ms-3 d-flex gap-1 align-items-center">
+                    <PlayIcon /> Start
                 </Button>
             </div>
         </div>
