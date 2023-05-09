@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.Type;
@@ -32,7 +31,7 @@ public class ContractTestError {
   private ErrorType errorType;
   @Enumerated(EnumType.STRING)
   @Type(type = "pgsql_enum")
-  @JoinColumn(name = "error_level")
+  @Column(name = "error_level")
   private ErrorLevel level;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -45,8 +44,8 @@ public class ContractTestError {
     return id;
   }
 
-  public void setId(Long errorInfoId) {
-    this.id = errorInfoId;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public ErrorLevel getLevel() {

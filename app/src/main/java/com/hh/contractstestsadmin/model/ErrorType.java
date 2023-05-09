@@ -25,7 +25,7 @@ public class ErrorType {
   private String comments;
 
   @OneToMany(mappedBy = "errorType", orphanRemoval = true, cascade = CascadeType.ALL)
-  private List<ContractTestError> errorInfo = new ArrayList<>();
+  private List<ContractTestError> contractTests = new ArrayList<>();
 
   public ErrorType() {
   }
@@ -54,11 +54,11 @@ public class ErrorType {
     this.comments = comments;
   }
 
-  public List<ContractTestError> getErrorInfo() {
-    return errorInfo;
+  public List<ContractTestError> getContractTests() {
+    return contractTests;
   }
 
-  public void setErrorInfo(List<ContractTestError> errorInfo) {
-    this.errorInfo = errorInfo;
+  public void setContractTests(List<ContractTestError> contractTests) {
+    this.contractTests = contractTests;
   }
 }

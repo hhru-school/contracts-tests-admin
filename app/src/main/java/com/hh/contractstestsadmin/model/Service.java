@@ -3,9 +3,6 @@ package com.hh.contractstestsadmin.model;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,8 +10,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -31,8 +26,8 @@ public class Service {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long serviceId;
 
-  @Column(name = "created_time")
-  private LocalDateTime createdTime;
+  @Column(name = "created_date")
+  private LocalDateTime createdDate;
 
   @Column(name = "service_name")
   private String serviceName;
@@ -42,7 +37,7 @@ public class Service {
 
   @Enumerated(EnumType.STRING)
   @Type(type = "pgsql_enum")
-  @JoinColumn(name = "service_type")
+  @Column(name = "service_type")
   private ServiceType serviceType;
 
   @Column(name = "tag")
@@ -50,15 +45,8 @@ public class Service {
 
   @Column(name = "expectation_link")
   private String expectationLink;
-  @Column(name = "link_schema")
-  private String linkSchema;
-
-  @OneToMany(mappedBy = "consumer", orphanRemoval = true, cascade = CascadeType.ALL)
-  private List<Expectation> expectationsConsumer = new ArrayList<>();
-
-  @OneToMany(mappedBy = "producer", orphanRemoval = true, cascade = CascadeType.ALL)
-  private List<Expectation> expectationsProducer = new ArrayList<>();
-
+  @Column(name = "schema_link")
+  private String schemaLink;
   public Service() {
   }
 
@@ -70,12 +58,12 @@ public class Service {
     this.serviceId = serviceId;
   }
 
-  public LocalDateTime getCreatedTime() {
-    return createdTime;
+  public LocalDateTime getCreatedDate() {
+    return createdDate;
   }
 
-  public void setCreatedTime(LocalDateTime createdTime) {
-    this.createdTime = createdTime;
+  public void setCreatedDate(LocalDateTime createdTime) {
+    this.createdDate = createdTime;
   }
 
   public String getServiceName() {
@@ -118,27 +106,11 @@ public class Service {
     this.expectationLink = expectationLink;
   }
 
-  public String getLinkSchema() {
-    return linkSchema;
+  public String getSchemaLink() {
+    return schemaLink;
   }
 
-  public void setLinkSchema(String shemaLink) {
-    this.linkSchema = shemaLink;
-  }
-
-  public List<Expectation> getExpectationsProducer() {
-    return expectationsProducer;
-  }
-
-  public void setExpectationsProducer(List<Expectation> expectationsProducer) {
-    this.expectationsProducer = expectationsProducer;
-  }
-
-  public List<Expectation> getExpectationsConsumer() {
-    return expectationsConsumer;
-  }
-
-  public void setExpectationsConsumer(List<Expectation> expectationsConsumer) {
-    this.expectationsConsumer = expectationsConsumer;
+  public void setSchemaLink(String schemaLink) {
+    this.schemaLink = schemaLink;
   }
 }
