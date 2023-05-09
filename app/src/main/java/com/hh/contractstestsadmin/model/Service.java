@@ -3,6 +3,9 @@ package com.hh.contractstestsadmin.model;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +13,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -47,6 +51,13 @@ public class Service {
   private String expectationLink;
   @Column(name = "schema_link")
   private String schemaLink;
+
+  @OneToMany(mappedBy = "consumer", orphanRemoval = true, cascade = CascadeType.ALL)
+  private List<Expectation> errorExpectationsConsumer = new ArrayList<>();
+
+  @OneToMany(mappedBy = "producer", orphanRemoval = true, cascade = CascadeType.ALL)
+  private List<Expectation> errorExpectationsProducer = new ArrayList<>();
+
   public Service() {
   }
 
@@ -112,5 +123,21 @@ public class Service {
 
   public void setSchemaLink(String schemaLink) {
     this.schemaLink = schemaLink;
+  }
+
+  public List<Expectation> getErrorExpectationsConsumer() {
+    return errorExpectationsConsumer;
+  }
+
+  public void setErrorExpectationsConsumer(List<Expectation> errorExpectationsConsumer) {
+    this.errorExpectationsConsumer = errorExpectationsConsumer;
+  }
+
+  public List<Expectation> getErrorExpectationsProducer() {
+    return errorExpectationsProducer;
+  }
+
+  public void setErrorExpectationsProducer(List<Expectation> errorExpectationsProducer) {
+    this.errorExpectationsProducer = errorExpectationsProducer;
   }
 }
