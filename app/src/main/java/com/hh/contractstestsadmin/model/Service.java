@@ -2,7 +2,7 @@ package com.hh.contractstestsadmin.model;
 
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -31,7 +31,7 @@ public class Service {
   private Long serviceId;
 
   @Column(name = "created_date")
-  private LocalDateTime createdDate;
+  private OffsetDateTime createdDate;
 
   @Column(name = "service_name")
   private String serviceName;
@@ -69,11 +69,11 @@ public class Service {
     this.serviceId = serviceId;
   }
 
-  public LocalDateTime getCreatedDate() {
+  public OffsetDateTime getCreatedDate() {
     return createdDate;
   }
 
-  public void setCreatedDate(LocalDateTime createdDate) {
+  public void setCreatedDate(OffsetDateTime createdDate) {
     this.createdDate = createdDate;
   }
 

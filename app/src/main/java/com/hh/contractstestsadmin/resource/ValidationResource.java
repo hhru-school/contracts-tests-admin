@@ -3,7 +3,7 @@ package com.hh.contractstestsadmin.resource;
 import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
-import com.hh.contractstestsadmin.service.ValidationService;
+import com.hh.contractstestsadmin.service.StandValidationService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,11 +21,11 @@ import javax.ws.rs.core.Response;
 @Path("api")
 public class ValidationResource {
 
-  private final ValidationService validationService;
+  private final StandValidationService standValidationService;
 
   @Inject
-  public ValidationResource(ValidationService validationService) {
-    this.validationService = validationService;
+  public ValidationResource(StandValidationService standValidationService) {
+    this.standValidationService = standValidationService;
   }
 
   @ApiOperation(
@@ -37,10 +37,10 @@ public class ValidationResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response getValidationsHistory(
       @PathParam("standName") String standName,
-      @QueryParam("sizeLimit") Long sizeLimit
+      @QueryParam("sizeLimit") Integer sizeLimit
   ) {
     try {
-      return Response.ok(validationService.getValidationHistory(standName, sizeLimit)).build();
+      return Response.ok(standValidationService.getValidationHistory(standName, sizeLimit)).build();
     } catch (ValidationHistoryNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
     } catch (Exception exception) {
@@ -56,7 +56,7 @@ public class ValidationResource {
   @POST
   public Response runValidation(@PathParam("standName") String standName) {
     try {
-      validationService.runValidation(standName);
+      standValidationService.runValidation(standName);
       return Response.status(Response.Status.ACCEPTED).build();
     } catch (StandNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
