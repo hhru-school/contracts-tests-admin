@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 public interface IContractsTestActorData {
 
-  public URL getArtifactURL();
-  public LocalDateTime getArtifactPublishDate();
+  public URL artifactURL();
+
+  public LocalDateTime artifactPublishDate();
 }
