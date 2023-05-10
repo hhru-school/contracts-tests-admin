@@ -60,10 +60,12 @@ public class Service {
     return producerData;
   }
 
+  @NotNull
   public Boolean isConsumer() {
     return !consumerData.isEmpty();
   }
 
+  @NotNull
   public Boolean isProducer() {
     return !producerData.isEmpty();
   }

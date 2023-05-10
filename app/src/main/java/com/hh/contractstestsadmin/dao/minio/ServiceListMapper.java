@@ -19,7 +19,9 @@ public class ServiceListMapper {
     return lastModifiedArtifacts.entrySet()
         .stream()
         .collect(Collectors.toMap(
-            entry -> ((String) entry.getKey()).replace("expectation/", "").replace("schema/", ""),
+            entry -> ((String) entry.getKey())
+                .replace("expectation/", "")
+                .replace("schema/", ""),
             entry -> {
               try {
                 return ServiceMapper.map((Map.Entry<String, Item>) entry);
@@ -51,7 +53,7 @@ public class ServiceListMapper {
 
   // remove json or yaml file from the path
   // expectation/subscription/01.02.json -> expectation/subscription
-  private static String removeArtifactInfo(String itemPath) {
+  private static String removeArtefactInfo(String itemPath) {
     return itemPath.replaceFirst("(^[^\\/]*\\/[^\\/]*)(.*)", "$1");
   }
 
@@ -61,7 +63,7 @@ public class ServiceListMapper {
     try {
       for (Result<Item> itemResult : bucketItems) {
         Item currItem = itemResult.get();
-        String serviceTypeNameKey = removeArtifactInfo(currItem.objectName());
+        String serviceTypeNameKey = removeArtefactInfo(currItem.objectName());
         Optional<Item> prevItemOptional = Optional.ofNullable(itemMap.putIfAbsent(serviceTypeNameKey, currItem));
         if (prevItemOptional.isPresent()) {
           Item prevItem = prevItemOptional.get();
