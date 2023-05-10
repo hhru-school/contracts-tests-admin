@@ -11,7 +11,11 @@ import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import kotlin.collections.EmptyList;
 
 public class StatusService {
 
@@ -30,10 +34,11 @@ public class StatusService {
     this.objectMapper = objectMapper;
   }
 
-  public List<StandInfoDto> getStands() throws ContractsDaoException {
+  public List<StandInfoDto> getStands(String search) throws ContractsDaoException {
     return contractsDao
         .getStandNames()
         .stream()
+        .filter(standName -> search == null || standName.contains(search))
         .sorted()
         .map((standName) -> new StandInfoDto(standName, standName.equals(releaseName)))
         .toList();
