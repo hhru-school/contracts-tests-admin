@@ -1,7 +1,8 @@
 package com.hh.contractstestsadmin.model;
 
-import java.net.URL;
-import java.time.Instant;
+import com.hh.contractstestsadmin.exception.StandsDaoException;
+import java.util.Optional;
+import javax.validation.constraints.NotNull;
 
 public class Service {
 
@@ -9,70 +10,61 @@ public class Service {
 
   private final String version;
 
-  private final Boolean isConsumer;
+  private Optional<ConsumerData> consumerData;
 
-  private final URL expectationLink;
-
-  private final Instant expectationPublishDate;
-
-  private final Boolean isProducer;
-
-  private final URL schemaLink;
-
-  private final Instant schemaPublishDate;
+  private Optional<ProducerData> producerData;
 
   public Service(
       String name,
       String version,
-      Boolean isConsumer,
-      URL expectationLink,
-      Instant expectationPublishDate,
-      Boolean isProducer,
-      URL schemaLink,
-      Instant schemaPublishDate
+      @NotNull ConsumerData consumerData
   ) {
     this.name = name;
     this.version = version;
-    this.isConsumer = isConsumer;
-    this.expectationLink = expectationLink;
-    this.expectationPublishDate = expectationPublishDate;
-    this.isProducer = isProducer;
-    this.schemaLink = schemaLink;
-    this.schemaPublishDate = schemaPublishDate;
+    this.consumerData = Optional.of(consumerData);
+    this.producerData = Optional.empty();
   }
 
-
-
-  public String getName() {
-    return name;
+  public Service(
+      String name,
+      String version,
+      ProducerData producerData
+  ) {
+    this.name = name;
+    this.version = version;
+    this.producerData = Optional.of(producerData);
+    this.consumerData = Optional.empty();
   }
 
-  public String getVersion() {
-    return version;
+  public void setConsumerData(@NotNull ConsumerData consumerData) throws StandsDaoException {
+    if (this.consumerData.isEmpty()) {
+      this.consumerData = Optional.of(consumerData);
+    } else {
+      throw new StandsDaoException("Attempt to set consumer data twice");
+    }
   }
 
-  public Boolean getConsumer() {
-    return isConsumer;
+  public Optional<ConsumerData> getConsumerData() {
+    return consumerData;
   }
 
-  public URL getExpectationLink() {
-    return expectationLink;
+  public void setProducerData(@NotNull ProducerData consumerData) throws StandsDaoException {
+    if (this.producerData.isEmpty()) {
+      this.producerData = Optional.of(consumerData);
+    } else {
+      throw new StandsDaoException("Attempt to set producer data twice");
+    }
   }
 
-  public Instant getExpectationPublishDate() {
-    return expectationPublishDate;
+  public Optional<ProducerData> getProducerData() {
+    return producerData;
   }
 
-  public Boolean getProducer() {
-    return isProducer;
+  public Boolean isConsumer() {
+    return !consumerData.isEmpty();
   }
 
-  public URL getSchemaLink() {
-    return schemaLink;
+  public Boolean isProducer() {
+    return !producerData.isEmpty();
   }
-
-  public Instant getSchemaPublishDate() {
-    return schemaPublishDate;
-  }
-
 }

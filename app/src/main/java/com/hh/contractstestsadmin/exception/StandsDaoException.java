@@ -6,4 +6,6 @@ public class StandsDaoException extends Exception {
     super(cause);
   }
 
+  public StandsDaoException(String s) {
+  }
 }
