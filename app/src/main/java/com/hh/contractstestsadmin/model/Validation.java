@@ -3,6 +3,7 @@ package com.hh.contractstestsadmin.model;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -30,13 +31,13 @@ public class Validation {
   private String standName;
 
   @Column(name = "execute_date")
-  private LocalDateTime executeDate;
+  private OffsetDateTime executeDate;
 
   @Column(name = "release_information_version")
   private String releaseInformationVersion;
 
   @Column(name = "created_date")
-  private LocalDateTime createdDate;
+  private OffsetDateTime createdDate;
 
   @Enumerated(EnumType.STRING)
   @Type(type = "pgsql_enum")
@@ -57,11 +58,11 @@ public class Validation {
     this.id = id;
   }
 
-  public LocalDateTime getCreatedDate() {
+  public OffsetDateTime getCreatedDate() {
     return createdDate;
   }
 
-  public void setCreatedDate(LocalDateTime createdDate) {
+  public void setCreatedDate(OffsetDateTime createdDate) {
     this.createdDate = createdDate;
   }
 
@@ -89,11 +90,11 @@ public class Validation {
     this.standName = standName;
   }
 
-  public LocalDateTime getExecuteDate() {
+  public OffsetDateTime getExecuteDate() {
     return executeDate;
   }
 
-  public void setExecuteDate(LocalDateTime executeDate) {
+  public void setExecuteDate(OffsetDateTime executeDate) {
     this.executeDate = executeDate;
   }
 

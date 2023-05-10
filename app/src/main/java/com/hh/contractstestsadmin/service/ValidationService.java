@@ -5,7 +5,7 @@ import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.model.Validation;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +33,7 @@ public class ValidationService {
   @Transactional
   public Validation createValidation(String standName) {
     Validation validation = new Validation();
-    validation.setCreatedDate(LocalDateTime.now(ZoneOffset.UTC));
+    validation.setCreatedDate(OffsetDateTime.now());
     validation.setStandName(standName);
     validation.setStatus(ValidationStatus.IN_PROGRESS);
     validation.setReleaseInformationVersion(releaseVersionDao.getCurrentReleaseVersion());
