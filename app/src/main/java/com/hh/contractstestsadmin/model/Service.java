@@ -60,13 +60,11 @@ public class Service {
     return producerData;
   }
 
-  @NotNull
-  public Boolean isConsumer() {
-    return !consumerData.isEmpty();
+  public String getName() {
+    return name;
   }
 
-  @NotNull
-  public Boolean isProducer() {
-    return !producerData.isEmpty();
+  public String getVersion() {
+    return version;
   }
 }

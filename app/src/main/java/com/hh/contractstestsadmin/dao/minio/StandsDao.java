@@ -1,5 +1,6 @@
 package com.hh.contractstestsadmin.dao.minio;
 
+import com.hh.contractstestsadmin.dao.minio.mapper.ServiceListMapper;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.model.Service;
@@ -18,8 +19,11 @@ public class StandsDao {
 
   private final MinioClient minioClient;
 
-  public StandsDao(MinioClient minioClient) {
+  private final ServiceListMapper serviceListMapper;
+
+  public StandsDao(MinioClient minioClient, ServiceListMapper serviceListMapper) {
     this.minioClient = minioClient;
+    this.serviceListMapper = serviceListMapper;
   }
 
   @NotNull
@@ -39,9 +43,9 @@ public class StandsDao {
   }
 
   @NotNull
-  public List<Service> getServicesInfo(@NotNull String standName) throws StandsDaoException, StandNotFoundException {
+  public List<Service> getServices(@NotNull String standName) throws StandsDaoException, StandNotFoundException {
     Iterable<Result<Item>> bucketItems = getBucketItems(standName);
-    return ServiceListMapper.map(bucketItems);
+    return serviceListMapper.map(bucketItems);
   }
 
   @NotNull

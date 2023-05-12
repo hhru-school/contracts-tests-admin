@@ -2,6 +2,10 @@ package com.hh.contractstestsadmin.config;
 
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
+import com.hh.contractstestsadmin.dao.minio.mapper.ConsumerDataMapper;
+import com.hh.contractstestsadmin.dao.minio.mapper.ProducerDataMapper;
+import com.hh.contractstestsadmin.dao.minio.mapper.ServiceListMapper;
+import com.hh.contractstestsadmin.dao.minio.mapper.ServiceMapper;
 import io.minio.MinioClient;
 import java.util.Properties;
 import javax.sql.DataSource;
@@ -21,6 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @PropertySource("classpath:hibernate.properties")
+@PropertySource("classpath:minio.properties")
 @PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 public class AppConfig {
@@ -42,21 +47,30 @@ public class AppConfig {
   @Value("${hibernate.show.sql}")
   private String hibernateShowSql;
 
-  @Value("${spring.minio.url}")
+  @Value("${minio.url}")
   private String minioUrl;
 
-  @Value("${spring.minio.access-key}")
+  @Value("${minio.access-key}")
   private String minioAccessKey;
 
-  @Value("${spring.minio.secret-key}")
+  @Value("${minio.secret-key}")
   private String minioSecretKey;
 
-  @Value("${release.stand.name}")
-  private String releaseName;
+  @Value("${minio.release.stand.name}")
+  private String minioReleaseName;
+
+  @Value("${minio.producer.artefact.name}")
+  private String producerArtefactName;
+
+  @Value("${minio.consumer.artefact.name")
+  private String consumerArtefactName;
+
+  @Value("${minio.object.name.separator}")
+  private String objectNameSeparator;
 
   @Bean
   public StatusService statusService(StandsDao standsDao) {
-    return new StatusService(standsDao, releaseName);
+    return new StatusService(standsDao, minioReleaseName);
   }
 
   @Bean
@@ -79,9 +93,28 @@ public class AppConfig {
 
   @Bean
   public StandsDao standsDao() {
-    return new StandsDao(minioClient());
+    return new StandsDao(minioClient(), serviceListMapper());
   }
 
+  @Bean
+  public ServiceListMapper serviceListMapper() {
+    return new ServiceListMapper(minioProperties(), serviceMapper());
+  }
+
+  @Bean
+  public ServiceMapper serviceMapper() {
+    return new ServiceMapper(minioProperties(), consumerDataMapper(), producerDataMapper());
+  }
+
+  @Bean
+  public ConsumerDataMapper consumerDataMapper() {
+    return new ConsumerDataMapper();
+  }
+
+  @Bean
+  public ProducerDataMapper producerDataMapper() {
+    return new ProducerDataMapper();
+  }
   @Bean
   public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -99,6 +132,13 @@ public class AppConfig {
     return hibernateProperties;
   }
 
+  private Properties minioProperties() {
+    Properties minioProperties = new Properties();
+    minioProperties.put("minio.consumer.artefact.name", consumerArtefactName);
+    minioProperties.put("minio.producer.artefact.name", producerArtefactName);
+    minioProperties.put("minio.object.name.separator", objectNameSeparator);
+    return minioProperties;
+  }
   @Bean
   public LocalSessionFactoryBean sessionFactory() {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();

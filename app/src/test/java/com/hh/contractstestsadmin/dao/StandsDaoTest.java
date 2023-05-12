@@ -1,6 +1,10 @@
 package com.hh.contractstestsadmin.dao;
 
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
+import com.hh.contractstestsadmin.dao.minio.mapper.ConsumerDataMapper;
+import com.hh.contractstestsadmin.dao.minio.mapper.ProducerDataMapper;
+import com.hh.contractstestsadmin.dao.minio.mapper.ServiceListMapper;
+import com.hh.contractstestsadmin.dao.minio.mapper.ServiceMapper;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.model.Service;
@@ -9,6 +13,7 @@ import io.minio.ListObjectsArgs;
 import io.minio.MinioClient;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -32,8 +37,14 @@ class StandsDaoTest {
           .build();
 
       when(minioClient.bucketExists(bucketExistsArgs)).thenReturn(false);
-      StandsDao standsDao = new StandsDao(minioClient);
-      standsDao.getServicesInfo(bucketName);
+      Properties properties = new Properties();
+      properties.put("minio.consumer.artefact.name", "expectation");
+      properties.put("minio.producer.artefact.name", "schema");
+      properties.put("minio.object.name.separator", "/");
+      StandsDao standsDao = new StandsDao(minioClient, new ServiceListMapper(properties, new ServiceMapper(properties, new ConsumerDataMapper(),
+          new ProducerDataMapper()
+      )));
+      standsDao.getServices(bucketName);
     });
     assertEquals("Minio Storage does not contain '" + bucketName + "' bucket", exception.getMessage());
     assertEquals(StandNotFoundException.class, exception.getClass());
@@ -65,11 +76,17 @@ class StandsDaoTest {
       fail();
     }
 
-    StandsDao standsDao = new StandsDao(minioClient);
+    Properties properties = new Properties();
+    properties.put("minio.consumer.artefact.name", "expectation");
+    properties.put("minio.producer.artefact.name", "schema");
+    properties.put("minio.object.name.separator", "/");
+    StandsDao standsDao = new StandsDao(minioClient, new ServiceListMapper(properties, new ServiceMapper(properties, new ConsumerDataMapper(),
+        new ProducerDataMapper()
+    )));
     try {
-      List<Service> servicesList = standsDao.getServicesInfo(bucketName);
+      List<Service> servicesList = standsDao.getServices(bucketName);
       assertNotNull(servicesList);
-      assertFalse(standsDao.getServicesInfo(bucketName).iterator().hasNext());
+      assertFalse(standsDao.getServices(bucketName).iterator().hasNext());
     } catch (StandsDaoException e) {
       fail();
     }

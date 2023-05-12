@@ -1,4 +1,4 @@
-package com.hh.contractstestsadmin.dao.minio;
+package com.hh.contractstestsadmin.dao.minio.mapper;
 
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.model.ConsumerData;
@@ -8,11 +8,11 @@ import java.net.URL;
 
 public class ConsumerDataMapper {
 
-  public static ConsumerData map(Item item) throws StandsDaoException {
+  public ConsumerData map(Item item) throws StandsDaoException {
     return new ConsumerData(getURL(item), item.lastModified().toLocalDateTime());
   }
 
-  private static URL getURL(Item item) throws StandsDaoException {
+  private URL getURL(Item item) throws StandsDaoException {
     try {
       return new URL("http://example.com");
     } catch (MalformedURLException e) {
