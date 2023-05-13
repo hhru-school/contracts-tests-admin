@@ -1,7 +1,7 @@
 package com.hh.contractstestsadmin.dao.minio.mapper;
 
 import com.hh.contractstestsadmin.exception.StandsDaoException;
-import com.hh.contractstestsadmin.model.ConsumerData;
+import com.hh.contractstestsadmin.model.artefacts.ConsumerData;
 import io.minio.messages.Item;
 import java.net.MalformedURLException;
 import java.net.URL;

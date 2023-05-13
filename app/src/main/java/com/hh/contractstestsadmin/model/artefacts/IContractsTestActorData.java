@@ -1,4 +1,4 @@
-package com.hh.contractstestsadmin.model;
+package com.hh.contractstestsadmin.model.artefacts;
 
 import java.net.URL;
 import java.time.LocalDateTime;

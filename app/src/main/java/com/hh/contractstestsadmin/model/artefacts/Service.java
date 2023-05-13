@@ -1,4 +1,4 @@
-package com.hh.contractstestsadmin.model;
+package com.hh.contractstestsadmin.model.artefacts;
 
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import java.util.Optional;

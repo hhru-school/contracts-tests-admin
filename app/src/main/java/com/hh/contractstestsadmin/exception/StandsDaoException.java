@@ -6,6 +6,11 @@ public class StandsDaoException extends Exception {
     super(cause);
   }
 
-  public StandsDaoException(String s) {
+  public StandsDaoException(String message) {
+    super(message);
+  }
+
+  public StandsDaoException(String message, Throwable cause) {
+    super(message, cause);
   }
 }

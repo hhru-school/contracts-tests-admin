@@ -7,7 +7,7 @@ import com.hh.contractstestsadmin.dao.minio.mapper.ServiceListMapper;
 import com.hh.contractstestsadmin.dao.minio.mapper.ServiceMapper;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
-import com.hh.contractstestsadmin.model.Service;
+import com.hh.contractstestsadmin.model.artefacts.Service;
 import io.minio.BucketExistsArgs;
 import io.minio.ListObjectsArgs;
 import io.minio.MinioClient;

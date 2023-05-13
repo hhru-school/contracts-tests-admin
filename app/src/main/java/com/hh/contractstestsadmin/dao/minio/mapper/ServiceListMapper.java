@@ -3,7 +3,7 @@ package com.hh.contractstestsadmin.dao.minio.mapper;
 import static com.hh.contractstestsadmin.dao.minio.mapper.Util.removeArtefactFilePostfix;
 import static com.hh.contractstestsadmin.dao.minio.mapper.Util.removeArtefactNamePrefix;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
-import com.hh.contractstestsadmin.model.Service;
+import com.hh.contractstestsadmin.model.artefacts.Service;
 import io.minio.Result;
 import io.minio.messages.Item;
 import java.util.HashMap;
