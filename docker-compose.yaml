@@ -68,6 +68,12 @@ services:
     restart: always
     ports:
       - "3001:80"
+      - "3002:81"
+  swagger-ui:
+    container_name: swagger-ui
+    image: swaggerapi/swagger-ui:v4.18.3
+    environment:
+      SWAGGER_JSON_URL: "http://localhost:3002/doc/swagger.json"
 volumes:
  postgres:
  minio-storage:

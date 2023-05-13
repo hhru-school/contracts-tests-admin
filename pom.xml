@@ -20,6 +20,7 @@
         <puppycrawl.version>9.3</puppycrawl.version>
         <minio.version>8.5.2</minio.version>
         <maven.surefire.plugin>3.0.0</maven.surefire.plugin>
+        <swagger.version>1.6.10</swagger.version>
     </properties>
 
     <dependencyManagement>
@@ -40,6 +41,11 @@
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-jersey2-jaxrs</artifactId>
+                <version>${swagger.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

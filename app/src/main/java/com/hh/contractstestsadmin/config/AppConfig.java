@@ -1,17 +1,21 @@
 package com.hh.contractstestsadmin.config;
 
-import com.hh.contractstestsadmin.dao.minio.StandsDao;
-import com.hh.contractstestsadmin.dao.ValidationDao;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hh.contractstestsadmin.dao.minio.StandssDao;
 import com.hh.contractstestsadmin.dao.minio.mapper.ConsumerDataMapper;
 import com.hh.contractstestsadmin.dao.minio.mapper.ProducerDataMapper;
 import com.hh.contractstestsadmin.dao.minio.mapper.ServiceListMapper;
 import com.hh.contractstestsadmin.dao.minio.mapper.ServiceMapper;
+import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
+import com.hh.contractstestsadmin.dao.ValidationDao;
+import com.hh.contractstestsadmin.service.ValidationService;
 import io.minio.MinioClient;
+import io.swagger.jaxrs.config.BeanConfig;
 import java.util.Properties;
 import javax.sql.DataSource;
 
 import com.hh.contractstestsadmin.service.StatusService;
-import com.hh.contractstestsadmin.service.ValidationService;
+import com.hh.contractstestsadmin.service.StandValidationService;
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -69,13 +73,36 @@ public class AppConfig {
   private String objectNameSeparator;
 
   @Bean
-  public StatusService statusService(StandsDao standsDao) {
-    return new StatusService(standsDao, minioReleaseName);
+  public BeanConfig configureSwagger() {
+    BeanConfig swaggerConfigBean = new BeanConfig();
+    swaggerConfigBean.setTitle("Contract tests backend");
+    swaggerConfigBean.setSchemes(new String[]{"http"});
+    swaggerConfigBean.setBasePath("/");
+    swaggerConfigBean.setVersion("1.0.2");
+    swaggerConfigBean.setResourcePackage("com.hh.contractstestsadmin.resource");
+    swaggerConfigBean.setPrettyPrint(true);
+    swaggerConfigBean.setScan(true);
+    return swaggerConfigBean;
   }
 
   @Bean
-  public ValidationService validationService() {
-    return new ValidationService();
+  public ReleaseVersionDao releaseVersionDao() {
+    return new ReleaseVersionDao();
+  }
+
+  @Bean
+  public StatusService statusService(StandsDao standsDao, ReleaseVersionDao releaseVersionDao, ObjectMapper objectMapper) {
+    return new StatusService(standsDao, releaseName, releaseVersionDao, objectMapper);
+  }
+
+  @Bean
+  public ValidationService validationService(ValidationDao validationDao, ReleaseVersionDao releaseVersionDao) {
+    return new ValidationService(validationDao, releaseVersionDao);
+  }
+
+  @Bean
+  public StandValidationService standValidationService(ContractsDao contractsDao, ValidationService validationService) {
+    return new StandValidationService(contractsDao, validationService);
   }
 
   @Bean
@@ -140,9 +167,9 @@ public class AppConfig {
     return minioProperties;
   }
   @Bean
-  public LocalSessionFactoryBean sessionFactory() {
+  public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-    sessionFactory.setDataSource(dataSource());
+    sessionFactory.setDataSource(dataSource);
     sessionFactory.setPackagesToScan("com.hh.contractstestsadmin.model");
     sessionFactory.setHibernateProperties(hibernateProperties());
 

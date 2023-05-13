@@ -1,9 +1,12 @@
 package com.hh.contractstestsadmin.resource;
 
+import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
-import com.hh.contractstestsadmin.service.ValidationService;
+import com.hh.contractstestsadmin.service.StandValidationService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,25 +17,30 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@Api
 @Path("api")
 public class ValidationResource {
 
-  private final ValidationService validationService;
+  private final StandValidationService standValidationService;
 
   @Inject
-  public ValidationResource(ValidationService validationService) {
-    this.validationService = validationService;
+  public ValidationResource(StandValidationService standValidationService) {
+    this.standValidationService = standValidationService;
   }
 
-  @Path("stand/{standName}/validations/preview")
+  @ApiOperation(
+      value = "Get list with stands",
+      response = ValidationPreviewDto.class,
+      responseContainer = "List")
+  @Path("stands/{standName}/validations")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getHistoryPreview(
+  public Response getValidationsHistory(
       @PathParam("standName") String standName,
-      @QueryParam("sizeLimit") Long sizeLimit
+      @QueryParam("sizeLimit") Integer sizeLimit
   ) {
     try {
-      return Response.ok(validationService.getHistoryPreview(standName, sizeLimit)).build();
+      return Response.ok(standValidationService.getValidationHistory(standName, sizeLimit)).build();
     } catch (ValidationHistoryNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
     } catch (Exception exception) {
@@ -40,11 +48,15 @@ public class ValidationResource {
     }
   }
 
-  @Path("stand/{standName}/validations")
+  @ApiOperation(
+      value = "Run validation",
+      response = String.class,
+      code = 202)
+  @Path("stands/{standName}/validations")
   @POST
   public Response runValidation(@PathParam("standName") String standName) {
     try {
-      validationService.runValidation(standName);
+      standValidationService.runValidation(standName);
       return Response.status(Response.Status.ACCEPTED).build();
     } catch (StandNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();

@@ -1,34 +1,43 @@
 package com.hh.contractstestsadmin.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
+import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
-import com.hh.contractstestsadmin.exception.StandNotFoundException;
-
-import java.io.IOException;
-import java.io.InputStream;
+import com.hh.contractstestsadmin.dto.ValidationStatus;
+import com.hh.contractstestsadmin.model.Validation;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 public class ValidationService {
 
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final ValidationDao validationDao;
 
-  public List<ValidationPreviewDto> getHistoryPreview(
-      String standName,
-      Long sizeLimit
-  )
-      throws StandNotFoundException, IOException {
-    ClassLoader classLoader = getClass().getClassLoader();
-    InputStream inputStream = classLoader.getResourceAsStream("test-data/validation-preview-list-exemple.json");
-    List<ValidationPreviewDto> result = objectMapper.readValue(inputStream, new TypeReference<>() {
-    });
-    if (sizeLimit == null) {
-      sizeLimit = 5L;
-    }
-    return result.stream().limit(sizeLimit).toList();
+  private final ReleaseVersionDao releaseVersionDao;
+
+  public ValidationService(ValidationDao validationDao, ReleaseVersionDao releaseVersionDao) {
+    this.validationDao = validationDao;
+    this.releaseVersionDao = releaseVersionDao;
   }
 
-  public void runValidation(String standName) throws StandNotFoundException {
+  @Transactional
+  public List<ValidationPreviewDto> getLatestValidationPreviews(String standName, Integer validationPreviewsCount) {
+    return validationDao
+        .getLatestValidations(standName, validationPreviewsCount)
+        .stream()
+        .map(ValidationMapper::map)
+        .toList();
+  }
 
+  @Transactional
+  public Validation createValidation(String standName) {
+    Validation validation = new Validation();
+    validation.setCreatedDate(OffsetDateTime.now());
+    validation.setStandName(standName);
+    validation.setStatus(ValidationStatus.IN_PROGRESS);
+    validation.setReleaseInformationVersion(releaseVersionDao.getCurrentReleaseVersion());
+    validationDao.save(validation);
+    return validation;
   }
 }

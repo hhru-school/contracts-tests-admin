@@ -1,6 +1,5 @@
 import logo from 'logo.svg';
 import { ApiHealthStatus } from 'components/HealthCheck';
-
 import './index.css';
 
 export const HomePage: React.FC = () => {
