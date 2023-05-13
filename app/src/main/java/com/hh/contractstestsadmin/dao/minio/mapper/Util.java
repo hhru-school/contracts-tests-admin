@@ -3,10 +3,11 @@ package com.hh.contractstestsadmin.dao.minio.mapper;
 public class Util {
 
   /**
-   * Removes e.g 'expectation/' prefix from 'expectation/jlogic' String, just to live the service name only
+   * Removes the consumer/producer artefact name, e.g 'expectation/', prefix from 'expectation/jlogic'('<consumer_aftefact_name>/<service_name>)
+   * String, just the service name only is left
    */
-  public static String removeArtefactTypePrefix(String serviceNameWithArtefactPrefix, String artefact, String separator) {
-    return serviceNameWithArtefactPrefix.replaceFirst(artefact + separator, "");
+  public static String removeArtefactNamePrefix(String serviceNameWithPrefix, String artefactName, String separator) {
+    return serviceNameWithPrefix.replaceFirst(artefactName + separator, "");
   }
 
   /**

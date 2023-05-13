@@ -28,14 +28,14 @@ public class StandsDao {
 
   @NotNull
   public List<String> getStandNames() throws StandsDaoException {
-    List<Bucket> bucketList;
+    List<Bucket> standList;
     try {
-      bucketList = minioClient.listBuckets();
+      standList = minioClient.listBuckets();
     } catch (Exception e) {
       throw new StandsDaoException(e);
     }
 
-    return ofNullable(bucketList)
+    return ofNullable(standList)
         .orElseGet(Collections::emptyList)
         .stream()
         .map(Bucket::name)
@@ -44,37 +44,35 @@ public class StandsDao {
 
   @NotNull
   public List<Service> getServices(@NotNull String standName) throws StandsDaoException, StandNotFoundException {
-    Iterable<Result<Item>> bucketItems = getBucketItems(standName);
-    return serviceListMapper.map(bucketItems);
+    Iterable<Result<Item>> standItems = getStandItems(standName);
+    return serviceListMapper.map(standItems);
   }
 
   @NotNull
-  private Iterable<Result<Item>> getBucketItems(@NotNull String bucketName) throws StandsDaoException, StandNotFoundException {
-    Iterable<Result<Item>> bucketItems;
+  private Iterable<Result<Item>> getStandItems(@NotNull String standName) throws StandsDaoException, StandNotFoundException {
+    Iterable<Result<Item>> standItems;
 
-    // We need this check as in case the bucket does not exist Minio return
-    // Result<Item> with an error inside and 'bucketObjects' variable is not empty
-    if (!bucketExists(bucketName)) {
-      throw new StandNotFoundException("Minio Storage does not contain '" + bucketName + "' bucket");
+    if (!standExists(standName)) {
+      throw new StandNotFoundException("Minio Storage does not contain '" + standName + "' stand");
     }
 
     try {
       ListObjectsArgs listObjectsArgs = ListObjectsArgs.builder()
-          .bucket(bucketName)
+          .bucket(standName)
           .recursive(true)
           .build();
-      bucketItems = minioClient.listObjects(listObjectsArgs);
+      standItems = minioClient.listObjects(listObjectsArgs);
     } catch (Exception e) {
       throw new StandsDaoException(e);
     }
 
-    return bucketItems;
+    return standItems;
   }
 
-  private boolean bucketExists(String bucketName) throws StandsDaoException {
+  public boolean standExists(String standName) throws StandsDaoException {
     BucketExistsArgs bucketExistsArgs = BucketExistsArgs
         .builder()
-        .bucket(bucketName)
+        .bucket(standName)
         .build();
 
     try {

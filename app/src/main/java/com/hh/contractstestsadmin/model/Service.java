@@ -8,30 +8,24 @@ public class Service {
 
   private final String name;
 
-  private final String version;
-
   private Optional<ConsumerData> consumerData;
 
   private Optional<ProducerData> producerData;
 
   public Service(
       String name,
-      String version,
       @NotNull ConsumerData consumerData
   ) {
     this.name = name;
-    this.version = version;
     this.consumerData = Optional.of(consumerData);
     this.producerData = Optional.empty();
   }
 
   public Service(
       String name,
-      String version,
       ProducerData producerData
   ) {
     this.name = name;
-    this.version = version;
     this.producerData = Optional.of(producerData);
     this.consumerData = Optional.empty();
   }
@@ -62,9 +56,5 @@ public class Service {
 
   public String getName() {
     return name;
-  }
-
-  public String getVersion() {
-    return version;
   }
 }

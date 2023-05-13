@@ -46,7 +46,7 @@ class StandsDaoTest {
       )));
       standsDao.getServices(bucketName);
     });
-    assertEquals("Minio Storage does not contain '" + bucketName + "' bucket", exception.getMessage());
+    assertEquals("Minio Storage does not contain '" + bucketName + "' stand", exception.getMessage());
     assertEquals(StandNotFoundException.class, exception.getClass());
   }
 

@@ -1,6 +1,6 @@
 package com.hh.contractstestsadmin.dao.minio.mapper;
 
-import static com.hh.contractstestsadmin.dao.minio.mapper.Util.removeArtefactTypePrefix;
+import static com.hh.contractstestsadmin.dao.minio.mapper.Util.removeArtefactNamePrefix;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.model.Service;
 import io.minio.messages.Item;
@@ -35,14 +35,12 @@ public class ServiceMapper {
 
     String entryKey = entry.getKey();
     if (entryKey.contains(expectation)) {
-      String serviceName = removeArtefactTypePrefix(entryKey, expectation, separator);
-      //TODO: put the correct version
-      return new Service(serviceName, "", consumerDataMapper.map(entry.getValue()));
+      String serviceName = removeArtefactNamePrefix(entryKey, expectation, separator);
+      return new Service(serviceName, consumerDataMapper.map(entry.getValue()));
 
     } else if (entryKey.contains(schema)) {
-      String serviceName = removeArtefactTypePrefix(entry.getKey(), schema, separator);
-      //TODO: put the correct version
-      return new Service(serviceName, "", producerDataMapper.map(entry.getValue()));
+      String serviceName = removeArtefactNamePrefix(entry.getKey(), schema, separator);
+      return new Service(serviceName, producerDataMapper.map(entry.getValue()));
 
     } else {
       throw new StandsDaoException("Bucket structure is different from the expected one");

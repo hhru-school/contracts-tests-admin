@@ -1,7 +1,7 @@
 package com.hh.contractstestsadmin.dao.minio.mapper;
 
 import static com.hh.contractstestsadmin.dao.minio.mapper.Util.removeArtefactFilePostfix;
-import static com.hh.contractstestsadmin.dao.minio.mapper.Util.removeArtefactTypePrefix;
+import static com.hh.contractstestsadmin.dao.minio.mapper.Util.removeArtefactNamePrefix;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.model.Service;
 import io.minio.Result;
@@ -27,17 +27,17 @@ public class ServiceListMapper {
   }
 
   @NotNull
-  public List<Service> map(Iterable<Result<Item>> bucketItems) throws StandsDaoException {
+  public List<Service> map(Iterable<Result<Item>> standItems) throws StandsDaoException {
     String expectation = minioProperties.getProperty("minio.consumer.artefact.name");
     String schema = minioProperties.getProperty("minio.producer.artefact.name");
     String separator = minioProperties.getProperty("minio.object.name.separator");
 
-    Map<String, Item> lastModifiedArtifacts = getLastModifiedArtefactVersions(bucketItems);
-    return lastModifiedArtifacts.entrySet()
+    Map<String, Item> lastModifiedArtefacts = getLastModifiedArtefacts(standItems);
+    return lastModifiedArtefacts.entrySet()
         .stream()
         .collect(Collectors.toMap(
-            entry -> removeArtefactTypePrefix(
-                removeArtefactTypePrefix((String) entry.getKey(), expectation, separator), schema, separator),
+            entry -> removeArtefactNamePrefix(
+                removeArtefactNamePrefix((String) entry.getKey(), expectation, separator), schema, separator),
             entry -> {
               try {
                 return serviceMapper.map((Map.Entry<String, Item>) entry);
@@ -59,7 +59,7 @@ public class ServiceListMapper {
                   throw new RuntimeException(e);
                 }
               } else {
-                throw new RuntimeException("Impossible to merge consumer and producer data correctly for service " + prevService.getName());
+                throw new RuntimeException("Impossible to merge consumer and producer data correctly for '" + prevService.getName() + "' service");
               }
               return prevService;
             }
@@ -69,12 +69,25 @@ public class ServiceListMapper {
         .toList();
   }
 
+  /**
+   * Returns a map with e.g 'expectation/jlogic'(<consumer_artefact_name>/<service_name>) key and the artefact item info of the particular service
+   * that is presented in the collection as a consumer or e.g 'schema/subscriptions'(<producer_artefact_name>/<service_name>) key and the artefact
+   * item info of the particular service that is presented in the collection as a producer.
+   *
+   * @param standItems all items that represents different versions of artefacts. It means to one service as a consumer the collection can contain
+   *                   several artefacts of different versions.
+   * @return a map that will contain only one last modified artefact for a particular service as a consumer/producer. In case the service is
+   * presented as a consumer and as a producer, it will be placed in the map twice with 2 different keys:
+   * 'exectation/<servicename>' and 'schema/<servicename>', and with 2 different values: consumer artefact item info and producer artefact
+   * item info
+   * @throws StandsDaoException
+   */
   @NotNull
-  private static Map<String, Item> getLastModifiedArtefactVersions(Iterable<Result<Item>> bucketItems) throws StandsDaoException {
+  private static Map<String, Item> getLastModifiedArtefacts(Iterable<Result<Item>> standItems) throws StandsDaoException {
     Map<String, Item> itemMap = new HashMap<>();
     try {
 
-      for (Result<Item> itemResult : bucketItems) {
+      for (Result<Item> itemResult : standItems) {
         Item currItem = itemResult.get();
         String serviceTypeNameKey = removeArtefactFilePostfix(currItem.objectName());
         Optional<Item> prevItemOptional = ofNullable(itemMap.putIfAbsent(serviceTypeNameKey, currItem));
