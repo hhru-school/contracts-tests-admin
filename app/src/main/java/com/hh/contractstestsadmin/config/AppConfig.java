@@ -1,7 +1,7 @@
 package com.hh.contractstestsadmin.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hh.contractstestsadmin.dao.minio.StandssDao;
+import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dao.minio.mapper.ConsumerDataMapper;
 import com.hh.contractstestsadmin.dao.minio.mapper.ProducerDataMapper;
 import com.hh.contractstestsadmin.dao.minio.mapper.ServiceListMapper;
@@ -92,7 +92,7 @@ public class AppConfig {
 
   @Bean
   public StatusService statusService(StandsDao standsDao, ReleaseVersionDao releaseVersionDao, ObjectMapper objectMapper) {
-    return new StatusService(standsDao, releaseName, releaseVersionDao, objectMapper);
+    return new StatusService(standsDao, minioReleaseName, releaseVersionDao, objectMapper);
   }
 
   @Bean
@@ -101,8 +101,8 @@ public class AppConfig {
   }
 
   @Bean
-  public StandValidationService standValidationService(ContractsDao contractsDao, ValidationService validationService) {
-    return new StandValidationService(contractsDao, validationService);
+  public StandValidationService standValidationService(StandsDao standsDao, ValidationService validationService) {
+    return new StandValidationService(standsDao, validationService);
   }
 
   @Bean
