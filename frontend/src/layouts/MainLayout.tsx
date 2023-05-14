@@ -1,7 +1,7 @@
-import { AppContent } from 'components/AppContent';
-import { AppFooter } from 'components/AppFooter/Index';
-import { AppHeader } from 'components/AppHeader';
-import { AppSidebar } from 'components/AppSidebar';
+import { AppContent } from 'components/App/Content';
+import { AppFooter } from 'components/App/Footer/Index';
+import { AppHeader } from 'components/App/Header';
+import { AppSidebar } from 'components/App/Sidebar';
 import { Col, Container, Row } from 'reactstrap';
 
 export const MainLayout = () => {
@@ -9,7 +9,7 @@ export const MainLayout = () => {
         <>
             <AppHeader />
             <Container fluid>
-                <Row style={{ height: '89vh' }}>
+                <Row>
                     <Col md={2} className="pt-3 border-end border-1">
                         <AppSidebar />
                     </Col>
