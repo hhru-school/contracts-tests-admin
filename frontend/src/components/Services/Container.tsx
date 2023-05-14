@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { Col, Container, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
 import { ServicesList } from './List';
-import useSWR from 'swr';
-import { getServicesList } from './api';
 import { Loader } from 'components/Loader';
 import { ApiResponse } from './types/ApiResponse';
+import useSWR from 'swr';
+import { getServicesList } from './api';
 
-export const ServicesContainer = () => {
+export type ServicesContainerProps = {
+    standName: string;
+};
+
+export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName }) => {
     const [activeTab, setactiveTab] = useState(1);
 
-    //TODO: заменить на хук useStandName из тулбара
-    const standId = 'ts107.pyn.ru-contracts';
-
     const { isLoading, isValidating, data } = useSWR<ApiResponse>(
-        `/api/stands/${standId}`,
+        standName ? `/api/stands/${standName}` : null,
         getServicesList,
     );
 
@@ -27,6 +28,7 @@ export const ServicesContainer = () => {
                         href="#"
                         className={activeTab === 1 ? 'active' : ''}
                         onClick={() => setactiveTab(1)}
+                        disabled={!standName}
                     >
                         Из стенда
                     </NavLink>
@@ -36,45 +38,40 @@ export const ServicesContainer = () => {
                         href="#"
                         className={activeTab === 2 ? 'active' : ''}
                         onClick={() => setactiveTab(2)}
+                        disabled={!standName}
                     >
                         Из релиза
                     </NavLink>
                 </NavItem>
             </Nav>
-            <TabContent activeTab={activeTab}>
-                <TabPane tabId={1}>
-                    <Row>
-                        {showLoader && (
-                            <Col className="d-flex justify-content-center">
-                                <div className="pt-5">
-                                    <Loader />
-                                </div>
-                            </Col>
-                        )}
-                        {!showLoader && data && (
+            {!standName && (
+                <div className="pt-5 d-flex justify-content-center">
+                    <h5>выберите стенд для отображения сервисов</h5>
+                </div>
+            )}
+            {showLoader && (
+                <div className="pt-5 d-flex justify-content-center">
+                    <Loader />
+                </div>
+            )}
+            {!showLoader && data && (
+                <TabContent activeTab={activeTab}>
+                    <TabPane tabId={1}>
+                        <Row>
                             <Col>
                                 <ServicesList items={data.services.stand} />
                             </Col>
-                        )}
-                    </Row>
-                </TabPane>
-                <TabPane tabId={2}>
-                    <Row>
-                        {showLoader && (
-                            <Col className="d-flex justify-content-center">
-                                <div className="pt-5">
-                                    <Loader />
-                                </div>
-                            </Col>
-                        )}
-                        {!showLoader && data && (
+                        </Row>
+                    </TabPane>
+                    <TabPane tabId={2}>
+                        <Row>
                             <Col>
                                 <ServicesList items={data.services.release} />
                             </Col>
-                        )}
-                    </Row>
-                </TabPane>
-            </TabContent>
+                        </Row>
+                    </TabPane>
+                </TabContent>
+            )}
         </Container>
     );
 };

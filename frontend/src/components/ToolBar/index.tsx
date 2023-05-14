@@ -2,12 +2,16 @@ import { ReactComponent as PlayIcon } from './img/play.svg';
 import useSWR from 'swr';
 import React, { useState, KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
 import { ListGroup, ListGroupItem, Input, Button, Alert } from 'reactstrap';
-import { ApiResponse } from './types/Response';
 import { HandleKeys } from './types/HandleKeys';
+import { Stand } from './types/Stand';
 
-export const AppToolBar: React.FC = () => {
-    const { isLoading, data, error } = useSWR<ApiResponse>('/api/stands/');
-    const [selectedItem, setSelectedItem] = useState('');
+export type ToolBarProps = {
+    selectedItem: string;
+    setSelectedItem: (item: string) => void;
+};
+
+export const ToolBar: React.FC<ToolBarProps> = ({ selectedItem, setSelectedItem }) => {
+    const { isLoading, data, error } = useSWR<Stand[]>('/api/stands');
     const [showList, setShowList] = useState(false);
     const [hoveredItem, setHoveredItem] = useState<string>('');
     const [currentPositionInList, setCurrentPositionInList] = useState(0);
@@ -28,7 +32,7 @@ export const AppToolBar: React.FC = () => {
         setSelectedItem(e.target.value);
         setShowList(true);
     };
-    const filteredData = data.stands
+    const filteredData = data
         .map((item) => item.name)
         .filter((name) => name.toLowerCase().includes(selectedItem.toLowerCase()));
 
