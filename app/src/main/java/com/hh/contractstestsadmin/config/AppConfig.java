@@ -1,7 +1,11 @@
 package com.hh.contractstestsadmin.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hh.contractstestsadmin.dao.*;
+import com.hh.contractstestsadmin.dao.ContractsDao;
+import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
+import com.hh.contractstestsadmin.dao.ServiceDao;
+import com.hh.contractstestsadmin.dao.ValidationDao;
+import com.hh.contractstestsadmin.dao.ValidationInfoDao;
 import com.hh.contractstestsadmin.service.ValidationService;
 import io.minio.MinioClient;
 import io.swagger.jaxrs.config.BeanConfig;
