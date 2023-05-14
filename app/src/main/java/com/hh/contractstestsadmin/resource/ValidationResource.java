@@ -57,7 +57,7 @@ public class ValidationResource {
   @Path("stands/{standName}/validations/{validationId}")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getValidation(
+  public Response getServicesRelations(
       @PathParam("standName") String standName,
       @PathParam("validationId") Long validationId
   ) {
