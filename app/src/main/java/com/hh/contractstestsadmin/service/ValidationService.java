@@ -6,7 +6,6 @@ import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.model.Validation;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 

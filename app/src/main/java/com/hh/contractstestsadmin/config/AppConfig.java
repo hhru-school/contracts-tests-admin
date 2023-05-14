@@ -64,7 +64,7 @@ public class AppConfig {
     swaggerConfigBean.setTitle("Contract tests backend");
     swaggerConfigBean.setSchemes(new String[]{"http"});
     swaggerConfigBean.setBasePath("/");
-    swaggerConfigBean.setVersion("1.0.2");
+    swaggerConfigBean.setVersion("1.1.0");
     swaggerConfigBean.setResourcePackage("com.hh.contractstestsadmin.resource");
     swaggerConfigBean.setPrettyPrint(true);
     swaggerConfigBean.setScan(true);
