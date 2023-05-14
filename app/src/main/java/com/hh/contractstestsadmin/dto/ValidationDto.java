@@ -4,13 +4,13 @@ import java.util.List;
 
 public class ValidationDto extends ValidationPreviewDto {
 
-  private List<RelationDto> relations;
+  private List<ServicesRelationDto> servicesRelations;
 
-  public List<RelationDto> getRelations() {
-    return relations;
+  public List<ServicesRelationDto> getServicesRelations() {
+    return servicesRelations;
   }
 
-  public void setRelations(List<RelationDto> relations) {
-    this.relations = relations;
+  public void setServicesRelations(List<ServicesRelationDto> servicesRelations) {
+    this.servicesRelations = servicesRelations;
   }
 }

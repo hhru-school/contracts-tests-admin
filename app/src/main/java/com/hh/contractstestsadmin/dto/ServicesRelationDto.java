@@ -1,6 +1,6 @@
 package com.hh.contractstestsadmin.dto;
 
-public class RelationDto {
+public class ServicesRelationDto {
 
   private ProducerDto producer;
 
