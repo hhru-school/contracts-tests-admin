@@ -9,7 +9,7 @@ export const MainLayout = () => {
         <>
             <AppHeader />
             <Container fluid>
-                <Row style={{ height: '89vh' }}>
+                <Row>
                     <Col md={2} className="pt-3 border-end border-1">
                         <AppSidebar />
                     </Col>

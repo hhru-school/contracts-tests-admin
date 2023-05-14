@@ -1,35 +1,23 @@
 import { useState } from 'react';
-import {
-    Col,
-    Container,
-    Nav,
-    NavItem,
-    NavLink,
-    Row,
-    Spinner,
-    TabContent,
-    TabPane,
-} from 'reactstrap';
+import { Col, Container, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
 import { ServicesList } from './List';
 import useSWR from 'swr';
-import { Service } from './types/Service';
 import { getServicesList } from './api';
-
-const Loader: React.FC = () => (
-    <Spinner
-        type="grow"
-        color="primary"
-        style={{
-            height: '3rem',
-            width: '3rem',
-        }}
-    />
-);
+import { Loader } from 'components/Loader';
+import { ApiResponse } from './types/ApiResponse';
 
 export const ServicesContainer = () => {
     const [activeTab, setactiveTab] = useState(1);
 
-    const { isLoading, isValidating, data } = useSWR<Service[]>('/api/services', getServicesList);
+    //TODO: заменить на хук useStandName из тулбара
+    const standId = 'ts107.pyn.ru-contracts';
+
+    const { isLoading, isValidating, data } = useSWR<ApiResponse>(
+        `/api/stands/${standId}`,
+        getServicesList,
+    );
+
+    const showLoader = isLoading || isValidating;
 
     return (
         <Container fluid>
@@ -40,7 +28,7 @@ export const ServicesContainer = () => {
                         className={activeTab === 1 ? 'active' : ''}
                         onClick={() => setactiveTab(1)}
                     >
-                        Из стендов
+                        Из стенда
                     </NavLink>
                 </NavItem>
                 <NavItem>
@@ -56,27 +44,34 @@ export const ServicesContainer = () => {
             <TabContent activeTab={activeTab}>
                 <TabPane tabId={1}>
                     <Row>
-                        {(isLoading || isValidating) && (
+                        {showLoader && (
                             <Col className="d-flex justify-content-center">
                                 <div className="pt-5">
                                     <Loader />
                                 </div>
                             </Col>
                         )}
-                        {data && (
+                        {!showLoader && data && (
                             <Col>
-                                <ServicesList items={data} />
+                                <ServicesList items={data.services.stand} />
                             </Col>
                         )}
                     </Row>
                 </TabPane>
                 <TabPane tabId={2}>
                     <Row>
-                        <Col className="d-flex justify-content-center">
-                            <div className="pt-5">
-                                <Loader />
-                            </div>
-                        </Col>
+                        {showLoader && (
+                            <Col className="d-flex justify-content-center">
+                                <div className="pt-5">
+                                    <Loader />
+                                </div>
+                            </Col>
+                        )}
+                        {!showLoader && data && (
+                            <Col>
+                                <ServicesList items={data.services.release} />
+                            </Col>
+                        )}
                     </Row>
                 </TabPane>
             </TabContent>

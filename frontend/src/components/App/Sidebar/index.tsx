@@ -5,17 +5,8 @@ export const AppSidebar: React.FC = () => {
         <Nav vertical pills>
             <NavItem>
                 <NavLink active href="/">
-                    Home page
+                    Статус
                 </NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink href="#">Sidebar Item #2</NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink href="#">Sidebar Item #3</NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink href="#">Sidebar Item #4</NavLink>
             </NavItem>
         </Nav>
     );
