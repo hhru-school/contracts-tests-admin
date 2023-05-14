@@ -64,6 +64,7 @@ public class Expectation {
   private String responseBody;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "validation_id")
   private Validation validation;
 
   @OneToMany(mappedBy = "expectation", orphanRemoval = true, cascade = CascadeType.ALL)

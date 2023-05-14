@@ -1,9 +1,7 @@
 package com.hh.contractstestsadmin.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hh.contractstestsadmin.dao.ContractsDao;
-import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
-import com.hh.contractstestsadmin.dao.ValidationDao;
+import com.hh.contractstestsadmin.dao.*;
 import com.hh.contractstestsadmin.service.ValidationService;
 import io.minio.MinioClient;
 import io.swagger.jaxrs.config.BeanConfig;
@@ -77,7 +75,8 @@ public class AppConfig {
   }
 
   @Bean
-  public StatusService statusService(ContractsDao contractsDao, ReleaseVersionDao releaseVersionDao, ObjectMapper objectMapper) {
+  public StatusService statusService(ContractsDao contractsDao, ReleaseVersionDao releaseVersionDao,
+                                     ObjectMapper objectMapper) {
     return new StatusService(contractsDao, releaseName, releaseVersionDao, objectMapper);
   }
 
@@ -94,6 +93,16 @@ public class AppConfig {
   @Bean
   public ValidationDao validationDao(LocalSessionFactoryBean sessionFactoryBean) {
     return new ValidationDao(sessionFactoryBean.getObject());
+  }
+
+  @Bean
+  public ServiceDao serviceDao(LocalSessionFactoryBean sessionFactoryBean) {
+    return new ServiceDao(sessionFactoryBean.getObject());
+  }
+
+  @Bean
+  public ValidationInfoDao validationInfoDao(LocalSessionFactoryBean sessionFactoryBean) {
+    return new ValidationInfoDao(sessionFactoryBean.getObject());
   }
 
   @Bean

@@ -28,7 +28,8 @@ import org.hibernate.annotations.TypeDefs;
 public class Service {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long serviceId;
+  @Column(name = "service_id")
+  private Long id;
 
   @Column(name = "created_date")
   private OffsetDateTime createdDate;
@@ -61,12 +62,12 @@ public class Service {
   public Service() {
   }
 
-  public Long getServiceId() {
-    return serviceId;
+  public Long getId() {
+    return id;
   }
 
-  public void setServiceId(Long serviceId) {
-    this.serviceId = serviceId;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public OffsetDateTime getCreatedDate() {
