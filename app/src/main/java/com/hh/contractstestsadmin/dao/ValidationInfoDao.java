@@ -27,7 +27,7 @@ public class ValidationInfoDao {
                 .getResultList();
     }
 
-    public List<Expectation> getExpectationByValidationIdANDByProducerIdAndConsumerId(Long validationId,
+    public List<Expectation> getExpectationByValidationIdAndByProducerIdAndConsumerId(Long validationId,
                                                                                       Long consumerId, Long producerId) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT e from Expectation  e " +
