@@ -39,7 +39,7 @@ public class StandsDao {
     try {
       standList = minioClient.listBuckets();
     } catch (Exception e) {
-      throw new StandsDaoException(e);
+      throw new StandsDaoException("It is impossible to get stands info from minio storage", e);
     }
 
     return ofNullable(standList)
