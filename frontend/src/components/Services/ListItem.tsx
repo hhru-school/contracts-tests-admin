@@ -2,14 +2,16 @@ import { ReactComponent as DownloadIcon } from './img/download.svg';
 import { Button, Col, ListGroupItem, Row } from 'reactstrap';
 import { Service } from './types/Service';
 
-export type ServicesListItemProps = {
-    item: Service;
-};
+export type ServicesListItemProps = Service & {};
 
-export const ServicesListItem: React.FC<ServicesListItemProps> = ({ item }) => {
-    const { name, version, isConsumer, isProducer, expectationPublishDate, schemaPublishDate } =
-        item;
-
+export const ServicesListItem: React.FC<ServicesListItemProps> = ({
+    name,
+    version,
+    isConsumer,
+    isProducer,
+    expectationPublishDate,
+    schemaPublishDate,
+}) => {
     return (
         <ListGroupItem>
             <Row>

@@ -1,10 +1,20 @@
 import { useState } from 'react';
-import { Col, Container, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
-import { ServicesList } from './List';
+import {
+    Col,
+    Container,
+    ListGroup,
+    Nav,
+    NavItem,
+    NavLink,
+    Row,
+    TabContent,
+    TabPane,
+} from 'reactstrap';
 import { Loader } from 'components/Loader';
 import { ApiResponse } from './types/ApiResponse';
 import useSWR from 'swr';
 import { getServicesList } from './api';
+import { ServicesListItem } from './ListItem';
 
 enum TabName {
     stand = 'stand',
@@ -62,11 +72,18 @@ export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName 
             </Nav>
             {data && (
                 <TabContent activeTab={activeTab}>
-                    {Object.entries(data.services).map(([key, value]) => (
-                        <TabPane tabId={key} key={key}>
+                    {Object.entries(data.services).map(([type, servicesList]) => (
+                        <TabPane tabId={type} key={type}>
                             <Row>
                                 <Col>
-                                    <ServicesList items={value} />
+                                    <ListGroup>
+                                        {servicesList.map((serviceItem, idx) => (
+                                            <ServicesListItem
+                                                key={serviceItem.name + idx}
+                                                {...serviceItem}
+                                            />
+                                        ))}
+                                    </ListGroup>
                                 </Col>
                             </Row>
                         </TabPane>
