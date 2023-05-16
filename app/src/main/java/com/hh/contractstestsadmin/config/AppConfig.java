@@ -119,17 +119,20 @@ public class AppConfig {
   }
 
   @Bean
-  public StandsDao standsDao() {
-    return new StandsDao(minioClient(), serviceListMapper());
+  public StandsDao standsDao(MinioClient minioClient, ServiceListMapper serviceListMapper) {
+    return new StandsDao(
+        minioClient(),
+        serviceListMapper(minioProperties(), serviceMapper(minioProperties(), consumerDataMapper(), producerDataMapper()))
+    );
   }
 
   @Bean
-  public ServiceListMapper serviceListMapper() {
-    return new ServiceListMapper(minioProperties(), serviceMapper());
+  public ServiceListMapper serviceListMapper(Properties minioProperties, ServiceMapper serviceMapper) {
+    return new ServiceListMapper(minioProperties(), serviceMapper(minioProperties(), consumerDataMapper(), producerDataMapper()));
   }
 
   @Bean
-  public ServiceMapper serviceMapper() {
+  public ServiceMapper serviceMapper(Properties minioProperties, ConsumerDataMapper consumerDataMapper, ProducerDataMapper producerDataMapper) {
     return new ServiceMapper(minioProperties(), consumerDataMapper(), producerDataMapper());
   }
 
@@ -142,6 +145,7 @@ public class AppConfig {
   public ProducerDataMapper producerDataMapper() {
     return new ProducerDataMapper();
   }
+
   @Bean
   public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -166,6 +170,7 @@ public class AppConfig {
     minioProperties.put("minio.object.name.separator", objectNameSeparator);
     return minioProperties;
   }
+
   @Bean
   public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();

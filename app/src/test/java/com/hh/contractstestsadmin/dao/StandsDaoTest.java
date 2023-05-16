@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -36,7 +37,7 @@ class StandsDaoTest {
           .bucket(bucketName)
           .build();
 
-      when(minioClient.bucketExists(bucketExistsArgs)).thenReturn(false);
+      when(minioClient.bucketExists(any())).thenReturn(false);
       Properties properties = new Properties();
       properties.put("minio.consumer.artefact.name", "expectation");
       properties.put("minio.producer.artefact.name", "schema");
