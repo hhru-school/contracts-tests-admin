@@ -78,42 +78,40 @@ export const ToolBar: React.FC<ToolBarProps> = ({ selectedItem, setSelectedItem 
         }
     };
     return (
-        <div className="row mb-5">
-            <div className="col-12 d-inline d-flex align-items-center justify-content-center">
-                <div className="d-block position-relative w-50">
-                    <Input
-                        type="text"
-                        placeholder="Search"
-                        value={selectedItem}
-                        onChange={handleSearch}
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
-                        onKeyDown={handleKeyDown}
-                    />
-                    {showList && (
-                        <ListGroup
-                            className="position-absolute w-100"
-                            style={{ height: '250px', overflow: 'auto' }}
-                            onSelect={handleSelect}
-                        >
-                            {filteredData.map((item: string) => (
-                                <ListGroupItem
-                                    key={item}
-                                    onClick={() => selectElement(item)}
-                                    onMouseEnter={() => handleHover(item)}
-                                    onMouseLeave={() => handleHover('')}
-                                    className={hoveredItem === item ? 'active' : ''}
-                                >
-                                    {item}
-                                </ListGroupItem>
-                            ))}
-                        </ListGroup>
-                    )}
-                </div>
-                <Button color="primary" className="ms-3 d-flex gap-1 align-items-center">
-                    <PlayIcon /> Start
-                </Button>
+        <div className="d-flex align-items-center gap-3 justify-content-center">
+            <div className="position-relative w-50">
+                <Input
+                    type="text"
+                    placeholder="Search"
+                    value={selectedItem}
+                    onChange={handleSearch}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    onKeyDown={handleKeyDown}
+                />
+                {showList && (
+                    <ListGroup
+                        className="position-absolute w-100"
+                        style={{ height: '250px', overflow: 'auto' }}
+                        onSelect={handleSelect}
+                    >
+                        {filteredData.map((item: string) => (
+                            <ListGroupItem
+                                key={item}
+                                onClick={() => selectElement(item)}
+                                onMouseEnter={() => handleHover(item)}
+                                onMouseLeave={() => handleHover('')}
+                                className={hoveredItem === item ? 'active' : ''}
+                            >
+                                {item}
+                            </ListGroupItem>
+                        ))}
+                    </ListGroup>
+                )}
             </div>
+            <Button color="primary" className="d-flex gap-1 align-items-center">
+                <PlayIcon /> Start
+            </Button>
         </div>
     );
 };

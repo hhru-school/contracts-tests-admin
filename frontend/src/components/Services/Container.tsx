@@ -6,12 +6,17 @@ import { ApiResponse } from './types/ApiResponse';
 import useSWR from 'swr';
 import { getServicesList } from './api';
 
+enum TabName {
+    stand = 'stand',
+    release = 'release',
+}
+
 export type ServicesContainerProps = {
     standName: string;
 };
 
 export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName }) => {
-    const [activeTab, setactiveTab] = useState(1);
+    const [activeTab, setactiveTab] = useState<TabName>(TabName.stand);
 
     const { isLoading, isValidating, data } = useSWR<ApiResponse>(
         standName ? `/api/stands/${standName}` : null,
@@ -26,8 +31,8 @@ export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName 
                 <NavItem>
                     <NavLink
                         href="#"
-                        className={activeTab === 1 ? 'active' : ''}
-                        onClick={() => setactiveTab(1)}
+                        className={activeTab === TabName.stand ? 'active' : ''}
+                        onClick={() => setactiveTab(TabName.stand)}
                         disabled={!standName}
                     >
                         Из стенда
@@ -36,8 +41,8 @@ export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName 
                 <NavItem>
                     <NavLink
                         href="#"
-                        className={activeTab === 2 ? 'active' : ''}
-                        onClick={() => setactiveTab(2)}
+                        className={activeTab === TabName.release ? 'active' : ''}
+                        onClick={() => setactiveTab(TabName.release)}
                         disabled={!standName}
                     >
                         Из релиза
@@ -56,14 +61,14 @@ export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName 
             )}
             {!showLoader && data && (
                 <TabContent activeTab={activeTab}>
-                    <TabPane tabId={1}>
+                    <TabPane tabId={TabName.stand}>
                         <Row>
                             <Col>
                                 <ServicesList items={data.services.stand} />
                             </Col>
                         </Row>
                     </TabPane>
-                    <TabPane tabId={2}>
+                    <TabPane tabId={TabName.release}>
                         <Row>
                             <Col>
                                 <ServicesList items={data.services.release} />

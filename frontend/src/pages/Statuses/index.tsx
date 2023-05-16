@@ -1,19 +1,16 @@
 import { ServicesContainer } from 'components/Services/Container';
-import { ToolBar } from 'components/ToolBar';
 import { ValidationHistory } from 'components/ValidationHistory';
-import { useState } from 'react';
+import { AppContext } from 'context/AppContext';
+import { useContext } from 'react';
 import { Col, Container, Row } from 'reactstrap';
 
 export const StatusesPage: React.FC = () => {
-    const [selectedStandName, setSelectedStandName] = useState('');
+    const { standName } = useContext(AppContext);
     return (
         <Container>
-            <Row className="pt-4">
-                <ToolBar selectedItem={selectedStandName} setSelectedItem={setSelectedStandName} />
-            </Row>
-            <Row>
-                <Col className="col-md-10">
-                    <ServicesContainer standName={selectedStandName} />
+            <Row className="pt-3">
+                <Col md={10}>
+                    <ServicesContainer standName={standName} />
                 </Col>
                 <Col>
                     <ValidationHistory />
