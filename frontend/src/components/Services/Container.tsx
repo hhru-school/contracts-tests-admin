@@ -16,7 +16,7 @@ export type ServicesContainerProps = {
 };
 
 export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName }) => {
-    const [activeTab, setactiveTab] = useState<TabName>(TabName.stand);
+    const [activeTab, setActiveTab] = useState<TabName>(TabName.stand);
 
     const { isLoading, isValidating, data } = useSWR<ApiResponse>(
         standName ? `/api/stands/${standName}` : null,
@@ -25,6 +25,17 @@ export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName 
 
     const showLoader = isLoading || isValidating;
 
+    if (!standName || showLoader) {
+        return (
+            <Container fluid>
+                <div className="pt-5 d-flex justify-content-center">
+                    {!standName && <h5>выберите стенд для отображения сервисов</h5>}
+                    {showLoader && <Loader />}
+                </div>
+            </Container>
+        );
+    }
+
     return (
         <Container fluid>
             <Nav tabs>
@@ -32,7 +43,7 @@ export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName 
                     <NavLink
                         href="#"
                         className={activeTab === TabName.stand ? 'active' : ''}
-                        onClick={() => setactiveTab(TabName.stand)}
+                        onClick={() => setActiveTab(TabName.stand)}
                         disabled={!standName}
                     >
                         Из стенда
@@ -42,39 +53,24 @@ export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName 
                     <NavLink
                         href="#"
                         className={activeTab === TabName.release ? 'active' : ''}
-                        onClick={() => setactiveTab(TabName.release)}
+                        onClick={() => setActiveTab(TabName.release)}
                         disabled={!standName}
                     >
                         Из релиза
                     </NavLink>
                 </NavItem>
             </Nav>
-            {!standName && (
-                <div className="pt-5 d-flex justify-content-center">
-                    <h5>выберите стенд для отображения сервисов</h5>
-                </div>
-            )}
-            {showLoader && (
-                <div className="pt-5 d-flex justify-content-center">
-                    <Loader />
-                </div>
-            )}
-            {!showLoader && data && (
+            {data && (
                 <TabContent activeTab={activeTab}>
-                    <TabPane tabId={TabName.stand}>
-                        <Row>
-                            <Col>
-                                <ServicesList items={data.services.stand} />
-                            </Col>
-                        </Row>
-                    </TabPane>
-                    <TabPane tabId={TabName.release}>
-                        <Row>
-                            <Col>
-                                <ServicesList items={data.services.release} />
-                            </Col>
-                        </Row>
-                    </TabPane>
+                    {Object.entries(data.services).map(([key, value]) => (
+                        <TabPane tabId={key} key={key}>
+                            <Row>
+                                <Col>
+                                    <ServicesList items={value} />
+                                </Col>
+                            </Row>
+                        </TabPane>
+                    ))}
                 </TabContent>
             )}
         </Container>
