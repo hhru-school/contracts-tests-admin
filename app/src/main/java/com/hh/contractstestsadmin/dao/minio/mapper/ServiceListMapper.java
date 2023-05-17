@@ -25,16 +25,16 @@ public class ServiceListMapper {
   }
 
   @NotNull
-  public List<Service> map(Collection<Item> standItems) throws StandsDaoException {
-    Map<String, Item> artefactsMap = getArtefactsMap(standItems);
+  public List<Service> map(Collection<Item> standArtefacts, Map<String, String> artefactUrls) throws StandsDaoException {
+    Map<String, Item> artefactsMap = getArtefactsMap(standArtefacts);
 
     return artefactsMap.entrySet()
         .stream()
         .collect(Collectors.toMap(
-            entry -> extractServiceName(entry.getValue().objectName()),
-            entry -> {
+            artefact -> extractServiceName(getArtefactPath(artefact)),
+            artefact -> {
               try {
-                return serviceMapper.map(entry);
+                return serviceMapper.map(artefact, artefactUrls.get(getArtefactPath(artefact)));
               } catch (StandsDaoException e) {
                 throw new RuntimeException(e);
               }
@@ -70,16 +70,20 @@ public class ServiceListMapper {
    * particular service that is presented in the map as a consumer, or e.g 'schema/subscriptions'(<producer_artefact_name>/<service_name>) key and
    * the artefact item info of the particular service that is presented in the map as a producer.
    *
-   * @param standItems all items that represents service artefact's info
+   * @param artefacts all items that represents service artefact's info
    * @return Map<String, Item> In case the service is presented as a consumer and as a producer, it will be placed in the map twice with 2
    * different keys:
    * 'exectation/<servicename>' and 'schema/<servicename>', and with 2 different values: consumer artefact item info and producer artefact
    * item info
    * @throws StandsDaoException
    */
-  private Map<String, Item> getArtefactsMap(Collection<Item> standItems) {
-    return standItems
+  private Map<String, Item> getArtefactsMap(Collection<Item> artefacts) {
+    return artefacts
         .stream()
         .collect(Collectors.toMap(item -> extractArtefactKey(item.objectName()), identity()));
+  }
+
+  private String getArtefactPath(Map.Entry<String, Item> artefactEntry) {
+    return artefactEntry.getValue().objectName();
   }
 }

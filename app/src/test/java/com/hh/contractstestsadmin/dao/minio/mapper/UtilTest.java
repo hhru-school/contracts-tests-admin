@@ -1,6 +1,6 @@
 package com.hh.contractstestsadmin.dao.minio.mapper;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 class UtilTest {
@@ -28,4 +28,5 @@ class UtilTest {
     assertEquals("00.01.01-SNAPSHOT", Util.extractArtefactVersion("expectation/jlogic/00.01.01-SNAPSHOT.json"));
     assertEquals("00.01.01-SNAPSHOT", Util.extractArtefactVersion("schema/jlogic/00.01.01-SNAPSHOT.yaml"));
   }
+
 }

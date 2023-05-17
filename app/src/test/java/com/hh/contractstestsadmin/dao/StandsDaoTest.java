@@ -39,9 +39,9 @@ class StandsDaoTest {
 
       when(minioClient.bucketExists(any())).thenReturn(false);
       Properties properties = new Properties();
-      properties.put("minio.consumer.artefact.name", "expectation");
-      properties.put("minio.producer.artefact.name", "schema");
-      StandsDao standsDao = new StandsDao(minioClient, new ServiceListMapper(properties, new ServiceMapper(properties, new ConsumerDataMapper(),
+      properties.put("minio.consumer.artefact.type", "expectation");
+      properties.put("minio.producer.artefact.type", "schema");
+      StandsDao standsDao = new StandsDao(minioClient, properties, new ServiceListMapper(properties, new ServiceMapper(properties, new ConsumerDataMapper(),
           new ProducerDataMapper()
       )));
       standsDao.getServices(bucketName);
@@ -77,9 +77,9 @@ class StandsDaoTest {
     }
 
     Properties properties = new Properties();
-    properties.put("minio.consumer.artefact.name", "expectation");
-    properties.put("minio.producer.artefact.name", "schema");
-    StandsDao standsDao = new StandsDao(minioClient, new ServiceListMapper(properties, new ServiceMapper(properties, new ConsumerDataMapper(),
+    properties.put("minio.consumer.artefact.type", "expectation");
+    properties.put("minio.producer.artefact.type", "schema");
+    StandsDao standsDao = new StandsDao(minioClient, properties, new ServiceListMapper(properties, new ServiceMapper(properties, new ConsumerDataMapper(),
         new ProducerDataMapper()
     )));
     try {

@@ -63,14 +63,14 @@ public class AppConfig {
   @Value("${minio.release.stand.name}")
   private String minioReleaseName;
 
-  @Value("${minio.producer.artefact.name}")
-  private String producerArtefactName;
+  @Value("${minio.producer.artefact.type}")
+  private String producerArtefactType;
 
-  @Value("${minio.consumer.artefact.name")
-  private String consumerArtefactName;
+  @Value("${minio.consumer.artefact.type")
+  private String consumerArtefactType;
 
-  @Value("${minio.object.name.separator}")
-  private String objectNameSeparator;
+  @Value("${minio.artefact.url.expiration.period")
+  private String artefactUrlExpirationPeriod;
 
   @Bean
   public BeanConfig configureSwagger() {
@@ -119,8 +119,8 @@ public class AppConfig {
   }
 
   @Bean
-  public StandsDao standsDao(MinioClient minioClient, ServiceListMapper serviceListMapper) {
-    return new StandsDao(minioClient, serviceListMapper);
+  public StandsDao standsDao(MinioClient minioClient, Properties minioProperties, ServiceListMapper serviceListMapper) {
+    return new StandsDao(minioClient, minioProperties, serviceListMapper);
   }
 
   @Bean
@@ -162,8 +162,9 @@ public class AppConfig {
 
   private Properties minioProperties() {
     Properties minioProperties = new Properties();
-    minioProperties.put("minio.consumer.artefact.name", consumerArtefactName);
-    minioProperties.put("minio.producer.artefact.name", producerArtefactName);
+    minioProperties.put("minio.consumer.artefact.type", consumerArtefactType);
+    minioProperties.put("minio.producer.artefact.type", producerArtefactType);
+    minioProperties.put("minio.artefact.url.expiration.period", artefactUrlExpirationPeriod);
     return minioProperties;
   }
 
