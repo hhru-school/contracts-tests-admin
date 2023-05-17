@@ -2,6 +2,7 @@ package com.hh.contractstestsadmin.dao.minio;
 
 import com.hh.contractstestsadmin.dao.minio.mapper.ServiceListMapper;
 import static com.hh.contractstestsadmin.dao.minio.mapper.Util.extractArtefactKey;
+import static com.hh.contractstestsadmin.dao.minio.mapper.Util.extractArtefactVersion;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.model.artefacts.Service;
@@ -64,8 +65,9 @@ public class StandsDao {
     validator.validate(standName);
 
     Iterable<Result<Item>> standArtefacts = getStandArtefacts(standName);
-    Collection<Item> lastModifiedArtefacts = getLastModifiedArtefacts(standArtefacts);
+    Collection<Item> lastModifiedArtefacts = getArtefactsOfLastVersions(standArtefacts);
     Map<String, String> artefactUrls = getArtefactUrls(standName, lastModifiedArtefacts);
+
     return serviceListMapper.map(lastModifiedArtefacts, artefactUrls);
   }
 
@@ -161,7 +163,7 @@ public class StandsDao {
    * @throws StandsDaoException
    */
   @NotNull
-  private Collection<Item> getLastModifiedArtefacts(@NotNull Iterable<Result<Item>> standArtefacts) throws StandsDaoException {
+  private Collection<Item> getArtefactsOfLastVersions(@NotNull Iterable<Result<Item>> standArtefacts) throws StandsDaoException {
     validator.validate(standArtefacts);
 
     Map<String, Item> artefactMap = new HashMap<>();
@@ -174,7 +176,10 @@ public class StandsDao {
 
         if (prevArtefact != null) {
 
-          if (currArtefact.lastModified().isAfter(prevArtefact.lastModified())) {
+          int compareResult = getArtefactVersion(currArtefact).compareToIgnoreCase(getArtefactVersion(prevArtefact));
+          boolean currArtefactIsNewer = (compareResult > 0 ? true : false);
+
+          if (currArtefactIsNewer) {
             artefactMap.put(artefactKey, currArtefact);
           }
         }
@@ -190,6 +195,11 @@ public class StandsDao {
   private String getArtefactPath(Item artefact) {
 
     return artefact.objectName();
+  }
+
+  private String getArtefactVersion(Item artefact) {
+
+    return extractArtefactVersion(getArtefactPath(artefact));
   }
 
 }
