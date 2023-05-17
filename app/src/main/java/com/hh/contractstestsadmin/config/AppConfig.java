@@ -120,20 +120,17 @@ public class AppConfig {
 
   @Bean
   public StandsDao standsDao(MinioClient minioClient, ServiceListMapper serviceListMapper) {
-    return new StandsDao(
-        minioClient(),
-        serviceListMapper(minioProperties(), serviceMapper(minioProperties(), consumerDataMapper(), producerDataMapper()))
-    );
+    return new StandsDao(minioClient, serviceListMapper);
   }
 
   @Bean
   public ServiceListMapper serviceListMapper(Properties minioProperties, ServiceMapper serviceMapper) {
-    return new ServiceListMapper(minioProperties(), serviceMapper(minioProperties(), consumerDataMapper(), producerDataMapper()));
+    return new ServiceListMapper(minioProperties, serviceMapper);
   }
 
   @Bean
   public ServiceMapper serviceMapper(Properties minioProperties, ConsumerDataMapper consumerDataMapper, ProducerDataMapper producerDataMapper) {
-    return new ServiceMapper(minioProperties(), consumerDataMapper(), producerDataMapper());
+    return new ServiceMapper(minioProperties, consumerDataMapper, producerDataMapper);
   }
 
   @Bean
