@@ -3,20 +3,46 @@ package com.hh.contractstestsadmin.dao.minio.mapper;
 public class Util {
 
   /**
-   * Removes the consumer/producer artefact name prefix, e.g 'expectation/' prefix from 'expectation/jlogic'('<consumer_aftefact_name>/<service_name>)
-   * String, just the service name only is left
+   * The artefact path is like 'expectation/jlogic/01.01.json' or 'schema/jlogic/01.01.json'
+   * The pattern match this path and divides it into groups:
+   * 1 - expectation
+   * 2 - /
+   * 3 - jlogic
+   * 4 - /
+   * 5 - 01.01
+   * 6 - .json
    */
-  public static String removeArtefactNamePrefix(String serviceNameWithPrefix, String artefactName, String separator) {
-    return serviceNameWithPrefix.replaceFirst(artefactName + separator, "");
+  public static String ARTEFACT_PATH_PATTERN = "(^[^\\/]*)(\\/)([^\\/]*)(\\/)(.*)(\\.json|\\.yaml)";
+
+  /**
+   * Extracts the service name from the specified artefact path
+   *
+   * @param artefactPath <artefact name>/<service name>/<artefact file>, e.g expectation/jlogic/00.01.01.json
+   * @return the service name, e.g jlogic
+   */
+  public static String extractServiceName(String artefactPath) {
+    return artefactPath.replaceFirst(ARTEFACT_PATH_PATTERN, "$3");
   }
 
   /**
-   * Remove json or yaml file from the path
+   * Extracts <artefact name>/<service name> string (the artefact key) from the specified artefactPath
    *
-   * @param itemPath e.g expectation/subscription/01.02.json
-   * @return e.g expectation/subscription
+   * @param artefactPath <artefact name>/<service name>/<artefact file>, e.g expectation/jlogic/00.01.01.json
+   * @return e.g expectation/jlogic
    */
-  public static String removeArtefactFilePostfix(String itemPath) {
-    return itemPath.replaceFirst("(^[^\\/]*\\/[^\\/]*)(.*)", "$1");
+  public static String extractArtefactKey(String artefactPath) {
+    return artefactPath.replaceFirst(ARTEFACT_PATH_PATTERN, "$1$2$3");
   }
+
+
+  /**
+   * Extracts the artefact version from the specified artefactPath
+   *
+   * @param artefactPath <artefact name>/<service name>/<artefact file>, e.g expectation/jlogic/00.01.01.json
+   * @return e.g 00.01.01
+   */
+  public static String extractArtefactVersion(String artefactPath) {
+    return artefactPath.replaceFirst(ARTEFACT_PATH_PATTERN, "$5");
+  }
+
 }

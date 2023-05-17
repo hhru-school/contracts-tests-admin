@@ -164,7 +164,6 @@ public class AppConfig {
     Properties minioProperties = new Properties();
     minioProperties.put("minio.consumer.artefact.name", consumerArtefactName);
     minioProperties.put("minio.producer.artefact.name", producerArtefactName);
-    minioProperties.put("minio.object.name.separator", objectNameSeparator);
     return minioProperties;
   }
 

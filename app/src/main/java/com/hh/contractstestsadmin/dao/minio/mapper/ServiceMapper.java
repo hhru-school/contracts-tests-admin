@@ -1,6 +1,7 @@
 package com.hh.contractstestsadmin.dao.minio.mapper;
 
-import static com.hh.contractstestsadmin.dao.minio.mapper.Util.removeArtefactNamePrefix;
+import static com.hh.contractstestsadmin.dao.minio.mapper.Util.extractArtefactVersion;
+import static com.hh.contractstestsadmin.dao.minio.mapper.Util.extractServiceName;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.model.artefacts.Service;
 import io.minio.messages.Item;
@@ -31,16 +32,16 @@ public class ServiceMapper {
   public Service map(Map.Entry<String, Item> entry) throws StandsDaoException {
     String expectation = minioProperties.getProperty("minio.consumer.artefact.name");
     String schema = minioProperties.getProperty("minio.producer.artefact.name");
-    String separator = minioProperties.getProperty("minio.object.name.separator");
 
     String entryKey = entry.getKey();
+    Item entryValue = entry.getValue();
     if (entryKey.contains(expectation)) {
-      String serviceName = removeArtefactNamePrefix(entryKey, expectation, separator);
-      return new Service(serviceName, consumerDataMapper.map(entry.getValue()));
+      String serviceName = extractServiceName(entryValue.objectName());
+      return new Service(serviceName, extractArtefactVersion(entryValue.objectName()), consumerDataMapper.map(entryValue));
 
     } else if (entryKey.contains(schema)) {
-      String serviceName = removeArtefactNamePrefix(entry.getKey(), schema, separator);
-      return new Service(serviceName, producerDataMapper.map(entry.getValue()));
+      String serviceName = extractServiceName(entryValue.objectName());
+      return new Service(serviceName, extractArtefactVersion(entryValue.objectName()), producerDataMapper.map(entryValue));
 
     } else {
       throw new StandsDaoException("Bucket structure is different from the expected one");

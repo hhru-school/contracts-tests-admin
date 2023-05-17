@@ -41,7 +41,6 @@ class StandsDaoTest {
       Properties properties = new Properties();
       properties.put("minio.consumer.artefact.name", "expectation");
       properties.put("minio.producer.artefact.name", "schema");
-      properties.put("minio.object.name.separator", "/");
       StandsDao standsDao = new StandsDao(minioClient, new ServiceListMapper(properties, new ServiceMapper(properties, new ConsumerDataMapper(),
           new ProducerDataMapper()
       )));
@@ -80,7 +79,6 @@ class StandsDaoTest {
     Properties properties = new Properties();
     properties.put("minio.consumer.artefact.name", "expectation");
     properties.put("minio.producer.artefact.name", "schema");
-    properties.put("minio.object.name.separator", "/");
     StandsDao standsDao = new StandsDao(minioClient, new ServiceListMapper(properties, new ServiceMapper(properties, new ConsumerDataMapper(),
         new ProducerDataMapper()
     )));

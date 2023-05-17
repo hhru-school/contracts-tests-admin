@@ -1,7 +1,7 @@
 package com.hh.contractstestsadmin.dao.minio;
 
 import com.hh.contractstestsadmin.dao.minio.mapper.ServiceListMapper;
-import static com.hh.contractstestsadmin.dao.minio.mapper.Util.removeArtefactFilePostfix;
+import static com.hh.contractstestsadmin.dao.minio.mapper.Util.extractArtefactKey;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.model.artefacts.Service;
@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import static java.util.Optional.ofNullable;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -110,7 +109,7 @@ public class StandsDao {
 
       for (Result<Item> itemResult : standItems) {
         Item currItem = itemResult.get();
-        String serviceTypeNameKey = removeArtefactFilePostfix(currItem.objectName());
+        String serviceTypeNameKey = extractArtefactKey(currItem.objectName());
         Item prevItem = itemMap.putIfAbsent(serviceTypeNameKey, currItem);
 
         if (prevItem != null) {

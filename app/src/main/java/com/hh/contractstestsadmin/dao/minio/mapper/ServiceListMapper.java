@@ -1,6 +1,7 @@
 package com.hh.contractstestsadmin.dao.minio.mapper;
 
-import static com.hh.contractstestsadmin.dao.minio.mapper.Util.removeArtefactNamePrefix;
+import static com.hh.contractstestsadmin.dao.minio.mapper.Util.extractArtefactKey;
+import static com.hh.contractstestsadmin.dao.minio.mapper.Util.extractServiceName;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.model.artefacts.Service;
 import io.minio.messages.Item;
@@ -30,7 +31,7 @@ public class ServiceListMapper {
     return artefactsMap.entrySet()
         .stream()
         .collect(Collectors.toMap(
-            entry -> extractServiceNameFromArtefactKey(entry.getKey()),
+            entry -> extractServiceName(entry.getValue().objectName()),
             entry -> {
               try {
                 return serviceMapper.map(entry);
@@ -79,22 +80,6 @@ public class ServiceListMapper {
   private Map<String, Item> getArtefactsMap(Collection<Item> standItems) {
     return standItems
         .stream()
-        .collect(Collectors.toMap(item -> Util.removeArtefactFilePostfix(((Item) item).objectName()), identity()));
-  }
-
-  /**
-   * Converts the artefact map key that is presented as <consumer_artefact_name>/<service_name>(e.g 'expectation/jlogic') or
-   * as <producer_artefact_name>/<service_name>(e.g schema/subscriptions) to the service name.
-   *
-   * @param artefactKey 'expectation/jlogic' or 'schema/subcsriptions'
-   * @return the service name, e.g 'jlogic'
-   */
-  private String extractServiceNameFromArtefactKey(String artefactKey) {
-    String expectation = minioProperties.getProperty("minio.consumer.artefact.name");
-    String schema = minioProperties.getProperty("minio.producer.artefact.name");
-    String separator = minioProperties.getProperty("minio.object.name.separator");
-
-    return removeArtefactNamePrefix(
-        removeArtefactNamePrefix(artefactKey, expectation, separator), schema, separator);
+        .collect(Collectors.toMap(item -> extractArtefactKey(item.objectName()), identity()));
   }
 }
