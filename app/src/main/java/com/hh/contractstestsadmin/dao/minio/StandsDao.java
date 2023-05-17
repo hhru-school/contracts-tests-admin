@@ -153,12 +153,12 @@ public class StandsDao {
   }
 
   /**
-   * Returns the last modified artefacts. If there are several artefact files were uploaded to Minio, the method returns Item object for
-   * the last modified one.
+   * Returns an artefact of the last version. If there are several artefact files were uploaded to Minio, the method returns Item object for
+   * the last artefact version.
    *
-   * @param standArtefacts all items that represents different versions of artefacts. It means to one service as a consumer the collection can contain
+   * @param standArtefacts all items that represents artefacts of several versions. It means to one service as a consumer the collection can contain
    *                       several artefacts of different versions.
-   * @return a collection of Item that will represent only one last modified artefact for a particular service as a consumer/producer. In case the
+   * @return a collection of Item that will represent only one last version artefact for a particular service as a consumer/producer. In case the
    * service is presented as a consumer and as a producer, it will be placed in the collection twice.
    * @throws StandsDaoException
    */
