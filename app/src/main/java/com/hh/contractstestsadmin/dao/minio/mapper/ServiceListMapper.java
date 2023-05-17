@@ -39,30 +39,59 @@ public class ServiceListMapper {
                 throw new RuntimeException(e);
               }
             },
-            (prevService, currentService) -> merge(prevService, currentService)
+            (prevService, currentService) -> {
+              try {
+                return merge(prevService, currentService);
+              } catch (StandsDaoException e) {
+                throw new RuntimeException(e);
+              }
+            }
         ))
         .values()
         .stream()
         .toList();
   }
 
-  private Service merge(Service initService, Service serviceToBeMerged) {
-    try {
-      boolean initServiceIsConsumer = initService.getConsumerData().isPresent();
-      boolean initServiceIsProducer = initService.getProducerData().isPresent();
+  /**
+   * The method merge 2 services into one in case the versions of the services are the same. Otherwise, the method returns the service has a newer
+   * version.
+   *
+   * @param initService       Initial service for merging.
+   * @param serviceToBeMerged The service to be merged.
+   * @return The merged service or the initial service or the service to be merged
+   * @throws StandsDaoException
+   */
+  private Service merge(Service initService, Service serviceToBeMerged) throws StandsDaoException {
+    boolean initServiceIsConsumer = initService.getConsumerData().isPresent();
+    boolean initServiceIsProducer = initService.getProducerData().isPresent();
+
+
+    boolean initServiceHasNewerVersion = initServiceHasNewerVersion(initService, serviceToBeMerged);
+    boolean initServiceHasTheSameVersion = initServiceHasTheSameVersion(initService, serviceToBeMerged);
+
+    if (initServiceHasNewerVersion) {
+
+      return initService;
+    } else if (initServiceHasTheSameVersion) {
 
       if (initServiceIsConsumer) {
+
         initService.setProducerData(serviceToBeMerged.getProducerData().get());
+        return initService;
       } else if (initServiceIsProducer) {
+
         initService.setConsumerData(serviceToBeMerged.getConsumerData().get());
+        return initService;
       } else {
-        throw new RuntimeException("Impossible to merge consumer and producer data correctly for '" + initService.getName() + "' service");
+
+        throw new StandsDaoException("Impossible to merge consumer and producer data correctly for '" + initService.getName() + "' service");
       }
-    } catch (StandsDaoException e) {
-      throw new RuntimeException(e);
+
+    } else {
+
+      return serviceToBeMerged;
     }
 
-    return initService;
   }
 
   /**
@@ -85,5 +114,15 @@ public class ServiceListMapper {
 
   private String getArtefactPath(Map.Entry<String, Item> artefactEntry) {
     return artefactEntry.getValue().objectName();
+  }
+
+  private boolean initServiceHasNewerVersion(Service initService, Service serviceToBeMerged) {
+    int compareResult = initService.getVersion().compareToIgnoreCase(serviceToBeMerged.getVersion());
+    return (compareResult > 0 ? true : false);
+  }
+
+  private boolean initServiceHasTheSameVersion(Service initService, Service serviceToBeMerged) {
+    int compareResult = initService.getVersion().compareToIgnoreCase(serviceToBeMerged.getVersion());
+    return (compareResult == 0 ? true : false);
   }
 }
