@@ -111,10 +111,9 @@ public class StandsDao {
       for (Result<Item> itemResult : standItems) {
         Item currItem = itemResult.get();
         String serviceTypeNameKey = removeArtefactFilePostfix(currItem.objectName());
-        Optional<Item> prevItemOptional = ofNullable(itemMap.putIfAbsent(serviceTypeNameKey, currItem));
+        Item prevItem = itemMap.putIfAbsent(serviceTypeNameKey, currItem);
 
-        if (prevItemOptional.isPresent()) {
-          Item prevItem = prevItemOptional.get();
+        if (prevItem != null) {
 
           if (currItem.lastModified().isAfter(prevItem.lastModified())) {
             itemMap.put(serviceTypeNameKey, currItem);
