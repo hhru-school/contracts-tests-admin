@@ -6,7 +6,7 @@ import io.minio.messages.Item;
 public class ConsumerDataMapper {
 
   public ConsumerData map(Item artefact, String artefactUrl) {
-    return new ConsumerData(artefactUrl, artefact.lastModified().toLocalDateTime());
+    return new ConsumerData(artefactUrl, artefact.lastModified().toOffsetDateTime());
   }
 
 }

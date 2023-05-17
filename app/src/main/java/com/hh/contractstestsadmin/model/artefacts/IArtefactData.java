@@ -1,10 +1,10 @@
 package com.hh.contractstestsadmin.model.artefacts;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 public interface IArtefactData {
 
   public String artefactURL();
 
-  public LocalDateTime artefactPublishDate();
+  public OffsetDateTime artefactPublishDate();
 }

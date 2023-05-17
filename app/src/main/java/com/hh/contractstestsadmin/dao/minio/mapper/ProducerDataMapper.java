@@ -6,7 +6,7 @@ import io.minio.messages.Item;
 public class ProducerDataMapper {
 
   public ProducerData map(Item artefact, String artefactUrl) {
-    return new ProducerData(artefactUrl, artefact.lastModified().toLocalDateTime());
+    return new ProducerData(artefactUrl, artefact.lastModified().toOffsetDateTime());
   }
 
 }
