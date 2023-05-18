@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.Type;
@@ -24,7 +25,7 @@ public class ContractTestError {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "error_info_id")
+  @Column(name = "error_id")
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -35,6 +36,7 @@ public class ContractTestError {
   private ErrorLevel level;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "expectation_id")
   Expectation expectation;
 
   public ContractTestError() {
