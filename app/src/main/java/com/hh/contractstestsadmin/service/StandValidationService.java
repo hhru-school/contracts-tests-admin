@@ -20,7 +20,7 @@ public class StandValidationService {
     this.validationService = validationService;
   }
 
-  private boolean standExist(String standName) throws ContractsDaoException, StandNotFoundException {
+  private boolean standExists(String standName) throws ContractsDaoException, StandNotFoundException {
     return contractsDao.getStandNames().stream().anyMatch(s -> s.equals(standName));
   }
 
@@ -28,14 +28,14 @@ public class StandValidationService {
       String standName,
       Integer sizeLimit
   ) throws ValidationHistoryNotFoundException, ContractsDaoException {
-    if(!standExist(standName)) {
+    if(!standExists(standName)) {
       throw new ValidationHistoryNotFoundException("Validation history not found for stand '" + standName + "'");
     }
     return validationService.getLatestValidationPreviews(standName, sizeLimit);
   }
 
   public void runValidation(String standName) throws StandNotFoundException, ContractsDaoException {
-    if(!standExist(standName)) {
+    if(!standExists(standName)) {
       throw new StandNotFoundException("Stand '" + standName + "' not found");
     }
     Validation validation = validationService.createValidation(standName);
