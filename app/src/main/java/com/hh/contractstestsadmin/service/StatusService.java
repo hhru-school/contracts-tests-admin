@@ -8,6 +8,7 @@ import com.hh.contractstestsadmin.dto.StandStatusDto;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
+import java.util.Collections;
 import java.util.List;
 
 public class StatusService {
@@ -49,6 +50,8 @@ public class StatusService {
               .stream()
               .map(ServiceStatusMapper::map)
               .toList());
+    } else {
+      servicesContainerDto.setStand(Collections.emptyList());
     }
     return servicesContainerDto;
   }
