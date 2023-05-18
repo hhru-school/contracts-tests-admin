@@ -1,5 +1,6 @@
 package com.hh.contractstestsadmin.resource;
 
+import com.hh.contractstestsadmin.dto.ErrorMessageDto;
 import com.hh.contractstestsadmin.dto.ExpectationDto;
 import com.hh.contractstestsadmin.dto.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
@@ -45,9 +46,9 @@ public class ValidationResource {
     try {
       return Response.ok(standValidationService.getValidationHistory(standName, sizeLimit)).build();
     } catch (ValidationHistoryNotFoundException exception) {
-      return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
+      return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessageDto(exception.getMessage())).build();
     } catch (Exception exception) {
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
     }
   }
 
@@ -64,9 +65,9 @@ public class ValidationResource {
     try {
       return Response.ok(standValidationService.getValidationWithRelations(standName, validationId)).build();
     } catch (ValidationHistoryNotFoundException exception) {
-      return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
+      return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessageDto(exception.getMessage())).build();
     } catch (Exception exception) {
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
     }
   }
 
@@ -86,9 +87,9 @@ public class ValidationResource {
     try {
       return Response.ok(standValidationService.getExpectations(standName, validationId, producerId, consumerId)).build();
     } catch (ValidationHistoryNotFoundException exception) {
-      return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
+      return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessageDto(exception.getMessage())).build();
     } catch (Exception exception) {
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
     }
   }
 
@@ -104,9 +105,9 @@ public class ValidationResource {
     try {
       return Response.ok(standValidationService.getValidatorError(standName, validationId)).build();
     } catch (ValidationHistoryNotFoundException exception) {
-      return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
+      return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessageDto(exception.getMessage())).build();
     } catch (Exception exception) {
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
     }
   }
 
@@ -121,9 +122,9 @@ public class ValidationResource {
       standValidationService.runValidation(standName);
       return Response.status(Response.Status.ACCEPTED).build();
     } catch (StandNotFoundException exception) {
-      return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
+      return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessageDto(exception.getMessage())).build();
     } catch (Exception exception) {
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
     }
   }
 

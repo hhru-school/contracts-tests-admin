@@ -1,6 +1,6 @@
 import { Nav, NavItem, NavLink } from 'reactstrap';
 
-export const AppHistory: React.FC = () => {
+export const ValidationHistory: React.FC = () => {
     return (
         <div className="sidebar col-2 pt-3 justify-content-start">
             <Nav vertical pills>
