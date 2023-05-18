@@ -1,6 +1,5 @@
 package com.hh.contractstestsadmin.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dto.ServicesContainerDto;
@@ -9,14 +8,7 @@ import com.hh.contractstestsadmin.dto.StandStatusDto;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
-import com.hh.contractstestsadmin.exception.StandsDaoException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import kotlin.collections.EmptyList;
 
 public class StatusService {
 
@@ -26,13 +18,10 @@ public class StatusService {
 
   private final ReleaseVersionDao releaseVersionDao;
 
-  private final ObjectMapper objectMapper;
-
-  public StatusService(StandsDao standsDao, String releaseName, ReleaseVersionDao releaseVersionDao, ObjectMapper objectMapper) {
+  public StatusService(StandsDao standsDao, String releaseName, ReleaseVersionDao releaseVersionDao) {
     this.standsDao = standsDao;
     this.releaseName = releaseName;
     this.releaseVersionDao = releaseVersionDao;
-    this.objectMapper = objectMapper;
   }
 
   public List<StandInfoDto> getStands(String search) throws StandsDaoException {
@@ -45,13 +34,24 @@ public class StatusService {
         .toList();
   }
 
-  public ServicesContainerDto getServices(String standName) throws StandNotFoundException, IOException {
-    ClassLoader classLoader = getClass().getClassLoader();
-    InputStream inputStream = classLoader.getResourceAsStream("test-data/service-list-exemple.json");
-    return objectMapper.readValue(inputStream, ServicesContainerDto.class);
+  public ServicesContainerDto getServices(String standName) throws StandNotFoundException, StandsDaoException {
+    ServicesContainerDto servicesContainerDto = new ServicesContainerDto();
+    servicesContainerDto.setStand(
+        standsDao
+            .getServices(standName)
+            .stream()
+            .map(ServiceStatusMapper::map)
+            .toList());
+    servicesContainerDto.setRelease(
+        standsDao
+            .getServices(releaseName)
+            .stream()
+            .map(ServiceStatusMapper::map)
+            .toList());
+    return servicesContainerDto;
   }
 
-  public StandStatusDto getStatus(String standName) throws StandNotFoundException, IOException {
+  public StandStatusDto getStatus(String standName) throws StandNotFoundException, StandsDaoException {
     StandStatusDto standStatusDto = new StandStatusDto();
     standStatusDto.setName(standName);
     standStatusDto.setIsRelease(standName.equals(releaseName));

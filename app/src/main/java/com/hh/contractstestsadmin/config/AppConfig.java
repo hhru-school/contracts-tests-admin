@@ -1,6 +1,5 @@
 package com.hh.contractstestsadmin.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dao.minio.mapper.ConsumerDataMapper;
 import com.hh.contractstestsadmin.dao.minio.mapper.ProducerDataMapper;
@@ -66,10 +65,10 @@ public class AppConfig {
   @Value("${minio.producer.artefact.type}")
   private String producerArtefactType;
 
-  @Value("${minio.consumer.artefact.type")
+  @Value("${minio.consumer.artefact.type}")
   private String consumerArtefactType;
 
-  @Value("${minio.artefact.url.expiration.period")
+  @Value("${minio.artefact.url.expiration.period}")
   private String artefactUrlExpirationPeriod;
 
   @Bean
@@ -91,8 +90,8 @@ public class AppConfig {
   }
 
   @Bean
-  public StatusService statusService(StandsDao standsDao, ReleaseVersionDao releaseVersionDao, ObjectMapper objectMapper) {
-    return new StatusService(standsDao, minioReleaseName, releaseVersionDao, objectMapper);
+  public StatusService statusService(StandsDao standsDao, ReleaseVersionDao releaseVersionDao) {
+    return new StatusService(standsDao, minioReleaseName, releaseVersionDao);
   }
 
   @Bean
@@ -119,18 +118,18 @@ public class AppConfig {
   }
 
   @Bean
-  public StandsDao standsDao(MinioClient minioClient, Properties minioProperties, ServiceListMapper serviceListMapper) {
-    return new StandsDao(minioClient, minioProperties, serviceListMapper);
+  public StandsDao standsDao(MinioClient minioClient, ServiceListMapper serviceListMapper) {
+    return new StandsDao(minioClient, minioProperties(), serviceListMapper);
   }
 
   @Bean
-  public ServiceListMapper serviceListMapper(Properties minioProperties, ServiceMapper serviceMapper) {
-    return new ServiceListMapper(minioProperties, serviceMapper);
+  public ServiceListMapper serviceListMapper(ServiceMapper serviceMapper) {
+    return new ServiceListMapper(minioProperties(), serviceMapper);
   }
 
   @Bean
-  public ServiceMapper serviceMapper(Properties minioProperties, ConsumerDataMapper consumerDataMapper, ProducerDataMapper producerDataMapper) {
-    return new ServiceMapper(minioProperties, consumerDataMapper, producerDataMapper);
+  public ServiceMapper serviceMapper(ConsumerDataMapper consumerDataMapper, ProducerDataMapper producerDataMapper) {
+    return new ServiceMapper(minioProperties(), consumerDataMapper, producerDataMapper);
   }
 
   @Bean
