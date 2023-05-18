@@ -118,11 +118,11 @@ public class ServiceListMapper {
 
   private boolean initServiceHasNewerVersion(Service initService, Service serviceToBeMerged) {
     int compareResult = initService.getVersion().compareToIgnoreCase(serviceToBeMerged.getVersion());
-    return (compareResult > 0 ? true : false);
+    return compareResult > 0;
   }
 
   private boolean initServiceHasTheSameVersion(Service initService, Service serviceToBeMerged) {
     int compareResult = initService.getVersion().compareToIgnoreCase(serviceToBeMerged.getVersion());
-    return (compareResult == 0 ? true : false);
+    return compareResult == 0;
   }
 }
