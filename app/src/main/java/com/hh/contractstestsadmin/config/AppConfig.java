@@ -87,8 +87,8 @@ public class AppConfig {
   }
 
   @Bean
-  public StandValidationService standValidationService(ContractsDao contractsDao, ValidationService validationService) {
-    return new StandValidationService(contractsDao, validationService);
+  public StandValidationService standValidationService(ContractsDao contractsDao, ValidationService validationService, ObjectMapper objectMapper) {
+    return new StandValidationService(contractsDao, validationService, objectMapper);
   }
 
   @Bean

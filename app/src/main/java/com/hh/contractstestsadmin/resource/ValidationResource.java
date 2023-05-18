@@ -1,7 +1,7 @@
 package com.hh.contractstestsadmin.resource;
 
 import com.hh.contractstestsadmin.dto.ExpectationDto;
-import com.hh.contractstestsadmin.dto.ValidationDto;
+import com.hh.contractstestsadmin.dto.ValidationServicesRelationsDto;
 import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
@@ -53,7 +53,7 @@ public class ValidationResource {
 
   @ApiOperation(
       value = "Get detailed information about validation",
-      response = ValidationDto.class)
+      response = ValidationServicesRelationsDto.class)
   @Path("stands/{standName}/validations/{validationId}")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@ public class ValidationResource {
       @PathParam("validationId") Long validationId
   ) {
     try {
-      return Response.ok().build();
+      return Response.ok(standValidationService.getValidationServicesRelations(standName, validationId)).build();
     } catch (ValidationHistoryNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
     } catch (Exception exception) {

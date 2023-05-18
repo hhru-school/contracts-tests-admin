@@ -1,0 +1,46 @@
+{
+  "releaseLink": "https://www.example.com/",
+  "createdDate": "2023-04-10T17:19:11.503988200Z",
+  "executeDate": "2023-04-10T17:19:11.503988200Z",
+  "status": "FAILED",
+  "errorCount": 6,
+  "validatorError": "['error in original form']",
+  "servicesRelations": [
+    {
+      "producer": {
+        "id": 1,
+        "name": "service1",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 2,
+        "name": "service2",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 1,
+      "errorCount": 1
+    },
+    {
+      "producer": {
+        "id": 1,
+        "name": "service3",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 2,
+        "name": "service4",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 1,
+      "errorCount": 1
+    }
+  ]
+}
