@@ -1,0 +1,243 @@
+{
+  "releaseLink": "https://www.example.com/",
+  "createdDate": "2023-04-10T17:19:11.503988200Z",
+  "executeDate": "2023-04-10T17:19:11.503988200Z",
+  "status": "FAILED",
+  "errorCount": 6,
+  "servicesRelations": [
+    {
+      "producer": {
+        "id": 1,
+        "name": "service1",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 2,
+        "name": "service2",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 2,
+      "errorCount": 4
+    },
+    {
+      "producer": {
+        "id": 3,
+        "name": "service3",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 4,
+        "name": "service4",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 2,
+      "errorCount": 4
+    },
+    {
+      "producer": {
+        "id": 5,
+        "name": "service5",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 6,
+        "name": "service6",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 2,
+      "errorCount": 4
+    },
+    {
+      "producer": {
+        "id": 7,
+        "name": "service7",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 8,
+        "name": "service8",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 2,
+      "errorCount": 4
+    },
+    {
+      "producer": {
+        "id": 8,
+        "name": "service8",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 7,
+        "name": "service7",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 2,
+      "errorCount": 4
+    },
+    {
+      "producer": {
+        "id": 1,
+        "name": "service1",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 5,
+        "name": "service5",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 2,
+      "errorCount": 4
+    },
+    {
+      "producer": {
+        "id": 4,
+        "name": "service4",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 2,
+        "name": "service2",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 2,
+      "errorCount": 4
+    },
+    {
+      "producer": {
+        "id": 9,
+        "name": "service9",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 13,
+        "name": "service13",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 2,
+      "errorCount": 4
+    },
+    {
+      "producer": {
+        "id": 32,
+        "name": "service32",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 21,
+        "name": "service21",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 2,
+      "errorCount": 4
+    },
+    {
+      "producer": {
+        "id": 21,
+        "name": "service21",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 9,
+        "name": "service9",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 2,
+      "errorCount": 4
+    },
+    {
+      "producer": {
+        "id": 9,
+        "name": "service9",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 2,
+        "name": "service2",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 2,
+      "errorCount": 4
+    },
+    {
+      "producer": {
+        "id": 1,
+        "name": "service1",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 43,
+        "name": "service43",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 2,
+      "errorCount": 4
+    },
+    {
+      "producer": {
+        "id": 3,
+        "name": "service3",
+        "isRelease": true,
+        "version": "1.0.0",
+        "schemaLink": "https://www.example.com/"
+      },
+      "consumer": {
+        "id": 75,
+        "name": "service75",
+        "isRelease": false,
+        "version": "1.0.0",
+        "expectationLink": "https://www.example.com/"
+      },
+      "expectationCount": 2,
+      "errorCount": 4
+    }
+  ]
+}

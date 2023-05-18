@@ -1,7 +1,7 @@
 package com.hh.contractstestsadmin.resource;
 
 import com.hh.contractstestsadmin.dto.ExpectationDto;
-import com.hh.contractstestsadmin.dto.ValidationServicesRelationsDto;
+import com.hh.contractstestsadmin.dto.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
@@ -53,16 +53,16 @@ public class ValidationResource {
 
   @ApiOperation(
       value = "Get detailed information about validation",
-      response = ValidationServicesRelationsDto.class)
+      response = ValidationWithRelationsDto.class)
   @Path("stands/{standName}/validations/{validationId}")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getServicesRelations(
+  public Response getValidationWithRelations(
       @PathParam("standName") String standName,
       @PathParam("validationId") Long validationId
   ) {
     try {
-      return Response.ok(standValidationService.getValidationServicesRelations(standName, validationId)).build();
+      return Response.ok(standValidationService.getValidationWithRelations(standName, validationId)).build();
     } catch (ValidationHistoryNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
     } catch (Exception exception) {
@@ -84,7 +84,7 @@ public class ValidationResource {
       @NotNull @QueryParam("consumerId") Long consumerId
   ) {
     try {
-      return Response.ok().build();
+      return Response.ok(standValidationService.getExpectations(standName, validationId, producerId, consumerId)).build();
     } catch (ValidationHistoryNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
     } catch (Exception exception) {
@@ -94,7 +94,7 @@ public class ValidationResource {
 
   @ApiOperation(
       value = "Get validation source code")
-  @Path("stands/{standName}/validations/{validationId}/validatorError")
+  @Path("stands/{standName}/validations/{validationId}/validationSourceCode")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response getValidatorError(
@@ -102,7 +102,7 @@ public class ValidationResource {
       @PathParam("validationId") Long validationId
   ) {
     try {
-      return Response.ok().build();
+      return Response.ok(standValidationService.getValidatorError(standName, validationId)).build();
     } catch (ValidationHistoryNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
     } catch (Exception exception) {

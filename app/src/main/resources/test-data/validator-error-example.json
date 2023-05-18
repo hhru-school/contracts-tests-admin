@@ -1,0 +1,49 @@
+[
+  {
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR",
+        "requestPath": "/item/with/nested",
+        "method": "PUT",
+        "apiRequestContentType": "application/json",
+        "responseStatus": null
+      },
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedRequiredField'] Instance type (null) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR",
+        "requestPath": "/item/with/nested",
+        "method": "PUT",
+        "apiRequestContentType": "application/json",
+        "responseStatus": null
+      }
+    ],
+    "consumerName": "some-service-consumer",
+    "producerName": "some-service-producer",
+    "request": {
+      "method": "PUT",
+      "path": "/item/with/nested",
+      "body": "{\"nonRequiredField\":{\"nestedRequiredField\":null,\"nestedNonRequiredField\":\"123\"}}",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {}
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "responseBody": "{\"someRequiredField\":1,\"nonRequiredField\":1}"
+    }
+  }
+]
