@@ -40,14 +40,14 @@ public class StandValidationService {
       String standName,
       Integer sizeLimit
   ) throws ValidationHistoryNotFoundException, ContractsDaoException {
-    if(!standExists(standName)) {
+    if (!standExists(standName)) {
       throw new ValidationHistoryNotFoundException("Validation history not found for stand '" + standName + "'");
     }
     return validationService.getLatestValidationPreviews(standName, sizeLimit);
   }
 
   public void runValidation(String standName) throws StandNotFoundException, ContractsDaoException {
-    if(!standExists(standName)) {
+    if (!standExists(standName)) {
       throw new StandNotFoundException("Stand '" + standName + "' not found");
     }
     Validation validation = validationService.createValidation(standName);
@@ -68,10 +68,10 @@ public class StandValidationService {
     });
   }
 
-  public String getValidatorError(String standName, Long validationId){
+  public String getValidatorError(String standName, Long validationId) {
     ClassLoader classLoader = getClass().getClassLoader();
     InputStream inputStream = classLoader.getResourceAsStream("test-data/validator-error-example.json");
-    if (inputStream == null){
+    if (inputStream == null) {
       return "";
     }
     return new BufferedReader(new InputStreamReader(inputStream))
