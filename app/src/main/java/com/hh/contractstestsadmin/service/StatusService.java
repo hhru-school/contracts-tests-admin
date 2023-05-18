@@ -36,18 +36,20 @@ public class StatusService {
 
   public ServicesContainerDto getServices(String standName) throws StandNotFoundException, StandsDaoException {
     ServicesContainerDto servicesContainerDto = new ServicesContainerDto();
-    servicesContainerDto.setStand(
-        standsDao
-            .getServices(standName)
-            .stream()
-            .map(ServiceStatusMapper::map)
-            .toList());
     servicesContainerDto.setRelease(
         standsDao
             .getServices(releaseName)
             .stream()
             .map(ServiceStatusMapper::map)
             .toList());
+    if (!standName.equals(releaseName)) {
+      servicesContainerDto.setStand(
+          standsDao
+              .getServices(standName)
+              .stream()
+              .map(ServiceStatusMapper::map)
+              .toList());
+    }
     return servicesContainerDto;
   }
 
