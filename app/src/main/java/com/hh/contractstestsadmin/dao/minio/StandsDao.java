@@ -177,7 +177,7 @@ public class StandsDao {
         if (prevArtefact != null) {
 
           int compareResult = getArtefactVersion(currArtefact).compareToIgnoreCase(getArtefactVersion(prevArtefact));
-          boolean currArtefactIsNewer = (compareResult > 0 ? true : false);
+          boolean currArtefactIsNewer = (compareResult > 0);
 
           if (currArtefactIsNewer) {
             artefactMap.put(artefactKey, currArtefact);
