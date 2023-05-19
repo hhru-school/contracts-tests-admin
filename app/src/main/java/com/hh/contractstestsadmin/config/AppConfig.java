@@ -1,7 +1,11 @@
 package com.hh.contractstestsadmin.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hh.contractstestsadmin.dao.ContractsDao;
+import com.hh.contractstestsadmin.dao.minio.StandsDao;
+import com.hh.contractstestsadmin.dao.minio.mapper.ConsumerDataMapper;
+import com.hh.contractstestsadmin.dao.minio.mapper.ProducerDataMapper;
+import com.hh.contractstestsadmin.dao.minio.mapper.ServiceListMapper;
+import com.hh.contractstestsadmin.dao.minio.mapper.ServiceMapper;
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.service.ValidationService;
@@ -25,6 +29,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @PropertySource("classpath:hibernate.properties")
+@PropertySource("classpath:minio.properties")
 @PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 public class AppConfig {
@@ -46,17 +51,26 @@ public class AppConfig {
   @Value("${hibernate.show.sql}")
   private String hibernateShowSql;
 
-  @Value("${spring.minio.url}")
+  @Value("${minio.url}")
   private String minioUrl;
 
-  @Value("${spring.minio.access-key}")
+  @Value("${minio.access-key}")
   private String minioAccessKey;
 
-  @Value("${spring.minio.secret-key}")
+  @Value("${minio.secret-key}")
   private String minioSecretKey;
 
-  @Value("${release.stand.name}")
-  private String releaseName;
+  @Value("${minio.release.stand.name}")
+  private String minioReleaseName;
+
+  @Value("${minio.producer.artefact.type}")
+  private String producerArtefactType;
+
+  @Value("${minio.consumer.artefact.type}")
+  private String consumerArtefactType;
+
+  @Value("${minio.artefact.url.expiration.period}")
+  private String artefactUrlExpirationPeriod;
 
   @Bean
   public BeanConfig configureSwagger() {
@@ -77,8 +91,8 @@ public class AppConfig {
   }
 
   @Bean
-  public StatusService statusService(ContractsDao contractsDao, ReleaseVersionDao releaseVersionDao, ObjectMapper objectMapper) {
-    return new StatusService(contractsDao, releaseName, releaseVersionDao, objectMapper);
+  public StatusService statusService(StandsDao standsDao, ReleaseVersionDao releaseVersionDao, ObjectMapper objectMapper) {
+    return new StatusService(standsDao, minioReleaseName, releaseVersionDao, objectMapper);
   }
 
   @Bean
@@ -87,8 +101,8 @@ public class AppConfig {
   }
 
   @Bean
-  public StandValidationService standValidationService(ContractsDao contractsDao, ValidationService validationService) {
-    return new StandValidationService(contractsDao, validationService);
+  public StandValidationService standValidationService(StandsDao standsDao, ValidationService validationService) {
+    return new StandValidationService(standsDao, validationService);
   }
 
   @Bean
@@ -105,8 +119,28 @@ public class AppConfig {
   }
 
   @Bean
-  public ContractsDao contractsDao() {
-    return new ContractsDao();
+  public StandsDao standsDao(MinioClient minioClient, ServiceListMapper serviceListMapper) {
+    return new StandsDao(minioClient, minioProperties(), serviceListMapper);
+  }
+
+  @Bean
+  public ServiceListMapper serviceListMapper(ServiceMapper serviceMapper) {
+    return new ServiceListMapper(minioProperties(), serviceMapper);
+  }
+
+  @Bean
+  public ServiceMapper serviceMapper(ConsumerDataMapper consumerDataMapper, ProducerDataMapper producerDataMapper) {
+    return new ServiceMapper(minioProperties(), consumerDataMapper, producerDataMapper);
+  }
+
+  @Bean
+  public ConsumerDataMapper consumerDataMapper() {
+    return new ConsumerDataMapper();
+  }
+
+  @Bean
+  public ProducerDataMapper producerDataMapper() {
+    return new ProducerDataMapper();
   }
 
   @Bean
@@ -124,6 +158,14 @@ public class AppConfig {
     hibernateProperties.put(Environment.DIALECT, hibernateDialect);
     hibernateProperties.put(Environment.SHOW_SQL, hibernateShowSql);
     return hibernateProperties;
+  }
+
+  private Properties minioProperties() {
+    Properties minioProperties = new Properties();
+    minioProperties.put("minio.consumer.artefact.type", consumerArtefactType);
+    minioProperties.put("minio.producer.artefact.type", producerArtefactType);
+    minioProperties.put("minio.artefact.url.expiration.period", artefactUrlExpirationPeriod);
+    return minioProperties;
   }
 
   @Bean

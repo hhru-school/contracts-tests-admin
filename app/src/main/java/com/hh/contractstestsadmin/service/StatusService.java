@@ -1,14 +1,15 @@
 package com.hh.contractstestsadmin.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hh.contractstestsadmin.dao.ContractsDao;
+import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dto.ServicesContainerDto;
 import com.hh.contractstestsadmin.dto.StandInfoDto;
 import com.hh.contractstestsadmin.dto.StandStatusDto;
-import com.hh.contractstestsadmin.exception.ContractsDaoException;
+import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
+import com.hh.contractstestsadmin.exception.StandsDaoException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -19,7 +20,7 @@ import kotlin.collections.EmptyList;
 
 public class StatusService {
 
-  private final ContractsDao contractsDao;
+  private final StandsDao standsDao;
 
   private final String releaseName;
 
@@ -27,15 +28,15 @@ public class StatusService {
 
   private final ObjectMapper objectMapper;
 
-  public StatusService(ContractsDao contractsDao, String releaseName, ReleaseVersionDao releaseVersionDao, ObjectMapper objectMapper) {
-    this.contractsDao = contractsDao;
+  public StatusService(StandsDao standsDao, String releaseName, ReleaseVersionDao releaseVersionDao, ObjectMapper objectMapper) {
+    this.standsDao = standsDao;
     this.releaseName = releaseName;
     this.releaseVersionDao = releaseVersionDao;
     this.objectMapper = objectMapper;
   }
 
-  public List<StandInfoDto> getStands(String search) throws ContractsDaoException {
-    return contractsDao
+  public List<StandInfoDto> getStands(String search) throws StandsDaoException {
+    return standsDao
         .getStandNames()
         .stream()
         .filter(standName -> search == null || standName.contains(search))
