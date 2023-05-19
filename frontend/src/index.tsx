@@ -6,18 +6,16 @@ import { App } from './App';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
-import { SWRConfig } from 'swr';
-import { fetcher } from './api';
+import { FetcherConfig } from './api';
+import { AppContextProvider } from 'context/AppContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <React.StrictMode>
-        <SWRConfig
-            value={{
-                fetcher,
-            }}
-        >
-            <App />
-        </SWRConfig>
+        <FetcherConfig>
+            <AppContextProvider>
+                <App />
+            </AppContextProvider>
+        </FetcherConfig>
     </React.StrictMode>,
 );
