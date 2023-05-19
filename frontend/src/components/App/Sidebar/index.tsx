@@ -1,10 +1,12 @@
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
+import { Nav, NavItem } from 'reactstrap';
+import navigation from 'routes/navigation';
 
 export const AppSidebar: React.FC = () => {
     return (
         <Nav vertical pills>
             <NavItem>
-                <NavLink active href="/">
+                <NavLink className="nav-link" to={navigation.base}>
                     Статус
                 </NavLink>
             </NavItem>

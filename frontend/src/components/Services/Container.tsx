@@ -1,23 +1,50 @@
 import { useState } from 'react';
-import { Col, Container, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
-import { ServicesList } from './List';
-import useSWR from 'swr';
-import { getServicesList } from './api';
+import {
+    Col,
+    Container,
+    ListGroup,
+    Nav,
+    NavItem,
+    NavLink,
+    Row,
+    TabContent,
+    TabPane,
+} from 'reactstrap';
 import { Loader } from 'components/Loader';
 import { ApiResponse } from './types/ApiResponse';
+import useSWR from 'swr';
+import { getServicesList } from './api';
+import { ServicesListItem } from './ListItem';
 
-export const ServicesContainer = () => {
-    const [activeTab, setactiveTab] = useState(1);
+enum TabName {
+    stand = 'stand',
+    release = 'release',
+}
 
-    //TODO: заменить на хук useStandName из тулбара
-    const standId = 'ts107.pyn.ru-contracts';
+export type ServicesContainerProps = {
+    standName: string;
+};
+
+export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName }) => {
+    const [activeTab, setActiveTab] = useState<TabName>(TabName.stand);
 
     const { isLoading, isValidating, data } = useSWR<ApiResponse>(
-        `/api/stands/${standId}`,
+        standName ? `/api/stands/${standName}` : null,
         getServicesList,
     );
 
     const showLoader = isLoading || isValidating;
+
+    if (!standName || showLoader) {
+        return (
+            <Container fluid>
+                <div className="pt-5 d-flex justify-content-center">
+                    {!standName && <h5>выберите стенд для отображения сервисов</h5>}
+                    {showLoader && <Loader />}
+                </div>
+            </Container>
+        );
+    }
 
     return (
         <Container fluid>
@@ -25,8 +52,9 @@ export const ServicesContainer = () => {
                 <NavItem>
                     <NavLink
                         href="#"
-                        className={activeTab === 1 ? 'active' : ''}
-                        onClick={() => setactiveTab(1)}
+                        className={activeTab === TabName.stand ? 'active' : ''}
+                        onClick={() => setActiveTab(TabName.stand)}
+                        disabled={!standName}
                     >
                         Из стенда
                     </NavLink>
@@ -34,47 +62,34 @@ export const ServicesContainer = () => {
                 <NavItem>
                     <NavLink
                         href="#"
-                        className={activeTab === 2 ? 'active' : ''}
-                        onClick={() => setactiveTab(2)}
+                        className={activeTab === TabName.release ? 'active' : ''}
+                        onClick={() => setActiveTab(TabName.release)}
+                        disabled={!standName}
                     >
                         Из релиза
                     </NavLink>
                 </NavItem>
             </Nav>
-            <TabContent activeTab={activeTab}>
-                <TabPane tabId={1}>
-                    <Row>
-                        {showLoader && (
-                            <Col className="d-flex justify-content-center">
-                                <div className="pt-5">
-                                    <Loader />
-                                </div>
-                            </Col>
-                        )}
-                        {!showLoader && data && (
-                            <Col>
-                                <ServicesList items={data.services.stand} />
-                            </Col>
-                        )}
-                    </Row>
-                </TabPane>
-                <TabPane tabId={2}>
-                    <Row>
-                        {showLoader && (
-                            <Col className="d-flex justify-content-center">
-                                <div className="pt-5">
-                                    <Loader />
-                                </div>
-                            </Col>
-                        )}
-                        {!showLoader && data && (
-                            <Col>
-                                <ServicesList items={data.services.release} />
-                            </Col>
-                        )}
-                    </Row>
-                </TabPane>
-            </TabContent>
+            {data && (
+                <TabContent activeTab={activeTab}>
+                    {Object.entries(data.services).map(([type, servicesList]) => (
+                        <TabPane tabId={type} key={type}>
+                            <Row>
+                                <Col>
+                                    <ListGroup>
+                                        {servicesList.map((serviceItem, idx) => (
+                                            <ServicesListItem
+                                                key={serviceItem.name + idx}
+                                                {...serviceItem}
+                                            />
+                                        ))}
+                                    </ListGroup>
+                                </Col>
+                            </Row>
+                        </TabPane>
+                    ))}
+                </TabContent>
+            )}
         </Container>
     );
 };

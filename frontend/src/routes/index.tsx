@@ -1,18 +1,19 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
-import { base } from './navigation';
 import { MainLayout } from '../layouts/MainLayout';
-import { HomePage } from 'pages/Home';
+import { StatusesPage } from 'pages/Statuses';
+
+import navigation from './navigation';
 
 export const routes = createBrowserRouter([
     {
-        path: base,
+        path: navigation.base,
         element: <MainLayout />,
         children: [
             {
                 index: true,
-                element: <HomePage />,
+                element: <StatusesPage />,
             },
         ],
     },
-    { path: '*', element: <Navigate to={base} replace /> },
+    { path: '*', element: <Navigate to={navigation.base} replace /> },
 ]);

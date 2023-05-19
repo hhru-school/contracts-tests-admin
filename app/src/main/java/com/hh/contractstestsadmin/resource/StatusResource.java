@@ -1,5 +1,6 @@
 package com.hh.contractstestsadmin.resource;
 
+import com.hh.contractstestsadmin.dto.ErrorMessageDto;
 import com.hh.contractstestsadmin.dto.StandInfoDto;
 import com.hh.contractstestsadmin.dto.StandStatusDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
@@ -38,7 +39,7 @@ public class StatusResource {
     try {
       return Response.ok(statusService.getStands(search)).build();
     } catch (Exception exception) {
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
     }
   }
 
@@ -52,9 +53,9 @@ public class StatusResource {
     try {
       return Response.ok(statusService.getStatus(standName)).build();
     } catch (StandNotFoundException exception) {
-      return Response.status(Response.Status.NOT_FOUND).entity(exception.getMessage()).build();
+      return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessageDto(exception.getMessage())).build();
     } catch (Exception exception) {
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exception.getMessage()).build();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
     }
   }
 
