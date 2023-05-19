@@ -2,12 +2,16 @@ import { ReactComponent as PlayIcon } from './img/play.svg';
 import useSWR from 'swr';
 import React, { useState, KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
 import { ListGroup, ListGroupItem, Input, Button, Alert } from 'reactstrap';
-import { ApiResponse } from './types/Response';
 import { HandleKeys } from './types/HandleKeys';
+import { Stand } from './types/Stand';
 
-export const AppToolBar: React.FC = () => {
-    const { isLoading, data, error } = useSWR<ApiResponse>('/api/stands/');
-    const [selectedItem, setSelectedItem] = useState('');
+export type ToolBarProps = {
+    selectedItem: string;
+    setSelectedItem: (item: string) => void;
+};
+
+export const ToolBar: React.FC<ToolBarProps> = ({ selectedItem, setSelectedItem }) => {
+    const { isLoading, data, error } = useSWR<Stand[]>('/api/stands');
     const [showList, setShowList] = useState(false);
     const [hoveredItem, setHoveredItem] = useState<string>('');
     const [currentPositionInList, setCurrentPositionInList] = useState(0);
@@ -28,7 +32,7 @@ export const AppToolBar: React.FC = () => {
         setSelectedItem(e.target.value);
         setShowList(true);
     };
-    const filteredData = data.stands
+    const filteredData = data
         .map((item) => item.name)
         .filter((name) => name.toLowerCase().includes(selectedItem.toLowerCase()));
 
@@ -74,42 +78,40 @@ export const AppToolBar: React.FC = () => {
         }
     };
     return (
-        <div className="row mb-5">
-            <div className="col-12 d-inline d-flex align-items-center justify-content-center">
-                <div className="d-block position-relative w-50">
-                    <Input
-                        type="text"
-                        placeholder="Search"
-                        value={selectedItem}
-                        onChange={handleSearch}
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
-                        onKeyDown={handleKeyDown}
-                    />
-                    {showList && (
-                        <ListGroup
-                            className="position-absolute w-100"
-                            style={{ height: '250px', overflow: 'auto' }}
-                            onSelect={handleSelect}
-                        >
-                            {filteredData.map((item: string) => (
-                                <ListGroupItem
-                                    key={item}
-                                    onClick={() => selectElement(item)}
-                                    onMouseEnter={() => handleHover(item)}
-                                    onMouseLeave={() => handleHover('')}
-                                    className={hoveredItem === item ? 'active' : ''}
-                                >
-                                    {item}
-                                </ListGroupItem>
-                            ))}
-                        </ListGroup>
-                    )}
-                </div>
-                <Button color="primary" className="ms-3 d-flex gap-1 align-items-center">
-                    <PlayIcon /> Start
-                </Button>
+        <div className="d-flex align-items-center gap-3 justify-content-center">
+            <div className="position-relative w-50">
+                <Input
+                    type="text"
+                    placeholder="Search"
+                    value={selectedItem}
+                    onChange={handleSearch}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    onKeyDown={handleKeyDown}
+                />
+                {showList && (
+                    <ListGroup
+                        className="position-absolute w-100"
+                        style={{ height: '250px', overflow: 'auto' }}
+                        onSelect={handleSelect}
+                    >
+                        {filteredData.map((item: string) => (
+                            <ListGroupItem
+                                key={item}
+                                onClick={() => selectElement(item)}
+                                onMouseEnter={() => handleHover(item)}
+                                onMouseLeave={() => handleHover('')}
+                                className={hoveredItem === item ? 'active' : ''}
+                            >
+                                {item}
+                            </ListGroupItem>
+                        ))}
+                    </ListGroup>
+                )}
             </div>
+            <Button color="primary">
+                <PlayIcon /> Start
+            </Button>
         </div>
     );
 };
