@@ -20,10 +20,10 @@ public class ValidationInfoDao {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT new com.hh.contractstestsadmin.model.ServiceRelation(" +
                         "p, c, count(e), count(ctr)) FROM Expectation e" +
-                        " JOIN Service p ON p.id = e.producer.id " +
-                        " JOIN Service c ON c.id = e.consumer.id" +
-                        " JOIN ContractTestError ctr ON ctr.expectation.id = e.id " +
-                        " JOIN Validation v ON v.id = e.validation.id" +
+                        " LEFT JOIN Service p ON p.id = e.producer.id " +
+                        " LEFT JOIN Service c ON c.id = e.consumer.id" +
+                        " LEFT JOIN ContractTestError ctr ON ctr.expectation.id = e.id " +
+                        " LEFT JOIN Validation v ON v.id = e.validation.id" +
                         "  WHERE e.validation.id = :validationId" +
                         " GROUP BY p, c", ServiceRelation.class)
                 .setParameter("validationId", validationId)
@@ -35,11 +35,11 @@ public class ValidationInfoDao {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery(
                         "select e FROM Expectation e" +
-                                " JOIN Service p ON p.id = e.producer.id" +
-                                " JOIN Service c ON c.id = e.consumer.id" +
-                                " JOIN ContractTestError ctr ON ctr.expectation.id = e.id" +
-                                " JOIN ErrorType et ON et.id = ctr.errorType.id" +
-                                " JOIN Validation v ON v.id = e.validation.id" +
+                                " LEFT JOIN Service p ON p.id = e.producer.id" +
+                                " LEFT JOIN Service c ON c.id = e.consumer.id" +
+                                " LEFT JOIN ContractTestError ctr ON ctr.expectation.id = e.id" +
+                                " LEFT JOIN ErrorType et ON et.id = ctr.errorType.id" +
+                                " LEFT JOIN Validation v ON v.id = e.validation.id" +
                                 " WHERE e.validation.id = :validationId" +
                                 " AND p.id =:producerId AND c.id =:consumerId", Expectation.class)
                 .setParameter("validationId", validationId)
