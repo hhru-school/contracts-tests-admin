@@ -95,7 +95,7 @@ public class ValidationResource {
 
   @ApiOperation(
       value = "Get validation source code")
-  @Path("stands/{standName}/validations/{validationId}/validationSourceCode")
+  @Path("stands/{standName}/validations/{validationId}/file")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response getValidatorError(
