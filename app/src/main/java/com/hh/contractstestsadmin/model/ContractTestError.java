@@ -29,6 +29,7 @@ public class ContractTestError {
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "error_type_id")
   private ErrorType errorType;
   @Enumerated(EnumType.STRING)
   @Type(type = "pgsql_enum")

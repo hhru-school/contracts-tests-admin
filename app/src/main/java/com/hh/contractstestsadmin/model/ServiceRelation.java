@@ -3,17 +3,17 @@ package com.hh.contractstestsadmin.model;
 public class ServiceRelation {
     private Service producer;
     private Service consumer;
-    private long countErrorByEndpoint;
+    private long countOfErrorExpectation;
     private long countOfError;
 
     public ServiceRelation() {
     }
 
-    public ServiceRelation(Service producer, Service consumer, Long countErrorByEndpoint,
+    public ServiceRelation(Service producer, Service consumer, Long countOfErrorExpectation,
                            Long countOfError) {
         this.producer = producer;
         this.consumer = consumer;
-        this.countErrorByEndpoint = countErrorByEndpoint == null ? 0 : countErrorByEndpoint;
+        this.countOfErrorExpectation = countOfErrorExpectation == null ? 0 : countOfErrorExpectation;
         this.countOfError = countOfError == null ? 0 : countOfError;
     }
 
@@ -38,12 +38,12 @@ public class ServiceRelation {
         this.consumer = consumer;
     }
 
-    public long getCountErrorByEndpoint() {
-        return countErrorByEndpoint;
+    public long getCountOfErrorExpectation() {
+        return countOfErrorExpectation;
     }
 
-    public void setCountErrorByEndpoint(long countErrorByEndpoint) {
-        this.countErrorByEndpoint = countErrorByEndpoint;
+    public void setCountOfErrorExpectation(long countOfErrorExpectation) {
+        this.countOfErrorExpectation = countOfErrorExpectation;
     }
 
     public long getCountOfError() {

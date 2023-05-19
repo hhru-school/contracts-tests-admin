@@ -19,12 +19,13 @@ public class ValidationInfoDao {
     public List<ServiceRelation> getServiceRelations(Long validationId) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT new com.hh.contractstestsadmin.model.ServiceRelation(" +
-                        "p, c, count(e.requestPath), count(ctr.id)) FROM Expectation e" +
-                        " JOIN FETCH Service p ON p.id = e.producer.id " +
-                        " JOIN FETCH Service c ON c.id = e.consumer.id" +
-                        " JOIN FETCH ContractTestError ctr ON ctr.expectation.id = e.id " +
-                        "   WHERE e.validation.id = :validationId" +
-                        " GROUP BY p, c, e.requestPath, ctr.id", ServiceRelation.class)
+                        "p, c, count(e), count(ctr)) FROM Expectation e" +
+                        " JOIN Service p ON p.id = e.producer.id " +
+                        " JOIN Service c ON c.id = e.consumer.id" +
+                        " JOIN ContractTestError ctr ON ctr.expectation.id = e.id " +
+                        " JOIN Validation v ON v.id = e.validation.id" +
+                        "  WHERE e.validation.id = :validationId" +
+                        " GROUP BY p, c", ServiceRelation.class)
                 .setParameter("validationId", validationId)
                 .getResultList();
     }
@@ -34,23 +35,16 @@ public class ValidationInfoDao {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery(
                         "select e FROM Expectation e" +
-                                " JOIN FETCH Service p ON p.id = e.producer.id " +
-                                " JOIN FETCH Service c ON c.id = e.consumer.id" +
-                                "  WHERE e.validation.id = :validationId", Expectation.class)
+                                " JOIN Service p ON p.id = e.producer.id" +
+                                " JOIN Service c ON c.id = e.consumer.id" +
+                                " JOIN ContractTestError ctr ON ctr.expectation.id = e.id" +
+                                " JOIN ErrorType et ON et.id = ctr.errorType.id" +
+                                " JOIN Validation v ON v.id = e.validation.id" +
+                                " WHERE e.validation.id = :validationId" +
+                                " AND p.id =:producerId AND c.id =:consumerId", Expectation.class)
                 .setParameter("validationId", validationId)
-                .getResultList();
-    }
-
-    public List<Error> getErrors(Long producerId, Long consumerId, Long expectationId) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("SELECT co from ContractTestError co" +
-                        " LEFT JOIN FETCH ErrorType e ON co.errorType.id = e.id" +
-                        " JOIN FETCH Expectation ex ON ex.id = co.expectation.id " +
-                        " JOIN FETCH Service p ON p.id = ex.producer.id" +
-                        " JOIN FETCH Service c ON c.id = ex.consumer.id" +
-                        " WHERE p.id =:producerId AND c.id =:consumerId", Error.class)
-                .setParameter("producerId", producerId)
                 .setParameter("consumerId", consumerId)
+                .setParameter("producerId", producerId)
                 .getResultList();
     }
 

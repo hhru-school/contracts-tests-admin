@@ -27,8 +27,8 @@ public class ServiceDao {
         if (serviceForUpdate != null) {
             serviceForUpdate.setServiceType(service.getServiceType());
             serviceForUpdate.setServiceName(service.getServiceName());
-            serviceForUpdate.setServiceName(service.getServiceName());
             serviceForUpdate.setTag(service.getTag());
+            serviceForUpdate.setStandName(service.getStandName());
             serviceForUpdate.setExpectationLink(service.getExpectationLink());
             serviceForUpdate.setSchemaLink(service.getSchemaLink());
             session.save(serviceForUpdate);
