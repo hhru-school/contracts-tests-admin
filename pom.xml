@@ -19,6 +19,7 @@
         <maven-checkstyle.version>3.2.0</maven-checkstyle.version>
         <puppycrawl.version>9.3</puppycrawl.version>
         <minio.version>8.5.2</minio.version>
+        <maven.surefire.plugin>3.0.0</maven.surefire.plugin>
         <swagger.version>1.6.10</swagger.version>
     </properties>
 
