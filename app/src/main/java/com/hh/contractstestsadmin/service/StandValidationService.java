@@ -1,7 +1,7 @@
 package com.hh.contractstestsadmin.service;
 
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
-import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
+import com.hh.contractstestsadmin.dto.api.ValidationPreviewDto;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;

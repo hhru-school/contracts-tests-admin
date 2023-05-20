@@ -1,4 +1,4 @@
-package com.hh.contractstestsadmin.dto;
+package com.hh.contractstestsadmin.dto.api;
 
 public class ServiceDto {
 
