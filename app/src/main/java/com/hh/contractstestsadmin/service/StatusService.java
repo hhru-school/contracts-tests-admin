@@ -9,7 +9,6 @@ import com.hh.contractstestsadmin.dto.StandStatusDto;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
-import com.hh.contractstestsadmin.exception.StandsDaoException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -55,5 +54,4 @@ public class StatusService {
     standStatusDto.setServices(getServices(standName));
     return standStatusDto;
   }
-
 }

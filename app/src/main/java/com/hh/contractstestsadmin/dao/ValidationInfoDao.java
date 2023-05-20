@@ -19,13 +19,10 @@ public class ValidationInfoDao {
     public List<ServiceRelation> getServiceRelations(Long validationId) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT new com.hh.contractstestsadmin.model.ServiceRelation(" +
-                        "p, c, count(e), count(ctr)) FROM Expectation e" +
-                        " LEFT JOIN Service p ON p.id = e.producer.id " +
-                        " LEFT JOIN Service c ON c.id = e.consumer.id" +
+                        "e.producer, e.consumer, count(e), count(ctr)) FROM Expectation e"+
                         " LEFT JOIN ContractTestError ctr ON ctr.expectation.id = e.id " +
-                        " LEFT JOIN Validation v ON v.id = e.validation.id" +
                         "  WHERE e.validation.id = :validationId" +
-                        " GROUP BY p, c", ServiceRelation.class)
+                        " GROUP BY e.producer, e.consumer", ServiceRelation.class)
                 .setParameter("validationId", validationId)
                 .getResultList();
     }
@@ -35,13 +32,10 @@ public class ValidationInfoDao {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery(
                         "select e FROM Expectation e" +
-                                " LEFT JOIN Service p ON p.id = e.producer.id" +
-                                " LEFT JOIN Service c ON c.id = e.consumer.id" +
-                                " LEFT JOIN ContractTestError ctr ON ctr.expectation.id = e.id" +
-                                " LEFT JOIN ErrorType et ON et.id = ctr.errorType.id" +
-                                " LEFT JOIN Validation v ON v.id = e.validation.id" +
+                                " LEFT JOIN FETCH e.contractTestErrors ctr" +
+                                " LEFT JOIN FETCH ctr.errorType et" +
                                 " WHERE e.validation.id = :validationId" +
-                                " AND p.id =:producerId AND c.id =:consumerId", Expectation.class)
+                                " AND e.producer.id =:producerId AND e.consumer.id =:consumerId", Expectation.class)
                 .setParameter("validationId", validationId)
                 .setParameter("consumerId", consumerId)
                 .setParameter("producerId", producerId)
