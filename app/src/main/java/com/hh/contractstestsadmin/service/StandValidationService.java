@@ -2,13 +2,12 @@ package com.hh.contractstestsadmin.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hh.contractstestsadmin.dao.ContractsDao;
 import com.hh.contractstestsadmin.dto.ExpectationDto;
 import com.hh.contractstestsadmin.dto.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
-import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
+import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.model.Validation;
 
@@ -21,33 +20,33 @@ import java.util.stream.Collectors;
 
 public class StandValidationService {
 
-  private final ContractsDao contractsDao;
+  private final StandsDao standsDao;
 
   private final ValidationService validationService;
 
   private final ObjectMapper objectMapper;
 
-  public StandValidationService(ContractsDao contractsDao, ValidationService validationService, ObjectMapper objectMapper) {
-    this.contractsDao = contractsDao;
+  public StandValidationService(StandsDao standsDao, ValidationService validationService, ObjectMapper objectMapper) {
+    this.standsDao = standsDao;
     this.validationService = validationService;
     this.objectMapper = objectMapper;
   }
 
-  private boolean standExists(String standName) throws ContractsDaoException, StandNotFoundException {
-    return contractsDao.getStandNames().stream().anyMatch(s -> s.equals(standName));
+  private boolean standExists(String standName) throws StandsDaoException, StandNotFoundException {
+    return standsDao.getStandNames().stream().anyMatch(s -> s.equals(standName));
   }
 
   public List<ValidationPreviewDto> getValidationHistory(
       String standName,
       Integer sizeLimit
-  ) throws ValidationHistoryNotFoundException, ContractsDaoException {
+  ) throws ValidationHistoryNotFoundException, StandsDaoException {
     if (!standExists(standName)) {
       throw new ValidationHistoryNotFoundException("Validation history not found for stand '" + standName + "'");
     }
     return validationService.getLatestValidationPreviews(standName, sizeLimit);
   }
 
-  public void runValidation(String standName) throws StandNotFoundException, ContractsDaoException {
+  public void runValidation(String standName) throws StandNotFoundException, StandsDaoException {
     if (!standExists(standName)) {
       throw new StandNotFoundException("Stand '" + standName + "' not found");
     }
