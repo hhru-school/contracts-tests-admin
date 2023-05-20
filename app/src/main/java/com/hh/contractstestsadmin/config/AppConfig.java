@@ -7,7 +7,9 @@ import com.hh.contractstestsadmin.dao.minio.mapper.ProducerDataMapper;
 import com.hh.contractstestsadmin.dao.minio.mapper.ServiceListMapper;
 import com.hh.contractstestsadmin.dao.minio.mapper.ServiceMapper;
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
+import com.hh.contractstestsadmin.dao.ServiceDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
+import com.hh.contractstestsadmin.dao.ValidationInfoDao;
 import com.hh.contractstestsadmin.service.ValidationService;
 import io.minio.MinioClient;
 import io.swagger.jaxrs.config.BeanConfig;
@@ -108,6 +110,16 @@ public class AppConfig {
   @Bean
   public ValidationDao validationDao(LocalSessionFactoryBean sessionFactoryBean) {
     return new ValidationDao(sessionFactoryBean.getObject());
+  }
+
+  @Bean
+  public ServiceDao serviceDao(LocalSessionFactoryBean sessionFactoryBean) {
+    return new ServiceDao(sessionFactoryBean.getObject());
+  }
+
+  @Bean
+  public ValidationInfoDao validationInfoDao(LocalSessionFactoryBean sessionFactoryBean) {
+    return new ValidationInfoDao(sessionFactoryBean.getObject());
   }
 
   @Bean

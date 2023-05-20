@@ -28,7 +28,8 @@ import org.hibernate.annotations.TypeDefs;
 public class Service {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long serviceId;
+  @Column(name = "service_id")
+  private Long id;
 
   @Column(name = "created_date")
   private OffsetDateTime createdDate;
@@ -53,20 +54,21 @@ public class Service {
   private String schemaLink;
 
   @OneToMany(mappedBy = "consumer", orphanRemoval = true, cascade = CascadeType.ALL)
-  private List<Expectation> errorExpectationsConsumer = new ArrayList<>();
+  private List<Expectation> expectationsConsumer = new ArrayList<>();
 
   @OneToMany(mappedBy = "producer", orphanRemoval = true, cascade = CascadeType.ALL)
-  private List<Expectation> errorExpectationsProducer = new ArrayList<>();
+  private List<Expectation> expectationsProducer = new ArrayList<>();
+
 
   public Service() {
   }
 
-  public Long getServiceId() {
-    return serviceId;
+  public Long getId() {
+    return id;
   }
 
-  public void setServiceId(Long serviceId) {
-    this.serviceId = serviceId;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public OffsetDateTime getCreatedDate() {
@@ -125,19 +127,19 @@ public class Service {
     this.schemaLink = schemaLink;
   }
 
-  public List<Expectation> getErrorExpectationsConsumer() {
-    return errorExpectationsConsumer;
+  public List<Expectation> getExpectationsConsumer() {
+    return expectationsConsumer;
   }
 
-  public void setErrorExpectationsConsumer(List<Expectation> errorExpectationsConsumer) {
-    this.errorExpectationsConsumer = errorExpectationsConsumer;
+  public void setExpectationsConsumer(List<Expectation> expectationsConsumer) {
+    this.expectationsConsumer = expectationsConsumer;
   }
 
-  public List<Expectation> getErrorExpectationsProducer() {
-    return errorExpectationsProducer;
+  public List<Expectation> getExpectationsProducer() {
+    return expectationsProducer;
   }
 
-  public void setErrorExpectationsProducer(List<Expectation> errorExpectationsProducer) {
-    this.errorExpectationsProducer = errorExpectationsProducer;
+  public void setExpectationsProducer(List<Expectation> expectationsProducer) {
+    this.expectationsProducer = expectationsProducer;
   }
 }
