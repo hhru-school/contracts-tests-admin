@@ -6,7 +6,7 @@ public class ServicesRelationDto {
 
   private ConsumerDto consumer;
 
-  private Integer expectationCount;
+  private Integer wrongExpectationCount;
 
   private Integer errorCount;
 
@@ -26,12 +26,12 @@ public class ServicesRelationDto {
     this.consumer = consumer;
   }
 
-  public Integer getExpectationCount() {
-    return expectationCount;
+  public Integer getWrongExpectationCount() {
+    return wrongExpectationCount;
   }
 
-  public void setExpectationCount(Integer expectationCount) {
-    this.expectationCount = expectationCount;
+  public void setWrongExpectationCount(Integer wrongExpectationCount) {
+    this.wrongExpectationCount = wrongExpectationCount;
   }
 
   public Integer getErrorCount() {

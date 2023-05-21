@@ -80,7 +80,7 @@ public class AppConfig {
     swaggerConfigBean.setTitle("Contract tests backend");
     swaggerConfigBean.setSchemes(new String[]{"http"});
     swaggerConfigBean.setBasePath("/");
-    swaggerConfigBean.setVersion("1.1.0");
+    swaggerConfigBean.setVersion("1.1.1");
     swaggerConfigBean.setResourcePackage("com.hh.contractstestsadmin.resource");
     swaggerConfigBean.setPrettyPrint(true);
     swaggerConfigBean.setScan(true);
@@ -103,8 +103,8 @@ public class AppConfig {
   }
 
   @Bean
-  public StandValidationService standValidationService(StandsDao standsDao, ValidationService validationService) {
-    return new StandValidationService(standsDao, validationService);
+  public StandValidationService standValidationService(StandsDao standsDao, ValidationService validationService, ObjectMapper objectMapper) {
+    return new StandValidationService(standsDao, validationService, objectMapper);
   }
 
   @Bean
