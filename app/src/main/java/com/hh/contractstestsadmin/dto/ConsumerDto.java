@@ -1,4 +1,4 @@
-package com.hh.contractstestsadmin.dto.api;
+package com.hh.contractstestsadmin.dto;
 
 public class ConsumerDto extends ServiceDto {
 

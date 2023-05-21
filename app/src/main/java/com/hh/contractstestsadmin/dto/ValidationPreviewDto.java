@@ -1,4 +1,4 @@
-package com.hh.contractstestsadmin.dto.api;
+package com.hh.contractstestsadmin.dto;
 
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import java.time.OffsetDateTime;

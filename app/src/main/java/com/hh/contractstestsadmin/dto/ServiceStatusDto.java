@@ -1,4 +1,4 @@
-package com.hh.contractstestsadmin.dto.api;
+package com.hh.contractstestsadmin.dto;
 
 import java.time.OffsetDateTime;
 
