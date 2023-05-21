@@ -12,7 +12,7 @@ export const StatusesPage: React.FC = () => {
                 <ServicesContainer standName={standName} />
             </Col>
             <Col>
-                <ValidationHistory />
+                <ValidationHistory standName={standName} />
             </Col>
         </Row>
     );
