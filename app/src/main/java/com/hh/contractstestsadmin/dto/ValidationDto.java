@@ -2,7 +2,7 @@ package com.hh.contractstestsadmin.dto;
 
 import java.time.OffsetDateTime;
 
-public class ValidationPreviewDto {
+public class ValidationDto {
 
   private Long id;
 

@@ -3,7 +3,7 @@ package com.hh.contractstestsadmin.resource;
 import com.hh.contractstestsadmin.dto.ErrorMessageDto;
 import com.hh.contractstestsadmin.dto.ExpectationDto;
 import com.hh.contractstestsadmin.dto.ValidationWithRelationsDto;
-import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
+import com.hh.contractstestsadmin.dto.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.service.StandValidationService;
@@ -34,7 +34,7 @@ public class ValidationResource {
 
   @ApiOperation(
       value = "Get list with stands",
-      response = ValidationPreviewDto.class,
+      response = ValidationDto.class,
       responseContainer = "List")
   @Path("stands/{standName}/validations")
   @GET
@@ -98,12 +98,12 @@ public class ValidationResource {
   @Path("stands/{standName}/validations/{validationId}/file")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getValidatorError(
+  public Response getValidatorReport(
       @PathParam("standName") String standName,
       @PathParam("validationId") Long validationId
   ) {
     try {
-      return Response.ok(standValidationService.getValidatorError(standName, validationId)).build();
+      return Response.ok(standValidationService.getValidatorReport(standName, validationId)).build();
     } catch (ValidationHistoryNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessageDto(exception.getMessage())).build();
     } catch (Exception exception) {

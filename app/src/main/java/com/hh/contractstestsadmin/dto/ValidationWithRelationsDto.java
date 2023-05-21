@@ -2,7 +2,7 @@ package com.hh.contractstestsadmin.dto;
 
 import java.util.List;
 
-public class ValidationWithRelationsDto extends ValidationPreviewDto {
+public class ValidationWithRelationsDto extends ValidationDto {
 
   private List<ServicesRelationDto> servicesRelations;
 

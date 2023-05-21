@@ -20,7 +20,7 @@
         "version": "1.0.0",
         "expectationLink": "https://www.example.com/"
       },
-      "expectationCount": 2,
+      "wrongExpectationCount": 2,
       "errorCount": 4
     },
     {
@@ -38,7 +38,7 @@
         "version": "1.0.0",
         "expectationLink": "https://www.example.com/"
       },
-      "expectationCount": 2,
+      "wrongExpectationCount": 2,
       "errorCount": 4
     },
     {
@@ -56,7 +56,7 @@
         "version": "1.0.0",
         "expectationLink": "https://www.example.com/"
       },
-      "expectationCount": 2,
+      "wrongExpectationCount": 2,
       "errorCount": 4
     },
     {
@@ -74,7 +74,7 @@
         "version": "1.0.0",
         "expectationLink": "https://www.example.com/"
       },
-      "expectationCount": 2,
+      "wrongExpectationCount": 2,
       "errorCount": 4
     },
     {
@@ -92,7 +92,7 @@
         "version": "1.0.0",
         "expectationLink": "https://www.example.com/"
       },
-      "expectationCount": 2,
+      "wrongExpectationCount": 2,
       "errorCount": 4
     },
     {
@@ -110,7 +110,7 @@
         "version": "1.0.0",
         "expectationLink": "https://www.example.com/"
       },
-      "expectationCount": 2,
+      "wrongExpectationCount": 2,
       "errorCount": 4
     },
     {
@@ -128,7 +128,7 @@
         "version": "1.0.0",
         "expectationLink": "https://www.example.com/"
       },
-      "expectationCount": 2,
+      "wrongExpectationCount": 2,
       "errorCount": 4
     },
     {
@@ -146,7 +146,7 @@
         "version": "1.0.0",
         "expectationLink": "https://www.example.com/"
       },
-      "expectationCount": 2,
+      "wrongExpectationCount": 2,
       "errorCount": 4
     },
     {
@@ -164,7 +164,7 @@
         "version": "1.0.0",
         "expectationLink": "https://www.example.com/"
       },
-      "expectationCount": 2,
+      "wrongExpectationCount": 2,
       "errorCount": 4
     },
     {
@@ -182,7 +182,7 @@
         "version": "1.0.0",
         "expectationLink": "https://www.example.com/"
       },
-      "expectationCount": 2,
+      "wrongExpectationCount": 2,
       "errorCount": 4
     },
     {
@@ -200,7 +200,7 @@
         "version": "1.0.0",
         "expectationLink": "https://www.example.com/"
       },
-      "expectationCount": 2,
+      "wrongExpectationCount": 2,
       "errorCount": 4
     },
     {
@@ -218,7 +218,7 @@
         "version": "1.0.0",
         "expectationLink": "https://www.example.com/"
       },
-      "expectationCount": 2,
+      "wrongExpectationCount": 2,
       "errorCount": 4
     },
     {
@@ -236,7 +236,7 @@
         "version": "1.0.0",
         "expectationLink": "https://www.example.com/"
       },
-      "expectationCount": 2,
+      "wrongExpectationCount": 2,
       "errorCount": 4
     }
   ]

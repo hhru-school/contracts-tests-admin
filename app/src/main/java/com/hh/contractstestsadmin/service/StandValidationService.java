@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dto.ExpectationDto;
 import com.hh.contractstestsadmin.dto.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
-import com.hh.contractstestsadmin.dto.ValidationPreviewDto;
+import com.hh.contractstestsadmin.dto.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
@@ -36,7 +36,7 @@ public class StandValidationService {
     return standsDao.getStandNames().stream().anyMatch(s -> s.equals(standName));
   }
 
-  public List<ValidationPreviewDto> getValidationHistory(
+  public List<ValidationDto> getValidationHistory(
       String standName,
       Integer sizeLimit
   ) throws ValidationHistoryNotFoundException, StandsDaoException {
@@ -68,9 +68,9 @@ public class StandValidationService {
     });
   }
 
-  public String getValidatorError(String standName, Long validationId) {
+  public String getValidatorReport(String standName, Long validationId) {
     ClassLoader classLoader = getClass().getClassLoader();
-    InputStream inputStream = classLoader.getResourceAsStream("test-data/validator-error-example.json");
+    InputStream inputStream = classLoader.getResourceAsStream("test-data/validator-report-example.json");
     if (inputStream == null) {
       return "";
     }
