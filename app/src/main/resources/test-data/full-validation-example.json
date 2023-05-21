@@ -1,0 +1,3686 @@
+[
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "POST",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "PUT",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "POST",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "PUT",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "POST",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "PUT",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "POST",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "PUT",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service5",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service5",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "POST",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service5",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "PUT",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service5",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service5",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service5",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service5",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service5",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "POST",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service5",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "PUT",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service5",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service5",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service5",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service7",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service7",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "POST",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service7",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "PUT",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service7",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service7",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service7",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service2",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service7",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service7",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "POST",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service7",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "PUT",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service7",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service7",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service7",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service1",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service4",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service4",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "POST",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service4",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "PUT",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service4",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service4",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service4",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service6",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service6",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "POST",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service6",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "PUT",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service6",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service6",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service1",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service6",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service6",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service6",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "POST",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service6",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "PUT",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service6",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service6",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service6",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": false,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service4",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service4",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "POST",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service4",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "PUT",
+      "path": "/users",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service4",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service4",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  },
+  {
+    "producerName": "service2",
+    "producerVersion": "1.0.0",
+    "producerIsRelease": false,
+    "consumerName": "service4",
+    "consumerVersion": "1.0.0",
+    "consumerIsRelease": true,
+    "request": {
+      "method": "GET",
+      "path": "/users/1/messages/1",
+      "body": "[ \"body\" ]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Accept": [
+          "application/json"
+        ]
+      },
+      "queryParams": {
+        "requiredQueryParam": [
+          "value"
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "[ \"body\" ]"
+    },
+    "messages": [
+      {
+        "key": "validation.request.body.schema.type",
+        "message": "[Path '/nonRequiredField/nestedNonRequiredField'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+        "level": "ERROR"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredQueryParam' is required but is missing.",
+        "level": "WARN"
+      },
+      {
+        "key": "validation.request.parameter.missing",
+        "message": "Parameter 'requiredParam' is required but is missing.",
+        "level": "FATAL"
+      }
+    ]
+  }
+]

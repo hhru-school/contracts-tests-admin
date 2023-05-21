@@ -1,9 +1,9 @@
 package com.hh.contractstestsadmin.resource;
 
-import com.hh.contractstestsadmin.dto.ErrorMessageDto;
-import com.hh.contractstestsadmin.dto.ExpectationDto;
-import com.hh.contractstestsadmin.dto.ValidationWithRelationsDto;
-import com.hh.contractstestsadmin.dto.ValidationDto;
+import com.hh.contractstestsadmin.dto.api.ErrorMessageDto;
+import com.hh.contractstestsadmin.dto.api.ExpectationDto;
+import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
+import com.hh.contractstestsadmin.dto.api.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.service.StandValidationService;

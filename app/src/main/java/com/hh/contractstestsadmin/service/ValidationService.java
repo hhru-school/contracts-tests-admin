@@ -2,7 +2,7 @@ package com.hh.contractstestsadmin.service;
 
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
-import com.hh.contractstestsadmin.dto.ValidationDto;
+import com.hh.contractstestsadmin.dto.api.ValidationDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.model.Validation;
 import java.time.OffsetDateTime;

@@ -1,6 +1,6 @@
 package com.hh.contractstestsadmin.service;
 
-import com.hh.contractstestsadmin.dto.ValidationDto;
+import com.hh.contractstestsadmin.dto.api.ValidationDto;
 import com.hh.contractstestsadmin.model.Validation;
 
 public class ValidationMapper {

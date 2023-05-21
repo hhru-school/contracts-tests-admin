@@ -3,9 +3,9 @@ package com.hh.contractstestsadmin.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
-import com.hh.contractstestsadmin.dto.ServicesContainerDto;
-import com.hh.contractstestsadmin.dto.StandInfoDto;
-import com.hh.contractstestsadmin.dto.StandStatusDto;
+import com.hh.contractstestsadmin.dto.api.ServicesContainerDto;
+import com.hh.contractstestsadmin.dto.api.StandInfoDto;
+import com.hh.contractstestsadmin.dto.api.StandStatusDto;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 

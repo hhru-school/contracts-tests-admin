@@ -11,6 +11,7 @@ import com.hh.contractstestsadmin.dao.ServiceDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dao.ValidationInfoDao;
 import com.hh.contractstestsadmin.service.ValidationService;
+import com.hh.contractstestsadmin.service.ValidatorService;
 import io.minio.MinioClient;
 import io.swagger.jaxrs.config.BeanConfig;
 import java.util.Properties;
@@ -105,6 +106,11 @@ public class AppConfig {
   @Bean
   public StandValidationService standValidationService(StandsDao standsDao, ValidationService validationService, ObjectMapper objectMapper) {
     return new StandValidationService(standsDao, validationService, objectMapper);
+  }
+
+  @Bean
+  public ValidatorService validatorService(ObjectMapper objectMapper){
+    return new ValidatorService(objectMapper);
   }
 
   @Bean
