@@ -54,5 +54,4 @@ public class StatusService {
     standStatusDto.setServices(getServices(standName));
     return standStatusDto;
   }
-
 }

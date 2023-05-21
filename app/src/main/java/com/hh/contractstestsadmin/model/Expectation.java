@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,6 +41,7 @@ public class Expectation {
   private Service producer;
 
   @Type(type = "pgsql_enum")
+  @Enumerated(EnumType.STRING)
   @Column(name = "http_method")
   private HttpMethod httpMethod;
 
@@ -64,6 +67,7 @@ public class Expectation {
   private String responseBody;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "validation_id")
   private Validation validation;
 
   @OneToMany(mappedBy = "expectation", orphanRemoval = true, cascade = CascadeType.ALL)

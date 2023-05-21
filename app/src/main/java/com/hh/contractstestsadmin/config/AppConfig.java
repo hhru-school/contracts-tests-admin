@@ -7,7 +7,9 @@ import com.hh.contractstestsadmin.dao.minio.mapper.ProducerDataMapper;
 import com.hh.contractstestsadmin.dao.minio.mapper.ServiceListMapper;
 import com.hh.contractstestsadmin.dao.minio.mapper.ServiceMapper;
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
+import com.hh.contractstestsadmin.dao.ServiceDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
+import com.hh.contractstestsadmin.dao.ValidationInfoDao;
 import com.hh.contractstestsadmin.service.ValidationService;
 import io.minio.MinioClient;
 import io.swagger.jaxrs.config.BeanConfig;
@@ -78,7 +80,7 @@ public class AppConfig {
     swaggerConfigBean.setTitle("Contract tests backend");
     swaggerConfigBean.setSchemes(new String[]{"http"});
     swaggerConfigBean.setBasePath("/");
-    swaggerConfigBean.setVersion("1.1.0");
+    swaggerConfigBean.setVersion("1.1.1");
     swaggerConfigBean.setResourcePackage("com.hh.contractstestsadmin.resource");
     swaggerConfigBean.setPrettyPrint(true);
     swaggerConfigBean.setScan(true);
@@ -101,13 +103,23 @@ public class AppConfig {
   }
 
   @Bean
-  public StandValidationService standValidationService(StandsDao standsDao, ValidationService validationService) {
-    return new StandValidationService(standsDao, validationService);
+  public StandValidationService standValidationService(StandsDao standsDao, ValidationService validationService, ObjectMapper objectMapper) {
+    return new StandValidationService(standsDao, validationService, objectMapper);
   }
 
   @Bean
   public ValidationDao validationDao(LocalSessionFactoryBean sessionFactoryBean) {
     return new ValidationDao(sessionFactoryBean.getObject());
+  }
+
+  @Bean
+  public ServiceDao serviceDao(LocalSessionFactoryBean sessionFactoryBean) {
+    return new ServiceDao(sessionFactoryBean.getObject());
+  }
+
+  @Bean
+  public ValidationInfoDao validationInfoDao(LocalSessionFactoryBean sessionFactoryBean) {
+    return new ValidationInfoDao(sessionFactoryBean.getObject());
   }
 
   @Bean
