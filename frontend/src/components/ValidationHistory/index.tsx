@@ -1,10 +1,11 @@
 import { Nav, NavItem, NavLink } from 'reactstrap';
-import { Alert } from 'reactstrap';
+import { Alert, Card, CardText, CardBody, CardHeader } from 'reactstrap';
+
 import useSWR from 'swr';
 type standResponce = {
     id: number;
-    createdDate: string;
-    executeDate: string;
+    createdDate: Date;
+    executeDate: Date;
     releaseLink: string;
     status: string;
     errorCount: number;
@@ -13,9 +14,9 @@ export type ServicesContainerProps = {
     standName: string;
 };
 
-export const ValidationHistory: React.FC<ServicesContainerProps> = (standName) => {
+export const ValidationHistory: React.FC<ServicesContainerProps> = ({ standName }) => {
     const { isLoading, data, error } = useSWR<standResponce[]>(
-        standName ? `/api/stands/${standName.standName}/validations` : null,
+        standName ? `/api/stands/${standName}/validations` : null,
     );
     if (isLoading) {
         return <Alert color="primary"> Data is loading </Alert>;
@@ -28,19 +29,30 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = (standName) =
     if (!data) {
         return null;
     }
+    if (!Array.isArray(data) || data.length === 0) {
+        return null;
+    }
     console.log(data);
-    //const filteredData = data.slice(0, 5);
+    const filteredData = data.slice(0, 5);
     return (
-        <div className="sidebar col-2 pt-3 justify-content-start">
-            <Nav vertical pills>
-                {data.map((item: standResponce) => (
-                    <NavItem>
-                        <NavLink className="link" href="#">
-                            Валидация {item.id} {item.createdDate}
-                        </NavLink>
-                    </NavItem>
-                ))}
-            </Nav>
-        </div>
+        <Card>
+            <CardBody>
+                <CardHeader>Последние валидации</CardHeader>
+                <CardText>
+                    <div className="justify-content-start">
+                        <Nav vertical pills>
+                            {filteredData.map((item: standResponce) => (
+                                <NavItem>
+                                    <NavLink className="link" href="#">
+                                        Валидация {item.id} (
+                                        {new Date(item.createdDate).toLocaleDateString('ru-RU')} )
+                                    </NavLink>
+                                </NavItem>
+                            ))}
+                        </Nav>
+                    </div>
+                </CardText>
+            </CardBody>
+        </Card>
     );
 };

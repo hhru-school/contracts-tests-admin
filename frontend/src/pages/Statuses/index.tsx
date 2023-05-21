@@ -8,10 +8,10 @@ export const StatusesPage: React.FC = () => {
     const { standName } = useContext(AppContext);
     return (
         <Row>
-            <Col md={10}>
+            <Col md={9}>
                 <ServicesContainer standName={standName} />
             </Col>
-            <Col>
+            <Col md={3}>
                 <ValidationHistory standName={standName} />
             </Col>
         </Row>
