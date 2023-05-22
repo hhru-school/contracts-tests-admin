@@ -30,7 +30,7 @@ public class FileResource {
     }
 
     @ApiOperation(
-            value = "Check health")
+            value = "Get shared link by file id")
     @GET
     @Path("/stands/{standName}/files/{fileId}")
     @Produces(value = MediaType.APPLICATION_JSON)
