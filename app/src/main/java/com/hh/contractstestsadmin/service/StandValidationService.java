@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 public class StandValidationService {
@@ -26,9 +27,12 @@ public class StandValidationService {
 
   private final ObjectMapper objectMapper;
 
-  public StandValidationService(StandsDao standsDao, ValidationService validationService, ObjectMapper objectMapper) {
+  private final ExecutorService executorService;
+
+  public StandValidationService(StandsDao standsDao, ValidationService validationService, ExecutorService executorService, ObjectMapper objectMapper) {
     this.standsDao = standsDao;
     this.validationService = validationService;
+    this.executorService = executorService;
     this.objectMapper = objectMapper;
   }
 
@@ -51,6 +55,11 @@ public class StandValidationService {
       throw new StandNotFoundException("Stand '" + standName + "' not found");
     }
     Validation validation = validationService.createValidation(standName);
+    executorService.submit(() -> startValidationProcess(standName, validation.getId()));
+  }
+
+  private void startValidationProcess(String standName, Long validationId){
+
   }
 
   public ValidationWithRelationsDto getValidationWithRelations(String standName, Long validationId) throws IOException {
