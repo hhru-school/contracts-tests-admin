@@ -2,18 +2,18 @@ package com.hh.contractstestsadmin.dto;
 
 public class ErrorMessageDto {
 
-  private String massage;
+  private String message;
 
-  public ErrorMessageDto(String massage) {
-    this.massage = massage;
+  public ErrorMessageDto(String message) {
+    this.message = message;
   }
 
-  public String getMassage() {
-    return massage;
+  public String getMessage() {
+    return message;
   }
 
-  public void setMassage(String massage) {
-    this.massage = massage;
+  public void setMessage(String message) {
+    this.message = message;
   }
 
 }

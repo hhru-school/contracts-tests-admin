@@ -1,0 +1,434 @@
+[
+  {
+    "id": 1,
+    "httpMethod": "GET",
+    "requestPath": "/api/user",
+    "requestHeaders": [
+      {
+        "key": "header1",
+        "value": "header1Value"
+      },
+      {
+        "key": "header2",
+        "value": "header2Value"
+      }
+    ],
+    "queryParams": [
+      {
+        "key": "queryParam1",
+        "value": "queryParam1Value"
+      },
+      {
+        "key": "queryParam2",
+        "value": "queryParam2Value"
+      }
+    ],
+    "requestBody": null,
+    "curlRequest": "curl -X 'GET' 'http://localhost:3002/api/health' -H 'accept: application/json'",
+    "responseStatus": 200,
+    "responseHeaders": [
+      {
+        "key": "header1",
+        "value": "header1Value"
+      },
+      {
+        "key": "header2",
+        "value": "header2Value"
+      },
+      {
+        "key": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "responseBody": "[ { \"name\": \"contract-release\", \"isRelease\": true }, { \"name\": \"ts107.pyn.ru-contracts\", \"isRelease\": false }]",
+    "errors": [
+      {
+        "id": 1,
+        "errorType": {
+          "key": "validation.response.body.schema.required",
+          "comment": "comment"
+        },
+        "errorLevel": "ERROR",
+        "comment": "Consumer has missing required properties while minimal required setting is enabled, properties: ([nonRequiredField])"
+      },
+      {
+        "id": 2,
+        "errorType": {
+          "key": "validation.request.body.schema.required",
+          "comment": "comment"
+        },
+        "errorLevel": "INFO",
+        "comment": "Object has missing required properties ([\"someRequiredField\"])"
+      },
+      {
+        "id": 2,
+        "errorType": {
+          "key": "validation.request.path.missing",
+          "comment": "comment"
+        },
+        "errorLevel": "FATAL",
+        "comment": "No API path found that matches request '/itemz'."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "httpMethod": "POST",
+    "requestPath": "/api/user",
+    "requestHeaders": [
+      {
+        "key": "header1",
+        "value": "header1Value"
+      },
+      {
+        "key": "header2",
+        "value": "header2Value"
+      }
+    ],
+    "queryParams": [
+      {
+        "key": "queryParam1",
+        "value": "queryParam1Value"
+      },
+      {
+        "key": "queryParam2",
+        "value": "queryParam2Value"
+      }
+    ],
+    "requestBody": "[ \"requestBody\" ]",
+    "curlRequest": "curl -X 'GET' 'http://localhost:3002/api/health' -H 'accept: application/json'",
+    "responseStatus": 200,
+    "responseHeaders": [
+      {
+        "key": "header1",
+        "value": "header1Value"
+      },
+      {
+        "key": "header2",
+        "value": "header2Value"
+      },
+      {
+        "key": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "responseBody": "[ { \"name\": \"contract-release\", \"isRelease\": true }, { \"name\": \"ts107.pyn.ru-contracts\", \"isRelease\": false }]",
+    "errors": [
+      {
+        "id": 1,
+        "errorType": {
+          "key": "validation.response.body.schema.required",
+          "comment": "comment"
+        },
+        "errorLevel": "ERROR",
+        "comment": "Consumer has missing required properties while minimal required setting is enabled, properties: ([nonRequiredField])"
+      },
+      {
+        "id": 2,
+        "errorType": {
+          "key": "validation.request.body.schema.required",
+          "comment": "comment"
+        },
+        "errorLevel": "INFO",
+        "comment": "Object has missing required properties ([\"someRequiredField\"])"
+      },
+      {
+        "id": 2,
+        "errorType": {
+          "key": "validation.request.path.missing",
+          "comment": "comment"
+        },
+        "errorLevel": "FATAL",
+        "comment": "No API path found that matches request '/itemz'."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "httpMethod": "GET",
+    "requestPath": "/api/user/1",
+    "requestHeaders": [
+      {
+        "key": "header1",
+        "value": "header1Value"
+      },
+      {
+        "key": "header2",
+        "value": "header2Value"
+      }
+    ],
+    "queryParams": [
+      {
+        "key": "queryParam1",
+        "value": "queryParam1Value"
+      },
+      {
+        "key": "queryParam2",
+        "value": "queryParam2Value"
+      }
+    ],
+    "requestBody": null,
+    "curlRequest": "curl -X 'GET' 'http://localhost:3002/api/health' -H 'accept: application/json'",
+    "responseStatus": 200,
+    "responseHeaders": [
+      {
+        "key": "header1",
+        "value": "header1Value"
+      },
+      {
+        "key": "header2",
+        "value": "header2Value"
+      },
+      {
+        "key": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "responseBody": "[ { \"name\": \"contract-release\", \"isRelease\": true }, { \"name\": \"ts107.pyn.ru-contracts\", \"isRelease\": false }]",
+    "errors": [
+      {
+        "id": 1,
+        "errorType": {
+          "key": "validation.response.body.schema.required",
+          "comment": "comment"
+        },
+        "errorLevel": "ERROR",
+        "comment": "Consumer has missing required properties while minimal required setting is enabled, properties: ([nonRequiredField])"
+      },
+      {
+        "id": 2,
+        "errorType": {
+          "key": "validation.request.body.schema.required",
+          "comment": "comment"
+        },
+        "errorLevel": "INFO",
+        "comment": "Object has missing required properties ([\"someRequiredField\"])"
+      },
+      {
+        "id": 2,
+        "errorType": {
+          "key": "validation.request.path.missing",
+          "comment": "comment"
+        },
+        "errorLevel": "FATAL",
+        "comment": "No API path found that matches request '/itemz'."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "httpMethod": "POST",
+    "requestPath": "/api/user/1",
+    "requestHeaders": [
+      {
+        "key": "header1",
+        "value": "header1Value"
+      },
+      {
+        "key": "header2",
+        "value": "header2Value"
+      }
+    ],
+    "queryParams": [
+      {
+        "key": "queryParam1",
+        "value": "queryParam1Value"
+      },
+      {
+        "key": "queryParam2",
+        "value": "queryParam2Value"
+      }
+    ],
+    "requestBody": "[ \"requestBody\" ]",
+    "curlRequest": "curl -X 'GET' 'http://localhost:3002/api/health' -H 'accept: application/json'",
+    "responseStatus": 200,
+    "responseHeaders": [
+      {
+        "key": "header1",
+        "value": "header1Value"
+      },
+      {
+        "key": "header2",
+        "value": "header2Value"
+      },
+      {
+        "key": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "responseBody": "[ { \"name\": \"contract-release\", \"isRelease\": true }, { \"name\": \"ts107.pyn.ru-contracts\", \"isRelease\": false }]",
+    "errors": [
+      {
+        "id": 1,
+        "errorType": {
+          "key": "validation.response.body.schema.required",
+          "comment": "comment"
+        },
+        "errorLevel": "ERROR",
+        "comment": "Consumer has missing required properties while minimal required setting is enabled, properties: ([nonRequiredField])"
+      },
+      {
+        "id": 2,
+        "errorType": {
+          "key": "validation.request.body.schema.required",
+          "comment": "comment"
+        },
+        "errorLevel": "INFO",
+        "comment": "Object has missing required properties ([\"someRequiredField\"])"
+      },
+      {
+        "id": 2,
+        "errorType": {
+          "key": "validation.request.path.missing",
+          "comment": "comment"
+        },
+        "errorLevel": "FATAL",
+        "comment": "No API path found that matches request '/itemz'."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "httpMethod": "PUT",
+    "requestPath": "/api/user/1",
+    "requestHeaders": [
+      {
+        "key": "header1",
+        "value": "header1Value"
+      },
+      {
+        "key": "header2",
+        "value": "header2Value"
+      }
+    ],
+    "queryParams": [
+      {
+        "key": "queryParam1",
+        "value": "queryParam1Value"
+      },
+      {
+        "key": "queryParam2",
+        "value": "queryParam2Value"
+      }
+    ],
+    "requestBody": "[ \"requestBody\" ]",
+    "curlRequest": "curl -X 'GET' 'http://localhost:3002/api/health' -H 'accept: application/json'",
+    "responseStatus": 200,
+    "responseHeaders": [
+      {
+        "key": "header1",
+        "value": "header1Value"
+      },
+      {
+        "key": "header2",
+        "value": "header2Value"
+      },
+      {
+        "key": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "responseBody": "[ { \"name\": \"contract-release\", \"isRelease\": true }, { \"name\": \"ts107.pyn.ru-contracts\", \"isRelease\": false }]",
+    "errors": [
+      {
+        "id": 1,
+        "errorType": {
+          "key": "validation.response.body.schema.required",
+          "comment": "comment"
+        },
+        "errorLevel": "ERROR",
+        "comment": "Consumer has missing required properties while minimal required setting is enabled, properties: ([nonRequiredField])"
+      },
+      {
+        "id": 2,
+        "errorType": {
+          "key": "validation.request.body.schema.required",
+          "comment": "comment"
+        },
+        "errorLevel": "INFO",
+        "comment": "Object has missing required properties ([\"someRequiredField\"])"
+      },
+      {
+        "id": 2,
+        "errorType": {
+          "key": "validation.request.path.missing",
+          "comment": "comment"
+        },
+        "errorLevel": "FATAL",
+        "comment": "No API path found that matches request '/itemz'."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "httpMethod": "GET",
+    "requestPath": "/api/health",
+    "requestHeaders": [
+      {
+        "key": "header1",
+        "value": "header1Value"
+      },
+      {
+        "key": "header2",
+        "value": "header2Value"
+      }
+    ],
+    "queryParams": [
+      {
+        "key": "queryParam1",
+        "value": "queryParam1Value"
+      },
+      {
+        "key": "queryParam2",
+        "value": "queryParam2Value"
+      }
+    ],
+    "requestBody": null,
+    "curlRequest": "curl -X 'GET' 'http://localhost:3002/api/health' -H 'accept: application/json'",
+    "responseStatus": 200,
+    "responseHeaders": [
+      {
+        "key": "header1",
+        "value": "header1Value"
+      },
+      {
+        "key": "header2",
+        "value": "header2Value"
+      },
+      {
+        "key": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "responseBody": "[ { \"name\": \"contract-release\", \"isRelease\": true }, { \"name\": \"ts107.pyn.ru-contracts\", \"isRelease\": false }]",
+    "errors": [
+      {
+        "id": 1,
+        "errorType": {
+          "key": "validation.response.body.schema.required",
+          "comment": "comment"
+        },
+        "errorLevel": "ERROR",
+        "comment": "Consumer has missing required properties while minimal required setting is enabled, properties: ([nonRequiredField])"
+      },
+      {
+        "id": 2,
+        "errorType": {
+          "key": "validation.request.body.schema.required",
+          "comment": "comment"
+        },
+        "errorLevel": "INFO",
+        "comment": "Object has missing required properties ([\"someRequiredField\"])"
+      },
+      {
+        "id": 2,
+        "errorType": {
+          "key": "validation.request.path.missing",
+          "comment": "comment"
+        },
+        "errorLevel": "FATAL",
+        "comment": "No API path found that matches request '/itemz'."
+      }
+    ]
+  }
+]
