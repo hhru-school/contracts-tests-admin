@@ -1,6 +1,7 @@
 package com.hh.contractstestsadmin.dto;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 public class ServiceStatusDto {
 
@@ -10,6 +11,8 @@ public class ServiceStatusDto {
 
   private Boolean isConsumer;
 
+  private UUID consumerId;
+
   private String expectationLink;
 
   private OffsetDateTime expectationPublishDate;
@@ -17,6 +20,8 @@ public class ServiceStatusDto {
   private Boolean isProducer;
 
   private String schemaLink;
+
+  private UUID producerId;
 
   private OffsetDateTime schemaPublishDate;
 
@@ -78,6 +83,22 @@ public class ServiceStatusDto {
 
   public OffsetDateTime getSchemaPublishDate() {
     return schemaPublishDate;
+  }
+
+  public UUID getConsumerId() {
+    return consumerId;
+  }
+
+  public void setConsumerId(UUID consumerId) {
+    this.consumerId = consumerId;
+  }
+
+  public UUID getProducerId() {
+    return producerId;
+  }
+
+  public void setProducerId(UUID producerId) {
+    this.producerId = producerId;
   }
 
   public void setSchemaPublishDate(OffsetDateTime schemaPublishDate) {

@@ -137,7 +137,7 @@ public class AppConfig {
 
   @Bean
   public ServiceListMapper serviceListMapper(ServiceMapper serviceMapper) {
-    return new ServiceListMapper(minioProperties(), serviceMapper);
+    return new ServiceListMapper(serviceMapper);
   }
 
   @Bean
