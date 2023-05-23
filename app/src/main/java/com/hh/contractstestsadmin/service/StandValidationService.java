@@ -6,9 +6,11 @@ import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dto.api.ValidationPreviewDto;
+import com.hh.contractstestsadmin.dto.validator.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
+import com.hh.contractstestsadmin.exception.ValidationRecordException;
 import com.hh.contractstestsadmin.exception.ValidatorException;
 import com.hh.contractstestsadmin.model.Validation;
 
@@ -17,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
@@ -50,7 +53,7 @@ public class StandValidationService {
     return standsDao.getStandNames().stream().anyMatch(s -> s.equals(standName));
   }
 
-  public List<ValidationDto> getValidationHistory(
+  public List<ValidationPreviewDto> getValidationHistory(
       String standName,
       Integer sizeLimit
   ) throws ValidationHistoryNotFoundException, StandsDaoException {
@@ -65,16 +68,18 @@ public class StandValidationService {
       throw new StandNotFoundException("Stand '" + standName + "' not found");
     }
     Validation validation = validationService.createValidation(standName);
-    executorService.submit(() -> startValidationProcess(standName, validation));
+    executorService.submit(() -> startValidationProcess(standName, validation.getId()));
   }
 
-  private void startValidationProcess(String standName, Validation validation) {
+  private void startValidationProcess(String standName, Long validationId) {
     try {
-      List<WrongExpectationDto> wrongExpectations = validatorService.validate(standName);
-
+      ValidationDto validationDto = validatorService.validate(standName);
+      validationService.recordValidation(validationId, validationDto);
     } catch (ValidatorException e) {
       throw new RuntimeException(e);
     } catch (IOException e) {
+      throw new RuntimeException(e);
+    } catch (ValidationRecordException e) {
       throw new RuntimeException(e);
     }
   }
