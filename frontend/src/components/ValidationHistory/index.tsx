@@ -1,15 +1,7 @@
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import { Alert, Card, CardText, CardBody, CardHeader } from 'reactstrap';
-
+import { standResponce } from './types';
 import useSWR from 'swr';
-type standResponce = {
-    id: number;
-    createdDate: Date;
-    executeDate: Date;
-    releaseLink: string;
-    status: string;
-    errorCount: number;
-};
 export type ServicesContainerProps = {
     standName: string;
 };
@@ -32,7 +24,6 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = ({ standName 
     if (!Array.isArray(data) || data.length === 0) {
         return null;
     }
-    console.log(data);
     const filteredData = data.slice(0, 5);
     return (
         <Card>
