@@ -7,7 +7,7 @@ public class ResponseDto {
 
   private Integer status;
 
-  private Map<String, List<String>> headers;
+  private Map<String, String> headers;
 
   private String body;
 
@@ -19,11 +19,11 @@ public class ResponseDto {
     this.status = status;
   }
 
-  public Map<String, List<String>> getHeaders() {
+  public Map<String, String> getHeaders() {
     return headers;
   }
 
-  public void setHeaders(Map<String, List<String>> headers) {
+  public void setHeaders(Map<String, String> headers) {
     this.headers = headers;
   }
 
