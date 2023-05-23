@@ -2,7 +2,7 @@ package com.hh.contractstestsadmin.service;
 
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
-import com.hh.contractstestsadmin.dto.api.ValidationPreviewDto;
+import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.model.Validation;
 import java.time.OffsetDateTime;
@@ -21,7 +21,7 @@ public class ValidationService {
   }
 
   @Transactional
-  public List<ValidationPreviewDto> getLatestValidationPreviews(String standName, Integer validationPreviewsCount) {
+  public List<ValidationMetaInfoDto> getLatestValidationPreviews(String standName, Integer validationPreviewsCount) {
     return validationDao
         .getLatestValidations(standName, validationPreviewsCount)
         .stream()

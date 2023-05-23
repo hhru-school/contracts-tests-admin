@@ -3,7 +3,7 @@ package com.hh.contractstestsadmin.resource;
 import com.hh.contractstestsadmin.dto.api.ErrorMessageDto;
 import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
-import com.hh.contractstestsadmin.dto.api.ValidationPreviewDto;
+import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.service.StandValidationService;
@@ -34,7 +34,7 @@ public class ValidationResource {
 
   @ApiOperation(
       value = "Get list with stands",
-      response = ValidationPreviewDto.class,
+      response = ValidationMetaInfoDto.class,
       responseContainer = "List")
   @Path("stands/{standName}/validations")
   @GET

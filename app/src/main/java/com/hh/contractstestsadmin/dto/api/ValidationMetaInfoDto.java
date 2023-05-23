@@ -3,7 +3,7 @@ package com.hh.contractstestsadmin.dto.api;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import java.time.OffsetDateTime;
 
-public class ValidationPreviewDto {
+public class ValidationMetaInfoDto {
 
   private Long id;
 
