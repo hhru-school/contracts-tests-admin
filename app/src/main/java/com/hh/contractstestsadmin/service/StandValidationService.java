@@ -2,10 +2,10 @@ package com.hh.contractstestsadmin.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hh.contractstestsadmin.dto.ExpectationDto;
-import com.hh.contractstestsadmin.dto.ValidationWithRelationsDto;
+import com.hh.contractstestsadmin.dto.api.ExpectationDto;
+import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
-import com.hh.contractstestsadmin.dto.ValidationDto;
+import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
@@ -36,7 +36,7 @@ public class StandValidationService {
     return standsDao.getStandNames().stream().anyMatch(s -> s.equals(standName));
   }
 
-  public List<ValidationDto> getValidationHistory(
+  public List<ValidationMetaInfoDto> getValidationHistory(
       String standName,
       Integer sizeLimit
   ) throws ValidationHistoryNotFoundException, StandsDaoException {

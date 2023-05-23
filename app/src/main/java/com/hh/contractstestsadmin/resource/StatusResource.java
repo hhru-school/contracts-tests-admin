@@ -1,8 +1,8 @@
 package com.hh.contractstestsadmin.resource;
 
-import com.hh.contractstestsadmin.dto.ErrorMessageDto;
-import com.hh.contractstestsadmin.dto.StandInfoDto;
-import com.hh.contractstestsadmin.dto.StandStatusDto;
+import com.hh.contractstestsadmin.dto.api.ErrorMessageDto;
+import com.hh.contractstestsadmin.dto.api.StandInfoDto;
+import com.hh.contractstestsadmin.dto.api.StandStatusDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.service.StatusService;
 
