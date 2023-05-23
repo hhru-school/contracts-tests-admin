@@ -120,9 +120,10 @@ public class AppConfig {
       StandsDao standsDao,
       ValidationService validationService,
       ExecutorService executorService,
-      ObjectMapper objectMapper
+      ObjectMapper objectMapper,
+      ValidatorService validatorService
   ) {
-    return new StandValidationService(standsDao, validationService, executorService, objectMapper);
+    return new StandValidationService(standsDao, validationService, executorService, validatorService, objectMapper);
   }
 
   @Bean

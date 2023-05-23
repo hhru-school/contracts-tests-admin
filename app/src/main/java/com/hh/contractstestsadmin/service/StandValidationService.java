@@ -6,9 +6,11 @@ import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dto.api.ValidationDto;
+import com.hh.contractstestsadmin.dto.validator.WrongExpectationDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
+import com.hh.contractstestsadmin.exception.ValidatorException;
 import com.hh.contractstestsadmin.model.Validation;
 
 import java.io.BufferedReader;
@@ -29,10 +31,19 @@ public class StandValidationService {
 
   private final ExecutorService executorService;
 
-  public StandValidationService(StandsDao standsDao, ValidationService validationService, ExecutorService executorService, ObjectMapper objectMapper) {
+  private final ValidatorService validatorService;
+
+  public StandValidationService(
+      StandsDao standsDao,
+      ValidationService validationService,
+      ExecutorService executorService,
+      ValidatorService validatorService,
+      ObjectMapper objectMapper
+  ) {
     this.standsDao = standsDao;
     this.validationService = validationService;
     this.executorService = executorService;
+    this.validatorService = validatorService;
     this.objectMapper = objectMapper;
   }
 
@@ -55,11 +66,18 @@ public class StandValidationService {
       throw new StandNotFoundException("Stand '" + standName + "' not found");
     }
     Validation validation = validationService.createValidation(standName);
-    executorService.submit(() -> startValidationProcess(standName, validation.getId()));
+    executorService.submit(() -> startValidationProcess(standName, validation));
   }
 
-  private void startValidationProcess(String standName, Long validationId){
+  private void startValidationProcess(String standName, Validation validation) {
+    try {
+      List<WrongExpectationDto> wrongExpectations = validatorService.validate(standName);
 
+    } catch (ValidatorException e) {
+      throw new RuntimeException(e);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public ValidationWithRelationsDto getValidationWithRelations(String standName, Long validationId) throws IOException {

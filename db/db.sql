@@ -26,7 +26,8 @@ CREATE TABLE IF NOT EXISTS service
     tag              varchar(30)                         not null,
     expectation_link varchar(255),
     schema_link      varchar(255),
-    PRIMARY KEY (service_id)
+    PRIMARY KEY (service_id),
+    UNIQUE (service_name, stand_name, tag)
 );
 
 CREATE TABLE IF NOT EXISTS error_type
