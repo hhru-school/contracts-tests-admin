@@ -109,7 +109,7 @@ public class AppConfig {
   }
 
   @Bean
-  public ValidatorService validatorService(ObjectMapper objectMapper){
+  public ValidatorService validatorService(ObjectMapper objectMapper) {
     return new ValidatorService(objectMapper);
   }
 
