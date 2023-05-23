@@ -5,7 +5,7 @@ import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.dto.validator.ValidationDto;
-import com.hh.contractstestsadmin.exception.ValidationRecordException;
+import com.hh.contractstestsadmin.exception.ValidationResultRecordException;
 import com.hh.contractstestsadmin.model.Validation;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -43,10 +43,13 @@ public class ValidationService {
   }
 
   @Transactional
-  public void recordValidation(Long validationId, ValidationDto validationDto) throws ValidationRecordException {
+  public void recordValidationResult(Long validationId, ValidationDto validationResult) throws ValidationResultRecordException {
     Validation validation = validationDao
         .getValidationById(validationId)
-        .orElseThrow(() -> new ValidationRecordException(""));
-
+        .orElseThrow(() -> new ValidationResultRecordException(
+            "Impossible to record validation result because validation was not found by id='" + validationId + "'")
+        );
+    validation.setExecuteDate(OffsetDateTime.now());
+    validation.setValidatorErrors(validationResult.getValidatorReport());
   }
 }

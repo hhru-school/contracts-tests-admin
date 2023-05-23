@@ -5,12 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
-import com.hh.contractstestsadmin.dto.api.ValidationPreviewDto;
+import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
 import com.hh.contractstestsadmin.dto.validator.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
-import com.hh.contractstestsadmin.exception.ValidationRecordException;
+import com.hh.contractstestsadmin.exception.ValidationResultRecordException;
 import com.hh.contractstestsadmin.exception.ValidatorException;
 import com.hh.contractstestsadmin.model.Validation;
 
@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
@@ -53,7 +52,7 @@ public class StandValidationService {
     return standsDao.getStandNames().stream().anyMatch(s -> s.equals(standName));
   }
 
-  public List<ValidationPreviewDto> getValidationHistory(
+  public List<ValidationMetaInfoDto> getValidationHistory(
       String standName,
       Integer sizeLimit
   ) throws ValidationHistoryNotFoundException, StandsDaoException {
@@ -73,13 +72,13 @@ public class StandValidationService {
 
   private void startValidationProcess(String standName, Long validationId) {
     try {
-      ValidationDto validationDto = validatorService.validate(standName);
-      validationService.recordValidation(validationId, validationDto);
+      ValidationDto validationResult = validatorService.validate(standName);
+      validationService.recordValidationResult(validationId, validationResult);
     } catch (ValidatorException e) {
       throw new RuntimeException(e);
     } catch (IOException e) {
       throw new RuntimeException(e);
-    } catch (ValidationRecordException e) {
+    } catch (ValidationResultRecordException e) {
       throw new RuntimeException(e);
     }
   }
