@@ -106,8 +106,8 @@ public class AppConfig {
   }
 
   @Bean
-  public StatusService statusService(StandsDao standsDao, ReleaseVersionDao releaseVersionDao, ObjectMapper objectMapper) {
-    return new StatusService(standsDao, minioReleaseName, releaseVersionDao, objectMapper);
+  public StatusService statusService(StandsDao standsDao, ReleaseVersionDao releaseVersionDao) {
+    return new StatusService(standsDao, minioReleaseName, releaseVersionDao);
   }
 
   @Bean
