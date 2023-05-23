@@ -1,6 +1,6 @@
 package com.hh.contractstestsadmin.service;
 
-import com.hh.contractstestsadmin.dto.ServiceStatusDto;
+import com.hh.contractstestsadmin.dto.api.ServiceStatusDto;
 import com.hh.contractstestsadmin.model.artefacts.Service;
 
 public class ServiceStatusMapper {
