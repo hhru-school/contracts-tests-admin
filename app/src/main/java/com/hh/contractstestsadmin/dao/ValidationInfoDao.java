@@ -4,6 +4,7 @@ import com.hh.contractstestsadmin.model.ContractTestError;
 import com.hh.contractstestsadmin.model.ServiceRelation;
 import com.hh.contractstestsadmin.model.ErrorType;
 import com.hh.contractstestsadmin.model.Expectation;
+import com.hh.contractstestsadmin.model.Validation;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -40,6 +41,11 @@ public class ValidationInfoDao {
                 .setParameter("consumerId", consumerId)
                 .setParameter("producerId", producerId)
                 .getResultList();
+    }
+
+    public void updateValidationInfo(Validation validation){
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(validation);
     }
 
     public void saveErrorType(ErrorType errorType) {

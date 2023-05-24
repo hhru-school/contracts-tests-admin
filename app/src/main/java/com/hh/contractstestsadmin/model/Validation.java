@@ -65,6 +65,11 @@ public class Validation {
   public Validation() {
   }
 
+  public void addExpectation(Expectation expectation){
+    expectations.add(expectation);
+    expectation.setValidation(this);
+  }
+
   public Long getId() {
     return id;
   }

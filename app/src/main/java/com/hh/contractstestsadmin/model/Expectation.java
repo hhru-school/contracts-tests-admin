@@ -77,6 +77,11 @@ public class Expectation {
   public Expectation() {
   }
 
+  public void addContractTestError(ContractTestError contractTestError){
+    contractTestErrors.add(contractTestError);
+    contractTestError.setExpectation(this);
+  }
+
   public Long getId() {
     return id;
   }
