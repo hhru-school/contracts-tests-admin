@@ -1,30 +1,46 @@
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import { NavLink, generatePath } from 'react-router-dom';
+import { Alert, ListGroup, ListGroupItem } from 'reactstrap';
+import { StandResponse } from './types';
+import useSWR from 'swr';
+import navigation from 'routes/navigation';
+export type ServicesContainerProps = {
+    standName: string;
+    sizeLimit?: number;
+};
 
-export const ValidationHistory: React.FC = () => {
+export const ValidationHistory: React.FC<ServicesContainerProps> = ({
+    standName,
+    sizeLimit = 5,
+}) => {
+    const { isLoading, data, error } = useSWR<StandResponse[]>(
+        standName ? `/api/stands/${standName}/validations?sizeLimit=${sizeLimit}` : null,
+    );
+    if (isLoading) {
+        return <Alert color="primary"> Data is loading </Alert>;
+    }
+
+    if (error) {
+        return <Alert color="danger"> Cant load data {error.message} </Alert>;
+    }
+    if (!data) {
+        return <small> Выберите стенд для отображения валидации</small>;
+    }
+    if (!Array.isArray(data) || data.length === 0) {
+        return <small> Нет валидаций для стенда({standName})</small>;
+    }
     return (
-        <div className="sidebar col-2 pt-3 justify-content-start">
-            <Nav vertical pills>
-                <NavItem>
-                    <NavLink className="link" href="#">
-                        Валидация 23.04.2023 11:22
-                        <button
-                            type="button"
-                            className="btn-close bg-danger ms-3"
-                            aria-label="Close"
-                        ></button>
+        <ListGroup>
+            {data.map((item: StandResponse) => (
+                <ListGroupItem key={item.id}>
+                    <NavLink
+                        className="link"
+                        to={generatePath(navigation.validations.detail, { validationId: item.id })}
+                    >
+                        Валидация {item.id}
                     </NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink className="link" href="#">
-                        Валидация 23.04.2023 10:22
-                        <button
-                            type="button"
-                            className="btn-close bg-danger ms-3"
-                            aria-label="Close"
-                        ></button>
-                    </NavLink>
-                </NavItem>
-            </Nav>
-        </div>
+                    ( {new Date(item.createdDate).toLocaleDateString('ru-RU')} )
+                </ListGroupItem>
+            ))}
+        </ListGroup>
     );
 };
