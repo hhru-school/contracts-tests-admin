@@ -68,8 +68,9 @@ public class StatusService {
     Map<String, UUID> fileIdByFilePath = filePathByStandName.get(standName);
     Artefact consumer = service.getConsumerData();
     if (consumer != null) {
-      fileIdByFilePath.putIfAbsent(consumer.getArtefactUrl(), UUID.randomUUID());
-      consumer.setFileId(fileIdByFilePath.get(consumer.getArtefactUrl()));
+      UUID consumerId =
+          fileIdByFilePath.putIfAbsent(consumer.getArtefactUrl(), UUID.randomUUID());
+      consumer.setFileId(consumerId);
     }
     Artefact producer = service.getProducerData();
     if (producer != null) {
