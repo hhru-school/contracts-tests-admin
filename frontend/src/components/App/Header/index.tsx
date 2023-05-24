@@ -18,9 +18,9 @@ export const AppHeader: React.FC = () => {
                     <h3>Admin panel</h3>
                 </NavLink>
                 <NavbarToggler onClick={toggle} />
-                <Collapse isOpen={isOpen} navbar>
+                <Collapse className="me-5" isOpen={isOpen} navbar>
                     <Nav navbar>
-                        <NavItem>
+                        <NavItem className="flex-shrink-0">
                             <NavLink className="nav-link" to={navigation.base}>
                                 Статус
                             </NavLink>
