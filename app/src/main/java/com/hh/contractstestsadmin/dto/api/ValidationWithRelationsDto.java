@@ -1,8 +1,8 @@
-package com.hh.contractstestsadmin.dto;
+package com.hh.contractstestsadmin.dto.api;
 
 import java.util.List;
 
-public class ValidationWithRelationsDto extends ValidationDto {
+public class ValidationWithRelationsDto extends ValidationMetaInfoDto {
 
   private List<ServicesRelationDto> servicesRelations;
 

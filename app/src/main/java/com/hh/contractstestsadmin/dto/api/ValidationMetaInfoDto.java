@@ -1,8 +1,9 @@
-package com.hh.contractstestsadmin.dto;
+package com.hh.contractstestsadmin.dto.api;
 
+import com.hh.contractstestsadmin.dto.ValidationStatus;
 import java.time.OffsetDateTime;
 
-public class ValidationDto {
+public class ValidationMetaInfoDto {
 
   private Long id;
 
