@@ -2,7 +2,7 @@ import { ToolBar } from 'components/ToolBar';
 import { AppContext } from 'context/AppContext';
 import { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Col, Collapse, Nav, NavItem, Navbar, NavbarToggler } from 'reactstrap';
+import { Collapse, Nav, NavItem, Navbar, NavbarText, NavbarToggler } from 'reactstrap';
 
 import navigation from 'routes/navigation';
 
@@ -26,10 +26,10 @@ export const AppHeader: React.FC = () => {
                             </NavLink>
                         </NavItem>
                     </Nav>
-                    <Col>
-                        <ToolBar selectedItem={standName} setSelectedItem={setStandName} />
-                    </Col>
                 </Collapse>
+                <NavbarText tag="div" className="d-flex flex-grow-1">
+                    <ToolBar selectedItem={standName} setSelectedItem={setStandName} />
+                </NavbarText>
             </Navbar>
         </header>
     );

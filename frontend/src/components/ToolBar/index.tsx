@@ -78,8 +78,8 @@ export const ToolBar: React.FC<ToolBarProps> = ({ selectedItem, setSelectedItem 
         }
     };
     return (
-        <div className="d-flex align-items-center gap-3 justify-content-center">
-            <div className="position-relative w-50">
+        <div className="d-flex align-items-center gap-3 w-100">
+            <div className="position-relative flex-grow-1">
                 <Input
                     type="text"
                     placeholder="Search"
@@ -109,7 +109,7 @@ export const ToolBar: React.FC<ToolBarProps> = ({ selectedItem, setSelectedItem 
                     </ListGroup>
                 )}
             </div>
-            <Button color="primary">
+            <Button color="primary" className="flex-shrink-0">
                 <PlayIcon /> Start
             </Button>
         </div>
