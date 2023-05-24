@@ -8,6 +8,8 @@ import com.hh.contractstestsadmin.dto.api.StandStatusDto;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
@@ -70,7 +72,7 @@ public class StatusService {
   }
 
   public String getSharedFileLink(String standName, String encodeFilePath) throws StandsDaoException {
-    String filePath = UriUtils.decode(encodeFilePath, StandardCharsets.UTF_8);
+    String filePath = URLDecoder.decode(encodeFilePath, StandardCharsets.UTF_8);
     return standsDao.getArtefactUrl(standName, filePath);
   }
 

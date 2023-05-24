@@ -2,6 +2,8 @@ package com.hh.contractstestsadmin.service;
 
 import com.hh.contractstestsadmin.dto.api.ServiceStatusDto;
 import com.hh.contractstestsadmin.model.artefacts.Service;
+import java.net.URLEncoder;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriUtils;
 
 import java.nio.charset.StandardCharsets;
@@ -15,7 +17,7 @@ public class ServiceStatusMapper {
     service.getConsumerData().ifPresentOrElse(
         (consumerData) -> {
           serviceStatusDto.setIsConsumer(true);
-          serviceStatusDto.setExpectationLink(UriUtils.encodePath(consumerData.artefactURL(), StandardCharsets.UTF_8));
+          serviceStatusDto.setExpectationLink(URLEncoder.encode(consumerData.artefactURL(), StandardCharsets.UTF_8));
           serviceStatusDto.setExpectationPublishDate(consumerData.artefactPublishDate());
         },
         () -> serviceStatusDto.setIsConsumer(false)
@@ -23,12 +25,11 @@ public class ServiceStatusMapper {
     service.getProducerData().ifPresentOrElse(
         (producerData) -> {
           serviceStatusDto.setIsProducer(true);
-          serviceStatusDto.setSchemaLink(UriUtils.encodePath(producerData.artefactURL(), StandardCharsets.UTF_8));
+          serviceStatusDto.setSchemaLink(URLEncoder.encode(producerData.artefactURL(), StandardCharsets.UTF_8));
           serviceStatusDto.setSchemaPublishDate(producerData.artefactPublishDate());
         },
         () -> serviceStatusDto.setIsProducer(false)
     );
     return serviceStatusDto;
   }
-
 }

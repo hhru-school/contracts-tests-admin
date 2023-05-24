@@ -1,6 +1,6 @@
 package com.hh.contractstestsadmin.resource;
 
-import com.hh.contractstestsadmin.dto.ErrorMessageDto;
+import com.hh.contractstestsadmin.dto.api.ErrorMessageDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.service.StatusService;
 import io.swagger.annotations.Api;
