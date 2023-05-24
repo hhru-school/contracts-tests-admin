@@ -1,14 +1,15 @@
-import { Nav, NavItem, NavLink } from 'reactstrap';
-import { Alert, Card, CardText, CardBody, CardHeader } from 'reactstrap';
-import { standResponce } from './types';
+import { NavLink } from 'react-router-dom';
+import { Alert, Card, CardText, CardBody, CardHeader, ListGroup, ListGroupItem } from 'reactstrap';
+import { StandResponse } from './types';
 import useSWR from 'swr';
 export type ServicesContainerProps = {
     standName: string;
+    sizeLimit: number;
 };
 
-export const ValidationHistory: React.FC<ServicesContainerProps> = ({ standName }) => {
-    const { isLoading, data, error } = useSWR<standResponce[]>(
-        standName ? `/api/stands/${standName}/validations` : null,
+export const ValidationHistory: React.FC<ServicesContainerProps> = ({ standName, sizeLimit }) => {
+    const { isLoading, data, error } = useSWR<StandResponse[]>(
+        standName ? `/api/stands/${standName}/validations?sizeLimit=${sizeLimit}` : null,
     );
     if (isLoading) {
         return <Alert color="primary"> Data is loading </Alert>;
@@ -17,31 +18,35 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = ({ standName 
     if (error) {
         return <Alert color="danger"> Cant load data {error.message} </Alert>;
     }
-
     if (!data) {
-        return null;
+        return (
+            <div className="pt-5 d-flex justify-content-center">
+                <h5>Выберите стенд для отображения валидации</h5>
+            </div>
+        );
     }
     if (!Array.isArray(data) || data.length === 0) {
-        return null;
+        return (
+            <div className="pt-5 d-flex justify-content-center">
+                <h5>Нет валидаций для стенда({standName})</h5>
+            </div>
+        );
     }
-    const filteredData = data.slice(0, 5);
     return (
         <Card>
             <CardBody>
                 <CardHeader>Последние валидации</CardHeader>
                 <CardText>
-                    <div className="justify-content-start">
-                        <Nav vertical pills>
-                            {filteredData.map((item: standResponce) => (
-                                <NavItem>
-                                    <NavLink className="link" href="#">
-                                        Валидация {item.id} (
-                                        {new Date(item.createdDate).toLocaleDateString('ru-RU')} )
-                                    </NavLink>
-                                </NavItem>
-                            ))}
-                        </Nav>
-                    </div>
+                    <ListGroup flush>
+                        {data.map((item: StandResponse) => (
+                            <ListGroupItem>
+                                <NavLink className="link" to="#">
+                                    Валидация {item.id}
+                                </NavLink>
+                                ( {new Date(item.createdDate).toLocaleDateString('ru-RU')} )
+                            </ListGroupItem>
+                        ))}
+                    </ListGroup>
                 </CardText>
             </CardBody>
         </Card>

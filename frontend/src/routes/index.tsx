@@ -14,18 +14,12 @@ export const routes = createBrowserRouter([
                 index: true,
                 element: <StatusesPage />,
             },
-        ],
-    },
-    { path: '*', element: <Navigate to={navigation.base} replace /> },
-    {
-        path: navigation.validations,
-        element: <MainLayout />,
-        children: [
             {
+                path: 'validations',
                 index: true,
                 element: <ValidationsPage />,
             },
         ],
     },
-    { path: '/validations', element: <Navigate to={navigation.validations} replace /> },
+    { path: '*', element: <Navigate to={navigation.base} replace /> },
 ]);
