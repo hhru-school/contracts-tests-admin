@@ -3,8 +3,6 @@ package com.hh.contractstestsadmin.service;
 import com.hh.contractstestsadmin.dto.api.ServiceStatusDto;
 import com.hh.contractstestsadmin.model.artefacts.Service;
 import java.net.URLEncoder;
-import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.web.util.UriUtils;
 
 import java.nio.charset.StandardCharsets;
 
