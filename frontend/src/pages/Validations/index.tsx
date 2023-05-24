@@ -4,9 +4,12 @@ import { Col, Row, Alert, ListGroup, ListGroupItem } from 'reactstrap';
 import { StandResponse } from '../../components/ValidationHistory/types';
 import { Loader } from 'components/Loader';
 import useSWR from 'swr';
+import { generatePath, useNavigate } from 'react-router-dom';
+import navigation from 'routes/navigation';
 
 export const ValidationsPage: React.FC = () => {
     const { standName } = useContext(AppContext);
+    const navigate = useNavigate();
 
     const { isLoading, data, error } = useSWR<StandResponse[]>(
         standName ? `/api/stands/${standName}/validations` : null,
@@ -40,7 +43,15 @@ export const ValidationsPage: React.FC = () => {
     return (
         <ListGroup>
             {data.map((item: StandResponse) => (
-                <ListGroupItem key={item.id}>
+                <ListGroupItem
+                    onClick={() =>
+                        navigate(
+                            generatePath(navigation.validations.detail, { validationId: item.id }),
+                        )
+                    }
+                    action
+                    key={item.id}
+                >
                     <Row>
                         <Col md={3}>Валидация {item.id}</Col>
                         <Col md={4}>{new Date(item.createdDate).toLocaleDateString('ru-RU')}</Col>

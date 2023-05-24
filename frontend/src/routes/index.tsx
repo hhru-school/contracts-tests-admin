@@ -4,6 +4,7 @@ import { StatusesPage } from 'pages/Statuses';
 import { ValidationsPage } from 'pages/Validations';
 
 import navigation from './navigation';
+import { ValidationDetailPage } from 'pages/ValidationsDetail';
 
 export const routes = createBrowserRouter([
     {
@@ -15,8 +16,12 @@ export const routes = createBrowserRouter([
                 element: <StatusesPage />,
             },
             {
-                path: navigation.validations,
+                path: navigation.validations.view,
                 element: <ValidationsPage />,
+            },
+            {
+                path: navigation.validations.detail,
+                element: <ValidationDetailPage />,
             },
         ],
     },

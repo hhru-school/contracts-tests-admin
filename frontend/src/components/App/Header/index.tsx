@@ -22,7 +22,12 @@ export const AppHeader: React.FC = () => {
                     <Nav navbar>
                         <NavItem className="flex-shrink-0">
                             <NavLink className="nav-link" to={navigation.base}>
-                                Статус
+                                Сервисы
+                            </NavLink>
+                        </NavItem>
+                        <NavItem className="flex-shrink-0">
+                            <NavLink className="nav-link" to={navigation.validations.view}>
+                                Валидации
                             </NavLink>
                         </NavItem>
                     </Nav>
