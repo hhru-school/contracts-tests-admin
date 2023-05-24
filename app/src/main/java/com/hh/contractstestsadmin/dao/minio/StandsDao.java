@@ -66,9 +66,8 @@ public class StandsDao {
 
     Iterable<Result<Item>> standArtefacts = getStandArtefacts(standName);
     Collection<Item> lastModifiedArtefacts = getArtefactsOfLastVersions(standArtefacts);
-    Map<String, String> artefactUrls = getArtefactUrls(standName, lastModifiedArtefacts);
 
-    return serviceListMapper.map(lastModifiedArtefacts, artefactUrls);
+    return serviceListMapper.map(lastModifiedArtefacts);
   }
 
   public boolean standExists(String standName) throws StandsDaoException {
@@ -84,39 +83,11 @@ public class StandsDao {
     }
   }
 
-  /**
-   * Return a Map of artefact URLs
-   *
-   * @param standName a stand name
-   * @param artefacts Collection of artefact info items
-   * @return a map of artefact URLs, where the key is an artefact path like 'expectation/jlogic/00.01.01.json',
-   * and the value is a string representation of artefact URL
-   */
-  private Map<String, String> getArtefactUrls(@NotNull String standName, @NotNull Collection<Item> artefacts) {
-    validator.validate(standName);
-    validator.validate(artefacts);
-
-    return artefacts
-        .stream()
-        .collect(Collectors.toMap(
-            this::getArtefactPath,
-            artefact -> {
-              try {
-                return getArtefactUrl(standName, artefact);
-              } catch (StandsDaoException e) {
-                throw new RuntimeException(e);
-              }
-            }
-        ));
-  }
-
   @NotNull
-  private String getArtefactUrl(String standName, Item artefact) throws StandsDaoException {
+  public String getArtefactUrl(String standName, String artefactPath) throws StandsDaoException {
     Map<String, String> requestParams = new HashMap<String, String>();
 
     int urlExpirationPeriod = Integer.parseInt(minioProperties.getProperty("minio.artefact.url.expiration.period"));
-
-    String artefactPath = getArtefactPath(artefact);
     requestParams.put("response-content-type", "application/json");
 
     try {

@@ -8,8 +8,12 @@ import com.hh.contractstestsadmin.dto.StandStatusDto;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import org.springframework.web.util.UriUtils;
 
 public class StatusService {
 
@@ -63,6 +67,11 @@ public class StatusService {
     standStatusDto.setReleaseLink(releaseVersionDao.getCurrentReleaseVersion());
     standStatusDto.setServices(getServices(standName));
     return standStatusDto;
+  }
+
+  public String getSharedFileLink(String standName, String encodeFilePath) throws StandsDaoException {
+    String filePath = UriUtils.decode(encodeFilePath, StandardCharsets.UTF_8);
+    return standsDao.getArtefactUrl(standName, filePath);
   }
 
 }
