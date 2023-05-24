@@ -15,8 +15,7 @@ export const routes = createBrowserRouter([
                 element: <StatusesPage />,
             },
             {
-                path: 'validations',
-                index: true,
+                path: navigation.validations,
                 element: <ValidationsPage />,
             },
         ],

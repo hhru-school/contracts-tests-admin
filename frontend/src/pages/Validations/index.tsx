@@ -40,7 +40,7 @@ export const ValidationsPage: React.FC = () => {
     return (
         <ListGroup>
             {data.map((item: StandResponse) => (
-                <ListGroupItem>
+                <ListGroupItem key={item.id}>
                     <Row>
                         <Col md={3}>Валидация {item.id}</Col>
                         <Col md={4}>{new Date(item.createdDate).toLocaleDateString('ru-RU')}</Col>

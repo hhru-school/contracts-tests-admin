@@ -1,13 +1,16 @@
 import { NavLink } from 'react-router-dom';
-import { Alert, Card, CardText, CardBody, CardHeader, ListGroup, ListGroupItem } from 'reactstrap';
+import { Alert, ListGroup, ListGroupItem } from 'reactstrap';
 import { StandResponse } from './types';
 import useSWR from 'swr';
 export type ServicesContainerProps = {
     standName: string;
-    sizeLimit: number;
+    sizeLimit?: number;
 };
 
-export const ValidationHistory: React.FC<ServicesContainerProps> = ({ standName, sizeLimit }) => {
+export const ValidationHistory: React.FC<ServicesContainerProps> = ({
+    standName,
+    sizeLimit = 5,
+}) => {
     const { isLoading, data, error } = useSWR<StandResponse[]>(
         standName ? `/api/stands/${standName}/validations?sizeLimit=${sizeLimit}` : null,
     );
@@ -19,36 +22,21 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = ({ standName,
         return <Alert color="danger"> Cant load data {error.message} </Alert>;
     }
     if (!data) {
-        return (
-            <div className="pt-5 d-flex justify-content-center">
-                <h5>Выберите стенд для отображения валидации</h5>
-            </div>
-        );
+        return <small> Выберите стенд для отображения валидации</small>;
     }
     if (!Array.isArray(data) || data.length === 0) {
-        return (
-            <div className="pt-5 d-flex justify-content-center">
-                <h5>Нет валидаций для стенда({standName})</h5>
-            </div>
-        );
+        return <small> Нет валидаций для стенда({standName})</small>;
     }
     return (
-        <Card>
-            <CardBody>
-                <CardHeader>Последние валидации</CardHeader>
-                <CardText>
-                    <ListGroup flush>
-                        {data.map((item: StandResponse) => (
-                            <ListGroupItem>
-                                <NavLink className="link" to="#">
-                                    Валидация {item.id}
-                                </NavLink>
-                                ( {new Date(item.createdDate).toLocaleDateString('ru-RU')} )
-                            </ListGroupItem>
-                        ))}
-                    </ListGroup>
-                </CardText>
-            </CardBody>
-        </Card>
+        <ListGroup>
+            {data.map((item: StandResponse) => (
+                <ListGroupItem key={item.id}>
+                    <NavLink className="link" to="#">
+                        Валидация {item.id}
+                    </NavLink>
+                    ( {new Date(item.createdDate).toLocaleDateString('ru-RU')} )
+                </ListGroupItem>
+            ))}
+        </ListGroup>
     );
 };
