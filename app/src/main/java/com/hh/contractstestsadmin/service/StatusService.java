@@ -46,16 +46,17 @@ public class StatusService {
     List<Service> services = standsDao.getServices(releaseName);
     services.forEach(s -> fillArtefactIds(standName, s));
     servicesContainerDto.setRelease(
-        services
-            .stream()
-            .map(ServiceStatusMapper::map)
-            .toList());
+            services
+                    .stream()
+                    .map(ServiceStatusMapper::map)
+                    .toList());
     if (!standName.equals(releaseName)) {
+      services = standsDao.getServices(standName);
       servicesContainerDto.setStand(
-          services
-              .stream()
-              .map(ServiceStatusMapper::map)
-              .toList());
+              services
+                      .stream()
+                      .map(ServiceStatusMapper::map)
+                      .toList());
     } else {
       servicesContainerDto.setStand(Collections.emptyList());
     }
