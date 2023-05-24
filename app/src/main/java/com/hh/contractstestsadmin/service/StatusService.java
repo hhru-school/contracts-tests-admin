@@ -7,14 +7,9 @@ import com.hh.contractstestsadmin.dto.StandInfoDto;
 import com.hh.contractstestsadmin.dto.StandStatusDto;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
-import com.hh.contractstestsadmin.model.artefacts.Artefact;
-import com.hh.contractstestsadmin.model.artefacts.Service;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public class StatusService {
 
@@ -23,7 +18,6 @@ public class StatusService {
   private final String releaseName;
 
   private final ReleaseVersionDao releaseVersionDao;
-  private final Map<String, Map<String, UUID>> filePathByStandName = new HashMap<>();
 
   public StatusService(StandsDao standsDao, String releaseName, ReleaseVersionDao releaseVersionDao) {
     this.standsDao = standsDao;
@@ -43,40 +37,23 @@ public class StatusService {
 
   public ServicesContainerDto getServices(String standName) throws StandNotFoundException, StandsDaoException {
     ServicesContainerDto servicesContainerDto = new ServicesContainerDto();
-    List<Service> services = standsDao.getServices(releaseName);
-    services.forEach(s -> fillArtefactIds(standName, s));
     servicesContainerDto.setRelease(
-            services
-                    .stream()
-                    .map(ServiceStatusMapper::map)
-                    .toList());
+        standsDao
+            .getServices(releaseName)
+            .stream()
+            .map(ServiceStatusMapper::map)
+            .toList());
     if (!standName.equals(releaseName)) {
-      services = standsDao.getServices(standName);
       servicesContainerDto.setStand(
-              services
-                      .stream()
-                      .map(ServiceStatusMapper::map)
-                      .toList());
+          standsDao
+              .getServices(standName)
+              .stream()
+              .map(ServiceStatusMapper::map)
+              .toList());
     } else {
       servicesContainerDto.setStand(Collections.emptyList());
     }
     return servicesContainerDto;
-  }
-
-  private void fillArtefactIds(String standName, Service service) {
-    filePathByStandName.putIfAbsent(standName, new HashMap<>());
-    Map<String, UUID> fileIdByFilePath = filePathByStandName.get(standName);
-    Artefact consumer = service.getConsumerData();
-    if (consumer != null) {
-      UUID consumerId =
-          fileIdByFilePath.putIfAbsent(consumer.getArtefactUrl(), UUID.randomUUID());
-      consumer.setFileId(consumerId);
-    }
-    Artefact producer = service.getProducerData();
-    if (producer != null) {
-      fileIdByFilePath.putIfAbsent(producer.getArtefactUrl(), UUID.randomUUID());
-      producer.setFileId(fileIdByFilePath.get(producer.getArtefactUrl()));
-    }
   }
 
   public StandStatusDto getStatus(String standName) throws StandNotFoundException, StandsDaoException {
@@ -88,16 +65,4 @@ public class StatusService {
     return standStatusDto;
   }
 
-  public String getSharedFileLink(String standName, UUID fileId) throws StandsDaoException {
-    Map<String, UUID> filePathByFileId = filePathByStandName.get(standName);
-    if (filePathByFileId == null) {
-      throw new StandNotFoundException("not found stand with name " + standName);
-    }
-    for (Map.Entry<String, UUID> entry : filePathByFileId.entrySet()) {
-      if (fileId.equals(entry.getValue())) {
-        return standsDao.getArtefactUrl(standName, entry.getKey());
-      }
-    }
-    throw new StandNotFoundException("not found fileId " + fileId + "for stand name " + standName);
-  }
 }

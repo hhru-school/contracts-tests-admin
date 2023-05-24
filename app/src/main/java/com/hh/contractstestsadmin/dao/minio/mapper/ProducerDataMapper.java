@@ -1,12 +1,12 @@
 package com.hh.contractstestsadmin.dao.minio.mapper;
 
-import com.hh.contractstestsadmin.model.artefacts.Artefact;
+import com.hh.contractstestsadmin.model.artefacts.ProducerData;
 import io.minio.messages.Item;
 
 public class ProducerDataMapper {
 
-  public Artefact map(Item artefact, String artefactUrl) {
-    return new Artefact(artefactUrl, artefact.lastModified().toOffsetDateTime());
+  public ProducerData map(Item artefact, String artefactUrl) {
+    return new ProducerData(artefactUrl, artefact.lastModified().toOffsetDateTime());
   }
 
 }

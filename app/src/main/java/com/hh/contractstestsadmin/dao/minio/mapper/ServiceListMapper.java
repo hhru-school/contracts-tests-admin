@@ -15,14 +15,17 @@ import javax.validation.constraints.NotNull;
 
 public class ServiceListMapper {
 
-  private final ServiceMapper serviceMapper;
+  private Properties minioProperties;
 
-  public ServiceListMapper(ServiceMapper serviceMapper) {
+  private ServiceMapper serviceMapper;
+
+  public ServiceListMapper(Properties minioProperties, ServiceMapper serviceMapper) {
+    this.minioProperties = minioProperties;
     this.serviceMapper = serviceMapper;
   }
 
   @NotNull
-  public List<Service> map(Collection<Item> standArtefacts) throws StandsDaoException {
+  public List<Service> map(Collection<Item> standArtefacts, Map<String, String> artefactUrls) throws StandsDaoException {
     Map<String, Item> artefactsMap = getArtefactsMap(standArtefacts);
 
     return artefactsMap.entrySet()
@@ -31,7 +34,7 @@ public class ServiceListMapper {
             artefact -> extractServiceName(getArtefactPath(artefact)),
             artefact -> {
               try {
-                return serviceMapper.map(artefact);
+                return serviceMapper.map(artefact, artefactUrls.get(getArtefactPath(artefact)));
               } catch (StandsDaoException e) {
                 throw new RuntimeException(e);
               }
@@ -59,8 +62,8 @@ public class ServiceListMapper {
    * @throws StandsDaoException
    */
   private Service merge(Service initService, Service serviceToBeMerged) throws StandsDaoException {
-    boolean initServiceIsConsumer = initService.getConsumerData() != null;
-    boolean initServiceIsProducer = initService.getProducerData() != null;
+    boolean initServiceIsConsumer = initService.getConsumerData().isPresent();
+    boolean initServiceIsProducer = initService.getProducerData().isPresent();
 
 
     boolean initServiceHasNewerVersion = initServiceHasNewerVersion(initService, serviceToBeMerged);
@@ -73,11 +76,11 @@ public class ServiceListMapper {
 
       if (initServiceIsConsumer) {
 
-        initService.setProducerData(serviceToBeMerged.getProducerData());
+        initService.setProducerData(serviceToBeMerged.getProducerData().get());
         return initService;
       } else if (initServiceIsProducer) {
 
-        initService.setConsumerData(serviceToBeMerged.getConsumerData());
+        initService.setConsumerData(serviceToBeMerged.getConsumerData().get());
         return initService;
       } else {
 

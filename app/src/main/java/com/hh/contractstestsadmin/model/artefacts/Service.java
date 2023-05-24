@@ -1,18 +1,39 @@
 package com.hh.contractstestsadmin.model.artefacts;
 
+import com.hh.contractstestsadmin.exception.StandsDaoException;
+import java.util.Optional;
+import javax.validation.constraints.NotNull;
+
 public class Service {
 
   private final String name;
 
   private final String version;
 
-  private Artefact consumerData;
+  private Optional<ConsumerData> consumerData;
 
-  private Artefact producerData;
+  private Optional<ProducerData> producerData;
 
-  public Service(String name, String version) {
+  public Service(
+      String name,
+      String version,
+      @NotNull ConsumerData consumerData
+  ) {
     this.name = name;
     this.version = version;
+    this.consumerData = Optional.of(consumerData);
+    this.producerData = Optional.empty();
+  }
+
+  public Service(
+      String name,
+      String version,
+      ProducerData producerData
+  ) {
+    this.name = name;
+    this.version = version;
+    this.producerData = Optional.of(producerData);
+    this.consumerData = Optional.empty();
   }
 
   public String getName() {
@@ -23,19 +44,28 @@ public class Service {
     return version;
   }
 
-  public Artefact getConsumerData() {
+  public void setConsumerData(@NotNull ConsumerData consumerData) throws StandsDaoException {
+    if (this.consumerData.isEmpty()) {
+      this.consumerData = Optional.of(consumerData);
+    } else {
+      throw new StandsDaoException("Attempt to set consumer data twice");
+    }
+  }
+
+  public Optional<ConsumerData> getConsumerData() {
     return consumerData;
   }
 
-  public void setConsumerData(Artefact consumerData) {
-    this.consumerData = consumerData;
+  public void setProducerData(@NotNull ProducerData consumerData) throws StandsDaoException {
+    if (this.producerData.isEmpty()) {
+      this.producerData = Optional.of(consumerData);
+    } else {
+      throw new StandsDaoException("Attempt to set producer data twice");
+    }
   }
 
-  public Artefact getProducerData() {
+  public Optional<ProducerData> getProducerData() {
     return producerData;
   }
 
-  public void setProducerData(Artefact producerData) {
-    this.producerData = producerData;
-  }
 }

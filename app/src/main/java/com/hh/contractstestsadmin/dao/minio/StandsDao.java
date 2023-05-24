@@ -34,7 +34,6 @@ public class StandsDao {
   private final ServiceListMapper serviceListMapper;
   private final Validator validator;
   private final Properties minioProperties;
-  private static final int DEFAULT_URL_EXPIRED_PERIOD = 7;
 
   public StandsDao(MinioClient minioClient, Properties minioProperties, ServiceListMapper serviceListMapper) {
     this.minioClient = minioClient;
@@ -67,7 +66,9 @@ public class StandsDao {
 
     Iterable<Result<Item>> standArtefacts = getStandArtefacts(standName);
     Collection<Item> lastModifiedArtefacts = getArtefactsOfLastVersions(standArtefacts);
-    return serviceListMapper.map(lastModifiedArtefacts);
+    Map<String, String> artefactUrls = getArtefactUrls(standName, lastModifiedArtefacts);
+
+    return serviceListMapper.map(lastModifiedArtefacts, artefactUrls);
   }
 
   public boolean standExists(String standName) throws StandsDaoException {
@@ -83,10 +84,39 @@ public class StandsDao {
     }
   }
 
-  public String getArtefactUrl(String standName, String filePath) throws StandsDaoException {
-    Map<String, String> requestParams = new HashMap<>();
+  /**
+   * Return a Map of artefact URLs
+   *
+   * @param standName a stand name
+   * @param artefacts Collection of artefact info items
+   * @return a map of artefact URLs, where the key is an artefact path like 'expectation/jlogic/00.01.01.json',
+   * and the value is a string representation of artefact URL
+   */
+  private Map<String, String> getArtefactUrls(@NotNull String standName, @NotNull Collection<Item> artefacts) {
+    validator.validate(standName);
+    validator.validate(artefacts);
 
-    int urlExpirationPeriod = getUrlExpirationPeriod();
+    return artefacts
+        .stream()
+        .collect(Collectors.toMap(
+            this::getArtefactPath,
+            artefact -> {
+              try {
+                return getArtefactUrl(standName, artefact);
+              } catch (StandsDaoException e) {
+                throw new RuntimeException(e);
+              }
+            }
+        ));
+  }
+
+  @NotNull
+  private String getArtefactUrl(String standName, Item artefact) throws StandsDaoException {
+    Map<String, String> requestParams = new HashMap<String, String>();
+
+    int urlExpirationPeriod = Integer.parseInt(minioProperties.getProperty("minio.artefact.url.expiration.period"));
+
+    String artefactPath = getArtefactPath(artefact);
     requestParams.put("response-content-type", "application/json");
 
     try {
@@ -94,20 +124,12 @@ public class StandsDao {
           GetPresignedObjectUrlArgs.builder()
               .method(Method.GET)
               .bucket(standName)
-              .object(filePath)
-              .expiry(urlExpirationPeriod, TimeUnit.DAYS)
+              .object(artefactPath)
+              .expiry(urlExpirationPeriod, TimeUnit.HOURS)
               .extraQueryParams(requestParams)
               .build());
     } catch (Exception e) {
-      throw new StandsDaoException("It is impossible to retrieve url for " + filePath + " in " + standName + " stand", e);
-    }
-  }
-
-  private int getUrlExpirationPeriod() {
-    try {
-      return Integer.parseInt(minioProperties.getProperty("minio.artefact.url.expiration.period"));
-    } catch (NumberFormatException e) {
-      return DEFAULT_URL_EXPIRED_PERIOD;
+      throw new StandsDaoException("It is impossible to retrieve url for " + artefactPath + " in " + standName + " stand", e);
     }
   }
 
