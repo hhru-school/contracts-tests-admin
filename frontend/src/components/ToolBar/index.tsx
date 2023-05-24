@@ -109,7 +109,7 @@ export const ToolBar: React.FC<ToolBarProps> = ({ selectedItem, setSelectedItem 
                     </ListGroup>
                 )}
             </div>
-            <Button color="primary" className="flex-shrink-0">
+            <Button color="primary" className="flex-shrink-0" disabled={!selectedItem}>
                 <PlayIcon /> Start
             </Button>
         </div>
