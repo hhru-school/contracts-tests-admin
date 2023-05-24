@@ -1,23 +1,35 @@
 import { ToolBar } from 'components/ToolBar';
 import { AppContext } from 'context/AppContext';
-import { useContext } from 'react';
-import { Col, Navbar, NavbarBrand } from 'reactstrap';
+import { useContext, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Col, Collapse, Nav, NavItem, Navbar, NavbarToggler } from 'reactstrap';
 
 import navigation from 'routes/navigation';
 
 export const AppHeader: React.FC = () => {
     const { standName, setStandName } = useContext(AppContext);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggle = () => setIsOpen(!isOpen);
     return (
         <header>
             <Navbar expand="md border-bottom border-2">
-                <Col md={2} className="d-flex justify-content-center">
-                    <NavbarBrand className="p-2 m-0" href={navigation.base}>
-                        <h3>Admin panel</h3>
-                    </NavbarBrand>
-                </Col>
-                <Col>
-                    <ToolBar selectedItem={standName} setSelectedItem={setStandName} />
-                </Col>
+                <NavLink className="navbar-brand me-5" to={navigation.base}>
+                    <h3>Admin panel</h3>
+                </NavLink>
+                <NavbarToggler onClick={toggle} />
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav navbar>
+                        <NavItem>
+                            <NavLink className="nav-link" to={navigation.base}>
+                                Статус
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                    <Col>
+                        <ToolBar selectedItem={standName} setSelectedItem={setStandName} />
+                    </Col>
+                </Collapse>
             </Navbar>
         </header>
     );
