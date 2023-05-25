@@ -15,29 +15,31 @@ export const AppHeader: React.FC = () => {
     const toggle = () => setIsOpen(!isOpen);
     return (
         <header>
-            <Navbar expand="md border-bottom border-2 app-header" fixed="top">
-                <NavLink className="navbar-brand me-5" to={navigation.base}>
-                    <h3>Admin panel</h3>
-                </NavLink>
-                <NavbarToggler onClick={toggle} />
-                <Collapse className="me-5" isOpen={isOpen} navbar>
-                    <Nav navbar>
-                        <NavItem className="flex-shrink-0">
-                            <NavLink className="nav-link" to={navigation.base}>
-                                Сервисы
-                            </NavLink>
-                        </NavItem>
-                        <NavItem className="flex-shrink-0">
-                            <NavLink className="nav-link" to={navigation.validations.view}>
-                                Валидации
-                            </NavLink>
-                        </NavItem>
-                    </Nav>
-                </Collapse>
-                <NavbarText tag="div" className="d-flex flex-grow-1">
-                    <ToolBar selectedItem={standName} setSelectedItem={setStandName} />
-                </NavbarText>
-            </Navbar>
+            <div className="app-header__container">
+                <Navbar expand="md border-bottom border-2">
+                    <NavLink className="navbar-brand me-5" to={navigation.base}>
+                        <h3>Admin panel</h3>
+                    </NavLink>
+                    <NavbarToggler onClick={toggle} />
+                    <Collapse className="me-5" isOpen={isOpen} navbar>
+                        <Nav navbar>
+                            <NavItem className="flex-shrink-0">
+                                <NavLink className="nav-link" to={navigation.base}>
+                                    Сервисы
+                                </NavLink>
+                            </NavItem>
+                            <NavItem className="flex-shrink-0">
+                                <NavLink className="nav-link" to={navigation.validations.view}>
+                                    Валидации
+                                </NavLink>
+                            </NavItem>
+                        </Nav>
+                    </Collapse>
+                    <NavbarText tag="div" className="d-flex flex-grow-1">
+                        <ToolBar selectedItem={standName} setSelectedItem={setStandName} />
+                    </NavbarText>
+                </Navbar>
+            </div>
         </header>
     );
 };
