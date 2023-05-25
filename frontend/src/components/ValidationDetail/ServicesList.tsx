@@ -20,7 +20,7 @@ export const ServicesList: React.FC<ServicesListProps> = ({
                 <b>Consumer:</b> {consumer.name}
             </Col>
             <Col xs={3} className="d-flex justify-content-between">
-                <small>Warnings: {wrongExpectaionCount}</small>
+                <small>Broken endpoints: {wrongExpectaionCount}</small>
                 <small>Errors: {errorCount}</small>
             </Col>
         </>

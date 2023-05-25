@@ -4,6 +4,8 @@ import { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Collapse, Nav, NavItem, Navbar, NavbarText, NavbarToggler } from 'reactstrap';
 
+import './styles.css';
+
 import navigation from 'routes/navigation';
 
 export const AppHeader: React.FC = () => {
@@ -13,7 +15,7 @@ export const AppHeader: React.FC = () => {
     const toggle = () => setIsOpen(!isOpen);
     return (
         <header>
-            <Navbar expand="md border-bottom border-2">
+            <Navbar expand="md border-bottom border-2 app-header" fixed="top">
                 <NavLink className="navbar-brand me-5" to={navigation.base}>
                     <h3>Admin panel</h3>
                 </NavLink>
