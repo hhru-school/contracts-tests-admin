@@ -16,8 +16,8 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
         <ListGroupItem>
             <Row>
                 <Col md={4}>
-                    <h6 className="mb-0">Name: {name}</h6>
-                    <p className="mb-0 opacity-75">Version: {version}</p>
+                    <h6 className="mb-0">{name}</h6>
+                    <p className="mb-0 opacity-50">version: {version}</p>
                 </Col>
                 <Col md={4}>
                     {isConsumer && (

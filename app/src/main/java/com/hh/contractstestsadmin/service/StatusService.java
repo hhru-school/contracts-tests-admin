@@ -3,6 +3,7 @@ package com.hh.contractstestsadmin.service;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dto.api.FileLinkDto;
+import com.hh.contractstestsadmin.dto.api.ServiceStatusDto;
 import com.hh.contractstestsadmin.dto.api.ServicesContainerDto;
 import com.hh.contractstestsadmin.dto.api.StandInfoDto;
 import com.hh.contractstestsadmin.dto.api.StandStatusDto;
@@ -13,6 +14,7 @@ import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class StatusService {
@@ -46,6 +48,7 @@ public class StatusService {
             .getServices(releaseName)
             .stream()
             .map(ServiceStatusMapper::map)
+            .sorted(Comparator.comparing(ServiceStatusDto::getName))
             .toList());
     if (!standName.equals(releaseName)) {
       servicesContainerDto.setStand(
@@ -53,6 +56,7 @@ public class StatusService {
               .getServices(standName)
               .stream()
               .map(ServiceStatusMapper::map)
+              .sorted(Comparator.comparing(ServiceStatusDto::getName))
               .toList());
     } else {
       servicesContainerDto.setStand(Collections.emptyList());
