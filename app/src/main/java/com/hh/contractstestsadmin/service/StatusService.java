@@ -2,9 +2,11 @@ package com.hh.contractstestsadmin.service;
 
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
+import com.hh.contractstestsadmin.dto.api.FileLinkDto;
 import com.hh.contractstestsadmin.dto.api.ServicesContainerDto;
 import com.hh.contractstestsadmin.dto.api.StandInfoDto;
 import com.hh.contractstestsadmin.dto.api.StandStatusDto;
+import com.hh.contractstestsadmin.exception.BadRequestException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
@@ -67,9 +69,22 @@ public class StatusService {
     return standStatusDto;
   }
 
-  public String getSharedFileLink(String standName, String encodeFilePath) throws StandsDaoException {
+  public FileLinkDto getSharedFileLink(String encodeFilePath) throws StandsDaoException {
     String filePath = URLDecoder.decode(encodeFilePath, StandardCharsets.UTF_8);
-    return standsDao.getArtefactUrl(standName, filePath);
+    if (!filePath.contains("/")) {
+      throw new BadRequestException("the field" + encodeFilePath + " must have a symbol '/'");
+    }
+    String standName = filePath.substring(0, filePath.indexOf("/"));
+    String filePathWithoutStandName = filePath.substring(filePath.indexOf("/") + 1);
+    List<StandInfoDto> stands = getStands(standName);
+    if (stands.stream().anyMatch(s -> s.getName().equals(standName))) {
+      String artefactUrl = standsDao.getArtefactUrl(standName, filePathWithoutStandName);
+      String fileUrl = artefactUrl.replaceAll(standsDao.getBaseMinioUrl(), standsDao.getExternalMinioUrl());
+
+      return new FileLinkDto(fileUrl);
+    }
+
+    throw new StandsDaoException("not found standName in filePath" + encodeFilePath);
   }
 
 }

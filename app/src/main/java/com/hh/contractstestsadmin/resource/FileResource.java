@@ -1,6 +1,7 @@
 package com.hh.contractstestsadmin.resource;
 
 import com.hh.contractstestsadmin.dto.api.ErrorMessageDto;
+import com.hh.contractstestsadmin.dto.api.FileLinkDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.service.StatusService;
 import io.swagger.annotations.Api;
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -30,20 +30,22 @@ public class FileResource {
   }
 
   @ApiOperation(
-      value = "Check health")
+      value = "get file link for download artefact",
+      response = FileLinkDto.class
+  )
   @GET
-  @Path("/stands/{standName}/file/")
+  @Path("/download-links")
   @Produces(value = MediaType.APPLICATION_JSON)
-  public Response getSharedFileLink(@PathParam("standName") String standName, @QueryParam("fileLink") String encodeFilePath) {
+  public Response getSharedFileLink(@QueryParam("filePath") String encodeFilePath) {
     try {
-      return Response.ok(statusService.getSharedFileLink(standName, encodeFilePath)).build();
+      return Response.ok(statusService.getSharedFileLink(encodeFilePath)).build();
     } catch (StandNotFoundException exception) {
-      LOG.warn("not found entity by standName {} and encodeFilePath {}", standName, encodeFilePath, exception);
+      LOG.warn("not found entity by encodeFilePath {}", encodeFilePath, exception);
       return Response.status(Response.Status.NOT_FOUND)
           .entity(new ErrorMessageDto(exception.getMessage()))
           .build();
     } catch (Exception exception) {
-      LOG.error("internal error by standName {} and  encodeFilePath {}", standName, encodeFilePath, exception);
+      LOG.error("internal error by encodeFilePath {}", encodeFilePath, exception);
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
           .entity(new ErrorMessageDto(exception.getMessage()))
           .build();

@@ -67,7 +67,7 @@ public class StandsDao {
     Iterable<Result<Item>> standArtefacts = getStandArtefacts(standName);
     Collection<Item> lastModifiedArtefacts = getArtefactsOfLastVersions(standArtefacts);
 
-    return serviceListMapper.map(lastModifiedArtefacts);
+    return serviceListMapper.map(lastModifiedArtefacts, standName);
   }
 
   public boolean standExists(String standName) throws StandsDaoException {
@@ -173,5 +173,12 @@ public class StandsDao {
     return extractArtefactVersion(getArtefactPath(artefact));
   }
 
-}
+  public String getBaseMinioUrl() {
+    return minioProperties.getProperty("minio.base.url");
+  }
 
+  public String getExternalMinioUrl() {
+    return minioProperties.getProperty("minio.external.base.url");
+  }
+
+}
