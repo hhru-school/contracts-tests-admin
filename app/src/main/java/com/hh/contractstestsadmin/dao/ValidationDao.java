@@ -38,6 +38,18 @@ public class ValidationDao {
     return Optional.ofNullable(session.get(Validation.class, validationId));
   }
 
+  public Optional<Validation> getValidation(long validationId, String standName) {
+    Session session = sessionFactory.getCurrentSession();
+    return Optional.ofNullable(session.createQuery(
+                "select v from Validation v where v.id = :validationId and v.standName = :standName",
+                Validation.class
+            )
+            .setParameter("validationId", validationId)
+            .setParameter("standName", standName)
+            .getSingleResult()
+    );
+  }
+
   public List<Validation> getAllValidations() {
     Session session = sessionFactory.getCurrentSession();
     return session.createQuery("select vh from Validation vh", Validation.class).getResultList();

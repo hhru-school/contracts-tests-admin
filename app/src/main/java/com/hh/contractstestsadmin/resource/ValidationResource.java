@@ -63,6 +63,10 @@ public class ValidationResource {
       @PathParam("validationId") Long validationId
   ) {
     try {
+      if (validationId == null || standName == null) {
+        return Response.status(Response.Status.BAD_REQUEST).entity("validation id and stand name must not null").build();
+      }
+
       return Response.ok(standValidationService.getValidationWithRelations(standName, validationId)).build();
     } catch (ValidationHistoryNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessageDto(exception.getMessage())).build();

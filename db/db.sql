@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS service
     stand_name       varchar(255)                        not null,
     service_type     service_type,
     tag              varchar(30)                         not null,
+    released         boolean                             not null,
     expectation_link varchar(255),
     schema_link      varchar(255),
     PRIMARY KEY (service_id)

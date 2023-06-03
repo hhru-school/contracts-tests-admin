@@ -48,6 +48,9 @@ public class Service {
   @Column(name = "tag")
   private String tag;
 
+  @Column(name = "released")
+  private boolean isRelease;
+
   @Column(name = "expectation_link")
   private String expectationLink;
   @Column(name = "schema_link")
@@ -89,6 +92,14 @@ public class Service {
 
   public String getStandName() {
     return standName;
+  }
+
+  public boolean isRelease() {
+    return isRelease;
+  }
+
+  public void setRelease(boolean release) {
+    isRelease = release;
   }
 
   public void setStandName(String standName) {
