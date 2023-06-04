@@ -5,6 +5,7 @@ import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.model.Validation;
+import com.hh.contractstestsadmin.service.mapper.ValidationMapper;
 import java.time.OffsetDateTime;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;

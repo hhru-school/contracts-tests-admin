@@ -10,6 +10,7 @@ import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ServiceDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dao.ValidationInfoDao;
+import com.hh.contractstestsadmin.service.CustomEntityService;
 import com.hh.contractstestsadmin.service.ValidationService;
 import com.hh.contractstestsadmin.service.ValidatorService;
 import io.minio.MinioClient;
@@ -96,6 +97,11 @@ public class AppConfig {
   @Bean
   public StatusService statusService(StandsDao standsDao, ReleaseVersionDao releaseVersionDao) {
     return new StatusService(standsDao, minioReleaseName, releaseVersionDao);
+  }
+
+  @Bean
+  public CustomEntityService customEntityService(ValidationInfoDao validationInfoDao) {
+    return new CustomEntityService(validationInfoDao);
   }
 
   @Bean

@@ -30,6 +30,11 @@ public class ErrorType {
   public ErrorType() {
   }
 
+  public ErrorType(String errorKey, String comments) {
+    this.errorKey = errorKey;
+    this.comments = comments;
+  }
+
   public Long getId() {
     return id;
   }

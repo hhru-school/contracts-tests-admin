@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS error_type
 (
     error_type_id BIGINT GENERATED ALWAYS AS IDENTITY not null,
     error_key     varchar(2048) UNIQUE,
-    comments      varchar(2048),
+    comments      varchar(4096),
     PRIMARY KEY (error_type_id)
 );
 

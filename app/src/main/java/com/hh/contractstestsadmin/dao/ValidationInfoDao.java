@@ -4,6 +4,7 @@ import com.hh.contractstestsadmin.model.ContractTestError;
 import com.hh.contractstestsadmin.model.ServiceRelation;
 import com.hh.contractstestsadmin.model.ErrorType;
 import com.hh.contractstestsadmin.model.Expectation;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -49,12 +50,10 @@ public class ValidationInfoDao {
 
     public void updateErrorType(ErrorType errorType) {
         Session session = sessionFactory.getCurrentSession();
-        ErrorType errorTypeForUpdate = session.get(ErrorType.class, errorType.getId());
-        if (errorTypeForUpdate != null) {
-            errorTypeForUpdate.setErrorKey(errorType.getErrorKey());
-            errorType.setComments(errorType.getComments());
-            session.update(errorType);
-        }
+        Optional<ErrorType> findErrorType = getErrorTypeByKey(errorType.getErrorKey());
+        ErrorType errorTypeForUpdate = findErrorType.orElseThrow(() -> new IllegalArgumentException("error key already exist with id " + errorType.getErrorKey()));
+        errorTypeForUpdate.setComments(errorType.getComments());
+        session.update(errorTypeForUpdate);
     }
 
     public void deleteErrorType(long errorTypeId) {
@@ -64,6 +63,47 @@ public class ValidationInfoDao {
             return;
         }
         session.delete(errorTypeToRemoved);
+    }
+    public void deleteErrorTypeByKey(String errorKey) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Optional<ErrorType> errorType = getErrorTypeByKey(errorKey);
+        if (errorType.isEmpty()) {
+            return;
+        }
+        long countError = countErrorByKey(errorKey);
+
+        if (countError > 0) {
+            throw new IllegalArgumentException("this key cannot be deleted because it is used in error links");
+        }
+
+        session.delete(errorType.get());
+    }
+
+    public long countErrorByKey(String errorKey) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("""
+                select cte from ContractTestError cte
+                where  exists (
+                    select 1
+                    from ErrorType et where  cte.errorType = et
+                and et.errorKey = :errorKey)
+                """, ContractTestError.class)
+            .setParameter("errorKey", errorKey)
+            .stream().count();
+    }
+
+    public List<ErrorType> getAllErrorTypes() {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("select e from ErrorType e", ErrorType.class).getResultList();
+    }
+
+    public Optional<ErrorType> getErrorTypeByKey(String errorKey) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("select e " +
+                "from ErrorType  e where e.errorKey = :errorKey", ErrorType.class)
+            .setParameter("errorKey", errorKey)
+            .getResultList().stream().findFirst();
     }
 
     public void saveContractTestError(ContractTestError error) {
