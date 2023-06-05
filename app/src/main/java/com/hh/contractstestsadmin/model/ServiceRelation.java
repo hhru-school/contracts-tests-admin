@@ -3,17 +3,17 @@ package com.hh.contractstestsadmin.model;
 public class ServiceRelation {
     private Service producer;
     private Service consumer;
-    private long countOfErrorExpectation;
+    private long failedRequestPathCount;
     private long countOfError;
 
     public ServiceRelation() {
     }
 
-    public ServiceRelation(Service producer, Service consumer, Long countOfErrorExpectation,
+    public ServiceRelation(Service producer, Service consumer, Long failedRequestPathCount,
                            Long countOfError) {
         this.producer = producer;
         this.consumer = consumer;
-        this.countOfErrorExpectation = countOfErrorExpectation == null ? 0 : countOfErrorExpectation;
+        this.failedRequestPathCount = failedRequestPathCount == null ? 0 : failedRequestPathCount;
         this.countOfError = countOfError == null ? 0 : countOfError;
     }
 
@@ -38,12 +38,12 @@ public class ServiceRelation {
         this.consumer = consumer;
     }
 
-    public long getCountOfErrorExpectation() {
-        return countOfErrorExpectation;
+    public long getFailedRequestPathCount() {
+        return failedRequestPathCount;
     }
 
-    public void setCountOfErrorExpectation(long countOfErrorExpectation) {
-        this.countOfErrorExpectation = countOfErrorExpectation;
+    public void setFailedRequestPathCount(long failedRequestPathCount) {
+        this.failedRequestPathCount = failedRequestPathCount;
     }
 
     public long getCountOfError() {

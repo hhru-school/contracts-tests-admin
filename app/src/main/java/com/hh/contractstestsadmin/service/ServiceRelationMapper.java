@@ -19,7 +19,7 @@ public class ServiceRelationMapper extends ServiceMapper {
       servicesRelationDto.setConsumer(ConsumerMapper.map(serviceRelation.getConsumer()));
     }
     servicesRelationDto.setErrorCount(serviceRelation.getCountOfError());
-    servicesRelationDto.setWrongExpectationCount(serviceRelation.getCountOfErrorExpectation());
+    servicesRelationDto.setFailedRequestPathCount(serviceRelation.getFailedRequestPathCount());
     return servicesRelationDto;
   }
 }

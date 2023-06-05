@@ -6,7 +6,7 @@ public class ServicesRelationDto {
 
   private ConsumerDto consumer;
 
-  private Long wrongExpectationCount;
+  private Long failedRequestPathCount;
 
   private Long errorCount;
 
@@ -26,12 +26,12 @@ public class ServicesRelationDto {
     this.consumer = consumer;
   }
 
-  public Long getWrongExpectationCount() {
-    return wrongExpectationCount;
+  public Long getFailedRequestPathCount() {
+    return failedRequestPathCount;
   }
 
-  public void setWrongExpectationCount(Long wrongExpectationCount) {
-    this.wrongExpectationCount = wrongExpectationCount;
+  public void setFailedRequestPathCount(Long failedRequestPathCount) {
+    this.failedRequestPathCount = failedRequestPathCount;
   }
 
   public Long getErrorCount() {
