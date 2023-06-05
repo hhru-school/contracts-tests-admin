@@ -7,7 +7,7 @@ import com.hh.contractstestsadmin.dto.api.ServiceStatusDto;
 import com.hh.contractstestsadmin.dto.api.ServicesContainerDto;
 import com.hh.contractstestsadmin.dto.api.StandInfoDto;
 import com.hh.contractstestsadmin.dto.api.StandStatusDto;
-import com.hh.contractstestsadmin.exception.BadRequestException;
+import com.hh.contractstestsadmin.exception.IllegalFilePathException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
@@ -76,7 +76,7 @@ public class StatusService {
   public FileLinkDto getSharedFileLink(String encodeFilePath) throws StandsDaoException {
     String filePath = URLDecoder.decode(encodeFilePath, StandardCharsets.UTF_8);
     if (!filePath.contains("/")) {
-      throw new BadRequestException("the field" + encodeFilePath + " must have a symbol '/'");
+      throw new IllegalFilePathException("the field" + encodeFilePath + " must have a symbol '/'");
     }
     String standName = filePath.substring(0, filePath.indexOf("/"));
     String filePathWithoutStandName = filePath.substring(filePath.indexOf("/") + 1);
