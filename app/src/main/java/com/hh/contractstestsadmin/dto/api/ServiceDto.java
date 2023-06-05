@@ -6,7 +6,7 @@ public class ServiceDto {
 
   private String name;
 
-  private boolean isRelease;
+  private boolean release;
 
   private String version;
 
@@ -26,14 +26,6 @@ public class ServiceDto {
     this.name = name;
   }
 
-  public Boolean getIsRelease() {
-    return isRelease;
-  }
-
-  public void setIsRelease(Boolean isRelease) {
-    this.isRelease = isRelease;
-  }
-
   public String getVersion() {
     return version;
   }
@@ -43,10 +35,10 @@ public class ServiceDto {
   }
 
   public boolean isRelease() {
-    return isRelease;
+    return release;
   }
 
   public void setRelease(boolean release) {
-    isRelease = release;
+    this.release = release;
   }
 }
