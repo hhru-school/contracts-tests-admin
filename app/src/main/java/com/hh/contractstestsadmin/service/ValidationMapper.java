@@ -10,8 +10,8 @@ public class ValidationMapper {
     Objects.requireNonNull(validation);
     ValidationMetaInfoDto validationMetaInfoDto = new ValidationMetaInfoDto();
     validationMetaInfoDto.setId(validation.getId());
-    validationMetaInfoDto.setCreatedDate(validation.getCreatedDate());
-    validationMetaInfoDto.setExecuteDate(validation.getExecuteDate());
+    validationMetaInfoDto.setCreatedDate(validation.getCreationDate());
+    validationMetaInfoDto.setExecuteDate(validation.getExecutionDate());
     validationMetaInfoDto.setStatus(validation.getStatus());
     validationMetaInfoDto.setReleaseLink(validation.getReleaseInformationVersion());
     validationMetaInfoDto.setErrorCount(validation.getErrorCount());

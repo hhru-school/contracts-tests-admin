@@ -37,14 +37,14 @@ public class Validation {
   @Column(name = "stand_name")
   private String standName;
 
-  @Column(name = "execute_date")
-  private OffsetDateTime executeDate;
+  @Column(name = "execution_date")
+  private OffsetDateTime executionDate;
 
   @Column(name = "release_information_version")
   private String releaseInformationVersion;
 
-  @Column(name = "created_date")
-  private OffsetDateTime createdDate;
+  @Column(name = "creation_date")
+  private OffsetDateTime creationDate;
 
   @Enumerated(EnumType.STRING)
   @Type(type = "pgsql_enum")
@@ -55,8 +55,8 @@ public class Validation {
   private int errorCount;
 
   @Type(type = "jsonb")
-  @Column(name = "validator_error", columnDefinition = "jsonb")
-  private String validatorErrors;
+  @Column(name = "report", columnDefinition = "jsonb")
+  private String report;
 
   @OneToMany(mappedBy = "validation", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Expectation> expectations = new ArrayList<>();
@@ -73,12 +73,12 @@ public class Validation {
     this.id = id;
   }
 
-  public OffsetDateTime getCreatedDate() {
-    return createdDate;
+  public OffsetDateTime getCreationDate() {
+    return creationDate;
   }
 
-  public void setCreatedDate(OffsetDateTime createdDate) {
-    this.createdDate = createdDate;
+  public void setCreationDate(OffsetDateTime creationDate) {
+    this.creationDate = creationDate;
   }
 
   public ValidationStatus getStatus() {
@@ -105,12 +105,12 @@ public class Validation {
     this.standName = standName;
   }
 
-  public OffsetDateTime getExecuteDate() {
-    return executeDate;
+  public OffsetDateTime getExecutionDate() {
+    return executionDate;
   }
 
-  public void setExecuteDate(OffsetDateTime executeDate) {
-    this.executeDate = executeDate;
+  public void setExecutionDate(OffsetDateTime executionDate) {
+    this.executionDate = executionDate;
   }
 
   public String getReleaseInformationVersion() {
@@ -129,11 +129,11 @@ public class Validation {
     this.expectations = expectations;
   }
 
-  public String getValidatorErrors() {
-    return validatorErrors;
+  public String getReport() {
+    return report;
   }
 
-  public void setValidatorErrors(String errors) {
-    this.validatorErrors = errors;
+  public void setReport(String report) {
+    this.report = report;
   }
 }

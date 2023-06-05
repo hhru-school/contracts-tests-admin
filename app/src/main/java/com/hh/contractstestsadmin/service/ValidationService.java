@@ -38,7 +38,7 @@ public class ValidationService {
   @Transactional
   public Validation createValidation(String standName) {
     Validation validation = new Validation();
-    validation.setCreatedDate(OffsetDateTime.now());
+    validation.setCreationDate(OffsetDateTime.now());
     validation.setStandName(standName);
     validation.setStatus(ValidationStatus.IN_PROGRESS);
     validation.setReleaseInformationVersion(releaseVersionDao.getCurrentReleaseVersion());

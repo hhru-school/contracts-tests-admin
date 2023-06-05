@@ -26,7 +26,7 @@ public class ValidationDao {
     Session session = sessionFactory.getCurrentSession();
     Validation validationToUpdated = session.get(Validation.class, validation.getId());
     if (validationToUpdated != null) {
-      validationToUpdated.setCreatedDate(validation.getCreatedDate());
+      validationToUpdated.setCreationDate(validation.getCreationDate());
       validationToUpdated.setErrorCount(validation.getErrorCount());
       validationToUpdated.setStatus(validation.getStatus());
       session.save(validationToUpdated);
@@ -40,14 +40,14 @@ public class ValidationDao {
 
   public Optional<Validation> getValidation(long validationId, String standName) {
     Session session = sessionFactory.getCurrentSession();
-    return Optional.ofNullable(session.createQuery(
-                "select v from Validation v where v.id = :validationId and v.standName = :standName",
-                Validation.class
-            )
-            .setParameter("validationId", validationId)
-            .setParameter("standName", standName)
-            .getSingleResult()
-    );
+    return session.createQuery(
+            "select v from Validation v where v.id = :validationId and v.standName = :standName",
+            Validation.class
+        )
+        .setParameter("validationId", validationId)
+        .setParameter("standName", standName)
+        .getResultList()
+        .stream().findFirst();
   }
 
   public List<Validation> getAllValidations() {
@@ -64,7 +64,7 @@ public class ValidationDao {
   public List<Validation> getLatestValidations(String standName, Integer validationPreviewsCount) {
     Session session = sessionFactory.getCurrentSession();
     Query<Validation> query = session.createQuery(
-            "select vh from Validation vh where vh.standName =:standName order by vh.createdDate desc",
+            "select vh from Validation vh where vh.standName =:standName order by vh.creationDate desc",
             Validation.class
         )
         .setParameter("standName", standName);
