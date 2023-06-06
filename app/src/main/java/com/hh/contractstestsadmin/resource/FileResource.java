@@ -2,6 +2,7 @@ package com.hh.contractstestsadmin.resource;
 
 import com.hh.contractstestsadmin.dto.api.ErrorMessageDto;
 import com.hh.contractstestsadmin.dto.api.FileLinkDto;
+import com.hh.contractstestsadmin.exception.FilePathNotFoundException;
 import com.hh.contractstestsadmin.exception.IllegalFilePathException;
 import com.hh.contractstestsadmin.exception.MinioClientException;
 import com.hh.contractstestsadmin.service.StatusService;
@@ -41,6 +42,11 @@ public class FileResource {
   public Response getSharedFileLink(@NotNull @QueryParam("filePath") String encodeFilePath) {
     try {
       return Response.ok(statusService.getSharedFileLink(encodeFilePath)).build();
+    } catch (FilePathNotFoundException exception) {
+      LOG.warn("not found entity by encodeFilePath {}", encodeFilePath, exception);
+      return Response.status(Response.Status.NOT_FOUND)
+          .entity(new ErrorMessageDto(exception.getMessage()))
+          .build();
     } catch (MinioClientException exception) {
       LOG.warn("minio client responded with unsuccessful code {}", exception.getStatusCode(), exception);
       return Response.status(Response.Status.fromStatusCode(exception.getStatusCode()))
@@ -49,8 +55,7 @@ public class FileResource {
     } catch (IllegalFilePathException e) {
       LOG.error("illegal argument encodeFilePath {}", encodeFilePath, e);
       return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorMessageDto(e.getMessage())).build();
-    }
-    catch (Exception exception) {
+    } catch (Exception exception) {
       LOG.error("internal error by encodeFilePath {}", encodeFilePath, exception);
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
           .entity(new ErrorMessageDto(exception.getMessage()))

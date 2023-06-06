@@ -12,6 +12,7 @@ import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.ListObjectsArgs;
 import io.minio.MinioClient;
 import io.minio.Result;
+import io.minio.StatObjectArgs;
 import io.minio.errors.ErrorResponseException;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
@@ -84,6 +85,23 @@ public class StandsDao {
 
     try {
       return minioClient.bucketExists(bucketExistsArgs);
+    } catch (Exception e) {
+      throw new StandsDaoException(e);
+    }
+  }
+
+  public boolean isArtefactPath(String standName, String artefactPath) throws StandsDaoException, MinioClientException {
+    StatObjectArgs artefactExists = StatObjectArgs
+        .builder()
+        .bucket(standName)
+        .object(artefactPath)
+        .build();
+
+    try {
+      return minioClient.statObject(artefactExists) != null;
+    } catch (ErrorResponseException e) {
+      int statusCode = getStatusCode(e.response());
+      throw new MinioClientException(e.getMessage(), e, statusCode);
     } catch (Exception e) {
       throw new StandsDaoException(e);
     }
