@@ -3,6 +3,7 @@ package com.hh.contractstestsadmin.dao.minio;
 import com.hh.contractstestsadmin.dao.minio.mapper.ServiceListMapper;
 import static com.hh.contractstestsadmin.dao.minio.mapper.Util.extractArtefactKey;
 import static com.hh.contractstestsadmin.dao.minio.mapper.Util.extractArtefactVersion;
+import com.hh.contractstestsadmin.exception.MinioClientException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.model.artefacts.Service;
@@ -11,6 +12,7 @@ import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.ListObjectsArgs;
 import io.minio.MinioClient;
 import io.minio.Result;
+import io.minio.errors.ErrorResponseException;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
@@ -22,11 +24,14 @@ import java.util.Map;
 import static java.util.Optional.ofNullable;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 import static javax.validation.Validation.buildDefaultValidatorFactory;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.constraints.NotNull;
+import okhttp3.Response;
+import org.eclipse.jetty.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StandsDao {
 
@@ -34,6 +39,7 @@ public class StandsDao {
   private final ServiceListMapper serviceListMapper;
   private final Validator validator;
   private final Properties minioProperties;
+  private static final Logger log = LoggerFactory.getLogger(StandsDao.class);
 
   public StandsDao(MinioClient minioClient, Properties minioProperties, ServiceListMapper serviceListMapper) {
     this.minioClient = minioClient;
@@ -84,7 +90,7 @@ public class StandsDao {
   }
 
   @NotNull
-  public String getArtefactUrl(String standName, String artefactPath) throws StandsDaoException {
+  public String getArtefactUrl(String standName, String artefactPath) throws StandsDaoException, MinioClientException {
     Map<String, String> requestParams = new HashMap<String, String>();
 
     int urlExpirationPeriod = Integer.parseInt(minioProperties.getProperty("minio.artefact.url.expiration.period"));
@@ -99,11 +105,21 @@ public class StandsDao {
               .expiry(urlExpirationPeriod, TimeUnit.HOURS)
               .extraQueryParams(requestParams)
               .build());
+    } catch (ErrorResponseException e) {
+      int statusCode = getStatusCode(e.response());
+      throw new MinioClientException(e.getMessage(), e, statusCode);
     } catch (Exception e) {
       throw new StandsDaoException("It is impossible to retrieve url for " + artefactPath + " in " + standName + " stand", e);
     }
   }
 
+  private static int getStatusCode(Response response) {
+    if (response == null) {
+      log.warn("response is null");
+      return HttpStatus.INTERNAL_SERVER_ERROR_500;
+    }
+    return response.code();
+  }
   @NotNull
   private Iterable<Result<Item>> getStandArtefacts(@NotNull String standName) throws StandsDaoException, StandNotFoundException {
     validator.validate(standName);

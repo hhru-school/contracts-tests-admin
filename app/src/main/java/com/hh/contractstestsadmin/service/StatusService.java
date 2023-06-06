@@ -8,6 +8,7 @@ import com.hh.contractstestsadmin.dto.api.ServicesContainerDto;
 import com.hh.contractstestsadmin.dto.api.StandInfoDto;
 import com.hh.contractstestsadmin.dto.api.StandStatusDto;
 import com.hh.contractstestsadmin.exception.IllegalFilePathException;
+import com.hh.contractstestsadmin.exception.MinioClientException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 
@@ -73,7 +74,7 @@ public class StatusService {
     return standStatusDto;
   }
 
-  public FileLinkDto getSharedFileLink(String encodeFilePath) throws StandsDaoException {
+  public FileLinkDto getSharedFileLink(String encodeFilePath) throws StandsDaoException, MinioClientException {
     String filePath = URLDecoder.decode(encodeFilePath, StandardCharsets.UTF_8);
     if (!filePath.contains("/")) {
       throw new IllegalFilePathException("the field" + encodeFilePath + " must have a symbol '/'");

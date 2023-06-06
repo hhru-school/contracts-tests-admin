@@ -3,7 +3,7 @@ package com.hh.contractstestsadmin.resource;
 import com.hh.contractstestsadmin.dto.api.ErrorMessageDto;
 import com.hh.contractstestsadmin.dto.api.FileLinkDto;
 import com.hh.contractstestsadmin.exception.IllegalFilePathException;
-import com.hh.contractstestsadmin.exception.StandNotFoundException;
+import com.hh.contractstestsadmin.exception.MinioClientException;
 import com.hh.contractstestsadmin.service.StatusService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,9 +41,9 @@ public class FileResource {
   public Response getSharedFileLink(@NotNull @QueryParam("filePath") String encodeFilePath) {
     try {
       return Response.ok(statusService.getSharedFileLink(encodeFilePath)).build();
-    } catch (StandNotFoundException exception) {
-      LOG.warn("not found entity by encodeFilePath {}", encodeFilePath, exception);
-      return Response.status(Response.Status.NOT_FOUND)
+    } catch (MinioClientException exception) {
+      LOG.warn("minio client responded with unsuccessful code {}", exception.getStatusCode(), exception);
+      return Response.status(Response.Status.fromStatusCode(exception.getStatusCode()))
           .entity(new ErrorMessageDto(exception.getMessage()))
           .build();
     } catch (IllegalFilePathException e) {
