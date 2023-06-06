@@ -80,15 +80,10 @@ public class StatusService {
     }
     String standName = filePath.substring(0, filePath.indexOf("/"));
     String filePathWithoutStandName = filePath.substring(filePath.indexOf("/") + 1);
-    List<StandInfoDto> stands = getStands(standName);
-    if (stands.stream().anyMatch(s -> s.getName().equals(standName))) {
-      String artefactUrl = standsDao.getArtefactUrl(standName, filePathWithoutStandName);
-      String fileUrl = artefactUrl.replaceAll(standsDao.getBaseMinioUrl(), standsDao.getExternalMinioUrl());
+    String artefactUrl = standsDao.getArtefactUrl(standName, filePathWithoutStandName);
+    String fileUrl = artefactUrl.replaceAll(standsDao.getBaseMinioUrl(), standsDao.getExternalMinioUrl());
 
-      return new FileLinkDto(fileUrl);
-    }
-
-    throw new StandsDaoException("not found standName in filePath" + encodeFilePath);
+    return new FileLinkDto(fileUrl);
   }
 
 }
