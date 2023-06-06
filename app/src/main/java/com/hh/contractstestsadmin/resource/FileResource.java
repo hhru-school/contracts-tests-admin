@@ -7,6 +7,7 @@ import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.service.StatusService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.QueryParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,7 @@ public class FileResource {
   @GET
   @Path("/download-links")
   @Produces(value = MediaType.APPLICATION_JSON)
-  public Response getSharedFileLink(@QueryParam("filePath") String encodeFilePath) {
+  public Response getSharedFileLink(@NotNull @QueryParam("filePath") String encodeFilePath) {
     try {
       return Response.ok(statusService.getSharedFileLink(encodeFilePath)).build();
     } catch (StandNotFoundException exception) {
