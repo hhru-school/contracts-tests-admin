@@ -9,6 +9,7 @@ import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.model.ServiceRelation;
 import com.hh.contractstestsadmin.model.Validation;
+import com.hh.contractstestsadmin.service.mapper.ValidationWithRelationsMapper;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;

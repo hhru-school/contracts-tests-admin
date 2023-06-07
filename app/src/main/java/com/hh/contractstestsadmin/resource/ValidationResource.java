@@ -55,7 +55,7 @@ public class ValidationResource {
   @ApiOperation(
       value = "Get detailed information about validation",
       response = ValidationWithRelationsDto.class)
-  @Path("stands/{standName}/validation/{validationId}")
+  @Path("stands/{standName}/validations/{validationId}")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response getValidationWithRelations(

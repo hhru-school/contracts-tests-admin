@@ -1,5 +1,7 @@
 package com.hh.contractstestsadmin.dto.api;
 
+import com.hh.contractstestsadmin.model.ServiceType;
+
 public class ServiceDto {
 
   private Long id;
@@ -9,6 +11,10 @@ public class ServiceDto {
   private boolean release;
 
   private String version;
+
+  private ServiceType serviceType;
+
+  private String fileLink;
 
   public Long getId() {
     return id;
@@ -40,5 +46,21 @@ public class ServiceDto {
 
   public void setRelease(boolean release) {
     this.release = release;
+  }
+
+  public ServiceType getServiceType() {
+    return serviceType;
+  }
+
+  public void setServiceType(ServiceType serviceType) {
+    this.serviceType = serviceType;
+  }
+
+  public String getFileLink() {
+    return fileLink;
+  }
+
+  public void setFileLink(String fileLink) {
+    this.fileLink = fileLink;
   }
 }

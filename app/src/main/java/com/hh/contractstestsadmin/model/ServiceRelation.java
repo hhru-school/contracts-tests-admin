@@ -4,17 +4,18 @@ public class ServiceRelation {
     private Service producer;
     private Service consumer;
     private long failedRequestPathCount;
-    private long countOfError;
+    private long errorCount;
 
     public ServiceRelation() {
     }
 
     public ServiceRelation(Service producer, Service consumer, Long failedRequestPathCount,
-                           Long countOfError) {
+                           Long errorCount
+    ) {
         this.producer = producer;
         this.consumer = consumer;
         this.failedRequestPathCount = failedRequestPathCount == null ? 0 : failedRequestPathCount;
-        this.countOfError = countOfError == null ? 0 : countOfError;
+        this.errorCount = errorCount == null ? 0 : errorCount;
     }
 
     public ServiceRelation(Service producer, Service consumer) {
@@ -46,11 +47,11 @@ public class ServiceRelation {
         this.failedRequestPathCount = failedRequestPathCount;
     }
 
-    public long getCountOfError() {
-        return countOfError;
+    public long getErrorCount() {
+        return errorCount;
     }
 
-    public void setCountOfError(long countOfError) {
-        this.countOfError = countOfError;
+    public void setErrorCount(long errorCount) {
+        this.errorCount = errorCount;
     }
 }
