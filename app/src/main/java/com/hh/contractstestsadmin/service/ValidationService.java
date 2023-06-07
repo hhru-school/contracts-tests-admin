@@ -3,12 +3,15 @@ package com.hh.contractstestsadmin.service;
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dao.ValidationInfoDao;
+import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.model.ServiceRelation;
 import com.hh.contractstestsadmin.model.Validation;
+import com.hh.contractstestsadmin.service.mapper.ExpectationMapper;
+import com.hh.contractstestsadmin.service.mapper.ValidationMapper;
 import com.hh.contractstestsadmin.service.mapper.ValidationWithRelationsMapper;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -52,5 +55,12 @@ public class ValidationService {
     Validation validation = validationFound.orElseThrow(() -> new ValidationHistoryNotFoundException("not found validation with id " + validationId));
     List<ServiceRelation> serviceRelations = validationInfoDao.getServiceRelations(validationId);
     return ValidationWithRelationsMapper.map(validation, serviceRelations);
+  }
+
+  @Transactional
+  public List<ExpectationDto> getExpectations(String standName, Long validationId, Long producerId, Long consumerId) {
+    return validationInfoDao.getExpectations(standName, validationId, consumerId, producerId).stream()
+        .map(ExpectationMapper::mapFromEntity)
+        .toList();
   }
 }

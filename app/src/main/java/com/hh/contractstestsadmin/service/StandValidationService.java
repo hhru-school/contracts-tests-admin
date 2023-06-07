@@ -1,6 +1,5 @@
 package com.hh.contractstestsadmin.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
@@ -24,12 +23,9 @@ public class StandValidationService {
 
   private final ValidationService validationService;
 
-  private final ObjectMapper objectMapper;
-
-  public StandValidationService(StandsDao standsDao, ValidationService validationService, ObjectMapper objectMapper) {
+  public StandValidationService(StandsDao standsDao, ValidationService validationService) {
     this.standsDao = standsDao;
     this.validationService = validationService;
-    this.objectMapper = objectMapper;
   }
 
   private boolean standExists(String standName) throws StandsDaoException, StandNotFoundException {
@@ -58,10 +54,7 @@ public class StandValidationService {
   }
 
   public List<ExpectationDto> getExpectations(String standName, Long validationId, Long producerId, Long consumerId) throws IOException {
-    ClassLoader classLoader = getClass().getClassLoader();
-    InputStream inputStream = classLoader.getResourceAsStream("test-data/expectations-example.json");
-    return objectMapper.readValue(inputStream, new TypeReference<>() {
-    });
+    return validationService.getExpectations(standName, validationId, producerId, consumerId);
   }
 
   public String getValidatorReport(String standName, Long validationId) {

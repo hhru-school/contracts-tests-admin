@@ -1,6 +1,8 @@
 package com.hh.contractstestsadmin.model;
 
+import com.hh.contractstestsadmin.dto.api.EntryDto;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -16,13 +18,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Tuple;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 @Entity
-@TypeDefs(
-    @TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
+@TypeDefs({
+    @TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class),
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+}
 )
 @Table(name = "expectation")
 public class Expectation {
@@ -48,11 +53,13 @@ public class Expectation {
   @Column(name = "request_path")
   private String requestPath;
 
-  @Column(name = "request_headers")
-  private String requestHeaders;
+  @Type(type = "jsonb")
+  @Column(name = "request_headers", columnDefinition = "jsonb")
+  private List<EntryDto> requestHeaders = new ArrayList<>();
 
-  @Column(name = "query_params")
-  private String queryParams;
+  @Type(type = "jsonb")
+  @Column(name = "query_params", columnDefinition = "jsonb")
+  private List<EntryDto> queryParams = new ArrayList<>();
 
   @Column(name = "request_body")
   private String requestBody;
@@ -60,8 +67,9 @@ public class Expectation {
   @Column(name = "response_status")
   private int responseStatus;
 
-  @Column(name = "response_headers")
-  private String responseHeaders;
+  @Type(type = "jsonb")
+  @Column(name = "response_headers", columnDefinition = "jsonb")
+  private List<EntryDto> responseHeaders = new ArrayList<>();
 
   @Column(name = "response_body")
   private String responseBody;
@@ -101,19 +109,19 @@ public class Expectation {
     this.requestPath = requestPath;
   }
 
-  public String getRequestHeaders() {
+  public List<EntryDto> getRequestHeaders() {
     return requestHeaders;
   }
 
-  public void setRequestHeaders(String requestHeaders) {
+  public void setRequestHeaders(List<EntryDto> requestHeaders) {
     this.requestHeaders = requestHeaders;
   }
 
-  public String getQueryParams() {
+  public List<EntryDto> getQueryParams() {
     return queryParams;
   }
 
-  public void setQueryParams(String queryParams) {
+  public void setQueryParams(List<EntryDto> queryParams) {
     this.queryParams = queryParams;
   }
 
@@ -133,11 +141,11 @@ public class Expectation {
     this.responseStatus = responseStatus;
   }
 
-  public String getResponseHeaders() {
+  public List<EntryDto> getResponseHeaders() {
     return responseHeaders;
   }
 
-  public void setResponseHeaders(String responseHeaders) {
+  public void setResponseHeaders(List<EntryDto> responseHeaders) {
     this.responseHeaders = responseHeaders;
   }
 

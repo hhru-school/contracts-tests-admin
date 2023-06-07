@@ -4,7 +4,6 @@ import com.hh.contractstestsadmin.dto.api.ServicesRelationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.model.ServiceRelation;
 import com.hh.contractstestsadmin.model.Validation;
-import com.hh.contractstestsadmin.service.ValidationMapper;
 import java.util.List;
 
 public class ValidationWithRelationsMapper {
