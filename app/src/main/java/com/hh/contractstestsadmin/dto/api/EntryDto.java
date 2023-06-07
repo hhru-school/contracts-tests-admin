@@ -1,10 +1,17 @@
 package com.hh.contractstestsadmin.dto.api;
 
-public class EntryDto {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class EntryDto implements Serializable {
 
   private String key;
 
   private String value;
+
+  public EntryDto() {
+  }
 
   public String getKey() {
     return key;
