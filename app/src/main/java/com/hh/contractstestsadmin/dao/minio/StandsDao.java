@@ -3,6 +3,7 @@ package com.hh.contractstestsadmin.dao.minio;
 import com.hh.contractstestsadmin.dao.minio.mapper.ServiceListMapper;
 import static com.hh.contractstestsadmin.dao.minio.mapper.Util.extractArtefactKey;
 import static com.hh.contractstestsadmin.dao.minio.mapper.Util.extractArtefactVersion;
+import com.hh.contractstestsadmin.exception.MinioClientException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.model.artefacts.Service;
@@ -11,6 +12,8 @@ import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.ListObjectsArgs;
 import io.minio.MinioClient;
 import io.minio.Result;
+import io.minio.StatObjectArgs;
+import io.minio.errors.ErrorResponseException;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
@@ -22,11 +25,14 @@ import java.util.Map;
 import static java.util.Optional.ofNullable;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 import static javax.validation.Validation.buildDefaultValidatorFactory;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.constraints.NotNull;
+import okhttp3.Response;
+import org.eclipse.jetty.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StandsDao {
 
@@ -34,6 +40,7 @@ public class StandsDao {
   private final ServiceListMapper serviceListMapper;
   private final Validator validator;
   private final Properties minioProperties;
+  private static final Logger log = LoggerFactory.getLogger(StandsDao.class);
 
   public StandsDao(MinioClient minioClient, Properties minioProperties, ServiceListMapper serviceListMapper) {
     this.minioClient = minioClient;
@@ -66,9 +73,8 @@ public class StandsDao {
 
     Iterable<Result<Item>> standArtefacts = getStandArtefacts(standName);
     Collection<Item> lastModifiedArtefacts = getArtefactsOfLastVersions(standArtefacts);
-    Map<String, String> artefactUrls = getArtefactUrls(standName, lastModifiedArtefacts);
 
-    return serviceListMapper.map(lastModifiedArtefacts, artefactUrls);
+    return serviceListMapper.map(lastModifiedArtefacts, standName);
   }
 
   public boolean standExists(String standName) throws StandsDaoException {
@@ -84,39 +90,32 @@ public class StandsDao {
     }
   }
 
-  /**
-   * Return a Map of artefact URLs
-   *
-   * @param standName a stand name
-   * @param artefacts Collection of artefact info items
-   * @return a map of artefact URLs, where the key is an artefact path like 'expectation/jlogic/00.01.01.json',
-   * and the value is a string representation of artefact URL
-   */
-  private Map<String, String> getArtefactUrls(@NotNull String standName, @NotNull Collection<Item> artefacts) {
-    validator.validate(standName);
-    validator.validate(artefacts);
+  public boolean isArtefactPath(String standName, String artefactPath) throws StandsDaoException, MinioClientException {
+    StatObjectArgs artefactExists = StatObjectArgs
+        .builder()
+        .bucket(standName)
+        .object(artefactPath)
+        .build();
 
-    return artefacts
-        .stream()
-        .collect(Collectors.toMap(
-            this::getArtefactPath,
-            artefact -> {
-              try {
-                return getArtefactUrl(standName, artefact);
-              } catch (StandsDaoException e) {
-                throw new RuntimeException(e);
-              }
-            }
-        ));
+    try {
+      return minioClient.statObject(artefactExists) != null;
+    } catch (ErrorResponseException e) {
+      int statusCode = getStatusCode(e.response());
+      throw new MinioClientException(e.getMessage(), e, statusCode);
+    } catch (Exception e) {
+      throw new StandsDaoException(e);
+    }
   }
 
   @NotNull
-  private String getArtefactUrl(String standName, Item artefact) throws StandsDaoException {
+  public String getArtefactUrl(String standName, String artefactPath) throws StandsDaoException, MinioClientException {
     Map<String, String> requestParams = new HashMap<String, String>();
+    boolean artefactPathExist = isArtefactPath(standName, artefactPath);
+    if (!artefactPathExist) {
+      throw new MinioClientException("not found file from path " + artefactPath, HttpStatus.NOT_FOUND_404);
+    }
 
     int urlExpirationPeriod = Integer.parseInt(minioProperties.getProperty("minio.artefact.url.expiration.period"));
-
-    String artefactPath = getArtefactPath(artefact);
     requestParams.put("response-content-type", "application/json");
 
     try {
@@ -128,11 +127,21 @@ public class StandsDao {
               .expiry(urlExpirationPeriod, TimeUnit.HOURS)
               .extraQueryParams(requestParams)
               .build());
+    } catch (ErrorResponseException e) {
+      int statusCode = getStatusCode(e.response());
+      throw new MinioClientException(e.getMessage(), e, statusCode);
     } catch (Exception e) {
       throw new StandsDaoException("It is impossible to retrieve url for " + artefactPath + " in " + standName + " stand", e);
     }
   }
 
+  private static int getStatusCode(Response response) {
+    if (response == null) {
+      log.warn("response is null");
+      return HttpStatus.INTERNAL_SERVER_ERROR_500;
+    }
+    return response.code();
+  }
   @NotNull
   private Iterable<Result<Item>> getStandArtefacts(@NotNull String standName) throws StandsDaoException, StandNotFoundException {
     validator.validate(standName);
@@ -202,5 +211,12 @@ public class StandsDao {
     return extractArtefactVersion(getArtefactPath(artefact));
   }
 
-}
+  public String getBaseMinioUrl() {
+    return minioProperties.getProperty("minio.base.url");
+  }
 
+  public String getExternalMinioUrl() {
+    return minioProperties.getProperty("minio.external.base.url");
+  }
+
+}
