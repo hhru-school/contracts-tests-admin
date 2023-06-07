@@ -25,7 +25,7 @@ public class ServiceListMapper {
   }
 
   @NotNull
-  public List<Service> map(Collection<Item> standArtefacts, Map<String, String> artefactUrls) throws StandsDaoException {
+  public List<Service> map(Collection<Item> standArtefacts, String standName) throws StandsDaoException {
     Map<String, Item> artefactsMap = getArtefactsMap(standArtefacts);
 
     return artefactsMap.entrySet()
@@ -34,7 +34,8 @@ public class ServiceListMapper {
             artefact -> extractServiceName(getArtefactPath(artefact)),
             artefact -> {
               try {
-                return serviceMapper.map(artefact, artefactUrls.get(getArtefactPath(artefact)));
+                String artefactPath = standName + "/" + getArtefactPath(artefact);
+                return serviceMapper.map(artefact, artefactPath);
               } catch (StandsDaoException e) {
                 throw new RuntimeException(e);
               }
