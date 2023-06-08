@@ -58,6 +58,9 @@ public class AppConfig {
   @Value("${minio.url}")
   private String minioUrl;
 
+  @Value("${minio.external.url}")
+  private String externalBaseUrl;
+
   @Value("${minio.access-key}")
   private String minioAccessKey;
 
@@ -186,6 +189,8 @@ public class AppConfig {
 
   private Properties minioProperties() {
     Properties minioProperties = new Properties();
+    minioProperties.put("minio.base.url", minioUrl);
+    minioProperties.put("minio.external.base.url", externalBaseUrl);
     minioProperties.put("minio.consumer.artefact.type", consumerArtefactType);
     minioProperties.put("minio.producer.artefact.type", producerArtefactType);
     minioProperties.put("minio.artefact.url.expiration.period", artefactUrlExpirationPeriod);
