@@ -1,31 +1,13 @@
 import { NavLink, generatePath } from 'react-router-dom';
-import { Alert, ListGroup, ListGroupItem, Spinner, Row, Col } from 'reactstrap';
-import { ReactComponent as SuccessIcon } from './img/success.svg';
-import { ReactComponent as FailedIcon } from './img/failed.svg';
-import { ReactComponent as CancelledIcon } from './img/cancelled.svg';
-import { StandResponse, Direction } from './types';
+import { Alert, ListGroup, ListGroupItem, Row, Col } from 'reactstrap';
+import { StandResponse, getStatus } from '../Validation/types';
 import useSWR from 'swr';
 import navigation from 'routes/navigation';
 export type ServicesContainerProps = {
     standName: string;
     sizeLimit?: number;
 };
-const getStatus = (statusResponce: Direction) => {
-    switch (statusResponce) {
-        case Direction.InProgress:
-            return <Spinner color="primary" />;
-            break;
-        case Direction.Cancelled:
-            return <CancelledIcon />;
-            break;
-        case Direction.Failed:
-            return <FailedIcon />;
-            break;
-        case Direction.Success:
-            return <SuccessIcon />;
-            break;
-    }
-};
+
 export const ValidationHistory: React.FC<ServicesContainerProps> = ({
     standName,
     sizeLimit = 5,
@@ -47,7 +29,6 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = ({
     if (!Array.isArray(data) || data.length === 0) {
         return <small> Нет валидаций для стенда({standName})</small>;
     }
-    console.log(`data = ${data.length}`);
     return (
         <ListGroup>
             {data.map((item: StandResponse) => (

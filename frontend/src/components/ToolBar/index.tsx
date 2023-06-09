@@ -1,7 +1,7 @@
 import { ReactComponent as PlayIcon } from './img/play.svg';
 import useSWR from 'swr';
 import React, { useState, KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
-import { ListGroup, ListGroupItem, Input, Button, Alert } from 'reactstrap';
+import { ListGroup, ListGroupItem, Input, Button, Alert, Spinner } from 'reactstrap';
 import { HandleKeys } from './types/HandleKeys';
 import { Stand } from './types/Stand';
 
@@ -11,31 +11,27 @@ export type ToolBarProps = {
 };
 
 export const ToolBar: React.FC<ToolBarProps> = ({ selectedItem, setSelectedItem }) => {
-    const { isLoading, data, error } = useSWR<Stand[]>('/api/stands');
     const [showList, setShowList] = useState(false);
+    const [validation, setValidation] = useState(false);
     const [hoveredItem, setHoveredItem] = useState<string>('');
     const [currentPositionInList, setCurrentPositionInList] = useState(0);
-
+    const { isLoading, data, error } = useSWR<Stand[]>(
+        selectedItem.length >= 300 ? `/api/stands?search=${selectedItem}` : '/api/stands',
+    );
     if (isLoading) {
         return <Alert color="primary"> Data is loading </Alert>;
     }
-
     if (error) {
         return <Alert color="danger"> Cant load data {error.message} </Alert>;
     }
-
     if (!data) {
         return null;
     }
-
+    const filteredData = data.map((item) => item.name);
     const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSelectedItem(e.target.value);
         setShowList(true);
     };
-    const filteredData = data
-        .map((item) => item.name)
-        .filter((name) => name.toLowerCase().includes(selectedItem.toLowerCase()));
-
     const handleHover = (item: string) => {
         setHoveredItem(item);
         if (item.length != 0) {
@@ -64,18 +60,32 @@ export const ToolBar: React.FC<ToolBarProps> = ({ selectedItem, setSelectedItem 
             setSelectedItem(element);
             setShowList(false);
         } else if (event.key === HandleKeys.ArrowDown) {
-            if (currentPositionInList < filteredData.length) {
-                setCurrentPositionInList(currentPositionInList + 1);
-                const element = filteredData[currentPositionInList + 1];
-                handleHover(element);
+            let curIndex = currentPositionInList;
+            if (curIndex + 1 < filteredData.length) {
+                curIndex += 1;
+            } else {
+                curIndex = 0;
             }
+            const element = filteredData[curIndex];
+            handleHover(element);
+            setCurrentPositionInList(curIndex);
         } else if (event.key === HandleKeys.ArrowUp) {
-            if (currentPositionInList > 0) {
-                setCurrentPositionInList(currentPositionInList - 1);
-                const element = filteredData[currentPositionInList - 1];
-                handleHover(element);
+            let curIndex = currentPositionInList;
+            if (curIndex > 0) {
+                curIndex -= 1;
+            } else {
+                curIndex = filteredData.length - 1;
             }
+            setCurrentPositionInList(curIndex);
+            const element = filteredData[curIndex];
+            handleHover(element);
         }
+    };
+    const submitRequest = () => {
+        setValidation(true);
+        setTimeout(() => {
+            setValidation(false);
+        }, 5000);
     };
     return (
         <div className="d-flex align-items-center gap-3 w-100">
@@ -95,22 +105,38 @@ export const ToolBar: React.FC<ToolBarProps> = ({ selectedItem, setSelectedItem 
                         style={{ height: '250px', overflow: 'auto' }}
                         onSelect={handleSelect}
                     >
-                        {filteredData.map((item: string) => (
-                            <ListGroupItem
-                                key={item}
-                                onClick={() => selectElement(item)}
-                                onMouseEnter={() => handleHover(item)}
-                                onMouseLeave={() => handleHover('')}
-                                className={hoveredItem === item ? 'active' : ''}
-                            >
-                                {item}
-                            </ListGroupItem>
-                        ))}
+                        {filteredData.length > 0 &&
+                            filteredData.map((item: string) => (
+                                <ListGroupItem
+                                    key={item}
+                                    onClick={() => selectElement(item)}
+                                    onMouseEnter={() => handleHover(item)}
+                                    onMouseLeave={() => handleHover('')}
+                                    className={hoveredItem === item ? 'active' : ''}
+                                >
+                                    {item}
+                                </ListGroupItem>
+                            ))}
                     </ListGroup>
                 )}
             </div>
-            <Button color="primary" className="flex-shrink-0" disabled={!selectedItem}>
-                <PlayIcon /> Start
+            <Button
+                color="primary"
+                className="flex-shrink-0"
+                disabled={!selectedItem}
+                onClick={() => {
+                    submitRequest();
+                }}
+            >
+                {validation ? (
+                    <>
+                        <Spinner color="white" style={{ width: '16px', height: '16px' }} /> Process
+                    </>
+                ) : (
+                    <>
+                        <PlayIcon /> Start
+                    </>
+                )}
             </Button>
         </div>
     );

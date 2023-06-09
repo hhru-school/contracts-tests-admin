@@ -1,7 +1,7 @@
 import { AppContext } from 'context/AppContext';
 import { useContext } from 'react';
 import { Col, Row, Alert, ListGroup, ListGroupItem } from 'reactstrap';
-import { StandResponse } from '../../components/ValidationHistory/types';
+import { StandResponse, getStatus, Direction } from '../../components/Validation/types';
 import { Loader } from 'components/Loader';
 import useSWR from 'swr';
 import { generatePath, useNavigate } from 'react-router-dom';
@@ -54,9 +54,26 @@ export const ValidationsPage: React.FC = () => {
                 >
                     <Row>
                         <Col md={3}>Валидация {item.id}</Col>
-                        <Col md={4}>{new Date(item.createdDate).toLocaleDateString('ru-RU')}</Col>
-                        <Col md={3}>{item.releaseLink}</Col>
-                        <Col md={2}>{item.errorCount} ошибок</Col>
+                        <Col md={3}>{new Date(item.createdDate).toLocaleDateString('ru-RU')}</Col>
+                        <Col md={2}>{item.releaseLink}</Col>
+                        {item.status === Direction.Failed ? (
+                            <>
+                                <Col md={3}>
+                                    <div className=" d-flex justify-content-center">
+                                        {getStatus(item.status)}
+                                    </div>
+                                </Col>
+                                <Col md={1}>{item.errorCount} ошибок</Col>
+                            </>
+                        ) : (
+                            <>
+                                <Col md={4}>
+                                    <div className=" d-flex justify-content-center">
+                                        {getStatus(item.status)}
+                                    </div>
+                                </Col>
+                            </>
+                        )}
                     </Row>
                 </ListGroupItem>
             ))}
