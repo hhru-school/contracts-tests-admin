@@ -21,11 +21,14 @@ public class ValidationService {
   private final ValidationInfoDao validationInfoDao;
 
   private final ReleaseVersionDao releaseVersionDao;
+  private final String minioReleaseName;
 
-  public ValidationService(ValidationDao validationDao, ReleaseVersionDao releaseVersionDao, ValidationInfoDao validationInfoDao) {
+  public ValidationService(ValidationDao validationDao, ReleaseVersionDao releaseVersionDao, ValidationInfoDao validationInfoDao,
+      String minioReleaseName) {
     this.validationDao = validationDao;
     this.releaseVersionDao = releaseVersionDao;
     this.validationInfoDao = validationInfoDao;
+    this.minioReleaseName = minioReleaseName;
   }
 
   @Transactional
@@ -51,6 +54,6 @@ public class ValidationService {
     Optional<Validation> validationFound = validationDao.getValidation(validationId, standName);
     Validation validation = validationFound.orElseThrow(() -> new ValidationHistoryNotFoundException("not found validation with id " + validationId));
     List<ServiceRelation> serviceRelations = validationInfoDao.getServiceRelations(validationId);
-    return ValidationWithRelationsMapper.map(validation, serviceRelations);
+    return ValidationWithRelationsMapper.map(validation, serviceRelations, minioReleaseName);
   }
 }
