@@ -17,15 +17,16 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
             <Row>
                 <Col md={4}>
                     <h6 className="mb-0">{name}</h6>
-                    <p className="mb-0 opacity-75">{version}</p>
+                    <p className="mb-0 opacity-50">version: {version}</p>
                 </Col>
                 <Col md={4}>
                     {isConsumer && (
                         <div className="d-flex align-items-center justify-content-center gap-3">
                             <div>
-                                <p className="mb-0 opacity-75">Consumer</p>
+                                <p className="mb-0 opacity-75">Contract as consumer</p>
                                 <small className="opacity-50 text-nowrap">
-                                    {new Date(expectationPublishDate).toLocaleDateString('ru-RU')}
+                                    Uploaded:{' '}
+                                    {new Date(expectationPublishDate).toLocaleString('ru-RU')}
                                 </small>
                             </div>
                             <Button color="primary" outline>
@@ -38,9 +39,9 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
                     {isProducer && (
                         <div className="d-flex align-items-center justify-content-center gap-3">
                             <div>
-                                <p className="mb-0 opacity-75">Producer</p>
+                                <p className="mb-0 opacity-75">Contract as producer</p>
                                 <small className="opacity-50 text-nowrap">
-                                    {new Date(schemaPublishDate).toLocaleDateString('ru-RU')}
+                                    Uploaded: {new Date(schemaPublishDate).toLocaleString('ru-RU')}
                                 </small>
                             </div>
                             <Button color="primary" outline>

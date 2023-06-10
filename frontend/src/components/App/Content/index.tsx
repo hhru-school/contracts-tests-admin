@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom';
-import './index.css';
 import { Container } from 'reactstrap';
+
+import './styles.css';
 
 export const AppContent: React.FC = () => {
     return (
-        <main className="app-content">
-            <Container fluid className="pt-3">
+        <main>
+            <Container fluid className="main-content">
                 <Outlet />
             </Container>
         </main>

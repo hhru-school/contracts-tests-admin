@@ -1,5 +1,7 @@
 export default {
     base: '/',
-    history: '/history',
-    detail: '/detail',
+    validations: {
+        view: '/validations',
+        detail: '/validations/:validationId',
+    },
 };

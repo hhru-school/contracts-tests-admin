@@ -31,8 +31,8 @@ public class Service {
   @Column(name = "service_id")
   private Long id;
 
-  @Column(name = "created_date")
-  private OffsetDateTime createdDate;
+  @Column(name = "creation_date")
+  private OffsetDateTime creationDate;
 
   @Column(name = "service_name")
   private String serviceName;
@@ -71,12 +71,12 @@ public class Service {
     this.id = id;
   }
 
-  public OffsetDateTime getCreatedDate() {
-    return createdDate;
+  public OffsetDateTime getCreationDate() {
+    return creationDate;
   }
 
-  public void setCreatedDate(OffsetDateTime createdDate) {
-    this.createdDate = createdDate;
+  public void setCreationDate(OffsetDateTime creationDate) {
+    this.creationDate = creationDate;
   }
 
   public String getServiceName() {
@@ -90,7 +90,6 @@ public class Service {
   public String getStandName() {
     return standName;
   }
-
   public void setStandName(String standName) {
     this.standName = standName;
   }
