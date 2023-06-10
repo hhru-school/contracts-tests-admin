@@ -83,7 +83,7 @@
             <systemPath>${pom.basedir}/lib/validation-1.0.14-SNAPSHOT.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>ru.hh</groupId>
+            <groupId>ru.hh.contract-tests</groupId>
             <artifactId>contract-tests-jclient</artifactId>
             <version>1.0.6-SNAPSHOT</version>
             <scope>system</scope>
@@ -92,7 +92,7 @@
         <dependency>
             <groupId>com.atlassian.oai</groupId>
             <artifactId>swagger-request-validator-core</artifactId>
-            <version>2.35.1</version>
+            <version>2.34.0</version>
         </dependency>
     </dependencies>
 
