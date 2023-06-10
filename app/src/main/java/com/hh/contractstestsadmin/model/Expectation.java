@@ -1,6 +1,5 @@
 package com.hh.contractstestsadmin.model;
 
-import com.hh.contractstestsadmin.dto.api.EntryDto;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Tuple;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -55,11 +53,11 @@ public class Expectation {
 
   @Type(type = "jsonb")
   @Column(name = "request_headers", columnDefinition = "jsonb")
-  private List<EntryDto> requestHeaders = new ArrayList<>();
+  private List<Entry> requestHeaders = new ArrayList<>();
 
   @Type(type = "jsonb")
   @Column(name = "query_params", columnDefinition = "jsonb")
-  private List<EntryDto> queryParams = new ArrayList<>();
+  private List<Entry> queryParams = new ArrayList<>();
 
   @Column(name = "request_body")
   private String requestBody;
@@ -69,7 +67,7 @@ public class Expectation {
 
   @Type(type = "jsonb")
   @Column(name = "response_headers", columnDefinition = "jsonb")
-  private List<EntryDto> responseHeaders = new ArrayList<>();
+  private List<Entry> responseHeaders = new ArrayList<>();
 
   @Column(name = "response_body")
   private String responseBody;
@@ -109,19 +107,19 @@ public class Expectation {
     this.requestPath = requestPath;
   }
 
-  public List<EntryDto> getRequestHeaders() {
+  public List<Entry> getRequestHeaders() {
     return requestHeaders;
   }
 
-  public void setRequestHeaders(List<EntryDto> requestHeaders) {
+  public void setRequestHeaders(List<Entry> requestHeaders) {
     this.requestHeaders = requestHeaders;
   }
 
-  public List<EntryDto> getQueryParams() {
+  public List<Entry> getQueryParams() {
     return queryParams;
   }
 
-  public void setQueryParams(List<EntryDto> queryParams) {
+  public void setQueryParams(List<Entry> queryParams) {
     this.queryParams = queryParams;
   }
 
@@ -141,11 +139,11 @@ public class Expectation {
     this.responseStatus = responseStatus;
   }
 
-  public List<EntryDto> getResponseHeaders() {
+  public List<Entry> getResponseHeaders() {
     return responseHeaders;
   }
 
-  public void setResponseHeaders(List<EntryDto> responseHeaders) {
+  public void setResponseHeaders(List<Entry> responseHeaders) {
     this.responseHeaders = responseHeaders;
   }
 

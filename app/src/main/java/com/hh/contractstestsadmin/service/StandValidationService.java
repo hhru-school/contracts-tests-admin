@@ -1,6 +1,5 @@
 package com.hh.contractstestsadmin.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
@@ -53,7 +52,10 @@ public class StandValidationService {
     return validationService.getServiceRelation(validationId, standName);
   }
 
-  public List<ExpectationDto> getExpectations(String standName, Long validationId, Long producerId, Long consumerId) throws IOException {
+  public List<ExpectationDto> getExpectations(String standName, Long validationId, Long producerId, Long consumerId) throws StandsDaoException {
+    if (!standExists(standName)) {
+      throw new StandNotFoundException("not found stand with name: " + standName);
+    }
     return validationService.getExpectations(standName, validationId, producerId, consumerId);
   }
 

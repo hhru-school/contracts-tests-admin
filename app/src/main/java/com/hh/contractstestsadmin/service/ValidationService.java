@@ -1,13 +1,16 @@
 package com.hh.contractstestsadmin.service;
 
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
+import com.hh.contractstestsadmin.dao.ServiceDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dao.ValidationInfoDao;
 import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
+import com.hh.contractstestsadmin.exception.ServiceNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
+import com.hh.contractstestsadmin.model.Service;
 import com.hh.contractstestsadmin.model.ServiceRelation;
 import com.hh.contractstestsadmin.model.Validation;
 import com.hh.contractstestsadmin.service.mapper.ExpectationMapper;
@@ -22,16 +25,18 @@ public class ValidationService {
 
   private final ValidationDao validationDao;
   private final ValidationInfoDao validationInfoDao;
+  private final ServiceDao serviceDao;
 
   private final ReleaseVersionDao releaseVersionDao;
   private final String minioReleaseName;
 
   public ValidationService(ValidationDao validationDao, ReleaseVersionDao releaseVersionDao, ValidationInfoDao validationInfoDao,
-      String minioReleaseName) {
+      String minioReleaseName, ServiceDao serviceDao) {
     this.validationDao = validationDao;
     this.releaseVersionDao = releaseVersionDao;
     this.validationInfoDao = validationInfoDao;
     this.minioReleaseName = minioReleaseName;
+    this.serviceDao = serviceDao;
   }
 
   @Transactional
@@ -62,6 +67,22 @@ public class ValidationService {
 
   @Transactional
   public List<ExpectationDto> getExpectations(String standName, Long validationId, Long producerId, Long consumerId) {
+    Optional<Validation> validationFound = validationDao.getValidation(validationId, standName);
+    if (validationFound.isEmpty()) {
+      throw new ValidationHistoryNotFoundException("not found validation with stand name: " + standName +
+          " and validation with id: " + validationId);
+    }
+
+    Optional<Service> producer = serviceDao.getService(producerId);
+    if (producer.isEmpty()) {
+      throw new ServiceNotFoundException("not found producer with id: " + producerId);
+    }
+
+    Optional<Service> consumer = serviceDao.getService(consumerId);
+    if (consumer.isEmpty()) {
+      throw new ServiceNotFoundException("not found consumer with id: " + consumerId);
+    }
+
     return validationInfoDao.getExpectations(standName, validationId, consumerId, producerId).stream()
         .map(ExpectationMapper::mapFromEntity)
         .toList();
