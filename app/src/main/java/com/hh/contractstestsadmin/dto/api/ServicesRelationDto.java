@@ -10,7 +10,7 @@ public class ServicesRelationDto {
 
   private Long errorCount;
 
-  public ServiceDto getProducer() {
+  public ProducerDto getProducer() {
     return producer;
   }
 
