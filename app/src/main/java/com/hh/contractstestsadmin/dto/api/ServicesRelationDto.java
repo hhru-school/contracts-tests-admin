@@ -2,27 +2,27 @@ package com.hh.contractstestsadmin.dto.api;
 
 public class ServicesRelationDto {
 
-  private ServiceDto producer;
+  private ProducerDto producer;
 
-  private ServiceDto consumer;
+  private ConsumerDto consumer;
 
   private Long failedRequestPathCount;
 
   private Long errorCount;
 
-  public ServiceDto getProducer() {
+  public ProducerDto getProducer() {
     return producer;
   }
 
-  public void setProducer(ServiceDto producer) {
+  public void setProducer(ProducerDto producer) {
     this.producer = producer;
   }
 
-  public ServiceDto getConsumer() {
+  public ConsumerDto getConsumer() {
     return consumer;
   }
 
-  public void setConsumer(ServiceDto consumer) {
+  public void setConsumer(ConsumerDto consumer) {
     this.consumer = consumer;
   }
 

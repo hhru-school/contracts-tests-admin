@@ -7,15 +7,15 @@ import com.hh.contractstestsadmin.model.Validation;
 import java.util.List;
 
 public class ValidationWithRelationsMapper {
-  public static ValidationWithRelationsDto map(Validation validation, List<ServiceRelation> serviceRelations) {
-    ValidationWithRelationsDto validationMetaInfoDto = new ValidationWithRelationsDto(ValidationMapper.map(validation));
+  public static ValidationWithRelationsDto map(Validation validation, List<ServiceRelation> serviceRelations, String minioReleaseName) {
+    ValidationWithRelationsDto validationWithRelationsDto = new ValidationWithRelationsDto(ValidationMapper.map(validation));
     if (serviceRelations == null) {
-      return validationMetaInfoDto;
+      return validationWithRelationsDto;
     }
     List<ServicesRelationDto> servicesRelationDtos = serviceRelations.stream()
-        .map(ServiceRelationMapper::map)
+        .map(s -> ServiceRelationMapper.map(s, minioReleaseName))
         .toList();
-    validationMetaInfoDto.setServicesRelations(servicesRelationDtos);
-    return validationMetaInfoDto;
+    validationWithRelationsDto.setServicesRelations(servicesRelationDtos);
+    return validationWithRelationsDto;
   }
 }
