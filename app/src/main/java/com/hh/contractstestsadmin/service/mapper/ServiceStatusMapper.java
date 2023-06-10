@@ -1,4 +1,4 @@
-package com.hh.contractstestsadmin.service;
+package com.hh.contractstestsadmin.service.mapper;
 
 import com.hh.contractstestsadmin.dto.api.ServiceStatusDto;
 import com.hh.contractstestsadmin.model.artefacts.Service;

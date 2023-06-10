@@ -53,12 +53,8 @@ public class StandValidationService {
     Validation validation = validationService.createValidation(standName);
   }
 
-  public ValidationWithRelationsDto getValidationWithRelations(String standName, Long validationId) throws IOException {
-    ClassLoader classLoader = getClass().getClassLoader();
-    InputStream inputStream = classLoader.getResourceAsStream("test-data/validation-with-relations-example.json");
-    ValidationWithRelationsDto validationWithRelationsDto = objectMapper.readValue(inputStream, ValidationWithRelationsDto.class);
-    validationWithRelationsDto.setId(validationId);
-    return validationWithRelationsDto;
+  public ValidationWithRelationsDto getValidationWithRelations(String standName, Long validationId) {
+    return validationService.getServiceRelation(validationId, standName);
   }
 
   public List<ExpectationDto> getExpectations(String standName, Long validationId, Long producerId, Long consumerId) throws IOException {

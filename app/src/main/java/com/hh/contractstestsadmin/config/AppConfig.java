@@ -102,8 +102,9 @@ public class AppConfig {
   }
 
   @Bean
-  public ValidationService validationService(ValidationDao validationDao, ReleaseVersionDao releaseVersionDao) {
-    return new ValidationService(validationDao, releaseVersionDao);
+  public ValidationService validationService(ValidationDao validationDao, ReleaseVersionDao releaseVersionDao,
+      ValidationInfoDao validationInfoDao) {
+    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, minioReleaseName);
   }
 
   @Bean
