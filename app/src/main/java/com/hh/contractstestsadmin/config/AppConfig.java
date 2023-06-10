@@ -29,6 +29,8 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import ru.hh.contract.validator.validation.OpenApiInteractionValidatorFactory;
+import ru.hh.contract.validator.validation.ValidationContextProvider;
 
 @Configuration
 @PropertySource("classpath:hibernate.properties")
@@ -113,8 +115,9 @@ public class AppConfig {
   }
 
   @Bean
-  public ValidatorService validatorService(ObjectMapper objectMapper) {
-    return new ValidatorService(objectMapper);
+  public ValidatorService validatorService(ObjectMapper objectMapper, ValidationContextProvider validationContextProvider,
+      OpenApiInteractionValidatorFactory openApiInteractionValidatorFactory) {
+    return new ValidatorService(objectMapper, validationContextProvider, openApiInteractionValidatorFactory);
   }
 
   @Bean
@@ -207,6 +210,16 @@ public class AppConfig {
     HibernateTransactionManager transactionManager = new HibernateTransactionManager();
     transactionManager.setSessionFactory(sessionFactoryBean.getObject());
     return transactionManager;
+  }
+
+  @Bean
+  public ValidationContextProvider validationContextProvider() {
+    return new ValidationContextProvider();
+  }
+
+  @Bean
+  public OpenApiInteractionValidatorFactory openApiInteractionValidatorFactory(ValidationContextProvider validationContextProvider) {
+    return new OpenApiInteractionValidatorFactory(validationContextProvider);
   }
 
 }

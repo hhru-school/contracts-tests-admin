@@ -68,6 +68,34 @@
             <groupId>io.swagger</groupId>
             <artifactId>swagger-jersey2-jaxrs</artifactId>
         </dependency>
+        <dependency>
+            <!--groupId>ru.hh.contract.validator</groupId-->
+            <groupId>ru.hh</groupId>
+            <artifactId>contract-validator-service</artifactId>
+            <scope>system</scope>
+            <version>1.0.14-SNAPSHOT</version>
+            <systemPath>${project.basedir}/lib/contract-validator-service-1.0.14-SNAPSHOT.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ru.hh.contract.validator</groupId>
+            <!--groupId>ru.hh</groupId-->
+            <artifactId>validation</artifactId>
+            <scope>system</scope>
+            <version>validation-1.0.14-SNAPSHOT</version>
+            <systemPath>${project.basedir}/lib/validation-1.0.14-SNAPSHOT.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ru.hh.contract-tests</groupId>
+            <!--groupId>ru.hh</groupId-->
+            <artifactId>contract-tests-jclient</artifactId>
+            <scope>system</scope>
+            <version>1.0.6-SNAPSHOT</version>
+            <systemPath>${project.basedir}/lib/contract-tests-jclient-1.0.6-SNAPSHOT.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.oai</groupId>
+            <artifactId>swagger-request-validator-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
