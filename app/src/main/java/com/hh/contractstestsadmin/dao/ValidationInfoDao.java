@@ -27,19 +27,23 @@ public class ValidationInfoDao {
             .getResultList();
     }
 
-    public List<Expectation> getExpectations(Long validationId,
-                                             Long consumerId, Long producerId) {
+    public List<Expectation> getExpectations(
+        String standName, Long validationId,
+        Long consumerId, Long producerId
+    ) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery(
-                        "select e FROM Expectation e" +
-                                " LEFT JOIN FETCH e.contractTestErrors ctr" +
-                                " LEFT JOIN FETCH ctr.errorType et" +
-                                " WHERE e.validation.id = :validationId" +
-                                " AND e.producer.id =:producerId AND e.consumer.id =:consumerId", Expectation.class)
-                .setParameter("validationId", validationId)
-                .setParameter("consumerId", consumerId)
-                .setParameter("producerId", producerId)
-                .getResultList();
+                "select e FROM Expectation e " +
+                    " LEFT JOIN FETCH e.contractTestErrors ctr " +
+                    " LEFT JOIN FETCH ctr.errorType et " +
+                    " WHERE e.validation.id = :validationId " +
+                    " AND e.producer.id =:producerId AND e.validation.standName = :standName " +
+                    " AND e.consumer.id =:consumerId", Expectation.class)
+            .setParameter("validationId", validationId)
+            .setParameter("consumerId", consumerId)
+            .setParameter("producerId", producerId)
+            .setParameter("standName", standName)
+            .getResultList();
     }
 
     public void saveErrorType(ErrorType errorType) {
@@ -52,7 +56,7 @@ public class ValidationInfoDao {
         ErrorType errorTypeForUpdate = session.get(ErrorType.class, errorType.getId());
         if (errorTypeForUpdate != null) {
             errorTypeForUpdate.setErrorKey(errorType.getErrorKey());
-            errorType.setComments(errorType.getComments());
+            errorType.setComment(errorType.getComment());
             session.update(errorType);
         }
     }

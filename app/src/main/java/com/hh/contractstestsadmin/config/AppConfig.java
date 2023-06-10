@@ -102,14 +102,18 @@ public class AppConfig {
   }
 
   @Bean
-  public ValidationService validationService(ValidationDao validationDao, ReleaseVersionDao releaseVersionDao,
-      ValidationInfoDao validationInfoDao) {
-    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, minioReleaseName);
+  public ValidationService validationService(
+      ValidationDao validationDao, ReleaseVersionDao releaseVersionDao,
+      ValidationInfoDao validationInfoDao, ServiceDao serviceDao
+  ) {
+    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, minioReleaseName,
+        serviceDao
+    );
   }
 
   @Bean
-  public StandValidationService standValidationService(StandsDao standsDao, ValidationService validationService, ObjectMapper objectMapper) {
-    return new StandValidationService(standsDao, validationService, objectMapper);
+  public StandValidationService standValidationService(StandsDao standsDao, ValidationService validationService) {
+    return new StandValidationService(standsDao, validationService);
   }
 
   @Bean

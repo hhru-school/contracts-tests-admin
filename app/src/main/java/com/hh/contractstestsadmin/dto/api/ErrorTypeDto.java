@@ -6,6 +6,14 @@ public class ErrorTypeDto {
 
   private String comment;
 
+  public ErrorTypeDto(String key, String comment) {
+    this.key = key;
+    this.comment = comment;
+  }
+
+  public ErrorTypeDto() {
+  }
+
   public String getKey() {
     return key;
   }
