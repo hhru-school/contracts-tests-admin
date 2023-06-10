@@ -122,7 +122,7 @@ public class AppConfig {
       ServiceDao serviceDao,
       ErrorTypeDao errorTypeDao
   ) {
-    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, serviceDao, errorTypeDao);
+    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, serviceDao, errorTypeDao, minioReleaseName);
   }
 
   @Bean

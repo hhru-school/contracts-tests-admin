@@ -1,6 +1,8 @@
 package com.hh.contractstestsadmin.service;
 
+import com.hh.contractstestsadmin.dao.ErrorTypeDao;
 import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
+import com.hh.contractstestsadmin.dao.ServiceDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dao.ValidationInfoDao;
 import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
@@ -8,35 +10,31 @@ import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.model.ServiceRelation;
-import com.hh.contractstestsadmin.dto.validator.MessageDto;
 import com.hh.contractstestsadmin.dto.validator.ValidationDto;
 import com.hh.contractstestsadmin.dto.validator.WrongExpectationDto;
 import com.hh.contractstestsadmin.exception.ValidationResultRecordException;
-import com.hh.contractstestsadmin.model.ContractTestError;
 import com.hh.contractstestsadmin.model.ErrorType;
 import com.hh.contractstestsadmin.model.Expectation;
 import com.hh.contractstestsadmin.model.Validation;
 import com.hh.contractstestsadmin.model.artefacts.Service;
-import com.hh.contractstestsadmin.service.util.ErrorTypesContextManager;
-import com.hh.contractstestsadmin.service.util.ServicesContextManager;
 import com.hh.contractstestsadmin.service.mapper.ValidationWithRelationsMapper;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.Nullable;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 
 public class ValidationService {
 
   private final ValidationDao validationDao;
+
   private final ValidationInfoDao validationInfoDao;
 
   private final ReleaseVersionDao releaseVersionDao;
-  private final String minioReleaseName;
 
-  private final ValidationInfoDao validationInfoDao;
+  private final String minioReleaseName;
 
   private final ServiceDao serviceDao;
 
@@ -45,13 +43,13 @@ public class ValidationService {
   public ValidationService(
       ValidationDao validationDao, ReleaseVersionDao releaseVersionDao, ValidationInfoDao validationInfoDao,
       ServiceDao serviceDao,
-      ErrorTypeDao errorTypeDao
+      ErrorTypeDao errorTypeDao,
+      String minioReleaseName
   ) {
     this.validationDao = validationDao;
     this.releaseVersionDao = releaseVersionDao;
     this.validationInfoDao = validationInfoDao;
     this.minioReleaseName = minioReleaseName;
-    this.validationInfoDao = validationInfoDao;
     this.serviceDao = serviceDao;
     this.errorTypeDao = errorTypeDao;
   }
@@ -75,6 +73,7 @@ public class ValidationService {
     validationDao.save(validation);
     return validation;
   }
+
   @Transactional
   public ValidationWithRelationsDto getServiceRelation(Long validationId, String standName) {
     Optional<Validation> validationFound = validationDao.getValidation(validationId, standName);
@@ -90,8 +89,8 @@ public class ValidationService {
         .orElseThrow(() -> new ValidationResultRecordException(
             "Impossible to record validation result because validation was not found by id='" + validationId + "'")
         );
-    validation.setExecuteDate(OffsetDateTime.now());
-    validation.setValidatorErrors(validationResult.getValidatorReport());
+    validation.setExecutionDate(OffsetDateTime.now());
+    validation.setReport(validationResult.getValidatorReport());
     int errorCount = 0;
     WrongExpectationsMapper wrongExpectationsMapper = new WrongExpectationsMapper(validation.getStandName());
     for (Expectation expectation : wrongExpectationsMapper.mapToExpectationEntities(validationResult.getWrongExpectations())) {
@@ -110,7 +109,7 @@ public class ValidationService {
 
     private final String standName;
 
-    public WrongExpectationsMapper(String standName){
+    public WrongExpectationsMapper(String standName) {
       this.standName = standName;
     }
 
@@ -124,8 +123,18 @@ public class ValidationService {
 
     private class ErrorTypesContextManager {
 
+      private final Map<String, ErrorType> errorTypesContext = new HashMap<>();
+
       public ErrorType getOrCreateErrorType(String errorKey) {
-        return null;
+        if (!errorTypesContext.containsKey(errorKey)) {
+          Optional<ErrorType> errorTypeFromDb = errorTypeDao.getErrorTypeByKey(errorKey);
+          if (errorTypeFromDb.isPresent()) {
+            errorTypesContext.put(errorKey, errorTypeFromDb.get());
+          } else {
+            errorTypesContext.put(errorKey, new ErrorType(errorKey));
+          }
+        }
+        return errorTypesContext.get(errorKey);
       }
 
     }
