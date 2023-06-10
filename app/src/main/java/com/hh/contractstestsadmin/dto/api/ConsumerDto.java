@@ -4,6 +4,9 @@ public class ConsumerDto extends ServiceDto {
 
   private String expectationLink;
 
+  public ConsumerDto() {
+  }
+
   public String getExpectationLink() {
     return expectationLink;
   }
@@ -13,3 +16,4 @@ public class ConsumerDto extends ServiceDto {
   }
 
 }
+

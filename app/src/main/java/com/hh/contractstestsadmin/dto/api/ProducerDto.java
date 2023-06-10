@@ -4,6 +4,9 @@ public class ProducerDto extends ServiceDto {
 
   private String schemaLink;
 
+  public ProducerDto() {
+  }
+
   public String getSchemaLink() {
     return schemaLink;
   }
