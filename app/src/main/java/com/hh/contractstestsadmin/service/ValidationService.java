@@ -9,17 +9,18 @@ import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
+import com.hh.contractstestsadmin.model.Service;
 import com.hh.contractstestsadmin.model.ServiceRelation;
 import com.hh.contractstestsadmin.dto.validator.ValidationDto;
 import com.hh.contractstestsadmin.dto.validator.WrongExpectationDto;
 import com.hh.contractstestsadmin.exception.ValidationResultRecordException;
 import com.hh.contractstestsadmin.model.ErrorType;
 import com.hh.contractstestsadmin.model.Expectation;
+import com.hh.contractstestsadmin.model.ServiceType;
 import com.hh.contractstestsadmin.model.Validation;
-import com.hh.contractstestsadmin.model.artefacts.Service;
+import com.hh.contractstestsadmin.service.mapper.ValidationMapper;
 import com.hh.contractstestsadmin.service.mapper.ValidationWithRelationsMapper;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,7 +115,9 @@ public class ValidationService {
     }
 
     public List<Expectation> mapToExpectationEntities(List<WrongExpectationDto> wrongExpectations) {
-      return new ArrayList<>();
+      return wrongExpectations.stream()
+          .map(this::mapToExpectationEntity)
+          .toList();
     }
 
     private Expectation mapToExpectationEntity(WrongExpectationDto wrongExpectation) {
@@ -141,10 +144,24 @@ public class ValidationService {
 
     private class ServicesContextManager {
 
+      private final Map<ServiceSearchToken, ErrorType> errorTypesContext = new HashMap<>();
+
       public Service getOrCreateService(String serviceName, String standName, String version) {
         return null;
       }
 
+      private Service createServiceFromToken(ServiceSearchToken token){
+        Service service = new Service();
+        service.setServiceName(token.serviceName());
+        service.setStandName(token.standName());
+        service.setTag(token.version());
+        service.setServiceType(ServiceType.NOT_DEFINED);
+        return service;
+      }
+
+      private record ServiceSearchToken(String serviceName, String standName, String version) {
+
+      }
     }
   }
 
