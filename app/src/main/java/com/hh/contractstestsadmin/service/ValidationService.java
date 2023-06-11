@@ -93,6 +93,29 @@ public class ValidationService {
   }
 
   @Transactional
+  public List<ExpectationDto> getExpectations(String standName, Long validationId, Long producerId, Long consumerId) {
+    Optional<Validation> validationFound = validationDao.getValidation(validationId, standName);
+    if (validationFound.isEmpty()) {
+      throw new ValidationHistoryNotFoundException("not found validation with stand name: " + standName +
+          " and validation with id: " + validationId);
+    }
+
+    Optional<Service> producer = serviceDao.getService(producerId);
+    if (producer.isEmpty()) {
+      throw new ServiceNotFoundException("not found producer with id: " + producerId);
+    }
+
+    Optional<Service> consumer = serviceDao.getService(consumerId);
+    if (consumer.isEmpty()) {
+      throw new ServiceNotFoundException("not found consumer with id: " + consumerId);
+    }
+
+    return validationInfoDao.getExpectations(standName, validationId, consumerId, producerId).stream()
+        .map(ExpectationMapper::mapFromEntity)
+        .toList();
+  }
+
+  @Transactional
   public void recordValidationResult(Long validationId, ValidationDto validationResult) throws ValidationResultRecordException {
     Validation validation = validationDao
         .getValidationById(validationId)

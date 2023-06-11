@@ -1,6 +1,7 @@
 package com.hh.contractstestsadmin.model;
 
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -21,8 +22,10 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 @Entity
-@TypeDefs(
-    @TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
+@TypeDefs({
+    @TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class),
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+}
 )
 @Table(name = "expectation")
 public class Expectation {
@@ -48,11 +51,13 @@ public class Expectation {
   @Column(name = "request_path")
   private String requestPath;
 
-  @Column(name = "request_headers")
-  private String requestHeaders;
+  @Type(type = "jsonb")
+  @Column(name = "request_headers", columnDefinition = "jsonb")
+  private List<Entry> requestHeaders = new ArrayList<>();
 
-  @Column(name = "query_params")
-  private String queryParams;
+  @Type(type = "jsonb")
+  @Column(name = "query_params", columnDefinition = "jsonb")
+  private List<Entry> queryParams = new ArrayList<>();
 
   @Column(name = "request_body")
   private String requestBody;
@@ -60,8 +65,9 @@ public class Expectation {
   @Column(name = "response_status")
   private int responseStatus;
 
-  @Column(name = "response_headers")
-  private String responseHeaders;
+  @Type(type = "jsonb")
+  @Column(name = "response_headers", columnDefinition = "jsonb")
+  private List<Entry> responseHeaders = new ArrayList<>();
 
   @Column(name = "response_body")
   private String responseBody;
@@ -116,19 +122,19 @@ public class Expectation {
     this.requestPath = requestPath;
   }
 
-  public String getRequestHeaders() {
+  public List<Entry> getRequestHeaders() {
     return requestHeaders;
   }
 
-  public void setRequestHeaders(String requestHeaders) {
+  public void setRequestHeaders(List<Entry> requestHeaders) {
     this.requestHeaders = requestHeaders;
   }
 
-  public String getQueryParams() {
+  public List<Entry> getQueryParams() {
     return queryParams;
   }
 
-  public void setQueryParams(String queryParams) {
+  public void setQueryParams(List<Entry> queryParams) {
     this.queryParams = queryParams;
   }
 
@@ -148,11 +154,11 @@ public class Expectation {
     this.responseStatus = responseStatus;
   }
 
-  public String getResponseHeaders() {
+  public List<Entry> getResponseHeaders() {
     return responseHeaders;
   }
 
-  public void setResponseHeaders(String responseHeaders) {
+  public void setResponseHeaders(List<Entry> responseHeaders) {
     this.responseHeaders = responseHeaders;
   }
 

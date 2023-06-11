@@ -1,16 +1,20 @@
-package com.hh.contractstestsadmin.dto.api;
-public class EntryDto {
+package com.hh.contractstestsadmin.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Entry implements Serializable {
   private String key;
 
   private String value;
 
-  public EntryDto() {
-  }
-
-  public EntryDto(String key, String value) {
+  public Entry(String key, String value) {
     this.key = key;
     this.value = value;
+  }
+
+  public Entry() {
   }
 
   public String getKey() {

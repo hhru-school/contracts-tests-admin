@@ -12,9 +12,9 @@ public class ServiceDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public Service getService(Long serviceId) {
+    public Optional<Service> getService(Long serviceId) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Service.class, serviceId);
+        return Optional.ofNullable(session.get(Service.class, serviceId));
     }
 
     public Optional<Service> findServiceByFields(String serviceName, String standName, String tag){

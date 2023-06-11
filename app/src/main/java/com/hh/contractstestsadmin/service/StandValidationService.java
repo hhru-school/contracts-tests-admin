@@ -87,11 +87,11 @@ public class StandValidationService {
     return validationService.getServiceRelation(validationId, standName);
   }
 
-  public List<ExpectationDto> getExpectations(String standName, Long validationId, Long producerId, Long consumerId) throws IOException {
-    ClassLoader classLoader = getClass().getClassLoader();
-    InputStream inputStream = classLoader.getResourceAsStream("test-data/expectations-example.json");
-    return objectMapper.readValue(inputStream, new TypeReference<>() {
-    });
+  public List<ExpectationDto> getExpectations(String standName, Long validationId, Long producerId, Long consumerId) throws StandsDaoException {
+    if (!standExists(standName)) {
+      throw new StandNotFoundException("not found stand with name: " + standName);
+    }
+    return validationService.getExpectations(standName, validationId, producerId, consumerId);
   }
 
   public String getValidatorReport(String standName, Long validationId) {
