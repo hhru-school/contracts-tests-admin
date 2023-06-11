@@ -77,6 +77,16 @@ public class Expectation {
   public Expectation() {
   }
 
+  public void linkWithConsumer(Service consumer){
+    consumer.getExpectationsConsumer().add(this);
+    this.setConsumer(consumer);
+  }
+
+  public void linkWithProducer(Service producer){
+    producer.getExpectationsProducer().add(this);
+    this.setProducer(producer);
+  }
+
   public void addContractTestError(ContractTestError contractTestError){
     contractTestErrors.add(contractTestError);
     contractTestError.setExpectation(this);

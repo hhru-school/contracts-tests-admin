@@ -11,6 +11,7 @@ import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ServiceDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dao.ValidationInfoDao;
+import com.hh.contractstestsadmin.service.builder.ValidationBuilder;
 import com.hh.contractstestsadmin.service.ValidationService;
 import com.hh.contractstestsadmin.service.ValidatorService;
 import io.minio.MinioClient;
@@ -120,9 +121,25 @@ public class AppConfig {
       ReleaseVersionDao releaseVersionDao,
       ValidationInfoDao validationInfoDao,
       ServiceDao serviceDao,
-      ErrorTypeDao errorTypeDao
+      ErrorTypeDao errorTypeDao,
+      StandsDao standsDao,
+      ValidationBuilder validationBuilder
   ) {
-    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, serviceDao, errorTypeDao, minioReleaseName);
+    return new ValidationService(
+        validationDao,
+        releaseVersionDao,
+        validationInfoDao,
+        serviceDao,
+        errorTypeDao,
+        minioReleaseName,
+        standsDao,
+        validationBuilder
+    );
+  }
+
+  @Bean
+  public ValidationBuilder validationBuilder(StandsDao standsDao){
+    return new ValidationBuilder(standsDao, minioReleaseName);
   }
 
   @Bean

@@ -48,11 +48,6 @@ public class Service {
   @Column(name = "tag")
   private String tag;
 
-  @Column(name = "expectation_link")
-  private String expectationLink;
-  @Column(name = "schema_link")
-  private String schemaLink;
-
   @OneToMany(mappedBy = "consumer", orphanRemoval = true, cascade = CascadeType.ALL)
   private List<Expectation> expectationsConsumer = new ArrayList<>();
 
@@ -108,22 +103,6 @@ public class Service {
 
   public void setTag(String tag) {
     this.tag = tag;
-  }
-
-  public String getExpectationLink() {
-    return expectationLink;
-  }
-
-  public void setExpectationLink(String expectationLink) {
-    this.expectationLink = expectationLink;
-  }
-
-  public String getSchemaLink() {
-    return schemaLink;
-  }
-
-  public void setSchemaLink(String schemaLink) {
-    this.schemaLink = schemaLink;
   }
 
   public List<Expectation> getExpectationsConsumer() {

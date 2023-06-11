@@ -5,6 +5,7 @@ import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ServiceDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dao.ValidationInfoDao;
+import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
@@ -18,8 +19,8 @@ import com.hh.contractstestsadmin.model.ErrorType;
 import com.hh.contractstestsadmin.model.Expectation;
 import com.hh.contractstestsadmin.model.ServiceType;
 import com.hh.contractstestsadmin.model.Validation;
+import com.hh.contractstestsadmin.service.builder.ValidationBuilder;
 import com.hh.contractstestsadmin.service.mapper.ValidationMapper;
-import com.hh.contractstestsadmin.service.mapper.ValidationWithRelationsMapper;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -41,11 +42,17 @@ public class ValidationService {
 
   private final ErrorTypeDao errorTypeDao;
 
+  private final StandsDao standsDao;
+
+  private final ValidationBuilder validationBuilder;
+
   public ValidationService(
       ValidationDao validationDao, ReleaseVersionDao releaseVersionDao, ValidationInfoDao validationInfoDao,
       ServiceDao serviceDao,
       ErrorTypeDao errorTypeDao,
-      String minioReleaseName
+      String minioReleaseName,
+      StandsDao standsDao,
+      ValidationBuilder validationBuilder
   ) {
     this.validationDao = validationDao;
     this.releaseVersionDao = releaseVersionDao;
@@ -53,6 +60,8 @@ public class ValidationService {
     this.minioReleaseName = minioReleaseName;
     this.serviceDao = serviceDao;
     this.errorTypeDao = errorTypeDao;
+    this.standsDao = standsDao;
+    this.validationBuilder = validationBuilder;
   }
 
   @Transactional
@@ -80,7 +89,7 @@ public class ValidationService {
     Optional<Validation> validationFound = validationDao.getValidation(validationId, standName);
     Validation validation = validationFound.orElseThrow(() -> new ValidationHistoryNotFoundException("not found validation with id " + validationId));
     List<ServiceRelation> serviceRelations = validationInfoDao.getServiceRelations(validationId);
-    return ValidationWithRelationsMapper.map(validation, serviceRelations, minioReleaseName);
+    return validationBuilder.buildValidationWithRelationsDto(validation, serviceRelations);
   }
 
   @Transactional
@@ -121,6 +130,23 @@ public class ValidationService {
     }
 
     private Expectation mapToExpectationEntity(WrongExpectationDto wrongExpectation) {
+      Expectation expectation = new Expectation();
+      expectation.linkWithConsumer(
+          servicesContextManager.getOrCreateService(
+              wrongExpectation.getConsumerName(),
+              wrongExpectation.getConsumerIsRelease() ? minioReleaseName : standName,
+              wrongExpectation.getConsumerVersion()
+          )
+      );
+      expectation.linkWithProducer(
+          servicesContextManager.getOrCreateService(
+              wrongExpectation.getProducerName(),
+              wrongExpectation.getProducerIsRelease() ? minioReleaseName : standName,
+              wrongExpectation.getProducerVersion()
+          )
+      );
+      expectation.setHttpMethod(wrongExpectation.getRequest().getMethod());
+      expectation.setRequestPath(wrongExpectation.getRequest().getPath());
       return null;
     }
 
@@ -130,7 +156,7 @@ public class ValidationService {
 
       public ErrorType getOrCreateErrorType(String errorKey) {
         if (!errorTypesContext.containsKey(errorKey)) {
-          Optional<ErrorType> errorTypeFromDb = errorTypeDao.getErrorTypeByKey(errorKey);
+          Optional<ErrorType> errorTypeFromDb = errorTypeDao.findErrorTypeByKey(errorKey);
           if (errorTypeFromDb.isPresent()) {
             errorTypesContext.put(errorKey, errorTypeFromDb.get());
           } else {
@@ -144,23 +170,32 @@ public class ValidationService {
 
     private class ServicesContextManager {
 
-      private final Map<ServiceSearchToken, ErrorType> errorTypesContext = new HashMap<>();
+      private final Map<ServiceSearchToken, Service> servicesContext = new HashMap<>();
 
       public Service getOrCreateService(String serviceName, String standName, String version) {
-        return null;
+        ServiceSearchToken serviceSearchToken = new ServiceSearchToken(serviceName, standName, version);
+        if (!servicesContext.containsKey(serviceSearchToken)) {
+          Optional<Service> serviceFromDb = serviceDao.findServiceByFields(serviceName, standName, version);
+          if (serviceFromDb.isPresent()) {
+            servicesContext.put(serviceSearchToken, serviceFromDb.get());
+          } else {
+            servicesContext.put(serviceSearchToken, createServiceFromToken(serviceSearchToken));
+          }
+        }
+        return servicesContext.get(serviceSearchToken);
       }
 
-      private Service createServiceFromToken(ServiceSearchToken token){
+      private Service createServiceFromToken(ServiceSearchToken token) {
         Service service = new Service();
         service.setServiceName(token.serviceName());
         service.setStandName(token.standName());
         service.setTag(token.version());
         service.setServiceType(ServiceType.NOT_DEFINED);
+        service.setCreationDate(OffsetDateTime.now());
         return service;
       }
 
       private record ServiceSearchToken(String serviceName, String standName, String version) {
-
       }
     }
   }

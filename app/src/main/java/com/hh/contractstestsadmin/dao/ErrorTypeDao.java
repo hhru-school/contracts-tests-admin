@@ -1,7 +1,6 @@
 package com.hh.contractstestsadmin.dao;
 
 import com.hh.contractstestsadmin.model.ErrorType;
-import com.hh.contractstestsadmin.model.ServiceRelation;
 import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,7 +18,7 @@ public class ErrorTypeDao {
     return session.get(ErrorType.class, errorTypeId);
   }
 
-  public Optional<ErrorType> getErrorTypeByKey(String errorKey) {
+  public Optional<ErrorType> findErrorTypeByKey(String errorKey) {
     Session session = sessionFactory.getCurrentSession();
     return session.createQuery(
         "SELECT errorType FROM ErrorType errorType" +
