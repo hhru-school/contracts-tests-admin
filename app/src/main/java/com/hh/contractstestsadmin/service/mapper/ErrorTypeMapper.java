@@ -8,7 +8,7 @@ public class ErrorTypeMapper {
 
   public static ErrorTypeDto mapFromEntity(ErrorType errorType) {
     Objects.requireNonNull(errorType);
-    return new ErrorTypeDto(errorType.getErrorKey(), errorType.getComments());
+    return new ErrorTypeDto(errorType.getErrorKey(), errorType.getComment());
   }
 
   public static ErrorType mapToEntity(ErrorTypeDto errorTypeDto) {
