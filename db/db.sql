@@ -32,9 +32,9 @@ CREATE TABLE IF NOT EXISTS service
 CREATE TABLE IF NOT EXISTS error_type
 (
     error_type_id BIGINT GENERATED ALWAYS AS IDENTITY not null,
-    error_key     varchar(2048) UNIQUE,
-    comment      varchar(4096),
-    version       bigint default 0,
+    error_key     VARCHAR(2048) UNIQUE,
+    comment       VARCHAR(4096),
+    version       INTEGER default 0,
     PRIMARY KEY (error_type_id)
 );
 
