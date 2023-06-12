@@ -74,11 +74,7 @@ public class StandValidationService {
     try {
       ValidationDto validationResult = validatorService.validate(standName);
       validationService.recordValidationResult(validationId, validationResult);
-    } catch (ValidatorException e) {
-      throw new RuntimeException(e);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    } catch (ValidationResultRecordException e) {
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }

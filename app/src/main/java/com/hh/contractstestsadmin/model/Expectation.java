@@ -3,7 +3,9 @@ package com.hh.contractstestsadmin.model;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,11 +37,11 @@ public class Expectation {
   @Column(name = "expectation_id")
   private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "consumer_id")
   private Service consumer;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "producer_id")
   private Service producer;
 
@@ -53,11 +55,11 @@ public class Expectation {
 
   @Type(type = "jsonb")
   @Column(name = "request_headers", columnDefinition = "jsonb")
-  private List<Entry> requestHeaders = new ArrayList<>();
+  private Map<String, List<String> > requestHeaders = new HashMap<>();
 
   @Type(type = "jsonb")
   @Column(name = "query_params", columnDefinition = "jsonb")
-  private List<Entry> queryParams = new ArrayList<>();
+  private Map<String, List<String> > queryParams = new HashMap<>();
 
   @Column(name = "request_body")
   private String requestBody;
@@ -67,7 +69,7 @@ public class Expectation {
 
   @Type(type = "jsonb")
   @Column(name = "response_headers", columnDefinition = "jsonb")
-  private List<Entry> responseHeaders = new ArrayList<>();
+  private Map<String, List<String> > responseHeaders = new HashMap<>();
 
   @Column(name = "response_body")
   private String responseBody;
@@ -122,19 +124,19 @@ public class Expectation {
     this.requestPath = requestPath;
   }
 
-  public List<Entry> getRequestHeaders() {
+  public Map<String, List<String> > getRequestHeaders() {
     return requestHeaders;
   }
 
-  public void setRequestHeaders(List<Entry> requestHeaders) {
+  public void setRequestHeaders(Map<String, List<String> > requestHeaders) {
     this.requestHeaders = requestHeaders;
   }
 
-  public List<Entry> getQueryParams() {
+  public Map<String, List<String> > getQueryParams() {
     return queryParams;
   }
 
-  public void setQueryParams(List<Entry> queryParams) {
+  public void setQueryParams(Map<String, List<String> > queryParams) {
     this.queryParams = queryParams;
   }
 
@@ -154,11 +156,11 @@ public class Expectation {
     this.responseStatus = responseStatus;
   }
 
-  public List<Entry> getResponseHeaders() {
+  public Map<String, List<String> > getResponseHeaders() {
     return responseHeaders;
   }
 
-  public void setResponseHeaders(List<Entry> responseHeaders) {
+  public void setResponseHeaders(Map<String, List<String> > responseHeaders) {
     this.responseHeaders = responseHeaders;
   }
 

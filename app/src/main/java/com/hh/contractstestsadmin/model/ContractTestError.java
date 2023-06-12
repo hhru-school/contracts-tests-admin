@@ -1,6 +1,7 @@
 package com.hh.contractstestsadmin.model;
 
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -28,7 +29,7 @@ public class ContractTestError {
   @Column(name = "error_id")
   private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "error_type_id")
   private ErrorType errorType;
   @Enumerated(EnumType.STRING)

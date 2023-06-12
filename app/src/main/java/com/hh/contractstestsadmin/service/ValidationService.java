@@ -10,8 +10,10 @@ import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
+import com.hh.contractstestsadmin.dto.validator.MessageDto;
 import com.hh.contractstestsadmin.exception.ServiceNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
+import com.hh.contractstestsadmin.model.ContractTestError;
 import com.hh.contractstestsadmin.model.Service;
 import com.hh.contractstestsadmin.model.ServiceRelation;
 import com.hh.contractstestsadmin.dto.validator.ValidationDto;
@@ -173,7 +175,24 @@ public class ValidationService {
       );
       expectation.setHttpMethod(wrongExpectation.getRequest().getMethod());
       expectation.setRequestPath(wrongExpectation.getRequest().getPath());
-      return null;
+      expectation.setRequestHeaders(wrongExpectation.getRequest().getHeaders());
+      expectation.setQueryParams(wrongExpectation.getRequest().getQueryParams());
+      expectation.setRequestBody(wrongExpectation.getRequest().getBody());
+      expectation.setResponseStatus(wrongExpectation.getResponse().getStatus());
+      expectation.setResponseHeaders(wrongExpectation.getResponse().getHeaders());
+      expectation.setResponseBody(wrongExpectation.getResponse().getBody());
+      for(MessageDto message: wrongExpectation.getMessages()){
+        expectation.addContractTestError(mapToContractTestError(message));
+      }
+      return expectation;
+    }
+
+    private ContractTestError mapToContractTestError(MessageDto message){
+      ContractTestError contractTestError = new ContractTestError();
+      contractTestError.setErrorType(errorTypesContextManager.getOrCreateErrorType(message.getKey()));
+      contractTestError.setErrorMessage(message.getMessage());
+      contractTestError.setLevel(message.getLevel());
+      return contractTestError;
     }
 
     private class ErrorTypesContextManager {

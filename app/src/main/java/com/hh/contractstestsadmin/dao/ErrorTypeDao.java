@@ -40,7 +40,7 @@ public class ErrorTypeDao {
     ErrorType errorTypeForUpdate = session.get(ErrorType.class, errorType.getId());
     if (errorTypeForUpdate != null) {
       errorTypeForUpdate.setErrorKey(errorType.getErrorKey());
-      errorTypeForUpdate.setComments(errorType.getComments());
+      errorTypeForUpdate.setComment(errorType.getComment());
       session.save(errorTypeForUpdate);
     }
   }

@@ -22,9 +22,9 @@ CREATE TABLE IF NOT EXISTS service
     creation_date    timestamptz                         not null,
     service_name     varchar(255)                        not null,
     stand_name       varchar(255)                        not null,
+    service_type     service_type,
     tag              varchar(30)                         not null,
-    PRIMARY KEY (service_id),
-    UNIQUE (service_name, stand_name, tag)
+    PRIMARY KEY (service_id)
 );
 
 CREATE TABLE IF NOT EXISTS error_type

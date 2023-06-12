@@ -2,6 +2,7 @@ package com.hh.contractstestsadmin.dto.api;
 
 import com.hh.contractstestsadmin.model.HttpMethod;
 import java.util.List;
+import java.util.Map;
 
 public class ExpectationDto {
 
@@ -11,9 +12,9 @@ public class ExpectationDto {
 
   private String requestPath;
 
-  private List<EntryDto> requestHeaders;
+  private Map<String, List<String> > requestHeaders;
 
-  private List<EntryDto> queryParams;
+  private Map<String, List<String> > queryParams;
 
   private String requestBody;
 
@@ -21,7 +22,7 @@ public class ExpectationDto {
 
   private Integer responseStatus;
 
-  private List<EntryDto> responseHeaders;
+  private Map<String, List<String> > responseHeaders;
 
   private String responseBody;
 
@@ -51,19 +52,19 @@ public class ExpectationDto {
     this.requestPath = requestPath;
   }
 
-  public List<EntryDto> getRequestHeaders() {
+  public Map<String, List<String> > getRequestHeaders() {
     return requestHeaders;
   }
 
-  public void setRequestHeaders(List<EntryDto> requestHeaders) {
+  public void setRequestHeaders(Map<String, List<String> > requestHeaders) {
     this.requestHeaders = requestHeaders;
   }
 
-  public List<EntryDto> getQueryParams() {
+  public Map<String, List<String> > getQueryParams() {
     return queryParams;
   }
 
-  public void setQueryParams(List<EntryDto> queryParams) {
+  public void setQueryParams(Map<String, List<String> > queryParams) {
     this.queryParams = queryParams;
   }
 
@@ -91,11 +92,11 @@ public class ExpectationDto {
     this.responseStatus = responseStatus;
   }
 
-  public List<EntryDto> getResponseHeaders() {
+  public Map<String, List<String> > getResponseHeaders() {
     return responseHeaders;
   }
 
-  public void setResponseHeaders(List<EntryDto> responseHeaders) {
+  public void setResponseHeaders(Map<String, List<String> > responseHeaders) {
     this.responseHeaders = responseHeaders;
   }
 
