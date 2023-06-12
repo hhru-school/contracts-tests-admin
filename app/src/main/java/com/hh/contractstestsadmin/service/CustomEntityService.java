@@ -35,6 +35,7 @@ public class CustomEntityService {
       }
 
       ErrorType errorType = ErrorTypeMapper.mapToEntity(errorTypeDto);
+      errorType.setVersion(0);
       errorType.setErrorKey(modifiedLengthIfNeed(errorType.getErrorKey(), 2048));
       errorType.setComment(modifiedLengthIfNeed(errorType.getComment(), 4096));
       errorTypeDao.saveErrorType(errorType);

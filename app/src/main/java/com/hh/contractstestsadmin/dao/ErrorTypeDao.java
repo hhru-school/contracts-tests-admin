@@ -19,7 +19,7 @@ public class ErrorTypeDao {
     Session session = sessionFactory.getCurrentSession();
     Optional<ErrorType> findErrorType = getErrorTypeByKey(errorType.getErrorKey(), LockModeType.PESSIMISTIC_WRITE);
     ErrorType errorTypeForUpdate =
-        findErrorType.orElseThrow(() -> new IllegalArgumentException("error key already exist with id " + errorType.getErrorKey()));
+        findErrorType.orElseThrow(() -> new IllegalArgumentException("not found error key with id " + errorType.getErrorKey()));
     int version = errorType.getVersion();
     if (errorType.getVersion() != errorTypeForUpdate.getVersion()) {
       throw new ConcurrentModificationException(" entity was modified from another session");
