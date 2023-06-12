@@ -5,6 +5,7 @@ import com.hh.contractstestsadmin.dto.api.ErrorTypeDto;
 import com.hh.contractstestsadmin.service.CustomEntityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Optional;
 import javax.inject.Inject;
@@ -38,12 +39,15 @@ public class CustomEntityResource {
       value = "create error dictionary",
       response = String.class,
       code = 201)
-  @Path("customentity")
+  @Path("error-types")
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   public Response create(@RequestBody List<ErrorTypeDto> errorTypeDtos) {
     if (CollectionUtils.isEmpty(errorTypeDtos)) {
       return Response.status(Response.Status.BAD_REQUEST).entity("entity can not be empty").build();
+    }
+    if (errorTypeDtos.size() > 100) {
+      return Response.status(Response.Status.BAD_REQUEST).entity("max size value for create entities is 100").build();
     }
     try {
       customEntityService.createErrorType(errorTypeDtos);
@@ -51,6 +55,9 @@ public class CustomEntityResource {
     } catch (IllegalArgumentException e) {
       LOG.error("illegal argument", e);
       return Response.status(Response.Status.BAD_GATEWAY).entity(new ErrorMessageDto(e.getMessage())).build();
+    } catch (ConcurrentModificationException e) {
+      LOG.error("concurrent modification ", e);
+      return Response.status(Response.Status.CONFLICT).entity(new ErrorMessageDto(e.getMessage())).build();
     } catch (Exception exception) {
       LOG.error("internal error", exception);
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
@@ -62,7 +69,7 @@ public class CustomEntityResource {
       response = String.class,
       code = 202
   )
-  @Path("customentity/{errorKey}")
+  @Path("error-types/{errorKey}")
   @DELETE
   @Produces(MediaType.APPLICATION_JSON)
   public Response delete(@PathParam("errorKey") String errorKey) {
@@ -82,7 +89,7 @@ public class CustomEntityResource {
       value = "get error type",
       response = ErrorTypeDto.class
   )
-  @Path("customentity/{errorKey}")
+  @Path("error-types/{errorKey}")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response getCustomEntity(@PathParam("errorKey") String errorKey) {
@@ -91,6 +98,7 @@ public class CustomEntityResource {
       if (errorTypeDto.isEmpty()) {
         return Response.status(Response.Status.NOT_FOUND).entity("not found entity with error key" + errorKey).build();
       }
+
       return Response.status(Response.Status.OK).entity(customEntityService.getErrorTypeByKey(errorKey).get()).build();
     } catch (IllegalArgumentException e) {
       LOG.error("illegal argument", e);
@@ -106,12 +114,17 @@ public class CustomEntityResource {
       response = String.class
   )
   @PUT
-  @Path("customentity")
+  @Path("error-types")
   @Produces(MediaType.APPLICATION_JSON)
   public Response updateCustomEntity(@RequestBody List<ErrorTypeDto> errorTypeDtos) {
     if (CollectionUtils.isEmpty(errorTypeDtos)) {
       return Response.status(Response.Status.BAD_REQUEST).entity("entity can not be empty").build();
     }
+
+    if (errorTypeDtos.size() > 100) {
+      return Response.status(Response.Status.BAD_REQUEST).entity("max size value for update entities is 100").build();
+    }
+
     try {
       customEntityService.updateErrorType(errorTypeDtos);
       return Response.status(Response.Status.OK).build();
@@ -130,7 +143,7 @@ public class CustomEntityResource {
       response = ErrorTypeDto.class,
       responseContainer = "List"
   )
-  @Path("customentity")
+  @Path("error-types")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response getAllCustomEntity() {

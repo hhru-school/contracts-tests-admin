@@ -1,6 +1,7 @@
 package com.hh.contractstestsadmin.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hh.contractstestsadmin.dao.ErrorTypeDao;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dao.minio.mapper.ConsumerDataMapper;
 import com.hh.contractstestsadmin.dao.minio.mapper.ProducerDataMapper;
@@ -103,8 +104,13 @@ public class AppConfig {
   }
 
   @Bean
-  public CustomEntityService customEntityService(ValidationInfoDao validationInfoDao) {
-    return new CustomEntityService(validationInfoDao);
+  public ErrorTypeDao errorTypeDao(LocalSessionFactoryBean sessionFactoryBean) {
+    return new ErrorTypeDao(sessionFactoryBean.getObject());
+  }
+
+  @Bean
+  public CustomEntityService customEntityService(ErrorTypeDao errorTypeDao) {
+    return new CustomEntityService(errorTypeDao);
   }
 
   @Bean
