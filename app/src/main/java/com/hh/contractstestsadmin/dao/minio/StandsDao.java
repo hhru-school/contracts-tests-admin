@@ -6,6 +6,7 @@ import static com.hh.contractstestsadmin.dao.minio.mapper.Util.extractArtefactVe
 import com.hh.contractstestsadmin.exception.MinioClientException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
+import com.hh.contractstestsadmin.model.artefacts.ArtefactType;
 import com.hh.contractstestsadmin.model.artefacts.Service;
 import io.minio.BucketExistsArgs;
 import io.minio.GetPresignedObjectUrlArgs;
@@ -222,11 +223,14 @@ public class StandsDao {
     return minioProperties.getProperty("minio.external.base.url");
   }
 
-  public Map<String, SchemaData> getSchemaDataMap(String standName) {
-    return Collections.emptyMap();
+  public String buildArtefactPath(String standName, String serviceName, String version, ArtefactType artefactType){
+    if(artefactType.equals(ArtefactType.EXPECTATION)){
+      return standName + "/" + minioProperties.getProperty("minio.consumer.artefact.type") + "/" + serviceName + "/" + version + ".json";
+    }
+    return standName + "/" + minioProperties.getProperty("minio.producer.artefact.type") + "/" + serviceName + "/" + version + ".yaml";
   }
 
-  public Map<String, ExpectationsData> getExpectationsDataMap(String standName) {
-    return Collections.emptyMap();
+  public String getArtefactBody(String standName, String artefactPath) {
+    return "";
   }
 }
