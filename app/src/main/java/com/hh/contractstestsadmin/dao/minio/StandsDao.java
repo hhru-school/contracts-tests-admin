@@ -33,6 +33,8 @@ import okhttp3.Response;
 import org.eclipse.jetty.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.hh.contract.validator.service.ExpectationsData;
+import ru.hh.contract.validator.service.SchemaData;
 
 public class StandsDao {
 
@@ -142,6 +144,7 @@ public class StandsDao {
     }
     return response.code();
   }
+
   @NotNull
   private Iterable<Result<Item>> getStandArtefacts(@NotNull String standName) throws StandsDaoException, StandNotFoundException {
     validator.validate(standName);
@@ -219,4 +222,11 @@ public class StandsDao {
     return minioProperties.getProperty("minio.external.base.url");
   }
 
+  public Map<String, SchemaData> getSchemaDataMap(String standName) {
+    return Collections.emptyMap();
+  }
+
+  public Map<String, ExpectationsData> getExpectationsDataMap(String standName) {
+    return Collections.emptyMap();
+  }
 }

@@ -29,6 +29,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import ru.hh.contract.validator.service.ContractsValidator;
 import ru.hh.contract.validator.validation.OpenApiInteractionValidatorFactory;
 import ru.hh.contract.validator.validation.ValidationContextProvider;
 
@@ -104,20 +105,26 @@ public class AppConfig {
   }
 
   @Bean
-  public ValidationService validationService(ValidationDao validationDao, ReleaseVersionDao releaseVersionDao,
-      ValidationInfoDao validationInfoDao) {
+  public ValidationService validationService(
+      ValidationDao validationDao, ReleaseVersionDao releaseVersionDao,
+      ValidationInfoDao validationInfoDao
+  ) {
     return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, minioReleaseName);
   }
 
   @Bean
-  public StandValidationService standValidationService(StandsDao standsDao, ValidationService validationService, ObjectMapper objectMapper) {
-    return new StandValidationService(standsDao, validationService, objectMapper);
+  public StandValidationService standValidationService(
+      StandsDao standsDao,
+      ValidationService validationService,
+      ValidatorService validatorService,
+      ObjectMapper objectMapper
+  ) {
+    return new StandValidationService(standsDao, validationService, validatorService, objectMapper);
   }
 
   @Bean
-  public ValidatorService validatorService(ObjectMapper objectMapper, ValidationContextProvider validationContextProvider,
-      OpenApiInteractionValidatorFactory openApiInteractionValidatorFactory) {
-    return new ValidatorService(objectMapper, validationContextProvider, openApiInteractionValidatorFactory);
+  public ValidatorService validatorService(StandsDao standsDao, ObjectMapper objectMapper, ContractsValidator contractsValidator) {
+    return new ValidatorService(standsDao, objectMapper, contractsValidator);
   }
 
   @Bean
@@ -222,4 +229,11 @@ public class AppConfig {
     return new OpenApiInteractionValidatorFactory(validationContextProvider);
   }
 
+  @Bean
+  public ContractsValidator contractsValidator(
+      ValidationContextProvider validationContextProvider, OpenApiInteractionValidatorFactory
+      openApiInteractionValidatorFactory
+  ) {
+    return new ContractsValidator(validationContextProvider, openApiInteractionValidatorFactory);
+  }
 }

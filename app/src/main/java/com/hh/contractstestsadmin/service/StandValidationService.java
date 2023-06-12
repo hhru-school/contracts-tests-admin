@@ -6,9 +6,11 @@ import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
+import com.hh.contractstestsadmin.dto.validator.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
+import com.hh.contractstestsadmin.exception.ValidatorException;
 import com.hh.contractstestsadmin.model.Validation;
 
 import java.io.BufferedReader;
@@ -17,6 +19,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.stream.Collectors;
+import ru.hh.contract.validator.dto.ContractValidationResultDto;
 
 public class StandValidationService {
 
@@ -24,11 +27,15 @@ public class StandValidationService {
 
   private final ValidationService validationService;
 
+  private final ValidatorService validatorService;
+
   private final ObjectMapper objectMapper;
 
-  public StandValidationService(StandsDao standsDao, ValidationService validationService, ObjectMapper objectMapper) {
+  public StandValidationService(StandsDao standsDao, ValidationService validationService, ValidatorService validatorService,
+      ObjectMapper objectMapper) {
     this.standsDao = standsDao;
     this.validationService = validationService;
+    this.validatorService = validatorService;
     this.objectMapper = objectMapper;
   }
 
@@ -46,11 +53,11 @@ public class StandValidationService {
     return validationService.getLatestValidationPreviews(standName, sizeLimit);
   }
 
-  public void runValidation(String standName) throws StandNotFoundException, StandsDaoException {
+  public void runValidation(String standName) throws StandNotFoundException, StandsDaoException, IOException {
     if (!standExists(standName)) {
       throw new StandNotFoundException("Stand '" + standName + "' not found");
     }
-    Validation validation = validationService.createValidation(standName);
+    ValidationDto validationDto = validatorService.validate(standName);
   }
 
   public ValidationWithRelationsDto getValidationWithRelations(String standName, Long validationId) {
