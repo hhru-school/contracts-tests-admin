@@ -4,33 +4,42 @@ import React, { useState, KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
 import { ListGroup, ListGroupItem, Input, Button, Alert, Spinner } from 'reactstrap';
 import { HandleKeys } from './types/HandleKeys';
 import { Stand } from './types/Stand';
+import { useGlobalContext } from '../../context/AppContext';
 
-export type ToolBarProps = {
-    selectedItem: string;
-    setSelectedItem: (item: string) => void;
-};
-
-export const ToolBar: React.FC<ToolBarProps> = ({ selectedItem, setSelectedItem }) => {
+export const ToolBar = () => {
+    const { setStandName } = useGlobalContext();
+    const [selectedItem, setSelectedItem] = useState('');
     const [showList, setShowList] = useState(false);
     const [validation, setValidation] = useState(false);
     const [hoveredItem, setHoveredItem] = useState<string>('');
     const [currentPositionInList, setCurrentPositionInList] = useState(0);
     const { isLoading, data, error } = useSWR<Stand[]>(
-        selectedItem.length >= 300 ? `/api/stands?search=${selectedItem}` : '/api/stands',
+        selectedItem.length >= 3 ? `/api/stands?search=${selectedItem}` : '/api/stands',
     );
-    if (isLoading) {
-        return <Alert color="primary"> Data is loading </Alert>;
-    }
     if (error) {
         return <Alert color="danger"> Cant load data {error.message} </Alert>;
     }
-    if (!data) {
-        return null;
+    if (!data || isLoading) {
+        return (
+            <div className="d-flex align-items-center gap-3 w-100">
+                <div className="position-relative flex-grow-1">
+                    <Input type="text" placeholder="Search" value={selectedItem} />
+                </div>
+                <Button color="primary" className="flex-shrink-0" disabled={!selectedItem}>
+                    <>
+                        <PlayIcon /> Start
+                    </>
+                </Button>
+            </div>
+        );
     }
     const filteredData = data.map((item) => item.name);
     const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSelectedItem(e.target.value);
         setShowList(true);
+        if (filteredData.includes(e.target.value)) {
+            setStandName(e.target.value);
+        }
     };
     const handleHover = (item: string) => {
         setHoveredItem(item);
@@ -42,6 +51,9 @@ export const ToolBar: React.FC<ToolBarProps> = ({ selectedItem, setSelectedItem 
         setSelectedItem(item);
         setShowList(false);
         setCurrentPositionInList(0);
+        if (filteredData.includes(item)) {
+            setStandName(item);
+        }
     };
     const handleSelect = (item: MouseEvent<HTMLElement>) => {
         selectElement(item.currentTarget.textContent as string);
@@ -59,6 +71,9 @@ export const ToolBar: React.FC<ToolBarProps> = ({ selectedItem, setSelectedItem 
             const element = filteredData[currentPositionInList];
             setSelectedItem(element);
             setShowList(false);
+            if (filteredData.includes(element)) {
+                setStandName(element);
+            }
         } else if (event.key === HandleKeys.ArrowDown) {
             let curIndex = currentPositionInList;
             if (curIndex + 1 < filteredData.length) {

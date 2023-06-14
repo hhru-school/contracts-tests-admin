@@ -1,11 +1,10 @@
 import { ServicesContainer } from 'components/Services/Container';
 import { ValidationHistory } from 'components/ValidationHistory';
-import { AppContext } from 'context/AppContext';
-import { useContext } from 'react';
+import { useGlobalContext } from 'context/AppContext';
 import { Col, Row } from 'reactstrap';
 
 export const StatusesPage: React.FC = () => {
-    const { standName } = useContext(AppContext);
+    const { standName } = useGlobalContext();
     return (
         <Row>
             <Col md={9}>

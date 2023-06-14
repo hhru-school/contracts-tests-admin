@@ -41,7 +41,7 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = ({
                                     validationId: item.id,
                                 })}
                             >
-                                Валидация {item.id} (
+                                Валидация{item.id} (
                                 {new Date(item.createdDate).toLocaleDateString('ru-RU')} )
                             </NavLink>
                         </Col>

@@ -1,5 +1,4 @@
-import { AppContext } from 'context/AppContext';
-import { useContext } from 'react';
+import { useGlobalContext } from 'context/AppContext';
 import { Col, Row, Alert, ListGroup, ListGroupItem } from 'reactstrap';
 import { StandResponse, getStatus, Direction } from '../../components/Validation/types';
 import { Loader } from 'components/Loader';
@@ -8,7 +7,7 @@ import { generatePath, useNavigate } from 'react-router-dom';
 import navigation from 'routes/navigation';
 
 export const ValidationsPage: React.FC = () => {
-    const { standName } = useContext(AppContext);
+    const { standName } = useGlobalContext();
     const navigate = useNavigate();
 
     const { isLoading, data, error } = useSWR<StandResponse[]>(
