@@ -10,8 +10,6 @@ import com.hh.contractstestsadmin.dto.validator.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
-import com.hh.contractstestsadmin.exception.ValidatorException;
-import com.hh.contractstestsadmin.model.Validation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,7 +17,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.stream.Collectors;
-import ru.hh.contract.validator.dto.ContractValidationResultDto;
+
+import com.hh.contractstestsadmin.validator.service.ValidatorService;
 
 public class StandValidationService {
 

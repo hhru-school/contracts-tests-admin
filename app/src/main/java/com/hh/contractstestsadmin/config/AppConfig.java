@@ -11,7 +11,7 @@ import com.hh.contractstestsadmin.dao.ServiceDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dao.ValidationInfoDao;
 import com.hh.contractstestsadmin.service.ValidationService;
-import com.hh.contractstestsadmin.service.ValidatorService;
+import com.hh.contractstestsadmin.validator.service.ValidatorService;
 import io.minio.MinioClient;
 import io.swagger.jaxrs.config.BeanConfig;
 import java.util.Properties;

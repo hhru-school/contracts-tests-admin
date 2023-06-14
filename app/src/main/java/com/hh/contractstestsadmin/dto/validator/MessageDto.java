@@ -10,6 +10,8 @@ public class MessageDto {
 
   private ErrorLevel level;
 
+  private Integer responseStatus;
+
   public String getKey() {
     return key;
   }
@@ -32,5 +34,13 @@ public class MessageDto {
 
   public void setLevel(ErrorLevel level) {
     this.level = level;
+  }
+
+  public Integer getResponseStatus() {
+    return responseStatus;
+  }
+
+  public void setResponseStatus(Integer responseStatus) {
+    this.responseStatus = responseStatus;
   }
 }
