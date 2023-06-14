@@ -1,6 +1,7 @@
 package com.hh.contractstestsadmin.dao;
 
 import com.hh.contractstestsadmin.model.Service;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -11,9 +12,9 @@ public class ServiceDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public Service getService(Long serviceId) {
+    public Optional<Service> getService(Long serviceId) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Service.class, serviceId);
+        return Optional.ofNullable(session.get(Service.class, serviceId));
     }
 
     public void saveService(Service service) {

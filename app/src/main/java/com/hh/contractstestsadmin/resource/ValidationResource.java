@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -20,12 +21,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Api
 @Path("api")
 public class ValidationResource {
 
   private final StandValidationService standValidationService;
+  private static final Logger LOG = LoggerFactory.getLogger(ValidationResource.class);
 
   @Inject
   public ValidationResource(StandValidationService standValidationService) {
@@ -67,6 +71,7 @@ public class ValidationResource {
     } catch (ValidationHistoryNotFoundException exception) {
       return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessageDto(exception.getMessage())).build();
     } catch (Exception exception) {
+      LOG.error("Unknown exception caught during getting expectation ", exception);
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
     }
   }
@@ -86,9 +91,12 @@ public class ValidationResource {
   ) {
     try {
       return Response.ok(standValidationService.getExpectations(standName, validationId, producerId, consumerId)).build();
-    } catch (ValidationHistoryNotFoundException exception) {
-      return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessageDto(exception.getMessage())).build();
+    } catch (NotFoundException e) {
+      LOG.error("Not found expectation with standName {} and validationId {} " +
+          "and producerId {} and consumerId {}", standName, validationId, producerId, consumerId, e);
+      return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
     } catch (Exception exception) {
+      LOG.error("Unknown exception caught during getting expectation ", exception);
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
     }
   }

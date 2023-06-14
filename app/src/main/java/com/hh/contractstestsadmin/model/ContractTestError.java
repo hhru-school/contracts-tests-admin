@@ -36,6 +36,9 @@ public class ContractTestError {
   @Column(name = "error_level")
   private ErrorLevel level;
 
+  @Column(name = "error_message")
+  private String errorMessage;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "expectation_id")
   Expectation expectation;
@@ -68,6 +71,14 @@ public class ContractTestError {
   }
   public ErrorType getErrorType() {
     return errorType;
+  }
+
+  public String getErrorMessage() {
+    return errorMessage;
+  }
+
+  public void setErrorMessage(String errorMessage) {
+    this.errorMessage = errorMessage;
   }
 
   public void setErrorType(ErrorType errorType) {

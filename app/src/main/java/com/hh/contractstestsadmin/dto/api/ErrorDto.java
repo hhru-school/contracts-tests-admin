@@ -10,7 +10,10 @@ public class ErrorDto {
 
   private ErrorLevel errorLevel;
 
-  private String comment;
+  private String message;
+
+  public ErrorDto() {
+  }
 
   public Long getId() {
     return id;
@@ -36,11 +39,11 @@ public class ErrorDto {
     this.errorLevel = errorLevel;
   }
 
-  public String getComment() {
-    return comment;
+  public String getMessage() {
+    return message;
   }
 
-  public void setComment(String comment) {
-    this.comment = comment;
+  public void setMessage(String message) {
+    this.message = message;
   }
 }

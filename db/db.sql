@@ -7,10 +7,10 @@ CREATE TABLE IF NOT EXISTS validation
 (
     validation_id               BIGINT GENERATED ALWAYS AS IDENTITY not null,
     stand_name                  varchar(255)                        not null,
-    created_date                timestamptz                         not null,
-    execute_date                timestamptz,
+    creation_date               timestamptz                         not null,
+    execution_date              timestamptz,
     release_information_version varchar(255),
-    validator_error             jsonb,
+    report                      jsonb,
     validation_status           validation_status,
     error_count                 integer,
     PRIMARY KEY (validation_id)
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS validation
 CREATE TABLE IF NOT EXISTS service
 (
     service_id       BIGINT GENERATED ALWAYS AS IDENTITY not null,
-    created_date     timestamptz                         not null,
+    creation_date    timestamptz                         not null,
     service_name     varchar(255)                        not null,
     stand_name       varchar(255)                        not null,
     service_type     service_type,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS error_type
 (
     error_type_id BIGINT GENERATED ALWAYS AS IDENTITY not null,
     error_key     varchar(2048) UNIQUE,
-    comments      varchar(2048),
+    comment      varchar(4096),
     PRIMARY KEY (error_type_id)
 );
 
@@ -44,11 +44,11 @@ CREATE TABLE IF NOT EXISTS expectation
     consumer_id      BIGINT,
     producer_id      BIGINT,
     request_path     varchar(2048),
-    request_headers  varchar(2048),
-    query_params     varchar(2048),
+    request_headers  jsonb,
+    query_params     jsonb,
     request_body     varchar(4096),
     response_status  smallint,
-    response_headers varchar(2048),
+    response_headers jsonb,
     response_body    varchar(4096),
     validation_id    BIGINT,
     PRIMARY KEY (expectation_id),
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS error
 (
     error_id       BIGINT GENERATED ALWAYS AS IDENTITY not null,
     error_type_id  BIGINT,
-    comments       varchar(2048),
+    error_message  varchar(2048),
     expectation_id BIGINT,
     error_level    error_level,
     PRIMARY KEY (error_id),

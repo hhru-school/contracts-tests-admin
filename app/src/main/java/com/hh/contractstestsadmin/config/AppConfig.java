@@ -57,6 +57,9 @@ public class AppConfig {
   @Value("${minio.url}")
   private String minioUrl;
 
+  @Value("${minio.external.url}")
+  private String externalBaseUrl;
+
   @Value("${minio.access-key}")
   private String minioAccessKey;
 
@@ -99,13 +102,18 @@ public class AppConfig {
   }
 
   @Bean
-  public ValidationService validationService(ValidationDao validationDao, ReleaseVersionDao releaseVersionDao) {
-    return new ValidationService(validationDao, releaseVersionDao);
+  public ValidationService validationService(
+      ValidationDao validationDao, ReleaseVersionDao releaseVersionDao,
+      ValidationInfoDao validationInfoDao, ServiceDao serviceDao
+  ) {
+    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, minioReleaseName,
+        serviceDao
+    );
   }
 
   @Bean
-  public StandValidationService standValidationService(StandsDao standsDao, ValidationService validationService, ObjectMapper objectMapper) {
-    return new StandValidationService(standsDao, validationService, objectMapper);
+  public StandValidationService standValidationService(StandsDao standsDao, ValidationService validationService) {
+    return new StandValidationService(standsDao, validationService);
   }
 
   @Bean
@@ -180,6 +188,8 @@ public class AppConfig {
 
   private Properties minioProperties() {
     Properties minioProperties = new Properties();
+    minioProperties.put("minio.base.url", minioUrl);
+    minioProperties.put("minio.external.base.url", externalBaseUrl);
     minioProperties.put("minio.consumer.artefact.type", consumerArtefactType);
     minioProperties.put("minio.producer.artefact.type", producerArtefactType);
     minioProperties.put("minio.artefact.url.expiration.period", artefactUrlExpirationPeriod);

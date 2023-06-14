@@ -1,7 +1,5 @@
 package com.hh.contractstestsadmin.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
@@ -24,12 +22,9 @@ public class StandValidationService {
 
   private final ValidationService validationService;
 
-  private final ObjectMapper objectMapper;
-
-  public StandValidationService(StandsDao standsDao, ValidationService validationService, ObjectMapper objectMapper) {
+  public StandValidationService(StandsDao standsDao, ValidationService validationService) {
     this.standsDao = standsDao;
     this.validationService = validationService;
-    this.objectMapper = objectMapper;
   }
 
   private boolean standExists(String standName) throws StandsDaoException, StandNotFoundException {
@@ -53,19 +48,15 @@ public class StandValidationService {
     Validation validation = validationService.createValidation(standName);
   }
 
-  public ValidationWithRelationsDto getValidationWithRelations(String standName, Long validationId) throws IOException {
-    ClassLoader classLoader = getClass().getClassLoader();
-    InputStream inputStream = classLoader.getResourceAsStream("test-data/validation-with-relations-example.json");
-    ValidationWithRelationsDto validationWithRelationsDto = objectMapper.readValue(inputStream, ValidationWithRelationsDto.class);
-    validationWithRelationsDto.setId(validationId);
-    return validationWithRelationsDto;
+  public ValidationWithRelationsDto getValidationWithRelations(String standName, Long validationId) {
+    return validationService.getServiceRelation(validationId, standName);
   }
 
-  public List<ExpectationDto> getExpectations(String standName, Long validationId, Long producerId, Long consumerId) throws IOException {
-    ClassLoader classLoader = getClass().getClassLoader();
-    InputStream inputStream = classLoader.getResourceAsStream("test-data/expectations-example.json");
-    return objectMapper.readValue(inputStream, new TypeReference<>() {
-    });
+  public List<ExpectationDto> getExpectations(String standName, Long validationId, Long producerId, Long consumerId) throws StandsDaoException {
+    if (!standExists(standName)) {
+      throw new StandNotFoundException("not found stand with name: " + standName);
+    }
+    return validationService.getExpectations(standName, validationId, producerId, consumerId);
   }
 
   public String getValidatorReport(String standName, Long validationId) {
