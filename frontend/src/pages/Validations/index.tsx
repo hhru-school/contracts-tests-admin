@@ -52,9 +52,6 @@ export const ValidationsPage: React.FC = () => {
                     key={item.id}
                 >
                     <Row>
-                        <Col md={3}>Валидация {item.id}</Col>
-                        <Col md={3}>{new Date(item.createdDate).toLocaleDateString('ru-RU')}</Col>
-                        <Col md={2}>{item.releaseLink}</Col>
                         {item.status === Direction.Failed ? (
                             <>
                                 <Col md={3}>
@@ -62,15 +59,25 @@ export const ValidationsPage: React.FC = () => {
                                         {getStatus(item.status)}
                                     </div>
                                 </Col>
+                                <Col md={3}>Валидация {item.id}</Col>
+                                <Col md={3}>
+                                    {new Date(item.createdDate).toLocaleString('ru-RU')}
+                                </Col>
+                                <Col md={2}>{item.releaseLink}</Col>
                                 <Col md={1}>{item.errorCount} ошибок</Col>
                             </>
                         ) : (
                             <>
-                                <Col md={4}>
+                                <Col md={3}>
                                     <div className=" d-flex justify-content-center">
                                         {getStatus(item.status)}
                                     </div>
                                 </Col>
+                                <Col md={3}>Валидация {item.id}</Col>
+                                <Col md={4}>
+                                    {new Date(item.createdDate).toLocaleString('ru-RU')}
+                                </Col>
+                                <Col md={2}>{item.releaseLink}</Col>
                             </>
                         )}
                     </Row>
