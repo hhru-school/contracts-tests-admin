@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.inject.Inject;
+
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 public class CustomEntityService {
@@ -22,25 +24,28 @@ public class CustomEntityService {
     this.errorTypeDao = errorTypeDao;
   }
 
-  @Transactional
-  public void createErrorType(List<ErrorTypeDto> errorTypeDtos) {
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
+  public void createErrorTypes(List<ErrorTypeDto> errorTypeDtos) {
     Objects.requireNonNull(errorTypeDtos);
-    for (ErrorTypeDto errorTypeDto : errorTypeDtos) {
-      Optional<ErrorType> findErrorType = errorTypeDao.getErrorTypeByKey(errorTypeDto.getKey());
-      if (findErrorType.isPresent()) {
-        throw new IllegalErrorTypeArgumentException("error key with id " + errorTypeDto.getKey() + " must be unique");
-      }
+    errorTypeDtos.forEach(this::createErrorType);
+  }
 
-      if (errorTypeDto.getKey() == null || errorTypeDto.getComment() == null) {
-        throw new IllegalErrorTypeArgumentException("entity field can not null");
-      }
-      validateLengthString(errorTypeDto.getKey(), 2048);
-      validateLengthString(errorTypeDto.getComment(), MAX_SIZE_COMMENT);
-
-      ErrorType errorType = ErrorTypeMapper.mapToEntity(errorTypeDto);
-      errorType.setVersion(0);
-      errorTypeDao.saveErrorType(errorType);
+  @Transactional
+  public void createErrorType(ErrorTypeDto errorTypeDto) {
+    Optional<ErrorType> findErrorType = errorTypeDao.getErrorTypeByKey(errorTypeDto.getKey());
+    if (findErrorType.isPresent()) {
+      throw new IllegalErrorTypeArgumentException("error key with id " + errorTypeDto.getKey() + " must be unique");
     }
+
+    if (errorTypeDto.getKey() == null || errorTypeDto.getComment() == null) {
+      throw new IllegalErrorTypeArgumentException("entity field can not null");
+    }
+    validateLengthString(errorTypeDto.getKey(), 2048);
+    validateLengthString(errorTypeDto.getComment(), MAX_SIZE_COMMENT);
+
+    ErrorType errorType = ErrorTypeMapper.mapToEntity(errorTypeDto);
+    errorType.setVersion(0);
+    errorTypeDao.saveErrorType(errorType);
   }
 
   public void validateLengthString(String field, int maxLength) {

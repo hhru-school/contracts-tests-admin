@@ -51,7 +51,7 @@ public class CustomEntityResource {
       return Response.status(Response.Status.BAD_REQUEST).entity("max size value for create entities is 100").build();
     }
     try {
-      customEntityService.createErrorType(errorTypeDtos);
+      customEntityService.createErrorTypes(errorTypeDtos);
       return Response.status(Response.Status.CREATED).build();
     } catch (IllegalArgumentException e) {
       LOG.error("illegal argument", e);
