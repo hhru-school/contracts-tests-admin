@@ -54,30 +54,41 @@ export const ValidationsPage: React.FC = () => {
                     <Row>
                         {item.status === Direction.Failed ? (
                             <>
-                                <Col md={3}>
+                                <Col xs={5} sm={2} md={2}>
                                     <div className=" d-flex justify-content-center">
                                         {getStatus(item.status)}
                                     </div>
                                 </Col>
-                                <Col md={3}>Валидация {item.id}</Col>
-                                <Col md={3}>
+                                <Col xs={4} sm={3} md={2}>
+                                    Валидация {item.id}
+                                </Col>
+                                <Col xs={3} sm={3} md={2}>
+                                    {item.errorCount} ошибок
+                                </Col>
+
+                                <Col sm={4} md={3} className="d-none d-sm-block">
                                     {new Date(item.createdDate).toLocaleString('ru-RU')}
                                 </Col>
-                                <Col md={2}>{item.releaseLink}</Col>
-                                <Col md={1}>{item.errorCount} ошибок</Col>
+                                <Col md={3} className="d-none d-md-block">
+                                    {item.releaseLink}
+                                </Col>
                             </>
                         ) : (
                             <>
-                                <Col md={3}>
+                                <Col xs={7} sm={2} md={1}>
                                     <div className=" d-flex justify-content-center">
                                         {getStatus(item.status)}
                                     </div>
                                 </Col>
-                                <Col md={3}>Валидация {item.id}</Col>
-                                <Col md={4}>
+                                <Col xs={5} sm={4} md={2}>
+                                    Валидация {item.id}
+                                </Col>
+                                <Col sm={6} md={4} className="d-none d-sm-block">
                                     {new Date(item.createdDate).toLocaleString('ru-RU')}
                                 </Col>
-                                <Col md={2}>{item.releaseLink}</Col>
+                                <Col md={5} className="d-none d-md-block">
+                                    {item.releaseLink}
+                                </Col>
                             </>
                         )}
                     </Row>

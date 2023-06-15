@@ -34,19 +34,21 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = ({
             {data.map((item: StandResponse) => (
                 <ListGroupItem key={item.id}>
                     <Row className="align-items-center">
-                        <Col xs={7} xl={9}>
+                        <Col xs={7}>
                             <NavLink
                                 className="link"
                                 to={generatePath(navigation.validations.detail, {
                                     validationId: item.id,
                                 })}
                             >
-                                Валидация -{item.id} (
-                                {new Date(item.createdDate).toLocaleString('ru-RU')} )
+                                Валидация -{item.id}
+                                <div className="d-none d-sm-block d-md-block">
+                                    ({new Date(item.createdDate).toLocaleString('ru-RU')} )
+                                </div>
                             </NavLink>
                         </Col>
-                        <Col xs={5} xl={3}>
-                            <div className=" d-flex justify-content-center">
+                        <Col xs={5}>
+                            <div className="d-flex justify-content-center">
                                 {getStatus(item.status)}
                             </div>
                         </Col>

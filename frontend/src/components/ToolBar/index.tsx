@@ -23,7 +23,7 @@ export const ToolBar = () => {
         return (
             <div className="d-flex align-items-center gap-3 w-100">
                 <div className="position-relative flex-grow-1">
-                    <Input type="text" placeholder="Search" value={selectedItem} />
+                    <Input type="text" placeholder="Search" value={selectedItem} readOnly />
                 </div>
                 <Button color="primary" className="flex-shrink-0" disabled={!selectedItem}>
                     <>
