@@ -201,7 +201,7 @@ public class ValidationService {
 
       public ErrorType getOrCreateErrorType(String errorKey) {
         if (!errorTypesContext.containsKey(errorKey)) {
-          Optional<ErrorType> errorTypeFromDb = errorTypeDao.findErrorTypeByKey(errorKey);
+          Optional<ErrorType> errorTypeFromDb = errorTypeDao.getErrorTypeByKey(errorKey);
           if (errorTypeFromDb.isPresent()) {
             errorTypesContext.put(errorKey, errorTypeFromDb.get());
           } else {

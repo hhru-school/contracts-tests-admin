@@ -180,11 +180,6 @@ public class AppConfig {
   }
 
   @Bean
-  public ErrorTypeDao errorTypeDao(LocalSessionFactoryBean sessionFactoryBean) {
-    return new ErrorTypeDao(sessionFactoryBean.getObject());
-  }
-
-  @Bean
   public ValidationInfoDao validationInfoDao(LocalSessionFactoryBean sessionFactoryBean) {
     return new ValidationInfoDao(sessionFactoryBean.getObject());
   }
