@@ -23,13 +23,6 @@ public class CustomEntityService {
 
     this.errorTypeDao = errorTypeDao;
   }
-
-  @Transactional(propagation = Propagation.REQUIRES_NEW)
-  public void createErrorTypes(List<ErrorTypeDto> errorTypeDtos) {
-    Objects.requireNonNull(errorTypeDtos);
-    errorTypeDtos.forEach(this::createErrorType);
-  }
-
   @Transactional
   public void createErrorType(ErrorTypeDto errorTypeDto) {
     Optional<ErrorType> findErrorType = errorTypeDao.getErrorTypeByKey(errorTypeDto.getKey());
@@ -52,12 +45,6 @@ public class CustomEntityService {
     if (field != null && field.length() > maxLength) {
       throw new IllegalErrorTypeArgumentException("maximum allowed string length " + maxLength);
     }
-  }
-
-  @Transactional(propagation = Propagation.REQUIRES_NEW)
-  public void updateErrorTypes(List<ErrorTypeDto> errorTypeDtos) {
-    Objects.requireNonNull(errorTypeDtos);
-    errorTypeDtos.forEach(this::updateErrorType);
   }
 
   @Transactional

@@ -21,7 +21,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Api
@@ -43,15 +42,9 @@ public class CustomEntityResource {
   @Path("error-types")
   @POST
   @Produces(MediaType.APPLICATION_JSON)
-  public Response create(@RequestBody List<ErrorTypeDto> errorTypeDtos) {
-    if (CollectionUtils.isEmpty(errorTypeDtos)) {
-      return Response.status(Response.Status.BAD_REQUEST).entity("entity can not be empty").build();
-    }
-    if (errorTypeDtos.size() > 100) {
-      return Response.status(Response.Status.BAD_REQUEST).entity("max size value for create entities is 100").build();
-    }
+  public Response create(@RequestBody ErrorTypeDto errorTypeDto) {
     try {
-      customEntityService.createErrorTypes(errorTypeDtos);
+      customEntityService.createErrorType(errorTypeDto);
       return Response.status(Response.Status.CREATED).build();
     } catch (IllegalArgumentException e) {
       LOG.error("illegal argument", e);
@@ -117,17 +110,9 @@ public class CustomEntityResource {
   @PUT
   @Path("error-types")
   @Produces(MediaType.APPLICATION_JSON)
-  public Response updateCustomEntity(@RequestBody List<ErrorTypeDto> errorTypeDtos) {
-    if (CollectionUtils.isEmpty(errorTypeDtos)) {
-      return Response.status(Response.Status.BAD_REQUEST).entity("entity can not be empty").build();
-    }
-
-    if (errorTypeDtos.size() > 100) {
-      return Response.status(Response.Status.BAD_REQUEST).entity("max size value for update entities is 100").build();
-    }
-
+  public Response updateCustomEntity(@RequestBody ErrorTypeDto errorTypeDto) {
     try {
-      customEntityService.updateErrorTypes(errorTypeDtos);
+      customEntityService.updateErrorType(errorTypeDto);
       return Response.status(Response.Status.OK).build();
     } catch (IllegalArgumentException e) {
       LOG.error("illegal argument", e);
