@@ -1,16 +1,20 @@
 import { Context } from 'react';
-import { PropsWithChildren, createContext, useState } from 'react';
+import { PropsWithChildren, createContext, useState, useContext } from 'react';
 
 type AppContextType = {
     standName: string;
     setStandName: (standName: string) => void;
 };
 
-export const AppContext: Context<AppContextType> = createContext({
+const AppContext: Context<AppContextType> = createContext({
     standName: '',
     // eslint-disable-next-line
     setStandName: (standName) => {},
 });
+//custom hook
+export const useGlobalContext = () => {
+    return useContext(AppContext);
+};
 
 export const AppContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const [standName, setStandName] = useState('');

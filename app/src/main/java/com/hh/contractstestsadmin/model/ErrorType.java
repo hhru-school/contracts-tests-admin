@@ -28,6 +28,9 @@ public class ErrorType {
   @Column(name = "comment")
   private String comment;
 
+  @Column(name = "version")
+  private int version;
+
   @OneToMany(mappedBy = "errorType", orphanRemoval = true, cascade = CascadeType.ALL)
   private Set<ContractTestError> contractTests = new HashSet<>();
 
@@ -36,6 +39,12 @@ public class ErrorType {
 
   public ErrorType(String errorKey) {
     this.errorKey = errorKey;
+  }
+
+  public ErrorType(String errorKey, String comment, int version) {
+    this.errorKey = errorKey;
+    this.comment = comment;
+    this.version = version;
   }
 
   public Long getId() {
@@ -68,6 +77,14 @@ public class ErrorType {
 
   public void setContractTests(Set<ContractTestError> contractTests) {
     this.contractTests = contractTests;
+  }
+
+  public int getVersion() {
+    return version;
+  }
+
+  public void setVersion(int version) {
+    this.version = version;
   }
 
   @Override

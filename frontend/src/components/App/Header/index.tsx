@@ -1,6 +1,5 @@
 import { ToolBar } from 'components/ToolBar';
-import { AppContext } from 'context/AppContext';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Collapse, Nav, NavItem, Navbar, NavbarText, NavbarToggler } from 'reactstrap';
 
@@ -9,7 +8,6 @@ import './styles.css';
 import navigation from 'routes/navigation';
 
 export const AppHeader: React.FC = () => {
-    const { standName, setStandName } = useContext(AppContext);
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
@@ -36,7 +34,7 @@ export const AppHeader: React.FC = () => {
                         </Nav>
                     </Collapse>
                     <NavbarText tag="div" className="d-flex flex-grow-1">
-                        <ToolBar selectedItem={standName} setSelectedItem={setStandName} />
+                        <ToolBar />
                     </NavbarText>
                 </Navbar>
             </div>
