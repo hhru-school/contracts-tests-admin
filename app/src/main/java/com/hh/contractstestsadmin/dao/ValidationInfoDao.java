@@ -20,9 +20,9 @@ public class ValidationInfoDao {
     public List<ServiceRelation> getServiceRelations(Long validationId) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT new com.hh.contractstestsadmin.model.ServiceRelation(" +
-                "e.producer, e.consumer, count(e), sum(e.contractTestErrors.size)) FROM Expectation e" +
-                " LEFT JOIN e.contractTestErrors" +
-                "  WHERE e.validation.id = :validationId" +
+                "e.producer, e.consumer, count(distinct e), count(distinct ctr)) FROM Expectation e" +
+                " LEFT JOIN e.contractTestErrors ctr" +
+                " WHERE e.validation.id = :validationId" +
                 " GROUP BY e.producer, e.consumer", ServiceRelation.class)
             .setParameter("validationId", validationId)
             .getResultList();
@@ -34,7 +34,7 @@ public class ValidationInfoDao {
     ) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery(
-                "select e FROM Expectation e " +
+                "select distinct e FROM Expectation e " +
                     " LEFT JOIN FETCH e.contractTestErrors ctr " +
                     " LEFT JOIN FETCH ctr.errorType et " +
                     " WHERE e.validation.id = :validationId " +

@@ -3,8 +3,9 @@ package com.hh.contractstestsadmin.model;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -49,10 +51,10 @@ public class Service {
   private String tag;
 
   @OneToMany(mappedBy = "consumer", orphanRemoval = true, cascade = CascadeType.ALL)
-  private List<Expectation> expectationsConsumer = new ArrayList<>();
+  private Set<Expectation> expectationsConsumer = new HashSet<>();
 
   @OneToMany(mappedBy = "producer", orphanRemoval = true, cascade = CascadeType.ALL)
-  private List<Expectation> expectationsProducer = new ArrayList<>();
+  private Set<Expectation> expectationsProducer = new HashSet<>();
 
 
   public Service() {
@@ -105,19 +107,36 @@ public class Service {
     this.tag = tag;
   }
 
-  public List<Expectation> getExpectationsConsumer() {
+  public Set<Expectation> getExpectationsConsumer() {
     return expectationsConsumer;
   }
 
-  public void setExpectationsConsumer(List<Expectation> expectationsConsumer) {
+  public void setExpectationsConsumer(Set<Expectation> expectationsConsumer) {
     this.expectationsConsumer = expectationsConsumer;
   }
 
-  public List<Expectation> getExpectationsProducer() {
+  public Set<Expectation> getExpectationsProducer() {
     return expectationsProducer;
   }
 
-  public void setExpectationsProducer(List<Expectation> expectationsProducer) {
+  public void setExpectationsProducer(Set<Expectation> expectationsProducer) {
     this.expectationsProducer = expectationsProducer;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+      return false;
+    }
+    Service service = (Service) o;
+    return getId() != null && Objects.equals(getId(), service.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
   }
 }

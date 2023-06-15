@@ -2,10 +2,12 @@ package com.hh.contractstestsadmin.model;
 
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -37,11 +40,11 @@ public class Expectation {
   @Column(name = "expectation_id")
   private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "consumer_id")
   private Service consumer;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "producer_id")
   private Service producer;
 
@@ -79,7 +82,7 @@ public class Expectation {
   private Validation validation;
 
   @OneToMany(mappedBy = "expectation", orphanRemoval = true, cascade = CascadeType.ALL)
-  private List<ContractTestError> contractTestErrors = new ArrayList<>();
+  private Set<ContractTestError> contractTestErrors = new HashSet<>();
 
 
   public Expectation() {
@@ -168,11 +171,11 @@ public class Expectation {
     return responseBody;
   }
 
-  public List<ContractTestError> getContractTestErrors() {
+  public Set<ContractTestError> getContractTestErrors() {
     return contractTestErrors;
   }
 
-  public void setContractTestErrors(List<ContractTestError> contractTestErrors) {
+  public void setContractTestErrors(Set<ContractTestError> contractTestErrors) {
     this.contractTestErrors = contractTestErrors;
   }
 
@@ -202,5 +205,18 @@ public class Expectation {
 
   public void setValidation(Validation validation) {
     this.validation = validation;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+    Expectation that = (Expectation) o;
+    return getId() != null && Objects.equals(getId(), that.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
   }
 }

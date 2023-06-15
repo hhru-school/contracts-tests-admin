@@ -10,7 +10,7 @@ public class ExpectationMapper {
     ExpectationDto expectationDto = new ExpectationDto();
     expectationDto.setId(expectation.getId());
     expectationDto.setHttpMethod(expectation.getHttpMethod());
-    expectation.setRequestPath(expectation.getRequestPath());
+    expectationDto.setRequestPath(expectation.getRequestPath());
     expectationDto.setRequestHeaders(expectation.getRequestHeaders());
 
     expectationDto.setQueryParams(expectation.getQueryParams());
