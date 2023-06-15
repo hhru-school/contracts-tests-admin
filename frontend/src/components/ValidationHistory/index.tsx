@@ -1,6 +1,6 @@
 import { NavLink, generatePath } from 'react-router-dom';
-import { Alert, ListGroup, ListGroupItem } from 'reactstrap';
-import { StandResponse } from './types';
+import { Alert, ListGroup, ListGroupItem, Row, Col } from 'reactstrap';
+import { StandResponse, getStatus } from '../Validation/types';
 import useSWR from 'swr';
 import navigation from 'routes/navigation';
 export type ServicesContainerProps = {
@@ -14,6 +14,7 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = ({
 }) => {
     const { isLoading, data, error } = useSWR<StandResponse[]>(
         standName ? `/api/stands/${standName}/validations?sizeLimit=${sizeLimit}` : null,
+        { refreshInterval: 3000 },
     );
     if (isLoading) {
         return <Alert color="primary"> Data is loading </Alert>;
@@ -32,13 +33,24 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = ({
         <ListGroup>
             {data.map((item: StandResponse) => (
                 <ListGroupItem key={item.id}>
-                    <NavLink
-                        className="link"
-                        to={generatePath(navigation.validations.detail, { validationId: item.id })}
-                    >
-                        Валидация {item.id}
-                    </NavLink>
-                    ( {new Date(item.createdDate).toLocaleDateString('ru-RU')} )
+                    <Row className="align-items-center">
+                        <Col xs={7} xl={9}>
+                            <NavLink
+                                className="link"
+                                to={generatePath(navigation.validations.detail, {
+                                    validationId: item.id,
+                                })}
+                            >
+                                Валидация -{item.id} (
+                                {new Date(item.createdDate).toLocaleString('ru-RU')} )
+                            </NavLink>
+                        </Col>
+                        <Col xs={5} xl={3}>
+                            <div className=" d-flex justify-content-center">
+                                {getStatus(item.status)}
+                            </div>
+                        </Col>
+                    </Row>
                 </ListGroupItem>
             ))}
         </ListGroup>
