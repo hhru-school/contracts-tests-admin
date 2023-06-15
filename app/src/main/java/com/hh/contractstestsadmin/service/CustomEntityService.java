@@ -1,8 +1,8 @@
 package com.hh.contractstestsadmin.service;
 
 import com.hh.contractstestsadmin.dao.ErrorTypeDao;
-import com.hh.contractstestsadmin.dao.ValidationInfoDao;
 import com.hh.contractstestsadmin.dto.api.ErrorTypeDto;
+import com.hh.contractstestsadmin.exception.IllegalErrorTypeArgumentException;
 import com.hh.contractstestsadmin.model.ErrorType;
 import com.hh.contractstestsadmin.service.mapper.ErrorTypeMapper;
 import java.util.Collections;
@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class CustomEntityService {
   private final ErrorTypeDao errorTypeDao;
+  private static final int MAX_SIZE_COMMENT = 4096;
 
   @Inject
   public CustomEntityService(ErrorTypeDao errorTypeDao) {
@@ -27,26 +28,25 @@ public class CustomEntityService {
     for (ErrorTypeDto errorTypeDto : errorTypeDtos) {
       Optional<ErrorType> findErrorType = errorTypeDao.getErrorTypeByKey(errorTypeDto.getKey());
       if (findErrorType.isPresent()) {
-        throw new IllegalArgumentException("error key with id " + errorTypeDto.getKey() + " must be unique");
+        throw new IllegalErrorTypeArgumentException("error key with id " + errorTypeDto.getKey() + " must be unique");
       }
 
       if (errorTypeDto.getKey() == null || errorTypeDto.getComment() == null) {
-        throw new IllegalArgumentException("entity field can not null");
+        throw new IllegalErrorTypeArgumentException("entity field can not null");
       }
+      validateLengthString(errorTypeDto.getKey(), 2048);
+      validateLengthString(errorTypeDto.getComment(), MAX_SIZE_COMMENT);
 
       ErrorType errorType = ErrorTypeMapper.mapToEntity(errorTypeDto);
       errorType.setVersion(0);
-      errorType.setErrorKey(modifiedLengthIfNeed(errorType.getErrorKey(), 2048));
-      errorType.setComment(modifiedLengthIfNeed(errorType.getComment(), 4096));
       errorTypeDao.saveErrorType(errorType);
     }
   }
 
-  public String modifiedLengthIfNeed(String field, int maxLength) {
+  public void validateLengthString(String field, int maxLength) {
     if (field != null && field.length() > maxLength) {
-      return field.substring(0, 4096);
+      throw new IllegalErrorTypeArgumentException("maximum allowed string length " + maxLength);
     }
-    return field;
   }
 
   @Transactional
@@ -56,8 +56,9 @@ public class CustomEntityService {
       if (errorTypeDto.getKey() == null) {
         throw new IllegalArgumentException("entity field can not null");
       }
+      validateLengthString(errorTypeDto.getComment(), MAX_SIZE_COMMENT);
       ErrorType errorType = ErrorTypeMapper.mapToEntity(errorTypeDto);
-      errorType.setComment(modifiedLengthIfNeed(errorType.getComment(), 4096));
+      errorType.setComment(errorTypeDto.getComment());
       errorTypeDao.updateErrorType(errorType);
     }
   }

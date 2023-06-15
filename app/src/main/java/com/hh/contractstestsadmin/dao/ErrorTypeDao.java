@@ -1,5 +1,6 @@
 package com.hh.contractstestsadmin.dao;
 
+import com.hh.contractstestsadmin.exception.ErrorTypeCannotBeDeletedException;
 import com.hh.contractstestsadmin.model.ContractTestError;
 import com.hh.contractstestsadmin.model.ErrorType;
 import java.util.ConcurrentModificationException;
@@ -59,14 +60,14 @@ public class ErrorTypeDao {
   public void deleteErrorTypeByKey(String errorKey) {
     Session session = sessionFactory.getCurrentSession();
 
-    Optional<ErrorType> errorType = getErrorTypeByKey(errorKey);
+    Optional<ErrorType> errorType = getErrorTypeByKey(errorKey, LockModeType.PESSIMISTIC_WRITE);
     if (errorType.isEmpty()) {
       return;
     }
     long countError = countErrorByKey(errorKey);
 
     if (countError > 0) {
-      throw new IllegalArgumentException("this key cannot be deleted because it is used in error links");
+      throw new ErrorTypeCannotBeDeletedException("this key cannot be deleted because it is used in error links");
     }
 
     session.delete(errorType.get());

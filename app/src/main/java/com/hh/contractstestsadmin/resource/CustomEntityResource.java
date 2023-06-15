@@ -2,6 +2,7 @@ package com.hh.contractstestsadmin.resource;
 
 import com.hh.contractstestsadmin.dto.api.ErrorMessageDto;
 import com.hh.contractstestsadmin.dto.api.ErrorTypeDto;
+import com.hh.contractstestsadmin.exception.ErrorTypeCannotBeDeletedException;
 import com.hh.contractstestsadmin.service.CustomEntityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -54,7 +55,7 @@ public class CustomEntityResource {
       return Response.status(Response.Status.CREATED).build();
     } catch (IllegalArgumentException e) {
       LOG.error("illegal argument", e);
-      return Response.status(Response.Status.BAD_GATEWAY).entity(new ErrorMessageDto(e.getMessage())).build();
+      return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorMessageDto(e.getMessage())).build();
     } catch (ConcurrentModificationException e) {
       LOG.error("concurrent modification ", e);
       return Response.status(Response.Status.CONFLICT).entity(new ErrorMessageDto(e.getMessage())).build();
@@ -75,10 +76,10 @@ public class CustomEntityResource {
   public Response delete(@PathParam("errorKey") String errorKey) {
     try {
       customEntityService.deleteErrorType(errorKey);
-      return Response.status(Response.Status.ACCEPTED).build();
-    } catch (IllegalArgumentException e) {
+      return Response.status(Response.Status.OK).build();
+    } catch (ErrorTypeCannotBeDeletedException e) {
       LOG.error("illegal argument", e);
-      return Response.status(Response.Status.BAD_GATEWAY).entity(new ErrorMessageDto(e.getMessage())).build();
+      return Response.status(Response.Status.CONFLICT).entity(new ErrorMessageDto(e.getMessage())).build();
     } catch (Exception exception) {
       LOG.error("internal error", exception);
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
@@ -102,7 +103,7 @@ public class CustomEntityResource {
       return Response.status(Response.Status.OK).entity(customEntityService.getErrorTypeByKey(errorKey).get()).build();
     } catch (IllegalArgumentException e) {
       LOG.error("illegal argument", e);
-      return Response.status(Response.Status.BAD_GATEWAY).entity(new ErrorMessageDto(e.getMessage())).build();
+      return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorMessageDto(e.getMessage())).build();
     } catch (Exception exception) {
       LOG.error("internal error", exception);
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
@@ -110,8 +111,8 @@ public class CustomEntityResource {
   }
 
   @ApiOperation(
-      value = "update error types",
-      response = String.class
+          value = "update error types",
+          response = String.class
   )
   @PUT
   @Path("error-types")
@@ -130,7 +131,10 @@ public class CustomEntityResource {
       return Response.status(Response.Status.OK).build();
     } catch (IllegalArgumentException e) {
       LOG.error("illegal argument", e);
-      return Response.status(Response.Status.BAD_GATEWAY).entity(new ErrorMessageDto(e.getMessage())).build();
+      return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorMessageDto(e.getMessage())).build();
+    } catch (ConcurrentModificationException e) {
+      LOG.error("errorType entity was created another session", e);
+      return Response.status(Response.Status.CONFLICT).entity(new ErrorMessageDto(e.getMessage())).build();
     } catch (Exception exception) {
       LOG.error("internal error", exception);
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
