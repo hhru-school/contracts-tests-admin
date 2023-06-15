@@ -1,49 +1,47 @@
 import { useState } from 'react';
 import { Accordion, AccordionBody, AccordionHeader, AccordionItem } from 'reactstrap';
 import { ServicesList } from './ServicesList';
-import { ErrorsList } from './ErrorsList';
+import { ExpectationsInfo } from './ExpectationsInfo';
+import { ServicesRelation } from './types/ValidationResponse';
 
 export type ValidationDetailProps = {
-    relationsList: any;
+    relationsList: ServicesRelation[];
     standName: string;
 };
 
 export const ValidationDetail: React.FC<ValidationDetailProps> = ({ relationsList, standName }) => {
     const [open, setOpen] = useState('');
 
-    const toggle = (id: string) => {
-        if (open === id) {
-            setOpen('');
-        } else {
-            setOpen(id);
-        }
-    };
+    const toggle = (id: string) => setOpen(open === id ? '' : id);
+
     return (
         // @ts-expect-error
         <Accordion open={open} toggle={toggle}>
-            {relationsList.map((relationItem: any, idx: number) => (
-                <AccordionItem key={idx}>
-                    <AccordionHeader targetId={idx.toString()}>
-                        <ServicesList
-                            producer={relationItem.producer}
-                            consumer={relationItem.consumer}
-                            wrongExpectaionCount={relationItem.wrongExpectationCount}
-                            errorCount={relationItem.errorCount}
-                        />
-                    </AccordionHeader>
-                    <AccordionBody accordionId={idx.toString()}>
-                        {open === idx.toString() && (
-                            <ErrorsList
-                                // @ts-expect-error
-                                standName={standName}
-                                validationId={1}
-                                consumerId={relationItem.consumer.id}
-                                producerId={relationItem.producer.id}
+            {relationsList.map(({ producer, consumer, wrongExpectationCount, errorCount }) => {
+                const uniqueItemId = producer.id + '-' + consumer.id;
+                return (
+                    <AccordionItem key={uniqueItemId}>
+                        <AccordionHeader targetId={uniqueItemId}>
+                            <ServicesList
+                                producer={producer}
+                                consumer={consumer}
+                                wrongExpectaionCount={wrongExpectationCount}
+                                errorCount={errorCount}
                             />
-                        )}
-                    </AccordionBody>
-                </AccordionItem>
-            ))}
+                        </AccordionHeader>
+                        <AccordionBody accordionId={uniqueItemId}>
+                            {open === uniqueItemId && (
+                                <ExpectationsInfo
+                                    standName={standName}
+                                    validationId={1}
+                                    consumerId={consumer.id}
+                                    producerId={producer.id}
+                                />
+                            )}
+                        </AccordionBody>
+                    </AccordionItem>
+                );
+            })}
         </Accordion>
     );
 };
