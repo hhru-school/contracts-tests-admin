@@ -69,15 +69,8 @@
             <artifactId>swagger-jersey2-jaxrs</artifactId>
         </dependency>
         <dependency>
-            <groupId>ru.hh</groupId>
-            <artifactId>contract-validator-root</artifactId>
-            <version>1.0.14-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/contract-validator-service-1.0.14-SNAPSHOT.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>ru.hh</groupId>
-            <artifactId>contract-validator-root</artifactId>
+            <groupId>ru.hh.contract.validator</groupId>
+            <artifactId>validation</artifactId>
             <version>1.0.14-SNAPSHOT</version>
             <scope>system</scope>
             <systemPath>${pom.basedir}/lib/validation-1.0.14-SNAPSHOT.jar</systemPath>
@@ -105,6 +98,7 @@
                 <configuration>
                     <mainClass>com.hh.contractstestsadmin.ContractsTestsAdminApplication</mainClass>
                     <layout>JAR</layout>
+                    <includeSystemScope>true</includeSystemScope>
                 </configuration>
                 <executions>
                     <execution>
