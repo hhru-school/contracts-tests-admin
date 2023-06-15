@@ -78,7 +78,7 @@ public class CustomEntityResource {
       customEntityService.deleteErrorType(errorKey);
       return Response.status(Response.Status.OK).build();
     } catch (ErrorTypeCannotBeDeletedException e) {
-      LOG.error("illegal argument", e);
+      LOG.error("error type can not be delete with key {}", errorKey, e);
       return Response.status(Response.Status.CONFLICT).entity(new ErrorMessageDto(e.getMessage())).build();
     } catch (Exception exception) {
       LOG.error("internal error", exception);
