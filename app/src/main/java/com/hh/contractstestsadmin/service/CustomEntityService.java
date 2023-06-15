@@ -30,7 +30,7 @@ public class CustomEntityService {
     errorTypeDtos.forEach(this::createErrorType);
   }
 
-  @Transactional
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
   public void createErrorType(ErrorTypeDto errorTypeDto) {
     Optional<ErrorType> findErrorType = errorTypeDao.getErrorTypeByKey(errorTypeDto.getKey());
     if (findErrorType.isPresent()) {
@@ -67,7 +67,6 @@ public class CustomEntityService {
     }
     validateLengthString(errorTypeDto.getComment(), MAX_SIZE_COMMENT);
     ErrorType errorType = ErrorTypeMapper.mapToEntity(errorTypeDto);
-    errorType.setComment(errorTypeDto.getComment());
     errorTypeDao.updateErrorType(errorType);
   }
 
