@@ -68,7 +68,7 @@ public class CustomEntityResource {
   @ApiOperation(
       value = "delete error type",
       response = String.class,
-      code = 202
+      code = 200
   )
   @Path("error-types/{errorKey}")
   @DELETE
