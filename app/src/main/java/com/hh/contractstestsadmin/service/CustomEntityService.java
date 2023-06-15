@@ -54,7 +54,6 @@ public class CustomEntityService {
     }
     validateLengthString(errorTypeDto.getComment(), MAX_SIZE_COMMENT);
     ErrorType errorType = ErrorTypeMapper.mapToEntity(errorTypeDto);
-    errorType.setComment(errorTypeDto.getComment());
     errorTypeDao.updateErrorType(errorType);
   }
 
