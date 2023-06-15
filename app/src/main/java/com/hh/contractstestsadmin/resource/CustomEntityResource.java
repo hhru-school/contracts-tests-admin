@@ -127,7 +127,7 @@ public class CustomEntityResource {
     }
 
     try {
-      customEntityService.updateErrorType(errorTypeDtos);
+      customEntityService.updateErrorTypes(errorTypeDtos);
       return Response.status(Response.Status.OK).build();
     } catch (IllegalArgumentException e) {
       LOG.error("illegal argument", e);

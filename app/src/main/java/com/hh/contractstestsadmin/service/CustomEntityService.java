@@ -54,18 +54,21 @@ public class CustomEntityService {
     }
   }
 
-  @Transactional
-  public void updateErrorType(List<ErrorTypeDto> errorTypeDtos) {
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
+  public void updateErrorTypes(List<ErrorTypeDto> errorTypeDtos) {
     Objects.requireNonNull(errorTypeDtos);
-    for (ErrorTypeDto errorTypeDto : errorTypeDtos) {
-      if (errorTypeDto.getKey() == null) {
-        throw new IllegalArgumentException("entity field can not null");
-      }
-      validateLengthString(errorTypeDto.getComment(), MAX_SIZE_COMMENT);
-      ErrorType errorType = ErrorTypeMapper.mapToEntity(errorTypeDto);
-      errorType.setComment(errorTypeDto.getComment());
-      errorTypeDao.updateErrorType(errorType);
+    errorTypeDtos.forEach(this::updateErrorType);
+  }
+
+  @Transactional
+  public void updateErrorType(ErrorTypeDto errorTypeDto) {
+    if (errorTypeDto.getKey() == null) {
+      throw new IllegalArgumentException("entity field can not null");
     }
+    validateLengthString(errorTypeDto.getComment(), MAX_SIZE_COMMENT);
+    ErrorType errorType = ErrorTypeMapper.mapToEntity(errorTypeDto);
+    errorType.setComment(errorTypeDto.getComment());
+    errorTypeDao.updateErrorType(errorType);
   }
 
   @Transactional
