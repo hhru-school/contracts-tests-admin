@@ -1,8 +1,5 @@
 FROM maven AS build
 WORKDIR /cdc-test-app
-COPY pom.xml ./pom.xml
-COPY ./app/pom.xml ./app/pom.xml
-RUN mvn -f pom.xml dependency:go-offline -B
 COPY . .
 RUN mvn -f pom.xml clean package -T 4C
 
