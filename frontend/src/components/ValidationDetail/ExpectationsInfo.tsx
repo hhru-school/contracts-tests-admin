@@ -43,7 +43,7 @@ export const ExpectationsInfo: React.FC<ExpectationsInfoProps> = ({
     if (!data) return null;
     return (
         <UncontrolledAccordion flush>
-            {data.map(({ id, httpMethod, requestPath, ...other }) => (
+            {data.map(({ id, httpMethod, requestPath, requestBody, responseBody, errors }) => (
                 <AccordionItem key={id}>
                     <AccordionHeader targetId={id.toString()}>
                         {httpMethod}: {requestPath}
@@ -51,14 +51,14 @@ export const ExpectationsInfo: React.FC<ExpectationsInfoProps> = ({
                     <AccordionBody accordionId={id.toString()}>
                         <Row>
                             <Col md={6} className="border b-2 p-5">
-                                Request: {JSON.stringify(other.requestBody)}
+                                Request: {JSON.stringify(requestBody)}
                             </Col>
                             <Col className="border b-2 p-5" md={6}>
-                                Response: {JSON.stringify(other.responseBody)}
+                                Response: {JSON.stringify(responseBody)}
                             </Col>
                         </Row>
                         <ListGroup flush>
-                            {other.errors.map((error: any, idx: number) => (
+                            {errors.map((error, idx) => (
                                 <ListGroupItem key={error.id + '-' + idx}>
                                     <ListGroupItemText tag="div">
                                         <div>
