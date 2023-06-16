@@ -1,5 +1,6 @@
 package com.hh.contractstestsadmin.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dto.validator.ValidationDto;
@@ -60,9 +61,16 @@ public class ValidatorService {
         .filter(service -> service.getConsumerData().isPresent())
         .collect(Collectors.toMap(
             service -> service.getName(),
-            service -> ExpectationsDataMapper.map(service,
-                standsDao.getArtefactBody(standName, standsDao.buildArtefactPath(standName, service.getName(), service.getVersion(),
-                    ArtefactType.EXPECTATION)))));
+            service -> {
+              try {
+                return ExpectationsDataMapper.map(service,
+                    standsDao.getArtefactBody(standName, standsDao.buildArtefactPath(standName, service.getName(), service.getVersion(),
+                        ArtefactType.EXPECTATION)), objectMapper);
+              } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+              }
+            }
+        ));
   }
 
   private Map<String, SchemaData> extractAndEnrichSchemas(String standName, List<Service> standServices) {
