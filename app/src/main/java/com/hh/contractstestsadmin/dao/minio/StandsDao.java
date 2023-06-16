@@ -136,8 +136,8 @@ public class StandsDao {
     }
   }
 
-  public String buildArtefactPath(String standName, String serviceName, String version, ArtefactType artefactType){
-    if(ArtefactType.EXPECTATION.equals(artefactType)){
+  public String buildArtefactPath(String standName, String serviceName, String version, ArtefactType artefactType) {
+    if (ArtefactType.EXPECTATION.equals(artefactType)) {
       return standName + "/" + minioProperties.getProperty("minio.consumer.artefact.type") + "/" + serviceName + "/" + version + ".json";
     }
     return standName + "/" + minioProperties.getProperty("minio.producer.artefact.type") + "/" + serviceName + "/" + version + ".yaml";
@@ -150,6 +150,7 @@ public class StandsDao {
     }
     return response.code();
   }
+
   @NotNull
   private Iterable<Result<Item>> getStandArtefacts(@NotNull String standName) throws StandsDaoException, StandNotFoundException {
     validator.validate(standName);

@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import javax.persistence.LockModeType;
 import org.springframework.transaction.annotation.Transactional;
 
 public class ValidationService {
@@ -47,8 +48,6 @@ public class ValidationService {
 
   private final ErrorTypeDao errorTypeDao;
 
-  private final StandsDao standsDao;
-
   private final ValidationBuilder validationBuilder;
 
   public ValidationService(
@@ -56,7 +55,6 @@ public class ValidationService {
       ServiceDao serviceDao,
       ErrorTypeDao errorTypeDao,
       String minioReleaseName,
-      StandsDao standsDao,
       ValidationBuilder validationBuilder
   ) {
     this.validationDao = validationDao;
@@ -65,7 +63,6 @@ public class ValidationService {
     this.minioReleaseName = minioReleaseName;
     this.serviceDao = serviceDao;
     this.errorTypeDao = errorTypeDao;
-    this.standsDao = standsDao;
     this.validationBuilder = validationBuilder;
   }
 
@@ -181,18 +178,31 @@ public class ValidationService {
       expectation.setResponseStatus(wrongExpectation.getResponse().getStatus());
       expectation.setResponseHeaders(wrongExpectation.getResponse().getHeaders());
       expectation.setResponseBody(wrongExpectation.getResponse().getBody());
-      for(MessageDto message: wrongExpectation.getMessages()){
+      for (MessageDto message : wrongExpectation.getMessages()) {
         expectation.addContractTestError(mapToContractTestError(message));
       }
       return expectation;
     }
 
-    private ContractTestError mapToContractTestError(MessageDto message){
+    private ContractTestError mapToContractTestError(MessageDto message) {
       ContractTestError contractTestError = new ContractTestError();
       contractTestError.setErrorType(errorTypesContextManager.getOrCreateErrorType(message.getKey()));
       contractTestError.setErrorMessage(message.getMessage());
       contractTestError.setLevel(message.getLevel());
       return contractTestError;
+    }
+
+    private void retryIfBreak(Runnable runnable) {
+      for (int i = 2; i >= 0; i--) {
+        try {
+          runnable.run();
+          break;
+        } catch (Exception exception) {
+          if (i < 1) {
+            throw exception;
+          }
+        }
+      }
     }
 
     private class ErrorTypesContextManager {
@@ -201,16 +211,26 @@ public class ValidationService {
 
       public ErrorType getOrCreateErrorType(String errorKey) {
         if (!errorTypesContext.containsKey(errorKey)) {
-          Optional<ErrorType> errorTypeFromDb = errorTypeDao.getErrorTypeByKey(errorKey);
-          if (errorTypeFromDb.isPresent()) {
-            errorTypesContext.put(errorKey, errorTypeFromDb.get());
-          } else {
-            errorTypesContext.put(errorKey, new ErrorType(errorKey, null, 0));
-          }
+          retryIfBreak(() -> {
+            Optional<ErrorType> errorTypeFromDb = errorTypeDao.getErrorTypeByKey(errorKey, LockModeType.PESSIMISTIC_WRITE);
+            if (errorTypeFromDb.isPresent()) {
+              errorTypesContext.put(errorKey, errorTypeFromDb.get());
+            } else {
+              ErrorType newErrorType = createErrorTypeFromKey(errorKey);
+              errorTypeDao.saveErrorType(newErrorType);
+              errorTypesContext.put(errorKey, newErrorType);
+            }
+          });
         }
         return errorTypesContext.get(errorKey);
       }
 
+      private ErrorType createErrorTypeFromKey(String errorKey) {
+        ErrorType errorType = new ErrorType();
+        errorType.setErrorKey(errorKey);
+        errorType.setVersion(0);
+        return errorType;
+      }
     }
 
     private class ServicesContextManager {
@@ -220,12 +240,16 @@ public class ValidationService {
       public Service getOrCreateService(String serviceName, String standName, String version) {
         ServiceSearchToken serviceSearchToken = new ServiceSearchToken(serviceName, standName, version);
         if (!servicesContext.containsKey(serviceSearchToken)) {
-          Optional<Service> serviceFromDb = serviceDao.findServiceByFields(serviceName, standName, version);
-          if (serviceFromDb.isPresent()) {
-            servicesContext.put(serviceSearchToken, serviceFromDb.get());
-          } else {
-            servicesContext.put(serviceSearchToken, createServiceFromToken(serviceSearchToken));
-          }
+          retryIfBreak(() -> {
+            Optional<Service> serviceFromDb = serviceDao.findServiceByFields(serviceName, standName, version, LockModeType.PESSIMISTIC_WRITE);
+            if (serviceFromDb.isPresent()) {
+              servicesContext.put(serviceSearchToken, serviceFromDb.get());
+            } else {
+              Service newService = createServiceFromToken(serviceSearchToken);
+              serviceDao.saveService(newService);
+              servicesContext.put(serviceSearchToken, newService);
+            }
+          });
         }
         return servicesContext.get(serviceSearchToken);
       }

@@ -1,7 +1,5 @@
 package com.hh.contractstestsadmin.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
@@ -10,25 +8,25 @@ import com.hh.contractstestsadmin.dto.validator.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
-import com.hh.contractstestsadmin.exception.ValidationResultRecordException;
-import com.hh.contractstestsadmin.exception.ValidatorException;
 import com.hh.contractstestsadmin.model.Validation;
 
+import com.hh.contractstestsadmin.resource.CustomEntityResource;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StandValidationService {
+
+  private static final Logger LOG = LoggerFactory.getLogger(CustomEntityResource.class);
 
   private final StandsDao standsDao;
 
   private final ValidationService validationService;
-
-  private final ObjectMapper objectMapper;
 
   private final ExecutorService executorService;
 
@@ -38,14 +36,12 @@ public class StandValidationService {
       StandsDao standsDao,
       ValidationService validationService,
       ExecutorService executorService,
-      ValidatorService validatorService,
-      ObjectMapper objectMapper
+      ValidatorService validatorService
   ) {
     this.standsDao = standsDao;
     this.validationService = validationService;
     this.executorService = executorService;
     this.validatorService = validatorService;
-    this.objectMapper = objectMapper;
   }
 
   private boolean standExists(String standName) throws StandsDaoException, StandNotFoundException {
@@ -75,6 +71,7 @@ public class StandValidationService {
       ValidationDto validationResult = validatorService.validate(standName);
       validationService.recordValidationResult(validationId, validationResult);
     } catch (Exception e) {
+      LOG.error("validation process ended with an error", e);
       throw new RuntimeException(e);
     }
   }

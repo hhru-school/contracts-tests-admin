@@ -2,6 +2,7 @@ package com.hh.contractstestsadmin.dao;
 
 import com.hh.contractstestsadmin.model.Service;
 import java.util.Optional;
+import javax.persistence.LockModeType;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -26,6 +27,21 @@ public class ServiceDao {
             .setParameter("serviceName", serviceName)
             .setParameter("standName", standName)
             .setParameter("tag", tag)
+            .getResultList()
+            .stream()
+            .findAny();
+    }
+
+    public Optional<Service> findServiceByFields(String serviceName, String standName, String tag, LockModeType lockModeType){
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery(
+                "SELECT service FROM Service service" +
+                    " WHERE service.serviceName = :serviceName AND service.standName = :standName AND service.tag = :tag",
+                Service.class)
+            .setParameter("serviceName", serviceName)
+            .setParameter("standName", standName)
+            .setParameter("tag", tag)
+            .setLockMode(lockModeType)
             .getResultList()
             .stream()
             .findAny();

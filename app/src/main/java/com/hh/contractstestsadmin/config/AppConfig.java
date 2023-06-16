@@ -128,7 +128,6 @@ public class AppConfig {
       ValidationInfoDao validationInfoDao,
       ServiceDao serviceDao,
       ErrorTypeDao errorTypeDao,
-      StandsDao standsDao,
       ValidationBuilder validationBuilder
   ) {
     return new ValidationService(
@@ -138,13 +137,12 @@ public class AppConfig {
         serviceDao,
         errorTypeDao,
         minioReleaseName,
-        standsDao,
         validationBuilder
     );
   }
 
   @Bean
-  public ValidationBuilder validationBuilder(StandsDao standsDao){
+  public ValidationBuilder validationBuilder(StandsDao standsDao) {
     return new ValidationBuilder(standsDao, minioReleaseName);
   }
 
@@ -153,10 +151,9 @@ public class AppConfig {
       StandsDao standsDao,
       ValidationService validationService,
       ExecutorService executorService,
-      ObjectMapper objectMapper,
       ValidatorService validatorService
   ) {
-    return new StandValidationService(standsDao, validationService, executorService, validatorService, objectMapper);
+    return new StandValidationService(standsDao, validationService, executorService, validatorService);
   }
 
   @Bean
