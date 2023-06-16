@@ -19,9 +19,7 @@ import io.minio.MinioClient;
 import io.swagger.jaxrs.config.BeanConfig;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Executors;
 import javax.sql.DataSource;
 
 import com.hh.contractstestsadmin.service.StatusService;
@@ -85,9 +83,6 @@ public class AppConfig {
   @Value("${minio.artefact.url.expiration.period}")
   private String artefactUrlExpirationPeriod;
 
-  @Value("${background.threads.count.max}")
-  private Integer backgroundThreadsMaxCount;
-
   @Bean
   public BeanConfig configureSwagger() {
     BeanConfig swaggerConfigBean = new BeanConfig();
@@ -103,7 +98,7 @@ public class AppConfig {
 
   @Bean
   public ExecutorService executorService() {
-    return new ThreadPoolExecutor(0, backgroundThreadsMaxCount, 60, TimeUnit.SECONDS, new SynchronousQueue<>());
+    return Executors.newSingleThreadExecutor();
   }
 
   @Bean

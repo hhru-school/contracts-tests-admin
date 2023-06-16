@@ -205,7 +205,7 @@ public class ValidationService {
           if (errorTypeFromDb.isPresent()) {
             errorTypesContext.put(errorKey, errorTypeFromDb.get());
           } else {
-            errorTypesContext.put(errorKey, new ErrorType(errorKey));
+            errorTypesContext.put(errorKey, new ErrorType(errorKey, null, 0));
           }
         }
         return errorTypesContext.get(errorKey);

@@ -37,10 +37,6 @@ public class ErrorType {
   public ErrorType() {
   }
 
-  public ErrorType(String errorKey) {
-    this.errorKey = errorKey;
-  }
-
   public ErrorType(String errorKey, String comment, int version) {
     this.errorKey = errorKey;
     this.comment = comment;

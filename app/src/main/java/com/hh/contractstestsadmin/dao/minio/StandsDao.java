@@ -137,7 +137,7 @@ public class StandsDao {
   }
 
   public String buildArtefactPath(String standName, String serviceName, String version, ArtefactType artefactType){
-    if(artefactType.equals(ArtefactType.EXPECTATION)){
+    if(ArtefactType.EXPECTATION.equals(artefactType)){
       return standName + "/" + minioProperties.getProperty("minio.consumer.artefact.type") + "/" + serviceName + "/" + version + ".json";
     }
     return standName + "/" + minioProperties.getProperty("minio.producer.artefact.type") + "/" + serviceName + "/" + version + ".yaml";
