@@ -13,43 +13,306 @@ public class ExpectationsDataMapper {
 
   public static ExpectationsData map(Service service, String expectationsString, ObjectMapper objectMapper) throws JsonProcessingException {
     expectationsString = "{\n" +
-        "  \"serviceName\": \"jlogic\",\n" +
-        "  \"expectations\": [{\n" +
-        "    \"expectedRequest\": {\n" +
-        "      \"method\": \"GET\",\n" +
-        "      \"path\": \"subscription/unsubscribe_link/1/applicant_digest\",\n" +
-        "      \"body\": null,\n" +
-        "      \"headers\": {},\n" +
-        "      \"queryParams\": {}        \n" +
-        "    },\n" +
-        "    \"expectedResponse\": {\n" +
-        "      \"status\": 200,\n" +
-        "      \"headers\": {\n" +
-        "        \"Content-Type\": [\"application/json\"]\n" +
+        "  \"serviceName\" : \"jlogic\",\n" +
+        "  \"expectations\" : [ {\n" +
+        "    \"expectedRequest\" : {\n" +
+        "      \"method\" : \"GET\",\n" +
+        "      \"path\" : \"/device/123\",\n" +
+        "      \"body\" : null,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Accept\" : [ \"application/json\" ],\n" +
+        "        \"X-Outer-Timeout-Ms\" : [ \"0\" ]\n" +
         "      },\n" +
-        "      \"responseBody\": \"{\\\"id\\\": 2,\\\"entityId\\\": 1,\\\"unsubscribeUrl\\\": \\\"/unsubscribe\\\"}\"\n" +
+        "      \"queryParams\" : { }\n" +
         "    },\n" +
-        "    \"expectedResponse\": {\n" +
-        "      \"status\": 200,\n" +
-        "      \"headers\": {\n" +
-        "        \"Content-Type\": [\"application/json\"]\n" +
+        "    \"expectedResponse\" : {\n" +
+        "      \"status\" : 200,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Content-Type\" : [ \"application/json\" ]\n" +
         "      },\n" +
-        "      \"responseBody\": \"{\\\"id\\\": 1,\\\"unsubscribeUrl\\\":\\\"/unsubscribe\\\"}\"\n" +
+        "      \"responseBody\" : \"{\\\"deviceId\\\":123,\\\"deviceToken\\\":null,\\\"registrationTime\\\":null,\\\"lastVisitTime\\\":null," +
+        "\\\"active\\\":true,\\\"deviceOsType\\\":null,\\\"deviceMode\\\":null,\\\"ownerUserId\\\":12300," +
+        "\\\"atLeastOnceUsedByRegisteredUser\\\":false,\\\"uuid\\\":null}\"\n" +
         "    },\n" +
-        "    \"producerName\": \"subscriptions\"\n" +
-        "  },\n" +
-        "  {\n" +
-        "    \"expectedRequest\": {\n" +
-        "      \"method\": \"POST\",\n" +
-        "      \"path\": \"/subscription/externalemail/\",\n" +
-        "      \"body\": null,\n" +
-        "      \"headers\": {},\n" +
-        "      \"queryParams\": {}\n" +
+        "    \"producerName\" : \"mobile-notifier\",\n" +
+        "    \"testInfo\" : \"SendOpenLinkPushToDeviceTest.testAddUtmParamsToLinkUrl()\",\n" +
+        "    \"minimalRequired\" : false\n" +
+        "  }, {\n" +
+        "    \"expectedRequest\" : {\n" +
+        "      \"method\" : \"GET\",\n" +
+        "      \"path\" : \"/device/123\",\n" +
+        "      \"body\" : null,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Accept\" : [ \"application/json\" ],\n" +
+        "        \"X-Outer-Timeout-Ms\" : [ \"0\" ]\n" +
+        "      },\n" +
+        "      \"queryParams\" : { }\n" +
         "    },\n" +
-        "    \"expectedResponse\": { \"status\":200, \"headers\": {}, \"responseBody\": null },\n" +
-        "    \"producerName\": \"subscriptions\" \n" +
-        "  }]\n" +
-        "}\n";
+        "    \"expectedResponse\" : {\n" +
+        "      \"status\" : 200,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Content-Type\" : [ \"application/json\" ]\n" +
+        "      },\n" +
+        "      \"responseBody\" : \"{\\\"deviceId\\\":123,\\\"deviceToken\\\":null,\\\"registrationTime\\\":null,\\\"lastVisitTime\\\":null," +
+        "\\\"active\\\":true,\\\"deviceOsType\\\":null,\\\"deviceMode\\\":null,\\\"ownerUserId\\\":null," +
+        "\\\"atLeastOnceUsedByRegisteredUser\\\":true,\\\"uuid\\\":null}\"\n" +
+        "    },\n" +
+        "    \"producerName\" : \"mobile-notifier\",\n" +
+        "    \"testInfo\" : \"SendOpenLinkPushToDeviceTest.shouldNotSendIfAppWasUsedAndBothOfUserFiltersAreEnabled()\",\n" +
+        "    \"minimalRequired\" : false\n" +
+        "  }, {\n" +
+        "    \"expectedRequest\" : {\n" +
+        "      \"method\" : \"GET\",\n" +
+        "      \"path\" : \"/device/123\",\n" +
+        "      \"body\" : null,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Accept\" : [ \"application/json\" ],\n" +
+        "        \"X-Outer-Timeout-Ms\" : [ \"0\" ]\n" +
+        "      },\n" +
+        "      \"queryParams\" : { }\n" +
+        "    },\n" +
+        "    \"expectedResponse\" : {\n" +
+        "      \"status\" : 200,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Content-Type\" : [ \"application/json\" ]\n" +
+        "      },\n" +
+        "      \"responseBody\" : \"{\\\"deviceId\\\":123,\\\"deviceToken\\\":null,\\\"registrationTime\\\":null,\\\"lastVisitTime\\\":null," +
+        "\\\"active\\\":true,\\\"deviceOsType\\\":null,\\\"deviceMode\\\":null,\\\"ownerUserId\\\":null," +
+        "\\\"atLeastOnceUsedByRegisteredUser\\\":true,\\\"uuid\\\":null}\"\n" +
+        "    },\n" +
+        "    \"producerName\" : \"mobile-notifier\",\n" +
+        "    \"testInfo\" : \"SendOpenLinkPushToDeviceTest.testAddUtmAndParamsWithoutUserIdToHhResearchLinkUrlWhenThereIsNoUserId()\",\n" +
+        "    \"minimalRequired\" : false\n" +
+        "  }, {\n" +
+        "    \"expectedRequest\" : {\n" +
+        "      \"method\" : \"GET\",\n" +
+        "      \"path\" : \"/device/123\",\n" +
+        "      \"body\" : null,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Accept\" : [ \"application/json\" ],\n" +
+        "        \"X-Outer-Timeout-Ms\" : [ \"0\" ]\n" +
+        "      },\n" +
+        "      \"queryParams\" : { }\n" +
+        "    },\n" +
+        "    \"expectedResponse\" : {\n" +
+        "      \"status\" : 599,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Content-Type\" : [ \"application/json\" ]\n" +
+        "      },\n" +
+        "      \"responseBody\" : \"null\"\n" +
+        "    },\n" +
+        "    \"producerName\" : \"mobile-notifier\",\n" +
+        "    \"testInfo\" : \"SendOpenLinkPushToDeviceTest.shouldNotSendIfEmptyDevice()\",\n" +
+        "    \"minimalRequired\" : false\n" +
+        "  }, {\n" +
+        "    \"expectedRequest\" : {\n" +
+        "      \"method\" : \"GET\",\n" +
+        "      \"path\" : \"/device/123\",\n" +
+        "      \"body\" : null,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Accept\" : [ \"application/json\" ],\n" +
+        "        \"X-Outer-Timeout-Ms\" : [ \"0\" ]\n" +
+        "      },\n" +
+        "      \"queryParams\" : { }\n" +
+        "    },\n" +
+        "    \"expectedResponse\" : {\n" +
+        "      \"status\" : 200,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Content-Type\" : [ \"application/json\" ]\n" +
+        "      },\n" +
+        "      \"responseBody\" : \"{\\\"deviceId\\\":123,\\\"deviceToken\\\":null,\\\"registrationTime\\\":null,\\\"lastVisitTime\\\":null," +
+        "\\\"active\\\":true,\\\"deviceOsType\\\":null,\\\"deviceMode\\\":null,\\\"ownerUserId\\\":null," +
+        "\\\"atLeastOnceUsedByRegisteredUser\\\":true,\\\"uuid\\\":null}\"\n" +
+        "    },\n" +
+        "    \"producerName\" : \"mobile-notifier\",\n" +
+        "    \"testInfo\" : \"SendOpenLinkPushToDeviceTest.shouldNotSendIfAppWasUsedAndFilterIsForNeverUsedByRegisteredUserOnly()\",\n" +
+        "    \"minimalRequired\" : false\n" +
+        "  }, {\n" +
+        "    \"expectedRequest\" : {\n" +
+        "      \"method\" : \"GET\",\n" +
+        "      \"path\" : \"/device/123\",\n" +
+        "      \"body\" : null,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Accept\" : [ \"application/json\" ],\n" +
+        "        \"X-Outer-Timeout-Ms\" : [ \"0\" ]\n" +
+        "      },\n" +
+        "      \"queryParams\" : { }\n" +
+        "    },\n" +
+        "    \"expectedResponse\" : {\n" +
+        "      \"status\" : 200,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Content-Type\" : [ \"application/json\" ]\n" +
+        "      },\n" +
+        "      \"responseBody\" : \"{\\\"deviceId\\\":123,\\\"deviceToken\\\":null,\\\"registrationTime\\\":null,\\\"lastVisitTime\\\":null," +
+        "\\\"active\\\":true,\\\"deviceOsType\\\":null,\\\"deviceMode\\\":null,\\\"ownerUserId\\\":null," +
+        "\\\"atLeastOnceUsedByRegisteredUser\\\":false,\\\"uuid\\\":null}\"\n" +
+        "    },\n" +
+        "    \"producerName\" : \"mobile-notifier\",\n" +
+        "    \"testInfo\" : \"SendOpenLinkPushToDeviceTest.shouldNotSendIfAppWasNotUsedAndFilterIsForUsedByRegisteredUserOnly()\",\n" +
+        "    \"minimalRequired\" : false\n" +
+        "  }, {\n" +
+        "    \"expectedRequest\" : {\n" +
+        "      \"method\" : \"GET\",\n" +
+        "      \"path\" : \"/device/123\",\n" +
+        "      \"body\" : null,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Accept\" : [ \"application/json\" ],\n" +
+        "        \"X-Outer-Timeout-Ms\" : [ \"0\" ]\n" +
+        "      },\n" +
+        "      \"queryParams\" : { }\n" +
+        "    },\n" +
+        "    \"expectedResponse\" : {\n" +
+        "      \"status\" : 200,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Content-Type\" : [ \"application/json\" ]\n" +
+        "      },\n" +
+        "      \"responseBody\" : \"{\\\"deviceId\\\":123,\\\"deviceToken\\\":null,\\\"registrationTime\\\":null,\\\"lastVisitTime\\\":null," +
+        "\\\"active\\\":true,\\\"deviceOsType\\\":null,\\\"deviceMode\\\":null,\\\"ownerUserId\\\":null," +
+        "\\\"atLeastOnceUsedByRegisteredUser\\\":false,\\\"uuid\\\":null}\"\n" +
+        "    },\n" +
+        "    \"producerName\" : \"mobile-notifier\",\n" +
+        "    \"testInfo\" : \"SendOpenLinkPushToDeviceTest.shouldSendIfAppWasNotUsedAndFilterIsForNeverUsedByRegisteredUserOnly()\",\n" +
+        "    \"minimalRequired\" : false\n" +
+        "  }, {\n" +
+        "    \"expectedRequest\" : {\n" +
+        "      \"method\" : \"GET\",\n" +
+        "      \"path\" : \"/device/123\",\n" +
+        "      \"body\" : null,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Accept\" : [ \"application/json\" ],\n" +
+        "        \"X-Outer-Timeout-Ms\" : [ \"0\" ]\n" +
+        "      },\n" +
+        "      \"queryParams\" : { }\n" +
+        "    },\n" +
+        "    \"expectedResponse\" : {\n" +
+        "      \"status\" : 200,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Content-Type\" : [ \"application/json\" ]\n" +
+        "      },\n" +
+        "      \"responseBody\" : \"{\\\"deviceId\\\":123,\\\"deviceToken\\\":null,\\\"registrationTime\\\":null,\\\"lastVisitTime\\\":null," +
+        "\\\"active\\\":true,\\\"deviceOsType\\\":null,\\\"deviceMode\\\":null,\\\"ownerUserId\\\":null," +
+        "\\\"atLeastOnceUsedByRegisteredUser\\\":false,\\\"uuid\\\":null}\"\n" +
+        "    },\n" +
+        "    \"producerName\" : \"mobile-notifier\",\n" +
+        "    \"testInfo\" : \"SendOpenLinkPushToDeviceTest.shouldSendIfAppWasNotUsedAndUserFilterNotSpecify()\",\n" +
+        "    \"minimalRequired\" : false\n" +
+        "  }, {\n" +
+        "    \"expectedRequest\" : {\n" +
+        "      \"method\" : \"GET\",\n" +
+        "      \"path\" : \"/device/123\",\n" +
+        "      \"body\" : null,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Accept\" : [ \"application/json\" ],\n" +
+        "        \"X-Outer-Timeout-Ms\" : [ \"0\" ]\n" +
+        "      },\n" +
+        "      \"queryParams\" : { }\n" +
+        "    },\n" +
+        "    \"expectedResponse\" : {\n" +
+        "      \"status\" : 200,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Content-Type\" : [ \"application/json\" ]\n" +
+        "      },\n" +
+        "      \"responseBody\" : \"{\\\"deviceId\\\":123,\\\"deviceToken\\\":null,\\\"registrationTime\\\":null,\\\"lastVisitTime\\\":null," +
+        "\\\"active\\\":true,\\\"deviceOsType\\\":null,\\\"deviceMode\\\":null,\\\"ownerUserId\\\":12300," +
+        "\\\"atLeastOnceUsedByRegisteredUser\\\":true,\\\"uuid\\\":null}\"\n" +
+        "    },\n" +
+        "    \"producerName\" : \"mobile-notifier\",\n" +
+        "    \"testInfo\" : \"SendOpenLinkPushToDeviceTest.testAddUtmAndUserIdParamsToLinkUrl()\",\n" +
+        "    \"minimalRequired\" : false\n" +
+        "  }, {\n" +
+        "    \"expectedRequest\" : {\n" +
+        "      \"method\" : \"GET\",\n" +
+        "      \"path\" : \"/device/123\",\n" +
+        "      \"body\" : null,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Accept\" : [ \"application/json\" ],\n" +
+        "        \"X-Outer-Timeout-Ms\" : [ \"0\" ]\n" +
+        "      },\n" +
+        "      \"queryParams\" : { }\n" +
+        "    },\n" +
+        "    \"expectedResponse\" : {\n" +
+        "      \"status\" : 200,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Content-Type\" : [ \"application/json\" ]\n" +
+        "      },\n" +
+        "      \"responseBody\" : \"{\\\"deviceId\\\":123,\\\"deviceToken\\\":null,\\\"registrationTime\\\":null,\\\"lastVisitTime\\\":null," +
+        "\\\"active\\\":true,\\\"deviceOsType\\\":null,\\\"deviceMode\\\":null,\\\"ownerUserId\\\":null," +
+        "\\\"atLeastOnceUsedByRegisteredUser\\\":true,\\\"uuid\\\":null}\"\n" +
+        "    },\n" +
+        "    \"producerName\" : \"mobile-notifier\",\n" +
+        "    \"testInfo\" : \"SendOpenLinkPushToDeviceTest.testForLinkWithoutHost()\",\n" +
+        "    \"minimalRequired\" : false\n" +
+        "  }, {\n" +
+        "    \"expectedRequest\" : {\n" +
+        "      \"method\" : \"GET\",\n" +
+        "      \"path\" : \"/device/123\",\n" +
+        "      \"body\" : null,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Accept\" : [ \"application/json\" ],\n" +
+        "        \"X-Outer-Timeout-Ms\" : [ \"0\" ]\n" +
+        "      },\n" +
+        "      \"queryParams\" : { }\n" +
+        "    },\n" +
+        "    \"expectedResponse\" : {\n" +
+        "      \"status\" : 200,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Content-Type\" : [ \"application/json\" ]\n" +
+        "      },\n" +
+        "      \"responseBody\" : \"{\\\"deviceId\\\":123,\\\"deviceToken\\\":null,\\\"registrationTime\\\":null,\\\"lastVisitTime\\\":null," +
+        "\\\"active\\\":true,\\\"deviceOsType\\\":null,\\\"deviceMode\\\":null,\\\"ownerUserId\\\":null," +
+        "\\\"atLeastOnceUsedByRegisteredUser\\\":false,\\\"uuid\\\":null}\"\n" +
+        "    },\n" +
+        "    \"producerName\" : \"mobile-notifier\",\n" +
+        "    \"testInfo\" : \"SendOpenLinkPushToDeviceTest.shouldSendIfAppWasNotUsedAndBothOfUserFiltersAreEnabled()\",\n" +
+        "    \"minimalRequired\" : false\n" +
+        "  }, {\n" +
+        "    \"expectedRequest\" : {\n" +
+        "      \"method\" : \"GET\",\n" +
+        "      \"path\" : \"/device/123\",\n" +
+        "      \"body\" : null,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Accept\" : [ \"application/json\" ],\n" +
+        "        \"X-Outer-Timeout-Ms\" : [ \"0\" ]\n" +
+        "      },\n" +
+        "      \"queryParams\" : { }\n" +
+        "    },\n" +
+        "    \"expectedResponse\" : {\n" +
+        "      \"status\" : 200,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Content-Type\" : [ \"application/json\" ]\n" +
+        "      },\n" +
+        "      \"responseBody\" : \"{\\\"deviceId\\\":123,\\\"deviceToken\\\":null,\\\"registrationTime\\\":null,\\\"lastVisitTime\\\":null," +
+        "\\\"active\\\":true,\\\"deviceOsType\\\":null,\\\"deviceMode\\\":null,\\\"ownerUserId\\\":null," +
+        "\\\"atLeastOnceUsedByRegisteredUser\\\":true,\\\"uuid\\\":null}\"\n" +
+        "    },\n" +
+        "    \"producerName\" : \"mobile-notifier\",\n" +
+        "    \"testInfo\" : \"SendOpenLinkPushToDeviceTest.shouldSendIfAppWasUsedAndUserFilterNotSpecify()\",\n" +
+        "    \"minimalRequired\" : false\n" +
+        "  }, {\n" +
+        "    \"expectedRequest\" : {\n" +
+        "      \"method\" : \"GET\",\n" +
+        "      \"path\" : \"/device/123\",\n" +
+        "      \"body\" : null,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Accept\" : [ \"application/json\" ],\n" +
+        "        \"X-Outer-Timeout-Ms\" : [ \"0\" ]\n" +
+        "      },\n" +
+        "      \"queryParams\" : { }\n" +
+        "    },\n" +
+        "    \"expectedResponse\" : {\n" +
+        "      \"status\" : 200,\n" +
+        "      \"headers\" : {\n" +
+        "        \"Content-Type\" : [ \"application/json\" ]\n" +
+        "      },\n" +
+        "      \"responseBody\" : \"{\\\"deviceId\\\":123,\\\"deviceToken\\\":null,\\\"registrationTime\\\":null,\\\"lastVisitTime\\\":null," +
+        "\\\"active\\\":true,\\\"deviceOsType\\\":null,\\\"deviceMode\\\":null,\\\"ownerUserId\\\":null," +
+        "\\\"atLeastOnceUsedByRegisteredUser\\\":true,\\\"uuid\\\":null}\"\n" +
+        "    },\n" +
+        "    \"producerName\" : \"mobile-notifier\",\n" +
+        "    \"testInfo\" : \"SendOpenLinkPushToDeviceTest.shouldSendIfAppWasUsedAndFilterIsForUsedByRegisteredUserOnly()\",\n" +
+        "    \"minimalRequired\" : false\n" +
+        "  } ]\n" +
+        "}";
     Expectations expectations = objectMapper.readValue(expectationsString, new TypeReference<>(){});
     return new ExpectationsData(expectations, service.getVersion());
   }
