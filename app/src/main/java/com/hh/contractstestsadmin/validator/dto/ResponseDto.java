@@ -1,5 +1,6 @@
 package com.hh.contractstestsadmin.validator.dto;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ public class ResponseDto {
 
   private Integer status;
 
-  private Map<String, List<String>> headers;
+  private Map<String, List<String>> headers = new HashMap<>();
 
   private String body;
 
