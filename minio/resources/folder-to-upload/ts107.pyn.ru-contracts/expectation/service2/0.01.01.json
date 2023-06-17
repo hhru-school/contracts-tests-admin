@@ -1,34 +1,25 @@
 {
-  "serviceName": "jlogic",
-  "expectations": [{
-    "expectedRequest": {
-      "method": "GET",
-      "path": "subscription/unsubscribe_link/1/applicant_digest",
-      "body": null,
-      "headers": {},
-      "queryParams": {}        
-    },
-    "expectedResponse": {
-      "status": 200,
-      "headers": {
-        "Content-Type": ["application/json"]
+  "serviceName" : "service",
+  "expectations" : [ {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
       },
-      "responseBody": {
-        "id": 1,
-        "unsubscribeUrl": "/unsubscribe"
-      }
+      "queryParams" : { }
     },
-    "producerName": "subscriptions"
-  },
-  {
-    "expectedRequest": {
-      "method": "POST",
-      "path": "/subscription/externalemail/",
-      "body": null,
-      "headers": {},
-      "queryParams": {}
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":\"null\",\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":\"null\",\"deviceMode\":null,\"ownerUserId\":12300,\"atLeastOnceUsedByRegisteredUser\":false,\"uuid\":null}"
     },
-    "expectedResponse": { "status":200, "headers": {}, "responseBody": null },
-    "producerName": "subscriptions" 
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.testAddUtmParamsToLinkUrl()",
+    "minimalRequired" : false
   }]
 }
