@@ -6,7 +6,7 @@ public class ValidationDto {
 
   private String validatorReport;
 
-  private List<WrongExpectationDto> wrongExpectationsDto;
+  private List<WrongExpectationDto> wrongExpectations;
 
   public String getValidatorReport() {
     return validatorReport;
@@ -16,11 +16,11 @@ public class ValidationDto {
     this.validatorReport = validatorReport;
   }
 
-  public List<WrongExpectationDto> getWrongExpectationsDto() {
-    return wrongExpectationsDto;
+  public List<WrongExpectationDto> getWrongExpectations() {
+    return wrongExpectations;
   }
 
-  public void setWrongExpectationsDto(List<WrongExpectationDto> wrongExpectationsDto) {
-    this.wrongExpectationsDto = wrongExpectationsDto;
+  public void setWrongExpectations(List<WrongExpectationDto> wrongExpectations) {
+    this.wrongExpectations = wrongExpectations;
   }
 }

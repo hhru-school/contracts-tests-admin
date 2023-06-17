@@ -11,12 +11,14 @@ import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ServiceDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dao.ValidationInfoDao;
-import com.hh.contractstestsadmin.service.CustomEntityService;
+import com.hh.contractstestsadmin.service.builder.ValidationBuilder;
 import com.hh.contractstestsadmin.service.ValidationService;
 import com.hh.contractstestsadmin.validator.service.ValidatorService;
 import io.minio.MinioClient;
 import io.swagger.jaxrs.config.BeanConfig;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.sql.DataSource;
 
 import com.hh.contractstestsadmin.service.StatusService;
@@ -97,6 +99,11 @@ public class AppConfig {
   }
 
   @Bean
+  public ExecutorService executorService() {
+    return Executors.newSingleThreadExecutor();
+  }
+
+  @Bean
   public ReleaseVersionDao releaseVersionDao() {
     return new ReleaseVersionDao();
   }
@@ -106,26 +113,44 @@ public class AppConfig {
     return new StatusService(standsDao, minioReleaseName, releaseVersionDao);
   }
 
+  @Bean
+  public ErrorTypeDao errorTypeDao(LocalSessionFactoryBean sessionFactoryBean) {
+    return new ErrorTypeDao(sessionFactoryBean.getObject());
+  }
 
   @Bean
   public ValidationService validationService(
       ValidationDao validationDao,
       ReleaseVersionDao releaseVersionDao,
       ValidationInfoDao validationInfoDao,
-      ServiceDao serviceDao
+      ServiceDao serviceDao,
+      ErrorTypeDao errorTypeDao,
+      ValidationBuilder validationBuilder
   ) {
-    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao,
-        minioReleaseName, serviceDao);
+    return new ValidationService(
+        validationDao,
+        releaseVersionDao,
+        validationInfoDao,
+        serviceDao,
+        errorTypeDao,
+        minioReleaseName,
+        validationBuilder
+    );
+  }
+
+  @Bean
+  public ValidationBuilder validationBuilder(StandsDao standsDao) {
+    return new ValidationBuilder(standsDao, minioReleaseName);
   }
 
   @Bean
   public StandValidationService standValidationService(
       StandsDao standsDao,
       ValidationService validationService,
-      ValidatorService validatorService,
-      ObjectMapper objectMapper
+      ExecutorService executorService,
+      ValidatorService validatorService
   ) {
-    return new StandValidationService(standsDao, validationService, validatorService, objectMapper);
+    return new StandValidationService(standsDao, validationService, executorService, validatorService);
   }
 
   @Bean

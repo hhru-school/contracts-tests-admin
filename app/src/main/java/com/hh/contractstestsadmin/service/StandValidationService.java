@@ -1,40 +1,48 @@
 package com.hh.contractstestsadmin.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
-import com.hh.contractstestsadmin.validator.dto.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 
+import com.hh.contractstestsadmin.model.Validation;
+import com.hh.contractstestsadmin.resource.CustomEntityResource;
+import com.hh.contractstestsadmin.validator.dto.ValidationDto;
+import com.hh.contractstestsadmin.validator.service.ValidatorService;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
-
-import com.hh.contractstestsadmin.validator.service.ValidatorService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StandValidationService {
+
+  private static final Logger LOG = LoggerFactory.getLogger(CustomEntityResource.class);
 
   private final StandsDao standsDao;
 
   private final ValidationService validationService;
 
+  private final ExecutorService executorService;
+
   private final ValidatorService validatorService;
 
-  private final ObjectMapper objectMapper;
-
-  public StandValidationService(StandsDao standsDao, ValidationService validationService, ValidatorService validatorService,
-      ObjectMapper objectMapper) {
+  public StandValidationService(
+      StandsDao standsDao,
+      ValidationService validationService,
+      ExecutorService executorService,
+      ValidatorService validatorService
+  ) {
     this.standsDao = standsDao;
     this.validationService = validationService;
+    this.executorService = executorService;
     this.validatorService = validatorService;
-    this.objectMapper = objectMapper;
   }
 
   private boolean standExists(String standName) throws StandsDaoException, StandNotFoundException {
@@ -51,11 +59,22 @@ public class StandValidationService {
     return validationService.getLatestValidationPreviews(standName, sizeLimit);
   }
 
-  public void runValidation(String standName) throws StandNotFoundException, StandsDaoException, IOException {
+  public void runValidation(String standName) throws StandNotFoundException, StandsDaoException {
     if (!standExists(standName)) {
       throw new StandNotFoundException("Stand '" + standName + "' not found");
     }
-    ValidationDto validationDto = validatorService.validate(standName);
+    Validation validation = validationService.createValidation(standName);
+    executorService.submit(() -> startValidationProcess(standName, validation.getId()));
+  }
+
+  private void startValidationProcess(String standName, Long validationId) {
+    try {
+      ValidationDto validationResult = validatorService.validate(standName);
+      validationService.recordValidationResult(validationId, validationResult);
+    } catch (Exception e) {
+      LOG.error("validation process ended with an error", e);
+      throw new RuntimeException(e);
+    }
   }
 
   public ValidationWithRelationsDto getValidationWithRelations(String standName, Long validationId) {

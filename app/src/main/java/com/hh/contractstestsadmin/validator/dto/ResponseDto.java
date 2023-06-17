@@ -34,4 +34,5 @@ public class ResponseDto {
   public void setBody(String body) {
     this.body = body;
   }
+
 }

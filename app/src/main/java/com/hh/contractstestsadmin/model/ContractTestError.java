@@ -1,6 +1,8 @@
 package com.hh.contractstestsadmin.model;
 
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
+import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -28,7 +31,7 @@ public class ContractTestError {
   @Column(name = "error_id")
   private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "error_type_id")
   private ErrorType errorType;
   @Enumerated(EnumType.STRING)
@@ -83,5 +86,18 @@ public class ContractTestError {
 
   public void setErrorType(ErrorType errorType) {
     this.errorType = errorType;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+    ContractTestError that = (ContractTestError) o;
+    return getId() != null && Objects.equals(getId(), that.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
   }
 }
