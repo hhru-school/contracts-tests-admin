@@ -2,8 +2,12 @@ package com.hh.contractstestsadmin.model;
 
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -35,11 +40,11 @@ public class Expectation {
   @Column(name = "expectation_id")
   private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "consumer_id")
   private Service consumer;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "producer_id")
   private Service producer;
 
@@ -53,11 +58,11 @@ public class Expectation {
 
   @Type(type = "jsonb")
   @Column(name = "request_headers", columnDefinition = "jsonb")
-  private List<Entry> requestHeaders = new ArrayList<>();
+  private Map<String, List<String> > requestHeaders = new HashMap<>();
 
   @Type(type = "jsonb")
   @Column(name = "query_params", columnDefinition = "jsonb")
-  private List<Entry> queryParams = new ArrayList<>();
+  private Map<String, List<String> > queryParams = new HashMap<>();
 
   @Column(name = "request_body")
   private String requestBody;
@@ -67,7 +72,7 @@ public class Expectation {
 
   @Type(type = "jsonb")
   @Column(name = "response_headers", columnDefinition = "jsonb")
-  private List<Entry> responseHeaders = new ArrayList<>();
+  private Map<String, List<String> > responseHeaders = new HashMap<>();
 
   @Column(name = "response_body")
   private String responseBody;
@@ -77,10 +82,25 @@ public class Expectation {
   private Validation validation;
 
   @OneToMany(mappedBy = "expectation", orphanRemoval = true, cascade = CascadeType.ALL)
-  private List<ContractTestError> contractTestErrors = new ArrayList<>();
+  private Set<ContractTestError> contractTestErrors = new HashSet<>();
 
 
   public Expectation() {
+  }
+
+  public void linkWithConsumer(Service consumer){
+    consumer.getExpectationsConsumer().add(this);
+    this.setConsumer(consumer);
+  }
+
+  public void linkWithProducer(Service producer){
+    producer.getExpectationsProducer().add(this);
+    this.setProducer(producer);
+  }
+
+  public void addContractTestError(ContractTestError contractTestError){
+    contractTestErrors.add(contractTestError);
+    contractTestError.setExpectation(this);
   }
 
   public Long getId() {
@@ -107,19 +127,19 @@ public class Expectation {
     this.requestPath = requestPath;
   }
 
-  public List<Entry> getRequestHeaders() {
+  public Map<String, List<String> > getRequestHeaders() {
     return requestHeaders;
   }
 
-  public void setRequestHeaders(List<Entry> requestHeaders) {
+  public void setRequestHeaders(Map<String, List<String> > requestHeaders) {
     this.requestHeaders = requestHeaders;
   }
 
-  public List<Entry> getQueryParams() {
+  public Map<String, List<String> > getQueryParams() {
     return queryParams;
   }
 
-  public void setQueryParams(List<Entry> queryParams) {
+  public void setQueryParams(Map<String, List<String> > queryParams) {
     this.queryParams = queryParams;
   }
 
@@ -139,11 +159,11 @@ public class Expectation {
     this.responseStatus = responseStatus;
   }
 
-  public List<Entry> getResponseHeaders() {
+  public Map<String, List<String> > getResponseHeaders() {
     return responseHeaders;
   }
 
-  public void setResponseHeaders(List<Entry> responseHeaders) {
+  public void setResponseHeaders(Map<String, List<String> > responseHeaders) {
     this.responseHeaders = responseHeaders;
   }
 
@@ -151,11 +171,11 @@ public class Expectation {
     return responseBody;
   }
 
-  public List<ContractTestError> getContractTestErrors() {
+  public Set<ContractTestError> getContractTestErrors() {
     return contractTestErrors;
   }
 
-  public void setContractTestErrors(List<ContractTestError> contractTestErrors) {
+  public void setContractTestErrors(Set<ContractTestError> contractTestErrors) {
     this.contractTestErrors = contractTestErrors;
   }
 
@@ -185,5 +205,18 @@ public class Expectation {
 
   public void setValidation(Validation validation) {
     this.validation = validation;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+    Expectation that = (Expectation) o;
+    return getId() != null && Objects.equals(getId(), that.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
   }
 }

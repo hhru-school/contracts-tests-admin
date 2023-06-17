@@ -16,4 +16,3 @@ public class ConsumerDto extends ServiceDto {
   }
 
 }
-

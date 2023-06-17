@@ -6,6 +6,7 @@ import static com.hh.contractstestsadmin.dao.minio.mapper.Util.extractArtefactVe
 import com.hh.contractstestsadmin.exception.MinioClientException;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
+import com.hh.contractstestsadmin.model.artefacts.ArtefactType;
 import com.hh.contractstestsadmin.model.artefacts.Service;
 import io.minio.BucketExistsArgs;
 import io.minio.GetPresignedObjectUrlArgs;
@@ -135,6 +136,13 @@ public class StandsDao {
     }
   }
 
+  public String buildArtefactPath(String standName, String serviceName, String version, ArtefactType artefactType) {
+    if (ArtefactType.EXPECTATION.equals(artefactType)) {
+      return standName + "/" + minioProperties.getProperty("minio.consumer.artefact.type") + "/" + serviceName + "/" + version + ".json";
+    }
+    return standName + "/" + minioProperties.getProperty("minio.producer.artefact.type") + "/" + serviceName + "/" + version + ".yaml";
+  }
+
   private static int getStatusCode(Response response) {
     if (response == null) {
       log.warn("response is null");
@@ -142,6 +150,7 @@ public class StandsDao {
     }
     return response.code();
   }
+
   @NotNull
   private Iterable<Result<Item>> getStandArtefacts(@NotNull String standName) throws StandsDaoException, StandNotFoundException {
     validator.validate(standName);

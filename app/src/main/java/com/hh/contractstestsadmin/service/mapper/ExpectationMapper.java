@@ -10,13 +10,13 @@ public class ExpectationMapper {
     ExpectationDto expectationDto = new ExpectationDto();
     expectationDto.setId(expectation.getId());
     expectationDto.setHttpMethod(expectation.getHttpMethod());
-    expectation.setRequestPath(expectation.getRequestPath());
-    expectationDto.setRequestHeaders(EntryMapper.mapList(expectation.getRequestHeaders()));
+    expectationDto.setRequestPath(expectation.getRequestPath());
+    expectationDto.setRequestHeaders(expectation.getRequestHeaders());
 
-    expectationDto.setQueryParams(EntryMapper.mapList(expectation.getQueryParams()));
+    expectationDto.setQueryParams(expectation.getQueryParams());
     expectationDto.setRequestBody(expectation.getRequestBody());
     expectationDto.setResponseStatus(expectation.getResponseStatus());
-    expectationDto.setResponseHeaders(EntryMapper.mapList(expectation.getResponseHeaders()));
+    expectationDto.setResponseHeaders(expectation.getResponseHeaders());
     expectationDto.setResponseBody(expectation.getResponseBody());
 
     List<ErrorDto> errors = expectation.getContractTestErrors().stream()

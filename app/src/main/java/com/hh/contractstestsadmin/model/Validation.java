@@ -5,8 +5,9 @@ import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -59,10 +61,15 @@ public class Validation {
   private String report;
 
   @OneToMany(mappedBy = "validation", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Expectation> expectations = new ArrayList<>();
+  private Set<Expectation> expectations = new HashSet<>();
 
 
   public Validation() {
+  }
+
+  public void addExpectation(Expectation expectation){
+    expectations.add(expectation);
+    expectation.setValidation(this);
   }
 
   public Long getId() {
@@ -121,11 +128,11 @@ public class Validation {
     this.releaseInformationVersion = releaseInformationVersion;
   }
 
-  public List<Expectation> getExpectations() {
+  public Set<Expectation> getExpectations() {
     return expectations;
   }
 
-  public void setExpectations(List<Expectation> expectations) {
+  public void setExpectations(Set<Expectation> expectations) {
     this.expectations = expectations;
   }
 
@@ -135,5 +142,22 @@ public class Validation {
 
   public void setReport(String report) {
     this.report = report;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+      return false;
+    }
+    Validation that = (Validation) o;
+    return getId() != null && Objects.equals(getId(), that.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
   }
 }
