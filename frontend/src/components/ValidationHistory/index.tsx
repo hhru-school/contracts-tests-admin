@@ -34,6 +34,11 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = ({
             {data.map((item: StandResponse) => (
                 <ListGroupItem key={item.id}>
                     <Row className="align-items-center">
+                        <Col xs={5}>
+                            <div className="d-flex justify-content-center">
+                                {getStatus(item.status)}
+                            </div>
+                        </Col>
                         <Col xs={7}>
                             <NavLink
                                 className="link"
@@ -46,11 +51,6 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = ({
                                     ({new Date(item.createdDate).toLocaleString('ru-RU')} )
                                 </div>
                             </NavLink>
-                        </Col>
-                        <Col xs={5}>
-                            <div className="d-flex justify-content-center">
-                                {getStatus(item.status)}
-                            </div>
                         </Col>
                     </Row>
                 </ListGroupItem>
