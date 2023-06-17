@@ -24,16 +24,15 @@ CREATE TABLE IF NOT EXISTS service
     stand_name       varchar(255)                        not null,
     service_type     service_type,
     tag              varchar(30)                         not null,
-    expectation_link varchar(255),
-    schema_link      varchar(255),
     PRIMARY KEY (service_id)
 );
 
 CREATE TABLE IF NOT EXISTS error_type
 (
     error_type_id BIGINT GENERATED ALWAYS AS IDENTITY not null,
-    error_key     varchar(2048) UNIQUE,
-    comment      varchar(4096),
+    error_key     VARCHAR(2048) UNIQUE,
+    comment       VARCHAR(4096),
+    version       INTEGER default 0,
     PRIMARY KEY (error_type_id)
 );
 
