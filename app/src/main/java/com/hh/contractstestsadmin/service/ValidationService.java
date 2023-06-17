@@ -117,6 +117,18 @@ public class ValidationService {
   }
 
   @Transactional
+  public String getValidationReport(String standName, Long validationId) {
+    Optional<Validation> validationFound = validationDao.getValidation(validationId, standName);
+    Validation validation = validationFound.orElseThrow(() ->
+        new ValidationHistoryNotFoundException("not found validation with stand name: " + standName +
+            " and validation with id: " + validationId)
+    );
+    return validation.getReport();
+  }
+
+
+
+  @Transactional
   public void recordValidationResult(Long validationId, ValidationDto validationResult) throws ValidationResultRecordException {
     Validation validation = validationDao
         .getValidationById(validationId)
