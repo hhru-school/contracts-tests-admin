@@ -9,12 +9,7 @@ import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.model.Validation;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class StandValidationService {
 
@@ -59,13 +54,10 @@ public class StandValidationService {
     return validationService.getExpectations(standName, validationId, producerId, consumerId);
   }
 
-  public String getValidatorReport(String standName, Long validationId) {
-    ClassLoader classLoader = getClass().getClassLoader();
-    InputStream inputStream = classLoader.getResourceAsStream("test-data/validator-report-example.json");
-    if (inputStream == null) {
-      return "";
+  public String getValidatorReport(String standName, Long validationId) throws StandsDaoException {
+    if (!standExists(standName)) {
+      throw new StandNotFoundException("not found stand with name: " + standName);
     }
-    return new BufferedReader(new InputStreamReader(inputStream))
-        .lines().collect(Collectors.joining("\n"));
+    return validationService.getValidationReport(standName, validationId);
   }
 }
