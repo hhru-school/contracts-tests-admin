@@ -1,6 +1,8 @@
 package com.hh.contractstestsadmin.validator.dto;
 
 import com.hh.contractstestsadmin.model.HttpMethod;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RequestDto {
@@ -11,9 +13,9 @@ public class RequestDto {
 
   private String body;
 
-  private Map<String, String> headers;
+  private Map<String, List<String>> headers = new HashMap<>();
 
-  private Map<String, String> queryParams;
+  private Map<String, List<String>> queryParams = new HashMap<>();
 
   public HttpMethod getMethod() {
     return method;
@@ -39,19 +41,19 @@ public class RequestDto {
     this.body = body;
   }
 
-  public Map<String, String> getHeaders() {
+  public Map<String, List<String>> getHeaders() {
     return headers;
   }
 
-  public void setHeaders(Map<String, String> headers) {
+  public void setHeaders(Map<String, List<String>> headers) {
     this.headers = headers;
   }
 
-  public Map<String, String> getQueryParams() {
+  public Map<String, List<String>> getQueryParams() {
     return queryParams;
   }
 
-  public void setQueryParams(Map<String, String> queryParams) {
+  public void setQueryParams(Map<String, List<String>> queryParams) {
     this.queryParams = queryParams;
   }
 }
