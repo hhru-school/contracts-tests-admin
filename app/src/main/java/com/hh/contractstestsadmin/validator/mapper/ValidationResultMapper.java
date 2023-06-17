@@ -20,7 +20,7 @@ public class ValidationResultMapper {
         .collect(Collectors.toList());
     ValidationDto validationDto = new ValidationDto();
     validationDto.setValidatorReport(objectMapper.writeValueAsString(validationResults));
-    validationDto.setWrongExpectationsDto(wrongExpectationDtos);
+    validationDto.setWrongExpectations(wrongExpectationDtos);
     return validationDto;
   }
 }

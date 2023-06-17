@@ -230,13 +230,6 @@ public class StandsDao {
     return minioProperties.getProperty("minio.external.base.url");
   }
 
-  public String buildArtefactPath(String standName, String serviceName, String version, ArtefactType artefactType){
-    if(artefactType.equals(ArtefactType.EXPECTATION)){
-      return standName + "/" + minioProperties.getProperty("minio.consumer.artefact.type") + "/" + serviceName + "/" + version + ".json";
-    }
-    return standName + "/" + minioProperties.getProperty("minio.producer.artefact.type") + "/" + serviceName + "/" + version + ".yaml";
-  }
-
   public String getArtefactBody(String standName, String artefactPath) {
     return "";
   }
