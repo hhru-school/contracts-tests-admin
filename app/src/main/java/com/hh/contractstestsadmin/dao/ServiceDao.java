@@ -2,6 +2,7 @@ package com.hh.contractstestsadmin.dao;
 
 import com.hh.contractstestsadmin.model.Service;
 import java.util.Optional;
+import javax.persistence.LockModeType;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -17,6 +18,35 @@ public class ServiceDao {
         return Optional.ofNullable(session.get(Service.class, serviceId));
     }
 
+    public Optional<Service> findServiceByFields(String serviceName, String standName, String tag){
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery(
+                "SELECT service FROM Service service" +
+                    " WHERE service.serviceName = :serviceName AND service.standName = :standName AND service.tag = :tag",
+                Service.class)
+            .setParameter("serviceName", serviceName)
+            .setParameter("standName", standName)
+            .setParameter("tag", tag)
+            .getResultList()
+            .stream()
+            .findAny();
+    }
+
+    public Optional<Service> findServiceByFields(String serviceName, String standName, String tag, LockModeType lockModeType){
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery(
+                "SELECT service FROM Service service" +
+                    " WHERE service.serviceName = :serviceName AND service.standName = :standName AND service.tag = :tag",
+                Service.class)
+            .setParameter("serviceName", serviceName)
+            .setParameter("standName", standName)
+            .setParameter("tag", tag)
+            .setLockMode(lockModeType)
+            .getResultList()
+            .stream()
+            .findAny();
+    }
+
     public void saveService(Service service) {
         Session session = sessionFactory.getCurrentSession();
         session.save(service);
@@ -30,8 +60,6 @@ public class ServiceDao {
             serviceForUpdate.setServiceName(service.getServiceName());
             serviceForUpdate.setTag(service.getTag());
             serviceForUpdate.setStandName(service.getStandName());
-            serviceForUpdate.setExpectationLink(service.getExpectationLink());
-            serviceForUpdate.setSchemaLink(service.getSchemaLink());
             session.save(serviceForUpdate);
         }
     }
