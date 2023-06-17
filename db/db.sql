@@ -1,7 +1,7 @@
 CREATE TYPE validation_status AS ENUM ('IN_PROGRESS', 'SUCCESS', 'FAILED', 'CANCELLED');
 CREATE TYPE service_type AS ENUM ('CONSUMER', 'PRODUCER', 'CONSUMER_AND_PRODUCER', 'NOT_DEFINED');
-CREATE TYPE error_level AS ENUM ('ERROR', 'WARN', 'INFO', 'FATAL');
-CREATE TYPE http_method AS ENUM ('GET', 'POST', 'DELETE', 'PUT', 'HEAD', 'PATCH', 'OPTIONS');
+CREATE TYPE error_level AS ENUM ('ERROR', 'WARN', 'INFO', 'FATAL', 'IGNORE', 'UNDEFINED');
+CREATE TYPE http_method AS ENUM ('GET', 'POST', 'DELETE', 'PUT', 'HEAD', 'PATCH', 'OPTIONS', 'NOT_DEFINED');
 
 CREATE TABLE IF NOT EXISTS validation
 (
@@ -32,8 +32,9 @@ CREATE TABLE IF NOT EXISTS service
 CREATE TABLE IF NOT EXISTS error_type
 (
     error_type_id BIGINT GENERATED ALWAYS AS IDENTITY not null,
-    error_key     varchar(2048) UNIQUE,
-    comments      varchar(2048),
+    error_key     VARCHAR(2048) UNIQUE,
+    comment       VARCHAR(4096),
+    version       INTEGER default 0,
     PRIMARY KEY (error_type_id)
 );
 
@@ -44,11 +45,11 @@ CREATE TABLE IF NOT EXISTS expectation
     consumer_id      BIGINT,
     producer_id      BIGINT,
     request_path     varchar(2048),
-    request_headers  varchar(2048),
-    query_params     varchar(2048),
+    request_headers  jsonb,
+    query_params     jsonb,
     request_body     varchar(4096),
     response_status  smallint,
-    response_headers varchar(2048),
+    response_headers jsonb,
     response_body    varchar(4096),
     validation_id    BIGINT,
     PRIMARY KEY (expectation_id),
@@ -61,7 +62,7 @@ CREATE TABLE IF NOT EXISTS error
 (
     error_id       BIGINT GENERATED ALWAYS AS IDENTITY not null,
     error_type_id  BIGINT,
-    comments       varchar(2048),
+    error_message  varchar(2048),
     expectation_id BIGINT,
     error_level    error_level,
     PRIMARY KEY (error_id),

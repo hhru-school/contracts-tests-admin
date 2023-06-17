@@ -1,4 +1,4 @@
-package com.hh.contractstestsadmin.dto.validator;
+package com.hh.contractstestsadmin.validator.dto;
 
 import com.hh.contractstestsadmin.model.ErrorLevel;
 
@@ -9,6 +9,8 @@ public class MessageDto {
   private String message;
 
   private ErrorLevel level;
+
+  private Integer responseStatus;
 
   public String getKey() {
     return key;
@@ -32,5 +34,13 @@ public class MessageDto {
 
   public void setLevel(ErrorLevel level) {
     this.level = level;
+  }
+
+  public Integer getResponseStatus() {
+    return responseStatus;
+  }
+
+  public void setResponseStatus(Integer responseStatus) {
+    this.responseStatus = responseStatus;
   }
 }

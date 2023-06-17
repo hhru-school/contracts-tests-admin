@@ -1,4 +1,4 @@
-package com.hh.contractstestsadmin.dto.validator;
+package com.hh.contractstestsadmin.validator.dto;
 
 import java.util.List;
 

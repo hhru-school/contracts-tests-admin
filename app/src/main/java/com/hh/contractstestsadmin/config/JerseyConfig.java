@@ -1,5 +1,6 @@
 package com.hh.contractstestsadmin.config;
 
+import com.hh.contractstestsadmin.resource.CustomEntityResource;
 import com.hh.contractstestsadmin.resource.FileResource;
 import com.hh.contractstestsadmin.resource.HealthResource;
 import com.hh.contractstestsadmin.resource.StatusResource;
@@ -17,6 +18,7 @@ public class JerseyConfig extends ResourceConfig {
     register(FileResource.class);
     register(ValidationResource.class);
     register(ApiListingResource.class);
+    register(CustomEntityResource.class);
     register(SwaggerSerializers.class);
   }
 

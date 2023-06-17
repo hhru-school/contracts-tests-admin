@@ -1,16 +1,15 @@
-package com.hh.contractstestsadmin.service;
+package com.hh.contractstestsadmin.validator.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
-import com.hh.contractstestsadmin.dto.validator.ValidationDto;
-import com.hh.contractstestsadmin.dto.validator.WrongExpectationDto;
+import com.hh.contractstestsadmin.validator.dto.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.model.artefacts.ArtefactType;
 import com.hh.contractstestsadmin.model.artefacts.Service;
 import com.hh.contractstestsadmin.service.mapper.ExpectationsDataMapper;
 import com.hh.contractstestsadmin.service.mapper.SchemaDataMapper;
-import com.hh.contractstestsadmin.service.mapper.WrongExpectationMapper;
+import com.hh.contractstestsadmin.validator.mapper.ValidationResultMapper;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -43,16 +42,7 @@ public class ValidatorService {
     Map<String, ExpectationsData> expectationDataMap = extractAndEnrichExpectations(standName, standServices);
 
     List<ContractValidationResultDto> validationResults = contractsValidator.validateContracts(schemaDataMap, expectationDataMap);
-
-    List<WrongExpectationDto> wrongExpectationDtos = validationResults
-        .stream()
-        .map(WrongExpectationMapper::map)
-        .collect(Collectors.toList());
-    ValidationDto validationDto = new ValidationDto();
-    validationDto.setValidatorReport(objectMapper.writeValueAsString(validationResults));
-    validationDto.setWrongExpectationsDto(wrongExpectationDtos);
-
-    return validationDto;
+    return ValidationResultMapper.map(validationResults, objectMapper);
   }
 
   private Map<String, ExpectationsData> extractAndEnrichExpectations(String standName, List<Service> standServices) {

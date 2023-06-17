@@ -1,17 +1,14 @@
 package com.hh.contractstestsadmin.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
-import com.hh.contractstestsadmin.dto.validator.ValidationDto;
+import com.hh.contractstestsadmin.validator.dto.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
-import com.hh.contractstestsadmin.exception.ValidatorException;
-import com.hh.contractstestsadmin.model.Validation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,7 +16,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.stream.Collectors;
-import ru.hh.contract.validator.dto.ContractValidationResultDto;
+
+import com.hh.contractstestsadmin.validator.service.ValidatorService;
 
 public class StandValidationService {
 
@@ -64,11 +62,11 @@ public class StandValidationService {
     return validationService.getServiceRelation(validationId, standName);
   }
 
-  public List<ExpectationDto> getExpectations(String standName, Long validationId, Long producerId, Long consumerId) throws IOException {
-    ClassLoader classLoader = getClass().getClassLoader();
-    InputStream inputStream = classLoader.getResourceAsStream("test-data/expectations-example.json");
-    return objectMapper.readValue(inputStream, new TypeReference<>() {
-    });
+  public List<ExpectationDto> getExpectations(String standName, Long validationId, Long producerId, Long consumerId) throws StandsDaoException {
+    if (!standExists(standName)) {
+      throw new StandNotFoundException("not found stand with name: " + standName);
+    }
+    return validationService.getExpectations(standName, validationId, producerId, consumerId);
   }
 
   public String getValidatorReport(String standName, Long validationId) {

@@ -1,4 +1,4 @@
-package com.hh.contractstestsadmin.dto.validator;
+package com.hh.contractstestsadmin.validator.dto;
 
 import java.util.List;
 import java.util.Map;
@@ -7,7 +7,7 @@ public class ResponseDto {
 
   private Integer status;
 
-  private Map<String, String> headers;
+  private Map<String, List<String>> headers;
 
   private String body;
 
@@ -19,11 +19,11 @@ public class ResponseDto {
     this.status = status;
   }
 
-  public Map<String, String> getHeaders() {
+  public Map<String, List<String>> getHeaders() {
     return headers;
   }
 
-  public void setHeaders(Map<String, String> headers) {
+  public void setHeaders(Map<String, List<String>> headers) {
     this.headers = headers;
   }
 
