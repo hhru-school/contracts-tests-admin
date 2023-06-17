@@ -1,10 +1,11 @@
 package com.hh.contractstestsadmin.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
-import com.hh.contractstestsadmin.dto.validator.ValidationDto;
+import com.hh.contractstestsadmin.validator.dto.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;

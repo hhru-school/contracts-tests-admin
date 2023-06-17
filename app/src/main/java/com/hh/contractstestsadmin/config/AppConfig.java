@@ -106,32 +106,16 @@ public class AppConfig {
     return new StatusService(standsDao, minioReleaseName, releaseVersionDao);
   }
 
-  @Bean
-  public ValidationService validationService(
-      ValidationDao validationDao, ReleaseVersionDao releaseVersionDao,
-      ValidationInfoDao validationInfoDao, ServiceDao serviceDao
-  ) {
-    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, minioReleaseName,
-        serviceDao
-    );
-  }
 
   @Bean
   public ValidationService validationService(
-      ValidationDao validationDao, ReleaseVersionDao releaseVersionDao,
-      ValidationInfoDao validationInfoDao
+      ValidationDao validationDao,
+      ReleaseVersionDao releaseVersionDao,
+      ValidationInfoDao validationInfoDao,
+      ServiceDao serviceDao
   ) {
-    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, minioReleaseName);
-  }
-
-  @Bean
-  public ValidationService validationService(
-      ValidationDao validationDao, ReleaseVersionDao releaseVersionDao,
-      ValidationInfoDao validationInfoDao, ServiceDao serviceDao
-  ) {
-    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, minioReleaseName,
-        serviceDao
-    );
+    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao,
+        minioReleaseName, serviceDao);
   }
 
   @Bean

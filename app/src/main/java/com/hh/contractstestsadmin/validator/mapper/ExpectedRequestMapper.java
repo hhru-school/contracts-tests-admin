@@ -1,6 +1,6 @@
 package com.hh.contractstestsadmin.validator.mapper;
 
-import com.hh.contractstestsadmin.dto.validator.RequestDto;
+import com.hh.contractstestsadmin.validator.dto.RequestDto;
 import com.hh.contractstestsadmin.model.HttpMethod;
 import ru.hh.test.contract.model.ExpectedRequest;
 

@@ -1,7 +1,7 @@
 package com.hh.contractstestsadmin.validator.mapper;
 
 import com.atlassian.oai.validator.report.ValidationReport;
-import com.hh.contractstestsadmin.dto.validator.MessageDto;
+import com.hh.contractstestsadmin.validator.dto.MessageDto;
 import com.hh.contractstestsadmin.model.ErrorLevel;
 import ru.hh.contract.validator.dto.ValidationMessage;
 

@@ -1,7 +1,7 @@
 package com.hh.contractstestsadmin.validator.mapper;
 
-import com.hh.contractstestsadmin.dto.validator.MessageDto;
-import com.hh.contractstestsadmin.dto.validator.WrongExpectationDto;
+import com.hh.contractstestsadmin.validator.dto.MessageDto;
+import com.hh.contractstestsadmin.validator.dto.WrongExpectationDto;
 import ru.hh.contract.validator.dto.ContractValidationResultDto;
 
 import java.util.List;

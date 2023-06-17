@@ -1,7 +1,6 @@
-package com.hh.contractstestsadmin.dto.validator;
+package com.hh.contractstestsadmin.validator.dto;
 
 import com.hh.contractstestsadmin.model.HttpMethod;
-import java.util.List;
 import java.util.Map;
 
 public class RequestDto {

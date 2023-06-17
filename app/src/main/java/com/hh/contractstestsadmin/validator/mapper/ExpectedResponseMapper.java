@@ -1,6 +1,6 @@
 package com.hh.contractstestsadmin.validator.mapper;
 
-import com.hh.contractstestsadmin.dto.validator.ResponseDto;
+import com.hh.contractstestsadmin.validator.dto.ResponseDto;
 import ru.hh.test.contract.model.ExpectedResponse;
 
 import java.util.HashMap;
