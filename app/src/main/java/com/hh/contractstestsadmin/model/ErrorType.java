@@ -21,13 +21,22 @@ public class ErrorType {
   @Column(name = "error_key")
   private String errorKey;
 
-  @Column(name = "comments")
-  private String comments;
+  @Column(name = "comment")
+  private String comment;
+
+  @Column(name = "version")
+  private int version;
 
   @OneToMany(mappedBy = "errorType", orphanRemoval = true, cascade = CascadeType.ALL)
   private List<ContractTestError> contractTests = new ArrayList<>();
 
   public ErrorType() {
+  }
+
+  public ErrorType(String errorKey, String comment, int version) {
+    this.errorKey = errorKey;
+    this.comment = comment;
+    this.version = version;
   }
 
   public Long getId() {
@@ -46,12 +55,12 @@ public class ErrorType {
     this.errorKey = error_key;
   }
 
-  public String getComments() {
-    return comments;
+  public String getComment() {
+    return comment;
   }
 
-  public void setComments(String comments) {
-    this.comments = comments;
+  public void setComment(String comment) {
+    this.comment = comment;
   }
 
   public List<ContractTestError> getContractTests() {
@@ -60,5 +69,13 @@ public class ErrorType {
 
   public void setContractTests(List<ContractTestError> contractTests) {
     this.contractTests = contractTests;
+  }
+
+  public int getVersion() {
+    return version;
+  }
+
+  public void setVersion(int version) {
+    this.version = version;
   }
 }

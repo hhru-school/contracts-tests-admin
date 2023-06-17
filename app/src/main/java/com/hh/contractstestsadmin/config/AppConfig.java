@@ -1,6 +1,7 @@
 package com.hh.contractstestsadmin.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hh.contractstestsadmin.dao.ErrorTypeDao;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dao.minio.mapper.ConsumerDataMapper;
 import com.hh.contractstestsadmin.dao.minio.mapper.ProducerDataMapper;
@@ -10,6 +11,7 @@ import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ServiceDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dao.ValidationInfoDao;
+import com.hh.contractstestsadmin.service.CustomEntityService;
 import com.hh.contractstestsadmin.service.ValidationService;
 import com.hh.contractstestsadmin.validator.service.ValidatorService;
 import io.minio.MinioClient;
@@ -107,9 +109,29 @@ public class AppConfig {
   @Bean
   public ValidationService validationService(
       ValidationDao validationDao, ReleaseVersionDao releaseVersionDao,
+      ValidationInfoDao validationInfoDao, ServiceDao serviceDao
+  ) {
+    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, minioReleaseName,
+        serviceDao
+    );
+  }
+
+  @Bean
+  public ValidationService validationService(
+      ValidationDao validationDao, ReleaseVersionDao releaseVersionDao,
       ValidationInfoDao validationInfoDao
   ) {
     return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, minioReleaseName);
+  }
+
+  @Bean
+  public ValidationService validationService(
+      ValidationDao validationDao, ReleaseVersionDao releaseVersionDao,
+      ValidationInfoDao validationInfoDao, ServiceDao serviceDao
+  ) {
+    return new ValidationService(validationDao, releaseVersionDao, validationInfoDao, minioReleaseName,
+        serviceDao
+    );
   }
 
   @Bean
