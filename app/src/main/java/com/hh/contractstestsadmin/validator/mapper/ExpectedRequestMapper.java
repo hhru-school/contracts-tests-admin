@@ -13,8 +13,16 @@ public class ExpectedRequestMapper {
         requestDto.setMethod(HttpMethod.getMethodByName(expectedRequest.getMethod()));
         requestDto.setPath(expectedRequest.getPath());
         requestDto.setBody(requestDto.getBody());
-        requestDto.setHeaders(new HashMap<>(requestDto.getHeaders()));
-        requestDto.setQueryParams(new HashMap<>(requestDto.getQueryParams()));
+        if (requestDto.getHeaders() != null) {
+            requestDto.setHeaders(new HashMap<>(requestDto.getHeaders()));
+        } else {
+            requestDto.setHeaders(new HashMap<>());
+        }
+        if (requestDto.getQueryParams() != null) {
+            requestDto.setQueryParams(new HashMap<>(requestDto.getQueryParams()));
+        } else {
+            requestDto.setQueryParams(new HashMap<>());
+        }
 
         return requestDto;
     }

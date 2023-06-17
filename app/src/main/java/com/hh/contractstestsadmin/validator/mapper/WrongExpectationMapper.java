@@ -20,6 +20,6 @@ public class WrongExpectationMapper {
         wrongExpectationDto.setMessages(messageDtos);
         wrongExpectationDto.setRequest(ExpectedRequestMapper.map(contractValidationResultDto.getRequest()));
         wrongExpectationDto.setResponse(ExpectedResponseMapper.map(contractValidationResultDto.getResponse()));
-        return new WrongExpectationDto();
+        return wrongExpectationDto;
     }
 }
