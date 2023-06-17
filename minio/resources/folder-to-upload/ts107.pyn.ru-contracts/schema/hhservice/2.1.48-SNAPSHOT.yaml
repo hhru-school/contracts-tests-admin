@@ -1,0 +1,470 @@
+openapi: 3.0.1
+info:
+  title: mobile-notifier
+  version: 2.1.48-SNAPSHOT
+paths:
+  /device/user/byAvailableDevices:
+    get:
+      operationId: filterUserIdsByActiveDevicesAvailability
+      parameters:
+      - name: userId
+        in: query
+        schema:
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int32
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersInfoDto'
+  /device/{deviceId}:
+    get:
+      operationId: getDevice
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDto'
+  /device/subscribe:
+    post:
+      operationId: registerDevice
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  format: int32
+                deviceId:
+                  type: string
+                deviceUuid:
+                  type: string
+                osType:
+                  type: string
+                  enum:
+                  - MS_WINDOWS_PHONE
+                  - I_OS
+                  - ANDROID
+                  - WEB_BROWSER
+                  - JUSTAI
+                  - HUAWEI_ANDROID
+                  - BOTS
+                devMode:
+                  type: string
+                clientId:
+                  type: string
+                clientDescription:
+                  type: string
+                areaId:
+                  type: integer
+                  format: int32
+      responses:
+        default:
+          description: default response
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/StatusDto'
+  /device/unsubscribe_by_clientid:
+    post:
+      operationId: unsubscribeByClientId
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  format: int32
+                clientId:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/StatusDto'
+  /device/unsubscribe_by_uuid:
+    put:
+      operationId: unsubscribeByUuid
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  format: int32
+                deviceUuid:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusDto'
+  /device/unsubscribe:
+    post:
+      operationId: unsubscribeUser
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  format: int32
+                deviceId:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/StatusDto'
+  /fixture/device_notification:
+    post:
+      operationId: createDeviceNotification
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                deviceToken:
+                  type: string
+                title:
+                  type: string
+                text:
+                  type: string
+                linkUrl:
+                  type: string
+                linkMode:
+                  type: string
+                  enum:
+                  - EXTERNAL
+                  - INTERNAL
+                  - DEEP
+                notificationUuid:
+                  type: string
+                messageType:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+  /fixture/user_notification:
+    post:
+      operationId: createUserNotification
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  format: int32
+                title:
+                  type: string
+                text:
+                  type: string
+                linkUrl:
+                  type: string
+                linkMode:
+                  type: string
+                  enum:
+                  - EXTERNAL
+                  - INTERNAL
+                  - DEEP
+                notificationUuid:
+                  type: string
+                messageType:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+  /fixture/device:
+    get:
+      operationId: getDevice_1
+      parameters:
+      - name: deviceToken
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDto'
+  /notification/{notificationUuid}:
+    delete:
+      operationId: deleteNotification
+      parameters:
+      - name: notificationUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusDto'
+  /notification:
+    get:
+      operationId: getNotifications
+      parameters:
+      - name: userId
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: uuid
+        in: query
+        schema:
+          type: string
+      - name: clientId
+        in: query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 20
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PushNotificationsListDto'
+  /notification/count:
+    get:
+      operationId: getNotificationsCount
+      parameters:
+      - name: userId
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: uuid
+        in: query
+        schema:
+          type: string
+      - name: clientId
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PushNotificationsCountDto'
+  /notification/markAllSeen:
+    put:
+      operationId: markAllSeen
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  format: int32
+                uuid:
+                  type: string
+                clientId:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusDto'
+  /notification/{notificationUuid}/markSeen:
+    put:
+      operationId: markNotificationSeen
+      parameters:
+      - name: notificationUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusDto'
+components:
+  schemas:
+    UsersInfoDto:
+      required:
+      - userIds
+      type: object
+      properties:
+        userIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int32
+    DeviceDto:
+      required:
+      - deviceId
+      - deviceOsType
+      - deviceToken
+      type: object
+      properties:
+        deviceId:
+          type: integer
+          format: int64
+          xml:
+            name: device-id
+        deviceToken:
+          type: string
+          xml:
+            name: device-token
+        registrationTime:
+          type: integer
+          format: int64
+          nullable: true
+          xml:
+            name: registration-time
+        lastVisitTime:
+          type: integer
+          format: int64
+          nullable: true
+          xml:
+            name: last-visit-time
+        active:
+          type: boolean
+          nullable: true
+        deviceOsType:
+          type: string
+          xml:
+            name: os-type
+        deviceMode:
+          type: string
+          nullable: true
+          xml:
+            name: device-mode
+        ownerUserId:
+          type: integer
+          format: int32
+          nullable: true
+          xml:
+            name: owner-user-id
+        atLeastOnceUsedByRegisteredUser:
+          type: boolean
+          nullable: true
+          xml:
+            name: at-least-once-used-by-registered-user
+        nested:
+          $ref: '#/components/schemas/NestedDto'
+        uuid:
+          type: string
+          nullable: true
+      xml:
+        name: device
+    NestedDto:
+      required:
+      - requiredField
+      type: object
+      properties:
+        nullableField:
+          type: string
+          nullable: true
+        requiredField:
+          type: string
+    StatusDto:
+      type: object
+      properties:
+        content:
+          type: string
+          nullable: true
+      xml:
+        name: status
+    PushNotificationDto:
+      required:
+      - linkMode
+      - linkUrl
+      - notificationUuid
+      - seenByUser
+      - text
+      type: object
+      properties:
+        notificationUuid:
+          type: string
+        title:
+          type: string
+          nullable: true
+        text:
+          type: string
+        seenByUser:
+          type: boolean
+        linkUrl:
+          type: string
+        linkMode:
+          type: string
+          enum:
+          - EXTERNAL
+          - INTERNAL
+          - DEEP
+        messageType:
+          type: string
+          nullable: true
+    PushNotificationsListDto:
+      required:
+      - notifications
+      type: object
+      properties:
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/PushNotificationDto'
+    PushNotificationsCountDto:
+      required:
+      - notificationsCount
+      type: object
+      properties:
+        notificationsCount:
+          type: integer
+          format: int64

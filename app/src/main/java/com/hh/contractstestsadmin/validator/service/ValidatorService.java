@@ -1,8 +1,8 @@
 package com.hh.contractstestsadmin.validator.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
+import com.hh.contractstestsadmin.exception.MinioClientException;
 import com.hh.contractstestsadmin.validator.dto.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.model.artefacts.ArtefactType;
@@ -54,9 +54,13 @@ public class ValidatorService {
             service -> {
               try {
                 return ExpectationsDataMapper.map(service,
-                    standsDao.getArtefactBody(standName, standsDao.buildArtefactPath(standName, service.getName(), service.getVersion(),
+                    standsDao.getArtefactContent(standName, standsDao.buildArtefactPath(service.getName(), service.getVersion(),
                         ArtefactType.EXPECTATION)), objectMapper);
-              } catch (JsonProcessingException e) {
+              } catch (MinioClientException e) {
+                throw new RuntimeException(e);
+              } catch (IOException e) {
+                throw new RuntimeException(e);
+              } catch (StandsDaoException e) {
                 throw new RuntimeException(e);
               }
             }
@@ -69,9 +73,18 @@ public class ValidatorService {
         .filter(service -> service.getProducerData().isPresent())
         .collect(Collectors.toMap(
             service -> service.getName(),
-            service -> SchemaDataMapper.map(service,
-                standsDao.getArtefactBody(standName, standsDao.buildArtefactPath(standName, service.getName(), service.getVersion(),
-                    ArtefactType.SCHEMA)))));
+            service -> {
+              try {
+                return SchemaDataMapper.map(service,
+                    standsDao.getArtefactContent(standName, standsDao.buildArtefactPath(service.getName(), service.getVersion(),
+                        ArtefactType.SCHEMA)));
+              } catch (MinioClientException e) {
+                throw new RuntimeException(e);
+              } catch (StandsDaoException e) {
+                throw new RuntimeException(e);
+              }
+            }
+        ));
   }
 
 }
