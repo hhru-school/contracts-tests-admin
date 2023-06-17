@@ -4,13 +4,14 @@ import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
-import com.hh.contractstestsadmin.dto.validator.ValidationDto;
 import com.hh.contractstestsadmin.exception.StandNotFoundException;
 import com.hh.contractstestsadmin.exception.StandsDaoException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
-import com.hh.contractstestsadmin.model.Validation;
 
+import com.hh.contractstestsadmin.model.Validation;
 import com.hh.contractstestsadmin.resource.CustomEntityResource;
+import com.hh.contractstestsadmin.validator.dto.ValidationDto;
+import com.hh.contractstestsadmin.validator.service.ValidatorService;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
