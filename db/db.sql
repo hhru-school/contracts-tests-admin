@@ -1,4 +1,4 @@
-CREATE TYPE validation_status AS ENUM ('IN_PROGRESS', 'SUCCESS', 'FAILED', 'CANCELLED');
+CREATE TYPE validation_status AS ENUM ('IN_PROGRESS', 'SUCCESS', 'FAILED');
 CREATE TYPE service_type AS ENUM ('CONSUMER', 'PRODUCER', 'CONSUMER_AND_PRODUCER', 'NOT_DEFINED');
 CREATE TYPE error_level AS ENUM ('ERROR', 'WARN', 'INFO', 'FATAL', 'IGNORE', 'UNDEFINED');
 CREATE TYPE http_method AS ENUM ('GET', 'POST', 'DELETE', 'PUT', 'HEAD', 'PATCH', 'OPTIONS', 'NOT_DEFINED');
@@ -18,13 +18,14 @@ CREATE TABLE IF NOT EXISTS validation
 
 CREATE TABLE IF NOT EXISTS service
 (
-    service_id       BIGINT GENERATED ALWAYS AS IDENTITY not null,
-    creation_date    timestamptz                         not null,
-    service_name     varchar(255)                        not null,
-    stand_name       varchar(255)                        not null,
-    service_type     service_type,
-    tag              varchar(30)                         not null,
-    PRIMARY KEY (service_id)
+    service_id    BIGINT GENERATED ALWAYS AS IDENTITY not null,
+    creation_date timestamptz                         not null,
+    service_name  varchar(255)                        not null,
+    stand_name    varchar(255)                        not null,
+    service_type  service_type,
+    tag           varchar(30)                         not null,
+    PRIMARY KEY (service_id),
+    UNIQUE (service_name, stand_name, tag)
 );
 
 CREATE TABLE IF NOT EXISTS error_type

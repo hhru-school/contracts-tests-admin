@@ -73,8 +73,7 @@ public class ValidationBuilder {
 
   private String buildArtefactLink(Service service, ArtefactType artefactType) {
     return URLEncoder.encode(
-        standsDao.buildArtefactPath(
-            service.getStandName(),
+        service.getStandName() + "/" + standsDao.buildArtefactPath(
             service.getServiceName(),
             service.getTag(),
             artefactType
