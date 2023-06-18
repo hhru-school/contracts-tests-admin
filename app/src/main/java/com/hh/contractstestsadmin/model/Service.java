@@ -60,12 +60,6 @@ public class Service {
   public Service() {
   }
 
-  public Service(String serviceName, String standName, String tag) {
-    this.serviceName = serviceName;
-    this.standName = standName;
-    this.tag = tag;
-  }
-
   public Long getId() {
     return id;
   }

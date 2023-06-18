@@ -3,7 +3,6 @@ package com.hh.contractstestsadmin.service.mapper;
 import com.hh.contractstestsadmin.dto.api.ErrorDto;
 import com.hh.contractstestsadmin.model.ContractTestError;
 import com.hh.contractstestsadmin.model.ErrorType;
-import com.hh.contractstestsadmin.validator.dto.MessageDto;
 
 public class ContractTestErrorMapper {
   public static ErrorDto mapFromEntity(ContractTestError error) {
@@ -17,13 +16,4 @@ public class ContractTestErrorMapper {
     }
     return errorDto;
   }
-
-  public static ContractTestError mapToEntity(MessageDto message) {
-    ContractTestError contractTestError = new ContractTestError();
-    contractTestError.setErrorType(new ErrorType(message.getKey()));
-    contractTestError.setErrorMessage(message.getMessage());
-    contractTestError.setLevel(message.getLevel());
-    return contractTestError;
-  }
-
 }
