@@ -12,6 +12,7 @@ export const ValidationsPage: React.FC = () => {
 
     const { isLoading, data, error } = useSWR<StandResponse[]>(
         standName ? `/api/stands/${standName}/validations` : null,
+        { refreshInterval: 3000 },
     );
 
     if (!standName || isLoading) {

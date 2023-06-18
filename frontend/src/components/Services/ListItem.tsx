@@ -1,22 +1,19 @@
-import { ReactComponent as DownloadIcon } from './img/download.svg';
+import { ReactComponent as DBExpectation } from './img/db-expectation.svg';
 import { ReactComponent as DataBaseIcon } from './img/database.svg';
 import { Button, Col, ListGroupItem, Row } from 'reactstrap';
 import { Service } from './types/Service';
 import React from 'react';
 export type ServicesListItemProps = Service & {};
-/*
-const FileDataFetcher = ({ fileName }: { fileName: string }) => {
-    const { data } = useSWR<tpFileData>(`/api/download-links?filePath=${fileName}`);
-    if (data) {
-        return (
-            <Link className="d-block" to={data.link}>
-                Shema
-            </Link>
-        );
-    }
-    return null;
+
+const handleDownload = (fileUrl: string) => {
+    console.log(fileUrl);
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = 'downloaded_file.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 };
-*/
 export const ServicesListItem: React.FC<ServicesListItemProps> = ({
     name,
     version,
@@ -30,9 +27,13 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
     const onClickIcon = async (linkName: string) => {
         console.log(linkName);
         try {
-            const res = await fetch(linkName);
-            const json = await res.json();
-            console.log(json);
+            const res = await fetch(`/api/download-links?filePath=${linkName}`);
+            if (res.ok) {
+                const json = await res.json();
+                handleDownload(json.link);
+            } else {
+                console.log("Can't load link for file");
+            }
         } catch (err: any) {
             console.log(err.message);
         }
@@ -65,7 +66,7 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
                                 )}
                                 {expectationLink && (
                                     <Button className="d-flex align-items-start" color="primary">
-                                        <DownloadIcon />
+                                        <DBExpectation />
                                     </Button>
                                 )}
                             </div>
@@ -89,18 +90,19 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
                                         onClick={() => {
                                             onClickIcon(schemaLink);
                                         }}
-                                        outline
                                     >
-                                        <DownloadIcon />
+                                        <DataBaseIcon />
                                     </Button>
                                 )}
                                 {expectationLink && (
                                     <Button
                                         className="d-flex align-items-start"
                                         color="primary"
-                                        outline
+                                        onClick={() => {
+                                            onClickIcon(schemaLink);
+                                        }}
                                     >
-                                        <DownloadIcon />
+                                        <DBExpectation />
                                     </Button>
                                 )}
                             </div>
