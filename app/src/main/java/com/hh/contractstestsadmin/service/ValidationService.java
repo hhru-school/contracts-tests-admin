@@ -26,6 +26,7 @@ import com.hh.contractstestsadmin.validator.dto.MessageDto;
 import com.hh.contractstestsadmin.validator.dto.ValidationDto;
 import com.hh.contractstestsadmin.validator.dto.WrongExpectationDto;
 import java.time.OffsetDateTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,9 +126,14 @@ public class ValidationService {
         );
     validation.setExecutionDate(OffsetDateTime.now());
     validation.setReport(validationResult.getValidatorReport());
-    int errorCount = 0;
+
     ExpectationsBuilder expectationsBuilder = new ExpectationsBuilder(validation.getStandName());
-    List<Expectation> expectations = expectationsBuilder.buildExpectations(validationResult.getWrongExpectations());
+    List<WrongExpectationDto> wrongExpectationDtos = Optional
+        .ofNullable(validationResult.getWrongExpectations())
+        .orElse(Collections.emptyList());
+    List<Expectation> expectations = expectationsBuilder.buildExpectations(wrongExpectationDtos);
+
+    int errorCount = 0;
     for (Expectation expectation : expectations) {
       validation.addExpectation(expectation);
       errorCount += expectation.getContractTestErrors().size();
