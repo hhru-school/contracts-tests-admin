@@ -127,10 +127,10 @@ public class ValidationService {
     validation.setExecutionDate(OffsetDateTime.now());
     validation.setReport(validationResult.getValidatorReport());
 
-    ExpectationsBuilder expectationsBuilder = new ExpectationsBuilder(validation.getStandName());
     List<WrongExpectationDto> wrongExpectationDtos = Optional
         .ofNullable(validationResult.getWrongExpectations())
         .orElse(Collections.emptyList());
+    ExpectationsBuilder expectationsBuilder = new ExpectationsBuilder(validation.getStandName());
     List<Expectation> expectations = expectationsBuilder.buildExpectations(wrongExpectationDtos);
 
     int errorCount = 0;
