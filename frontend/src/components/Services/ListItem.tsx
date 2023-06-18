@@ -2,12 +2,14 @@ import { ReactComponent as DBExpectation } from './img/db-expectation.svg';
 import { ReactComponent as DataBaseIcon } from './img/database.svg';
 import { Button, Col, ListGroupItem, Row } from 'reactstrap';
 import { Service } from './types/Service';
-import React from 'react';
+import React, { useState } from 'react';
+import useSWR from 'swr';
 export type ServicesListItemProps = Service & {};
 
 const handleDownload = (fileUrl: string) => {
     const link = document.createElement('a');
     link.href = fileUrl;
+    link.target = '_blank';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -22,19 +24,17 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
     expectationPublishDate,
     schemaPublishDate,
 }) => {
+    const [linkFile, setLinkFile] = useState<string>('');
+    const { data } = useSWR(
+        linkFile.length === 0 ? null : `/api/download-links?filePath=${linkFile}`,
+    );
+    if (data && linkFile.length !== 0) {
+        handleDownload(data.link);
+        setLinkFile('');
+    }
     const onClickIcon = async (linkName: string) => {
+        setLinkFile(linkName);
         console.log(linkName);
-        try {
-            const res = await fetch(`/api/download-links?filePath=${linkName}`);
-            if (res.ok) {
-                const json = await res.json();
-                handleDownload(json.link);
-            } else {
-                console.log("Can't load link for file");
-            }
-        } catch (err: any) {
-            console.log(err.message);
-        }
     };
     return (
         <ListGroupItem>
