@@ -17,8 +17,6 @@ import com.hh.contractstestsadmin.validator.service.ValidatorService;
 import io.minio.MinioClient;
 import io.swagger.jaxrs.config.BeanConfig;
 import java.util.Properties;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import javax.sql.DataSource;
 
 import com.hh.contractstestsadmin.service.StatusService;
@@ -28,9 +26,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import ru.hh.contract.validator.service.ContractsValidator;
@@ -99,8 +99,14 @@ public class AppConfig {
   }
 
   @Bean
-  public ExecutorService executorService() {
-    return Executors.newSingleThreadExecutor();
+  public TaskExecutor executorService() {
+    ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+    taskExecutor.setCorePoolSize(1);
+    taskExecutor.setMaxPoolSize(1);
+    taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
+    taskExecutor.setAwaitTerminationSeconds(180);
+    taskExecutor.initialize();
+    return taskExecutor;
   }
 
   @Bean
@@ -147,7 +153,7 @@ public class AppConfig {
   public StandValidationService standValidationService(
       StandsDao standsDao,
       ValidationService validationService,
-      ExecutorService executorService,
+      TaskExecutor executorService,
       ValidatorService validatorService
   ) {
     return new StandValidationService(standsDao, validationService, executorService, validatorService);

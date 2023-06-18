@@ -20,6 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.task.TaskExecutor;
 
 public class StandValidationService {
 
@@ -29,19 +30,19 @@ public class StandValidationService {
 
   private final ValidationService validationService;
 
-  private final ExecutorService executorService;
+  private final TaskExecutor taskExecutor;
 
   private final ValidatorService validatorService;
 
   public StandValidationService(
       StandsDao standsDao,
       ValidationService validationService,
-      ExecutorService executorService,
+      TaskExecutor taskExecutor,
       ValidatorService validatorService
   ) {
     this.standsDao = standsDao;
     this.validationService = validationService;
-    this.executorService = executorService;
+    this.taskExecutor = taskExecutor;
     this.validatorService = validatorService;
   }
 
@@ -64,7 +65,7 @@ public class StandValidationService {
       throw new StandNotFoundException("Stand '" + standName + "' not found");
     }
     Validation validation = validationService.createValidation(standName);
-    executorService.submit(() -> startValidationProcess(standName, validation.getId()));
+    taskExecutor.execute(() -> startValidationProcess(standName, validation.getId()));
   }
 
   private void startValidationProcess(String standName, Long validationId) {

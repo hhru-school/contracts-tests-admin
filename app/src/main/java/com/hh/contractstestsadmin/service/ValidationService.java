@@ -26,6 +26,7 @@ import com.hh.contractstestsadmin.validator.dto.MessageDto;
 import com.hh.contractstestsadmin.validator.dto.ValidationDto;
 import com.hh.contractstestsadmin.validator.dto.WrongExpectationDto;
 import java.time.OffsetDateTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -137,9 +138,15 @@ public class ValidationService {
         );
     validation.setExecutionDate(OffsetDateTime.now());
     validation.setReport(validationResult.getValidatorReport());
+
+    List<WrongExpectationDto> wrongExpectationDtos = Optional
+        .ofNullable(validationResult.getWrongExpectations())
+        .orElse(Collections.emptyList());
+    ExpectationsService expectationsService = new ExpectationsService(validation.getStandName());
+    List<Expectation> expectations = expectationsService.convertAndPersistExpectations(wrongExpectationDtos);
+
     int errorCount = 0;
-    WrongExpectationsMapper wrongExpectationsMapper = new WrongExpectationsMapper(validation.getStandName());
-    for (Expectation expectation : wrongExpectationsMapper.mapToExpectationEntities(validationResult.getWrongExpectations())) {
+    for (Expectation expectation : expectations) {
       validation.addExpectation(expectation);
       errorCount += expectation.getContractTestErrors().size();
     }
@@ -148,24 +155,24 @@ public class ValidationService {
     validationInfoDao.updateValidationInfo(validation);
   }
 
-  private class WrongExpectationsMapper {
+  private class ExpectationsService {
 
     private final ErrorTypesContextManager errorTypesContextManager = new ErrorTypesContextManager();
     private final ServicesContextManager servicesContextManager = new ServicesContextManager();
 
     private final String standName;
 
-    public WrongExpectationsMapper(String standName) {
+    public ExpectationsService(String standName) {
       this.standName = standName;
     }
 
-    public List<Expectation> mapToExpectationEntities(List<WrongExpectationDto> wrongExpectations) {
+    public List<Expectation> convertAndPersistExpectations(List<WrongExpectationDto> wrongExpectations) {
       return wrongExpectations.stream()
-          .map(this::mapToExpectationEntity)
+          .map(this::convertAndPersistExpectation)
           .toList();
     }
 
-    private Expectation mapToExpectationEntity(WrongExpectationDto wrongExpectation) {
+    private Expectation convertAndPersistExpectation(WrongExpectationDto wrongExpectation) {
       Expectation expectation = new Expectation();
       expectation.linkWithConsumer(
           servicesContextManager.getOrCreateService(
@@ -190,12 +197,12 @@ public class ValidationService {
       expectation.setResponseHeaders(wrongExpectation.getResponse().getHeaders());
       expectation.setResponseBody(wrongExpectation.getResponse().getBody());
       for (MessageDto message : wrongExpectation.getMessages()) {
-        expectation.addContractTestError(mapToContractTestError(message));
+        expectation.addContractTestError(convertAndPersistContractTestError(message));
       }
       return expectation;
     }
 
-    private ContractTestError mapToContractTestError(MessageDto message) {
+    private ContractTestError convertAndPersistContractTestError(MessageDto message) {
       ContractTestError contractTestError = new ContractTestError();
       contractTestError.setErrorType(errorTypesContextManager.getOrCreateErrorType(message.getKey()));
       contractTestError.setErrorMessage(message.getMessage());
