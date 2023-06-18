@@ -115,14 +115,12 @@ public class StandsDao {
 
   @NotNull
   public String getArtefactUrl(String standName, String artefactPath) throws StandsDaoException, MinioClientException {
-    Map<String, String> requestParams = new HashMap<String, String>();
     boolean artefactPathExist = isArtefactPath(standName, artefactPath);
     if (!artefactPathExist) {
       throw new MinioClientException("not found file from path " + artefactPath, HttpStatus.NOT_FOUND_404);
     }
 
     int urlExpirationPeriod = Integer.parseInt(minioProperties.getProperty("minio.artefact.url.expiration.period"));
-    requestParams.put("response-content-type", "application/json");
 
     try {
       return minioClient.getPresignedObjectUrl(
@@ -131,7 +129,6 @@ public class StandsDao {
               .bucket(standName)
               .object(artefactPath)
               .expiry(urlExpirationPeriod, TimeUnit.HOURS)
-              .extraQueryParams(requestParams)
               .build());
     } catch (ErrorResponseException e) {
       int statusCode = getStatusCode(e.response());
