@@ -35,7 +35,6 @@ import static javax.validation.Validation.buildDefaultValidatorFactory;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.constraints.NotNull;
-import okhttp3.MediaType;
 import okhttp3.Response;
 import org.eclipse.jetty.http.HttpStatus;
 import org.slf4j.Logger;
