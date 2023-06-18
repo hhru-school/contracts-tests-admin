@@ -38,9 +38,9 @@ public class FileResource {
   @GET
   @Path("/download-links")
   @Produces(value = MediaType.APPLICATION_JSON)
-  public Response getSharedFileLink(@NotNull @QueryParam("filePath") String encodeFilePath) {
+  public Response getDownloadFileLink(@NotNull @QueryParam("filePath") String encodeFilePath) {
     try {
-      return Response.ok(statusService.getSharedFileLink(encodeFilePath)).build();
+      return Response.ok(statusService.getDownloadFileLink(encodeFilePath)).build();
     } catch (MinioClientException exception) {
       LOG.warn("minio client responded with unsuccessful code {}", exception.getStatusCode(), exception);
       return Response.status(Response.Status.fromStatusCode(exception.getStatusCode()))

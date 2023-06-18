@@ -22,6 +22,8 @@ import io.minio.messages.Bucket;
 import io.minio.messages.Item;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -111,6 +113,16 @@ public class StandsDao {
     } catch (Exception e) {
       throw new StandsDaoException(e);
     }
+  }
+
+  public String getDownloadFileLink(String standName, String artefactPath) throws MinioClientException, StandsDaoException {
+    boolean artefactPathExist = isArtefactPath(standName, artefactPath);
+    if (!artefactPathExist) {
+      throw new MinioClientException("not found file from path " + artefactPath, HttpStatus.NOT_FOUND_404);
+    }
+    String encodeArtefactPath = Base64.getEncoder().encodeToString(artefactPath.getBytes(StandardCharsets.UTF_8));
+    return getExternalMinioUrl() + "/api/v1/buckets/" + standName + "/objects/download?prefix="
+        + encodeArtefactPath + "&version_id=null";
   }
 
   @NotNull

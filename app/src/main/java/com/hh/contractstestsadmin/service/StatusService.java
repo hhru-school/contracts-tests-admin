@@ -75,16 +75,14 @@ public class StatusService {
     return standStatusDto;
   }
 
-  public FileLinkDto getSharedFileLink(String encodeFilePath) throws StandsDaoException, MinioClientException {
+  public FileLinkDto getDownloadFileLink(String encodeFilePath) throws StandsDaoException, MinioClientException {
     String filePath = URLDecoder.decode(encodeFilePath, StandardCharsets.UTF_8);
     if (!filePath.contains("/")) {
       throw new IllegalFilePathException("the field" + encodeFilePath + " must have a symbol '/'");
     }
     String standName = filePath.substring(0, filePath.indexOf("/"));
     String filePathWithoutStandName = filePath.substring(filePath.indexOf("/") + 1);
-    String artefactUrl = standsDao.getArtefactUrl(standName, filePathWithoutStandName);
-    String fileUrl = artefactUrl.replaceAll(standsDao.getBaseMinioUrl(), standsDao.getExternalMinioUrl());
-
-    return new FileLinkDto(fileUrl);
+    String artefactUrl = standsDao.getDownloadFileLink(standName, filePathWithoutStandName);
+    return new FileLinkDto(artefactUrl);
   }
 }
