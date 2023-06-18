@@ -38,6 +38,7 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = ({
                             <div className="d-flex justify-content-center">
                                 {getStatus(item.status)}
                             </div>
+                            <div>{item.status}</div>
                         </Col>
                         <Col xs={7}>
                             <NavLink

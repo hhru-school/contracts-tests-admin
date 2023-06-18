@@ -6,10 +6,8 @@ import React from 'react';
 export type ServicesListItemProps = Service & {};
 
 const handleDownload = (fileUrl: string) => {
-    console.log(fileUrl);
     const link = document.createElement('a');
     link.href = fileUrl;
-    link.download = 'downloaded_file.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
