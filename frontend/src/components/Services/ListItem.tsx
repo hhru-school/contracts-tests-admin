@@ -9,7 +9,6 @@ export type ServicesListItemProps = Service & {};
 const handleDownload = (fileUrl: string) => {
     const link = document.createElement('a');
     link.href = fileUrl;
-    link.target = '_blank';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -29,12 +28,14 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
         linkFile.length === 0 ? null : `/api/download-links?filePath=${linkFile}`,
     );
     if (data && linkFile.length !== 0) {
+        if (linkFile.length === 100000) {
+            handleDownload(data.link);
+        }
         handleDownload(data.link);
         setLinkFile('');
     }
     const onClickIcon = async (linkName: string) => {
         setLinkFile(linkName);
-        console.log(linkName);
     };
     return (
         <ListGroupItem>
@@ -58,12 +59,21 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
                                     <Button
                                         className="mb-1 d-flex align-items-start"
                                         color="primary"
+                                        onClick={() => {
+                                            onClickIcon(schemaLink);
+                                        }}
                                     >
                                         <DataBaseIcon />
                                     </Button>
                                 )}
                                 {expectationLink && (
-                                    <Button className="d-flex align-items-start" color="primary">
+                                    <Button
+                                        className="d-flex align-items-start"
+                                        color="primary"
+                                        onClick={() => {
+                                            onClickIcon(expectationLink);
+                                        }}
+                                    >
                                         <DBExpectation />
                                     </Button>
                                 )}
@@ -97,7 +107,7 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
                                         className="d-flex align-items-start"
                                         color="primary"
                                         onClick={() => {
-                                            onClickIcon(schemaLink);
+                                            onClickIcon(expectationLink);
                                         }}
                                     >
                                         <DBExpectation />

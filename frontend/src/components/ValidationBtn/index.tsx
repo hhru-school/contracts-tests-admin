@@ -38,7 +38,8 @@ export const ValidationBtn = () => {
         >
             {validation ? (
                 <>
-                    <Spinner color="white" style={{ width: '16px', height: '16px' }} /> Process
+                    <Spinner style={{ width: '16px', height: '16px', color: 'white' }} />
+                    Process
                 </>
             ) : (
                 <>
