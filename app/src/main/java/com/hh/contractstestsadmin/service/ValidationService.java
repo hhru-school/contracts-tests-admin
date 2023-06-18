@@ -130,8 +130,8 @@ public class ValidationService {
     List<WrongExpectationDto> wrongExpectationDtos = Optional
         .ofNullable(validationResult.getWrongExpectations())
         .orElse(Collections.emptyList());
-    ExpectationsBuilder expectationsBuilder = new ExpectationsBuilder(validation.getStandName());
-    List<Expectation> expectations = expectationsBuilder.buildExpectations(wrongExpectationDtos);
+    ExpectationsService expectationsService = new ExpectationsService(validation.getStandName());
+    List<Expectation> expectations = expectationsService.convertAndPersistExpectations(wrongExpectationDtos);
 
     int errorCount = 0;
     for (Expectation expectation : expectations) {
@@ -143,24 +143,24 @@ public class ValidationService {
     validationInfoDao.updateValidationInfo(validation);
   }
 
-  private class ExpectationsBuilder {
+  private class ExpectationsService {
 
     private final ErrorTypesContextManager errorTypesContextManager = new ErrorTypesContextManager();
     private final ServicesContextManager servicesContextManager = new ServicesContextManager();
 
     private final String standName;
 
-    public ExpectationsBuilder(String standName) {
+    public ExpectationsService(String standName) {
       this.standName = standName;
     }
 
-    public List<Expectation> buildExpectations(List<WrongExpectationDto> wrongExpectations) {
+    public List<Expectation> convertAndPersistExpectations(List<WrongExpectationDto> wrongExpectations) {
       return wrongExpectations.stream()
-          .map(this::buildExpectation)
+          .map(this::convertAndPersistExpectation)
           .toList();
     }
 
-    private Expectation buildExpectation(WrongExpectationDto wrongExpectation) {
+    private Expectation convertAndPersistExpectation(WrongExpectationDto wrongExpectation) {
       Expectation expectation = new Expectation();
       expectation.linkWithConsumer(
           servicesContextManager.getOrCreateService(
@@ -185,12 +185,12 @@ public class ValidationService {
       expectation.setResponseHeaders(wrongExpectation.getResponse().getHeaders());
       expectation.setResponseBody(wrongExpectation.getResponse().getBody());
       for (MessageDto message : wrongExpectation.getMessages()) {
-        expectation.addContractTestError(buildContractTestError(message));
+        expectation.addContractTestError(convertAndPersistContractTestError(message));
       }
       return expectation;
     }
 
-    private ContractTestError buildContractTestError(MessageDto message) {
+    private ContractTestError convertAndPersistContractTestError(MessageDto message) {
       ContractTestError contractTestError = new ContractTestError();
       contractTestError.setErrorType(errorTypesContextManager.getOrCreateErrorType(message.getKey()));
       contractTestError.setErrorMessage(message.getMessage());
