@@ -7,18 +7,14 @@ import com.hh.contractstestsadmin.model.ErrorType;
 import com.hh.contractstestsadmin.service.mapper.ErrorTypeMapper;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import javax.inject.Inject;
 
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 public class CustomEntityService {
   private final ErrorTypeDao errorTypeDao;
   private static final int MAX_SIZE_COMMENT = 4096;
 
-  @Inject
   public CustomEntityService(ErrorTypeDao errorTypeDao) {
 
     this.errorTypeDao = errorTypeDao;
