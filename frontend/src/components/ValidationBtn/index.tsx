@@ -3,7 +3,7 @@ import useSWR from 'swr';
 import React, { useState } from 'react';
 import { useGlobalContext } from '../../context/AppContext';
 import { ReactComponent as PlayIcon } from '../ToolBar/img/play.svg';
-
+import { useCntStatusValidation } from '../../context/AppCntStatusValidation';
 async function updateUser(url: string) {
     await fetch(url, {
         method: 'POST',
@@ -13,6 +13,7 @@ async function updateUser(url: string) {
 export const ValidationBtn = () => {
     const { standName } = useGlobalContext();
     const [validation, setValidation] = useState<boolean>(false);
+    const { cntStatus } = useCntStatusValidation();
     const { data } = useSWR(
         standName.length !== 0 && validation ? `/api/stands/${standName}/validations` : null,
         updateUser,
@@ -22,9 +23,11 @@ export const ValidationBtn = () => {
     }
     const submitRequest = () => {
         setValidation(true);
-        setTimeout(() => {
-            setValidation(false);
-        }, 5000);
+        setInterval(() => {
+            if (cntStatus === 0) {
+                setValidation(false);
+            }
+        }, 2000);
     };
 
     return (

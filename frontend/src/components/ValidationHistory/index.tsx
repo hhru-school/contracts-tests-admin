@@ -1,8 +1,9 @@
 import { NavLink, generatePath } from 'react-router-dom';
 import { Alert, ListGroup, ListGroupItem, Row, Col } from 'reactstrap';
-import { StandResponse, getStatus } from '../Validation/types';
+import { StandResponse, Direction, getStatus } from '../Validation/types';
 import useSWR from 'swr';
 import navigation from 'routes/navigation';
+import { useCntStatusValidation } from '../../context/AppCntStatusValidation';
 export type ServicesContainerProps = {
     standName: string;
     sizeLimit?: number;
@@ -14,8 +15,9 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = ({
 }) => {
     const { isLoading, data, error } = useSWR<StandResponse[]>(
         standName ? `/api/stands/${standName}/validations?sizeLimit=${sizeLimit}` : null,
-        { refreshInterval: 3000 },
+        { refreshInterval: 1000 },
     );
+    const { setCntStatus } = useCntStatusValidation();
     if (isLoading) {
         return <Alert color="primary"> Data is loading </Alert>;
     }
@@ -29,6 +31,10 @@ export const ValidationHistory: React.FC<ServicesContainerProps> = ({
     if (!Array.isArray(data) || data.length === 0) {
         return <small> Нет валидаций для стенда({standName})</small>;
     }
+    const countProgress = data.filter((item: StandResponse) => {
+        return item.status === Direction.InProgress;
+    }).length;
+    setCntStatus(countProgress);
     return (
         <ListGroup>
             {data.map((item: StandResponse) => (
