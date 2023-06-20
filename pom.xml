@@ -24,6 +24,7 @@
         <contract.validator.version>1.0.14-SNAPSHOT</contract.validator.version>
         <contract.tests.jclient.version>1.0.6-SNAPSHOT</contract.tests.jclient.version>
         <swagger.request.validator.version>2.35.1</swagger.request.validator.version>
+        <maven-artifact.version>3.9.2</maven-artifact.version>
     </properties>
 
     <dependencyManagement>
@@ -69,6 +70,11 @@
                 <groupId>com.atlassian.oai</groupId>
                 <artifactId>swagger-request-validator-core</artifactId>
                 <version>${swagger.request.validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-artifact</artifactId>
+                <version>${maven-artifact.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
