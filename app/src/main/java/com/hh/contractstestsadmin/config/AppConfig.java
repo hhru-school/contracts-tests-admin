@@ -11,6 +11,7 @@ import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ServiceDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dao.ValidationInfoDao;
+import com.hh.contractstestsadmin.service.CustomEntityService;
 import com.hh.contractstestsadmin.service.builder.ValidationBuilder;
 import com.hh.contractstestsadmin.service.ValidationService;
 import com.hh.contractstestsadmin.validator.service.ValidatorService;
@@ -162,6 +163,11 @@ public class AppConfig {
   @Bean
   public ValidatorService validatorService(StandsDao standsDao, ObjectMapper objectMapper, ContractsValidator contractsValidator) {
     return new ValidatorService(standsDao, objectMapper, contractsValidator);
+  }
+
+  @Bean
+  public CustomEntityService customEntityService(ErrorTypeDao errorTypeDao){
+    return new CustomEntityService(errorTypeDao);
   }
 
   @Bean
