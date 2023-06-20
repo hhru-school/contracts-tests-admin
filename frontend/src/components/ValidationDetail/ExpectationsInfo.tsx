@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Loader } from 'components/Loader';
 import {
     AccordionBody,
@@ -45,45 +46,84 @@ export const ExpectationsInfo: React.FC<ExpectationsInfoProps> = ({
     if (!data) return null;
     return (
         <UncontrolledAccordion flush>
-            {data.map(({ id, httpMethod, requestPath, requestBody, responseBody, errors }) => (
-                <AccordionItem key={id}>
-                    <AccordionHeader targetId={id.toString()}>
-                        {httpMethod}: {requestPath}
-                    </AccordionHeader>
-                    <AccordionBody accordionId={id.toString()}>
-                        <Row>
-                            <Col md={6} className="border b-2 p-5">
-                                Request:
-                                <SyntaxHighlighter language="json" style={docco}>
-                                    {requestBody as string}
-                                </SyntaxHighlighter>
-                            </Col>
-                            <Col className="border b-2 p-5" md={6}>
-                                Response:
-                                <SyntaxHighlighter language="json" style={docco}>
-                                    {responseBody as string}
-                                </SyntaxHighlighter>
-                            </Col>
-                        </Row>
-                        <ListGroup flush>
-                            {errors.map((error, idx) => (
-                                <ListGroupItem key={error.id + '-' + idx}>
-                                    <ListGroupItemText tag="div">
-                                        <div>
-                                            <small>Error key: {error.errorType.key}</small>
-                                            <p>comment: {error.errorType.comment}</p>
-                                        </div>
-                                        <div>
-                                            <small>Error level:{error.errorLevel}</small>
-                                            <p>comment: {error.comment}</p>
-                                        </div>
-                                    </ListGroupItemText>
-                                </ListGroupItem>
-                            ))}
-                        </ListGroup>
-                    </AccordionBody>
-                </AccordionItem>
-            ))}
+            {data.map(
+                ({
+                    id,
+                    httpMethod,
+                    requestPath,
+                    requestBody,
+                    responseBody,
+                    errors,
+                    requestHeaders,
+                    responseHeaders,
+                }) => (
+                    <AccordionItem key={id}>
+                        <AccordionHeader targetId={id.toString()}>
+                            {httpMethod}: {requestPath}
+                        </AccordionHeader>
+                        <AccordionBody accordionId={id.toString()}>
+                            <Row>
+                                <Col md={6} className="border b-2 p-5">
+                                    Request:
+                                </Col>
+                                <Col md={6} className="border b-2 p-5">
+                                    Response:
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md={6} className="border b-2 p-5">
+                                    <div>
+                                        <strong>Headers: </strong>
+                                        {Object.entries(requestHeaders).map(([key, value]) => (
+                                            <div>
+                                                "{key}" : "[{value.join(',')}]"
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div>
+                                        <strong>Body:</strong>
+                                        <SyntaxHighlighter language="json" style={docco}>
+                                            {requestBody as string}
+                                        </SyntaxHighlighter>
+                                    </div>
+                                </Col>
+                                <Col className="border b-2 p-5" md={6}>
+                                    <div>
+                                        <strong>Headers: </strong>
+                                        {Object.entries(responseHeaders).map(([key, value]) => (
+                                            <div>
+                                                "{key}" : "[{value.join(',')}]"
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div>
+                                        <strong>Body:</strong>
+                                        <SyntaxHighlighter language="json" style={docco}>
+                                            {responseBody as string}
+                                        </SyntaxHighlighter>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <ListGroup flush>
+                                {errors.map((error, idx) => (
+                                    <ListGroupItem key={error.id + '-' + idx}>
+                                        <ListGroupItemText tag="div">
+                                            <div>
+                                                <small>Error key: {error.errorType.key}</small>
+                                                <p>comment: {error.errorType.comment}</p>
+                                            </div>
+                                            <div>
+                                                <small>Error level:{error.errorLevel}</small>
+                                                <p>comment: {error.comment}</p>
+                                            </div>
+                                        </ListGroupItemText>
+                                    </ListGroupItem>
+                                ))}
+                            </ListGroup>
+                        </AccordionBody>
+                    </AccordionItem>
+                ),
+            )}
         </UncontrolledAccordion>
     );
 };

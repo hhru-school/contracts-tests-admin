@@ -6,20 +6,20 @@ export type Expectation = {
     id: number;
     httpMethod: HTTPMethod;
     requestPath: string;
-    requestHeaders: Array<{
+    requestHeaders: {
         key: string;
-        value: string;
-    }>;
-    queryParams: Array<{
+        value: string[];
+    };
+    queryParams: {
         key: string;
-        value: string;
-    }>;
-    requestBody: unknown; // TODO: тип пока неизвестен
+        value: string[];
+    };
+    requestBody: string;
     responseStatus: number; // TODO: заменить на перечисление возможных статусов
-    responseHeaders: Array<{
+    responseHeaders: {
         key: string;
-        value: string;
-    }>;
+        value: string[];
+    };
     responseBody: unknown;
     errors: ValidationDetailError[];
 };
