@@ -61,7 +61,7 @@ public class ValidatorService {
       enrichValidation(validation, services);
       return validation;
     } catch (StandsDaoException e) {
-      LOG.error("Unable to retrieve data from the minio", e);
+      LOG.error("Unable to get data from minio", e);
       throw new RuntimeException(e);
     } catch (JsonProcessingException e) {
       LOG.error("Unable to parse validation result", e);
