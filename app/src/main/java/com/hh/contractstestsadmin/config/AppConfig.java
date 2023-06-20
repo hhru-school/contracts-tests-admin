@@ -162,7 +162,7 @@ public class AppConfig {
 
   @Bean
   public ValidatorService validatorService(StandsDao standsDao, ObjectMapper objectMapper, ContractsValidator contractsValidator) {
-    return new ValidatorService(standsDao, objectMapper, contractsValidator);
+    return new ValidatorService(standsDao, objectMapper, contractsValidator, minioReleaseName);
   }
 
   @Bean

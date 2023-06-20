@@ -1,7 +1,6 @@
-package com.hh.contractstestsadmin.service.mapper;
+package com.hh.contractstestsadmin.validator.mapper;
 
 import com.hh.contractstestsadmin.model.artefacts.Service;
-import java.io.InputStream;
 import ru.hh.contract.validator.service.SchemaData;
 
 public class SchemaDataMapper {
