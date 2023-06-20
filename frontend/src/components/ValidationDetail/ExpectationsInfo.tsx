@@ -13,6 +13,8 @@ import {
 import useSWR from 'swr';
 import { getExpectationsInfo } from './api';
 import { ExpectationsResponse } from './types/ExpectationsResponse';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 export type ExpectationsInfoProps = {
     standName: string;
@@ -51,10 +53,16 @@ export const ExpectationsInfo: React.FC<ExpectationsInfoProps> = ({
                     <AccordionBody accordionId={id.toString()}>
                         <Row>
                             <Col md={6} className="border b-2 p-5">
-                                Request: {JSON.stringify(requestBody)}
+                                Request:
+                                <SyntaxHighlighter language="json" style={docco}>
+                                    {requestBody as string}
+                                </SyntaxHighlighter>
                             </Col>
                             <Col className="border b-2 p-5" md={6}>
-                                Response: {JSON.stringify(responseBody)}
+                                Response:
+                                <SyntaxHighlighter language="json" style={docco}>
+                                    {responseBody as string}
+                                </SyntaxHighlighter>
                             </Col>
                         </Row>
                         <ListGroup flush>
