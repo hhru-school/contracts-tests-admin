@@ -42,11 +42,11 @@ export const ValidationBtn = () => {
             {validation ? (
                 <>
                     <Spinner style={{ width: '16px', height: '16px', color: 'white' }} />
-                    Process
+                    Процес
                 </>
             ) : (
                 <>
-                    <PlayIcon /> Start
+                    <PlayIcon /> Старт
                 </>
             )}
         </Button>
