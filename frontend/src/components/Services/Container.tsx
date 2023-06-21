@@ -64,6 +64,7 @@ export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName 
                     type="text"
                     value={searchServices}
                     onChange={handleSearchServices}
+                    placeholder="Введите название сервиса"
                 />
 
                 <Row>
@@ -100,6 +101,7 @@ export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName 
                 type="text"
                 value={searchServices}
                 onChange={handleSearchServices}
+                placeholder="Введите название сервиса"
             />
 
             <Nav tabs>

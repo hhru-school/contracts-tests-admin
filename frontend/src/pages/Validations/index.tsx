@@ -3,7 +3,7 @@ import { Col, Row, Alert, ListGroup, ListGroupItem } from 'reactstrap';
 import { StandResponse, getStatus, Direction } from '../../components/Validation/types';
 import { Loader } from 'components/Loader';
 import useSWR from 'swr';
-import { generatePath, useNavigate } from 'react-router-dom';
+import { Link, generatePath, useNavigate } from 'react-router-dom';
 import navigation from 'routes/navigation';
 
 export const ValidationsPage: React.FC = () => {
@@ -71,7 +71,7 @@ export const ValidationsPage: React.FC = () => {
                                     {new Date(item.createdDate).toLocaleString('ru-RU')}
                                 </Col>
                                 <Col md={3} className="d-none d-md-block">
-                                    {item.releaseLink}
+                                    <Link to={item.releaseLink}>Информация о релизе</Link>
                                 </Col>
                             </>
                         ) : (
@@ -88,7 +88,7 @@ export const ValidationsPage: React.FC = () => {
                                     {new Date(item.createdDate).toLocaleString('ru-RU')}
                                 </Col>
                                 <Col md={5} className="d-none d-md-block">
-                                    {item.releaseLink}
+                                    <Link to={item.releaseLink}>Информация о релизе</Link>
                                 </Col>
                             </>
                         )}
