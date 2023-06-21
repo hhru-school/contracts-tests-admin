@@ -3,7 +3,7 @@ import { Col, Row, Alert, ListGroup, ListGroupItem } from 'reactstrap';
 import { StandResponse, getStatus, Direction } from '../../components/Validation/types';
 import { Loader } from 'components/Loader';
 import useSWR from 'swr';
-import { generatePath, useNavigate } from 'react-router-dom';
+import { Link, generatePath, useNavigate } from 'react-router-dom';
 import navigation from 'routes/navigation';
 
 export const ValidationsPage: React.FC = () => {
@@ -12,6 +12,7 @@ export const ValidationsPage: React.FC = () => {
 
     const { isLoading, data, error } = useSWR<StandResponse[]>(
         standName ? `/api/stands/${standName}/validations` : null,
+        { refreshInterval: 3000 },
     );
 
     if (!standName || isLoading) {
@@ -54,30 +55,41 @@ export const ValidationsPage: React.FC = () => {
                     <Row>
                         {item.status === Direction.Failed ? (
                             <>
-                                <Col md={3}>
+                                <Col xs={5} sm={2} md={2}>
                                     <div className=" d-flex justify-content-center">
                                         {getStatus(item.status)}
                                     </div>
                                 </Col>
-                                <Col md={3}>Валидация {item.id}</Col>
-                                <Col md={3}>
+                                <Col xs={4} sm={3} md={2}>
+                                    Валидация {item.id}
+                                </Col>
+                                <Col xs={3} sm={3} md={2}>
+                                    {item.errorCount} ошибок
+                                </Col>
+
+                                <Col sm={4} md={3} className="d-none d-sm-block">
                                     {new Date(item.createdDate).toLocaleString('ru-RU')}
                                 </Col>
-                                <Col md={2}>{item.releaseLink}</Col>
-                                <Col md={1}>{item.errorCount} ошибок</Col>
+                                <Col md={3} className="d-none d-md-block">
+                                    <Link to={item.releaseLink}>Информация о релизе</Link>
+                                </Col>
                             </>
                         ) : (
                             <>
-                                <Col md={3}>
+                                <Col xs={7} sm={2} md={1}>
                                     <div className=" d-flex justify-content-center">
                                         {getStatus(item.status)}
                                     </div>
                                 </Col>
-                                <Col md={3}>Валидация {item.id}</Col>
-                                <Col md={4}>
+                                <Col xs={5} sm={4} md={2}>
+                                    Валидация {item.id}
+                                </Col>
+                                <Col sm={6} md={4} className="d-none d-sm-block">
                                     {new Date(item.createdDate).toLocaleString('ru-RU')}
                                 </Col>
-                                <Col md={2}>{item.releaseLink}</Col>
+                                <Col md={5} className="d-none d-md-block">
+                                    <Link to={item.releaseLink}>Информация о релизе</Link>
+                                </Col>
                             </>
                         )}
                     </Row>

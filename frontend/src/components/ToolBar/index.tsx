@@ -1,21 +1,22 @@
-import { ReactComponent as PlayIcon } from './img/play.svg';
 import useSWR from 'swr';
 import React, { useState, KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
-import { ListGroup, ListGroupItem, Input, Button, Alert, Spinner } from 'reactstrap';
+import { ListGroup, ListGroupItem, Input, Button, Alert } from 'reactstrap';
 import { HandleKeys } from './types/HandleKeys';
 import { Stand } from './types/Stand';
 import { useGlobalContext } from '../../context/AppContext';
+import { ReactComponent as PlayIcon } from './img/play.svg';
+import { ValidationBtn } from 'components/ValidationBtn';
 
 export const ToolBar = () => {
     const { setStandName } = useGlobalContext();
-    const [selectedItem, setSelectedItem] = useState('');
-    const [showList, setShowList] = useState(false);
-    const [validation, setValidation] = useState(false);
+    const [selectedItem, setSelectedItem] = useState<string>('');
+    const [showList, setShowList] = useState<boolean>(false);
     const [hoveredItem, setHoveredItem] = useState<string>('');
-    const [currentPositionInList, setCurrentPositionInList] = useState(0);
+    const [currentPositionInList, setCurrentPositionInList] = useState<number>(0);
     const { isLoading, data, error } = useSWR<Stand[]>(
         selectedItem.length >= 3 ? `/api/stands?search=${selectedItem}` : '/api/stands',
     );
+
     if (error) {
         return <Alert color="danger"> Cant load data {error.message} </Alert>;
     }
@@ -23,7 +24,7 @@ export const ToolBar = () => {
         return (
             <div className="d-flex align-items-center gap-3 w-100">
                 <div className="position-relative flex-grow-1">
-                    <Input type="text" placeholder="Search" value={selectedItem} />
+                    <Input type="text" placeholder="Search" value={selectedItem} readOnly />
                 </div>
                 <Button color="primary" className="flex-shrink-0" disabled={!selectedItem}>
                     <>
@@ -96,12 +97,6 @@ export const ToolBar = () => {
             handleHover(element);
         }
     };
-    const submitRequest = () => {
-        setValidation(true);
-        setTimeout(() => {
-            setValidation(false);
-        }, 5000);
-    };
     return (
         <div className="d-flex align-items-center gap-3 w-100">
             <div className="position-relative flex-grow-1">
@@ -135,24 +130,7 @@ export const ToolBar = () => {
                     </ListGroup>
                 )}
             </div>
-            <Button
-                color="primary"
-                className="flex-shrink-0"
-                disabled={!selectedItem}
-                onClick={() => {
-                    submitRequest();
-                }}
-            >
-                {validation ? (
-                    <>
-                        <Spinner color="white" style={{ width: '16px', height: '16px' }} /> Process
-                    </>
-                ) : (
-                    <>
-                        <PlayIcon /> Start
-                    </>
-                )}
-            </Button>
+            <ValidationBtn />
         </div>
     );
 };

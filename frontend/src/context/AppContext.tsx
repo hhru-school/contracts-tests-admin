@@ -1,5 +1,4 @@
-import { Context } from 'react';
-import { PropsWithChildren, createContext, useState, useContext } from 'react';
+import { Context, PropsWithChildren, createContext, useState, useContext } from 'react';
 
 type AppContextType = {
     standName: string;
