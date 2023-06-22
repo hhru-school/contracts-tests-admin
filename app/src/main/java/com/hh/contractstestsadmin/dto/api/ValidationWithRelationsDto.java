@@ -16,6 +16,7 @@ public class ValidationWithRelationsDto extends ValidationMetaInfoDto {
     this.setExecuteDate(validationMetaInfoDto.getExecuteDate());
     this.setReleaseLink(validationMetaInfoDto.getReleaseLink());
     this.setStatus(validationMetaInfoDto.getStatus());
+    this.setErrorCount(validationMetaInfoDto.getErrorCount());
   }
 
   public List<ServicesRelationDto> getServicesRelations() {
