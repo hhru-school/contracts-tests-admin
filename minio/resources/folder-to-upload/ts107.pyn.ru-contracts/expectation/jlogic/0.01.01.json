@@ -336,5 +336,26 @@
     "producerName" : "mobile-notifier",
     "testInfo" : "SendOpenLinkPushToDeviceTest.shouldSendIfAppWasUsedAndFilterIsForUsedByRegisteredUserOnly1()",
     "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 201,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldSendIfAppWasUsedAndFilterIsForUsedByRegisteredUserOnly4()",
+    "minimalRequired" : false
   } ]
 }
