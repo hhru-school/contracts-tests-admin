@@ -12,6 +12,7 @@ import java.util.Properties;
 import static java.util.function.UnaryOperator.identity;
 import java.util.stream.Collectors;
 import javax.validation.constraints.NotNull;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 
 public class ServiceListMapper {
 
@@ -118,12 +119,16 @@ public class ServiceListMapper {
   }
 
   private boolean initServiceHasNewerVersion(Service initService, Service serviceToBeMerged) {
-    int compareResult = initService.getVersion().compareToIgnoreCase(serviceToBeMerged.getVersion());
+    ComparableVersion initServiceVersion = new ComparableVersion(initService.getVersion());
+    ComparableVersion serviceToBeMergedVersion = new ComparableVersion(serviceToBeMerged.getVersion());
+    int compareResult = initServiceVersion.compareTo(serviceToBeMergedVersion);
     return compareResult > 0;
   }
 
   private boolean initServiceHasTheSameVersion(Service initService, Service serviceToBeMerged) {
-    int compareResult = initService.getVersion().compareToIgnoreCase(serviceToBeMerged.getVersion());
+    ComparableVersion initServiceVersion = new ComparableVersion(initService.getVersion());
+    ComparableVersion serviceToBeMergedVersion = new ComparableVersion(serviceToBeMerged.getVersion());
+    int compareResult = initServiceVersion.compareTo(serviceToBeMergedVersion);
     return compareResult == 0;
   }
 }

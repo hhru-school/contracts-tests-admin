@@ -7,10 +7,10 @@ export const StatusesPage: React.FC = () => {
     const { standName } = useGlobalContext();
     return (
         <Row>
-            <Col md={9}>
+            <Col md={8}>
                 <ServicesContainer standName={standName} />
             </Col>
-            <Col md={3}>
+            <Col md={4}>
                 <ValidationHistory standName={standName} />
             </Col>
         </Row>

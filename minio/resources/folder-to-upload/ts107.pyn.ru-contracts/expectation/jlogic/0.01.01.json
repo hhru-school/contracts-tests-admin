@@ -1,34 +1,361 @@
 {
-  "serviceName": "jlogic",
-  "expectations": [{
-    "expectedRequest": {
-      "method": "GET",
-      "path": "subscription/unsubscribe_link/1/applicant_digest",
-      "body": null,
-      "headers": {},
-      "queryParams": {}        
-    },
-    "expectedResponse": {
-      "status": 200,
-      "headers": {
-        "Content-Type": ["application/json"]
+  "serviceName" : "jlogic",
+  "expectations" : [ {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
       },
-      "responseBody": {
-        "id": 1,
-        "unsubscribeUrl": "/unsubscribe"
-      }
+      "queryParams" : { }
     },
-    "producerName": "subscriptions"
-  },
-  {
-    "expectedRequest": {
-      "method": "POST",
-      "path": "/subscription/externalemail/",
-      "body": null,
-      "headers": {},
-      "queryParams": {}
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":12300,\"atLeastOnceUsedByRegisteredUser\":false,\"uuid\":null}"
     },
-    "expectedResponse": { "status":200, "headers": {}, "responseBody": null },
-    "producerName": "subscriptions" 
-  }]
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.testAddUtmParamsToLinkUrl()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":null,\"atLeastOnceUsedByRegisteredUser\":true,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldNotSendIfAppWasUsedAndBothOfUserFiltersAreEnabled()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":null,\"atLeastOnceUsedByRegisteredUser\":true,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.testAddUtmAndParamsWithoutUserIdToHhResearchLinkUrlWhenThereIsNoUserId()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 599,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "null"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldNotSendIfEmptyDevice()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":null,\"atLeastOnceUsedByRegisteredUser\":true,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldNotSendIfAppWasUsedAndFilterIsForNeverUsedByRegisteredUserOnly()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":null,\"atLeastOnceUsedByRegisteredUser\":false,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldNotSendIfAppWasNotUsedAndFilterIsForUsedByRegisteredUserOnly()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":null,\"atLeastOnceUsedByRegisteredUser\":false,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldSendIfAppWasNotUsedAndFilterIsForNeverUsedByRegisteredUserOnly()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":null,\"atLeastOnceUsedByRegisteredUser\":false,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldSendIfAppWasNotUsedAndUserFilterNotSpecify()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":12300,\"atLeastOnceUsedByRegisteredUser\":true,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.testAddUtmAndUserIdParamsToLinkUrl()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":null,\"atLeastOnceUsedByRegisteredUser\":true,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.testForLinkWithoutHost()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":null,\"atLeastOnceUsedByRegisteredUser\":false,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldSendIfAppWasNotUsedAndBothOfUserFiltersAreEnabled()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":null,\"atLeastOnceUsedByRegisteredUser\":true,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldSendIfAppWasUsedAndUserFilterNotSpecify()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":null,\"atLeastOnceUsedByRegisteredUser\":true,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldSendIfAppWasUsedAndFilterIsForUsedByRegisteredUserOnly()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "PUT",
+      "path" : "/device",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":123,\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":null,\"atLeastOnceUsedByRegisteredUser\":true,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldSendIfAppWasUsedAndFilterIsForUsedByRegisteredUserOnly1()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":null,\"atLeastOnceUsedByRegisteredUser\":true,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldSendIfAppWasUsedAndFilterIsForUsedByRegisteredUserOnly2()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device/123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{\"deviceId\":\"123\",\"deviceToken\":null,\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":null,\"deviceMode\":null,\"ownerUserId\":null,\"atLeastOnceUsedByRegisteredUser\":true,\"uuid\":null}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldSendIfAppWasUsedAndFilterIsForUsedByRegisteredUserOnly1()",
+    "minimalRequired" : false
+  }, {
+    "expectedRequest" : {
+      "method" : "GET",
+      "path" : "/device123",
+      "body" : null,
+      "headers" : {
+        "Accept" : [ "application/json" ],
+        "X-Outer-Timeout-Ms" : [ "0" ]
+      },
+      "queryParams" : { }
+    },
+    "expectedResponse" : {
+      "status" : 201,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },
+      "responseBody" : "{}"
+    },
+    "producerName" : "mobile-notifier",
+    "testInfo" : "SendOpenLinkPushToDeviceTest.shouldSendIfAppWasUsedAndFilterIsForUsedByRegisteredUserOnly4()",
+    "minimalRequired" : false
+  } ]
 }

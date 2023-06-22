@@ -5,28 +5,31 @@ import com.hh.contractstestsadmin.dao.ReleaseVersionDao;
 import com.hh.contractstestsadmin.dao.ServiceDao;
 import com.hh.contractstestsadmin.dao.ValidationDao;
 import com.hh.contractstestsadmin.dao.ValidationInfoDao;
-import com.hh.contractstestsadmin.dao.minio.StandsDao;
 import com.hh.contractstestsadmin.dto.api.ExpectationDto;
 import com.hh.contractstestsadmin.dto.api.ValidationMetaInfoDto;
 import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
-import com.hh.contractstestsadmin.dto.validator.MessageDto;
 import com.hh.contractstestsadmin.exception.ServiceNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
 import com.hh.contractstestsadmin.model.ContractTestError;
-import com.hh.contractstestsadmin.model.Service;
-import com.hh.contractstestsadmin.model.ServiceRelation;
-import com.hh.contractstestsadmin.dto.validator.ValidationDto;
-import com.hh.contractstestsadmin.dto.validator.WrongExpectationDto;
-import com.hh.contractstestsadmin.exception.ValidationResultRecordException;
+import com.hh.contractstestsadmin.model.ErrorLevel;
 import com.hh.contractstestsadmin.model.ErrorType;
 import com.hh.contractstestsadmin.model.Expectation;
+import com.hh.contractstestsadmin.model.Service;
+import com.hh.contractstestsadmin.model.ServiceRelation;
+import com.hh.contractstestsadmin.exception.ValidationResultRecordException;
+
+import com.hh.contractstestsadmin.exception.ValidationResultRecordException;
 import com.hh.contractstestsadmin.model.ServiceType;
 import com.hh.contractstestsadmin.model.Validation;
 import com.hh.contractstestsadmin.service.builder.ValidationBuilder;
 import com.hh.contractstestsadmin.service.mapper.ExpectationMapper;
 import com.hh.contractstestsadmin.service.mapper.ValidationMapper;
+import com.hh.contractstestsadmin.validator.dto.MessageDto;
+import com.hh.contractstestsadmin.validator.dto.ValidationDto;
+import com.hh.contractstestsadmin.validator.dto.WrongExpectationDto;
 import java.time.OffsetDateTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +93,7 @@ public class ValidationService {
   public ValidationWithRelationsDto getServiceRelation(Long validationId, String standName) {
     Optional<Validation> validationFound = validationDao.getValidation(validationId, standName);
     Validation validation = validationFound.orElseThrow(() -> new ValidationHistoryNotFoundException("not found validation with id " + validationId));
-    List<ServiceRelation> serviceRelations = validationInfoDao.getServiceRelations(validationId);
+    List<ServiceRelation> serviceRelations = validationInfoDao.getServiceRelations(validationId, ErrorLevel.ERROR);
     return validationBuilder.buildValidationWithRelationsDto(validation, serviceRelations);
   }
 
@@ -112,10 +115,22 @@ public class ValidationService {
       throw new ServiceNotFoundException("not found consumer with id: " + consumerId);
     }
 
-    return validationInfoDao.getExpectations(standName, validationId, consumerId, producerId).stream()
+    return validationInfoDao.getExpectations(standName, validationId, consumerId, producerId, ErrorLevel.ERROR).stream()
         .map(ExpectationMapper::mapFromEntity)
         .toList();
   }
+
+  @Transactional
+  public String getValidationReport(String standName, Long validationId) {
+    Optional<Validation> validationFound = validationDao.getValidation(validationId, standName);
+    Validation validation = validationFound.orElseThrow(() ->
+        new ValidationHistoryNotFoundException("not found validation with stand name: " + standName +
+            " and validation with id: " + validationId)
+    );
+    return validation.getReport();
+  }
+
+
 
   @Transactional
   public void recordValidationResult(Long validationId, ValidationDto validationResult) throws ValidationResultRecordException {
@@ -126,35 +141,43 @@ public class ValidationService {
         );
     validation.setExecutionDate(OffsetDateTime.now());
     validation.setReport(validationResult.getValidatorReport());
+
+    List<WrongExpectationDto> wrongExpectationDtos = Optional
+        .ofNullable(validationResult.getWrongExpectations())
+        .orElse(Collections.emptyList());
+    ExpectationsService expectationsService = new ExpectationsService(validation.getStandName());
+    List<Expectation> expectations = expectationsService.convertAndPersistExpectations(wrongExpectationDtos);
+
     int errorCount = 0;
-    WrongExpectationsMapper wrongExpectationsMapper = new WrongExpectationsMapper(validation.getStandName());
-    for (Expectation expectation : wrongExpectationsMapper.mapToExpectationEntities(validationResult.getWrongExpectations())) {
+    for (Expectation expectation : expectations) {
       validation.addExpectation(expectation);
-      errorCount += expectation.getContractTestErrors().size();
+      errorCount += expectation.getContractTestErrors().stream()
+              .filter(error -> ErrorLevel.ERROR == error.getLevel())
+              .count();
     }
     validation.setErrorCount(errorCount);
     validation.setStatus(ValidationStatus.getValidationStatus(errorCount));
     validationInfoDao.updateValidationInfo(validation);
   }
 
-  private class WrongExpectationsMapper {
+  private class ExpectationsService {
 
     private final ErrorTypesContextManager errorTypesContextManager = new ErrorTypesContextManager();
     private final ServicesContextManager servicesContextManager = new ServicesContextManager();
 
     private final String standName;
 
-    public WrongExpectationsMapper(String standName) {
+    public ExpectationsService(String standName) {
       this.standName = standName;
     }
 
-    public List<Expectation> mapToExpectationEntities(List<WrongExpectationDto> wrongExpectations) {
+    public List<Expectation> convertAndPersistExpectations(List<WrongExpectationDto> wrongExpectations) {
       return wrongExpectations.stream()
-          .map(this::mapToExpectationEntity)
+          .map(this::convertAndPersistExpectation)
           .toList();
     }
 
-    private Expectation mapToExpectationEntity(WrongExpectationDto wrongExpectation) {
+    private Expectation convertAndPersistExpectation(WrongExpectationDto wrongExpectation) {
       Expectation expectation = new Expectation();
       expectation.linkWithConsumer(
           servicesContextManager.getOrCreateService(
@@ -179,12 +202,12 @@ public class ValidationService {
       expectation.setResponseHeaders(wrongExpectation.getResponse().getHeaders());
       expectation.setResponseBody(wrongExpectation.getResponse().getBody());
       for (MessageDto message : wrongExpectation.getMessages()) {
-        expectation.addContractTestError(mapToContractTestError(message));
+        expectation.addContractTestError(convertAndPersistContractTestError(message));
       }
       return expectation;
     }
 
-    private ContractTestError mapToContractTestError(MessageDto message) {
+    private ContractTestError convertAndPersistContractTestError(MessageDto message) {
       ContractTestError contractTestError = new ContractTestError();
       contractTestError.setErrorType(errorTypesContextManager.getOrCreateErrorType(message.getKey()));
       contractTestError.setErrorMessage(message.getMessage());
