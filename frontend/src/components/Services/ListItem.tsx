@@ -55,18 +55,6 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
                                 </small>
                             </div>
                             <div className="d-block">
-                                {schemaLink && (
-                                    <Button
-                                        className="mb-1 d-flex align-items-start"
-                                        color="primary"
-                                        onClick={() => {
-                                            onClickIcon(schemaLink);
-                                        }}
-                                        title="Schema Link"
-                                    >
-                                        <DataBaseIcon />
-                                    </Button>
-                                )}
                                 {expectationLink && (
                                     <Button
                                         className="d-flex align-items-start"
@@ -103,18 +91,6 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
                                         title="Schema Link"
                                     >
                                         <DataBaseIcon />
-                                    </Button>
-                                )}
-                                {expectationLink && (
-                                    <Button
-                                        className="d-flex align-items-start"
-                                        color="primary"
-                                        onClick={() => {
-                                            onClickIcon(expectationLink);
-                                        }}
-                                        title="Expectation Link"
-                                    >
-                                        <DBExpectation />
                                     </Button>
                                 )}
                             </div>
