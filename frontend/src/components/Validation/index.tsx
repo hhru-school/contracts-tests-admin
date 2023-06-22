@@ -65,7 +65,7 @@ export const Validation: React.FC<propsContainerProps> = ({ standName }) => {
                                     {new Date(item.createdDate).toLocaleString('ru-RU')}
                                 </Col>
                                 <Col md={3} className="d-none d-md-block">
-                                    <Link to={item.releaseLink}>Информация о релизе</Link>
+                                    <Link to="#">Информация о релизе</Link>
                                 </Col>
                             </>
                         ) : (
@@ -82,7 +82,7 @@ export const Validation: React.FC<propsContainerProps> = ({ standName }) => {
                                     {new Date(item.createdDate).toLocaleString('ru-RU')}
                                 </Col>
                                 <Col md={4} className="d-none d-md-block">
-                                    <Link to={item.releaseLink}>Информация о релизе</Link>
+                                    <Link to="#">Информация о релизе</Link>
                                 </Col>
                             </>
                         )}

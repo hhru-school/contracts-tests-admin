@@ -9,8 +9,9 @@ import navigation from 'routes/navigation';
 
 export const AppHeader: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isShowToolBar, setIsShowToolBar] = useState<boolean>(true);
-
+    const [isShowToolBar, setIsShowToolBar] = useState<boolean>(
+        window.location.pathname === navigation.error_validations.view ? false : true,
+    );
     const toggle = () => setIsOpen(!isOpen);
     return (
         <header>
