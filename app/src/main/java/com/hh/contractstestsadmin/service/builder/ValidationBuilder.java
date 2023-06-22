@@ -32,6 +32,7 @@ public class ValidationBuilder {
             .map(this::buildServicesRelationDto)
             .toList()
     );
+
     return validationWithRelationsDto;
   }
 

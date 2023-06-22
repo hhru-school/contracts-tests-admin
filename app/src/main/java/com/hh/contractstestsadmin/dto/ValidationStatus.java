@@ -5,10 +5,9 @@ public enum ValidationStatus {
   SUCCESS,
   FAILED;
 
-  public static ValidationStatus getValidationStatus(int errorCount) {
-    if (errorCount > 0) {
-      return ValidationStatus.FAILED;
-    }
-    return ValidationStatus.SUCCESS;
+  public static ValidationStatus getValidationStatus(long errorCount) {
+    return errorCount > 0
+            ? ValidationStatus.FAILED
+            : ValidationStatus.SUCCESS;
   }
 }

@@ -111,7 +111,9 @@ public class ValidationResource {
       @PathParam("validationId") Long validationId
   ) {
     try {
-      return Response.ok(standValidationService.getValidatorReport(standName, validationId)).build();
+      return Response.ok(standValidationService.getValidatorReport(standName, validationId))
+              .header("Content-Disposition", "attachment")
+              .build();
     } catch (ValidationHistoryNotFoundException | StandNotFoundException e) {
       LOG.error("Not found validation report with standName: {} and validationId: {} ", standName, validationId, e);
 
