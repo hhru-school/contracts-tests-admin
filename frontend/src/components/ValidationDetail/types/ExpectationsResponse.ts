@@ -11,12 +11,12 @@ export type Expectation = {
     id: number;
     httpMethod: HTTPMethod;
     requestPath: string;
-    requestHeaders: HeadersType;
-    queryParams: QueryParamsType;
-    requestBody: string;
+    requestHeaders?: HeadersType;
+    queryParams?: QueryParamsType;
+    requestBody?: string;
     responseStatus: number; // TODO: заменить на перечисление возможных статусов
-    responseHeaders: HeadersType;
-    responseBody: string;
+    responseHeaders?: HeadersType;
+    responseBody?: string;
     errors: ValidationDetailError[];
 };
 

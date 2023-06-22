@@ -1,4 +1,4 @@
-// @ts-nocheck
+//@ts-nocheck
 import { Loader } from 'components/Loader';
 import {
     AccordionBody,
@@ -73,50 +73,60 @@ export const ExpectationsInfo: React.FC<ExpectationsInfoProps> = ({
                             </Row>
                             <Row>
                                 <Col md={6} className="border b-2 p-2">
-                                    <div>
-                                        <strong>Headers: </strong>
-                                        {Object.entries(requestHeaders).map(([key, value]) => (
-                                            <div>
-                                                "{key}" : "[{value.join(',')}]"
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div>
-                                        <strong>QueryParams: </strong>
-                                        {Object.entries(queryParams).map(([key, value]) => (
-                                            <div>
-                                                "{key}" : "[{value.join(',')}]"
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div>
-                                        <strong>Body:</strong>
-                                        <SyntaxHighlighter
-                                            language="json"
-                                            style={atelierLakesideLight}
-                                        >
-                                            {requestBody}
-                                        </SyntaxHighlighter>
-                                    </div>
+                                    {requestHeaders && (
+                                        <div>
+                                            <strong>Headers: </strong>
+                                            {Object.entries(requestHeaders).map(([key, value]) => (
+                                                <div>
+                                                    "{key}" : "[{value.join(',')}]"
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                    {queryParams && (
+                                        <div>
+                                            <strong>QueryParams: </strong>
+                                            {Object.entries(queryParams).map(([key, value]) => (
+                                                <div>
+                                                    "{key}" : "[{value.join(',')}]"
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                    {requestBody && (
+                                        <div>
+                                            <strong>Body:</strong>
+                                            <SyntaxHighlighter
+                                                language="json"
+                                                style={atelierLakesideLight}
+                                            >
+                                                {requestBody}
+                                            </SyntaxHighlighter>
+                                        </div>
+                                    )}
                                 </Col>
                                 <Col className="border b-2 p-2" md={6}>
-                                    <div>
-                                        <strong>Headers: </strong>
-                                        {Object.entries(responseHeaders).map(([key, value]) => (
-                                            <div>
-                                                "{key}" : "[{value.join(',')}]"
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div>
-                                        <strong>Body:</strong>
-                                        <SyntaxHighlighter
-                                            language="json"
-                                            style={atelierLakesideLight}
-                                        >
-                                            {responseBody}
-                                        </SyntaxHighlighter>
-                                    </div>
+                                    {responseHeaders && (
+                                        <div>
+                                            <strong>Headers: </strong>
+                                            {Object.entries(responseHeaders).map(([key, value]) => (
+                                                <div>
+                                                    "{key}" : "[{value.join(',')}]"
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                    {responseBody && (
+                                        <div>
+                                            <strong>Body:</strong>
+                                            <SyntaxHighlighter
+                                                language="json"
+                                                style={atelierLakesideLight}
+                                            >
+                                                {responseBody}
+                                            </SyntaxHighlighter>
+                                        </div>
+                                    )}
                                 </Col>
                             </Row>
                             <ListGroup flush>
@@ -129,7 +139,6 @@ export const ExpectationsInfo: React.FC<ExpectationsInfoProps> = ({
                                             </div>
                                             <div>
                                                 <small>Error level:{error.errorLevel}</small>
-                                                <p>comment: {error.comment}</p>
                                             </div>
                                             <div>
                                                 <p>Error message:</p>
