@@ -1,28 +1,29 @@
 import { Button, Spinner } from 'reactstrap';
-import useSWR from 'swr';
+import useSWRMutation from 'swr/mutation';
 import React, { useState } from 'react';
 import { useGlobalContext } from '../../context/AppContext';
 import { ReactComponent as PlayIcon } from '../ToolBar/img/play.svg';
 import { useCntStatusValidation } from '../../context/AppCntStatusValidation';
-async function updateUser(url: string) {
+async function startValidation(url: string) {
     await fetch(url, {
         method: 'POST',
     });
 }
-
+//standName.length !== 0 && validation ?
 export const ValidationBtn = () => {
     const { standName } = useGlobalContext();
     const [validation, setValidation] = useState<boolean>(false);
     const { cntStatus } = useCntStatusValidation();
-    const { data } = useSWR(
-        standName.length !== 0 && validation ? `/api/stands/${standName}/validations` : null,
-        updateUser,
+    const { trigger, error } = useSWRMutation(
+        `/api/stands/${standName}/validations`,
+        startValidation,
     );
-    if (data) {
-        console.log(data);
+    if (error) {
+        console.log(error);
     }
     const submitRequest = () => {
         setValidation(true);
+        trigger();
         setInterval(() => {
             if (cntStatus === 0) {
                 setValidation(false);

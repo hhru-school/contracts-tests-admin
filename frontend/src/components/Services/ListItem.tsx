@@ -62,6 +62,7 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
                                         onClick={() => {
                                             onClickIcon(schemaLink);
                                         }}
+                                        title="Schema Link"
                                     >
                                         <DataBaseIcon />
                                     </Button>
@@ -73,6 +74,7 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
                                         onClick={() => {
                                             onClickIcon(expectationLink);
                                         }}
+                                        title="Expectation Link"
                                     >
                                         <DBExpectation />
                                     </Button>
@@ -98,6 +100,7 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
                                         onClick={() => {
                                             onClickIcon(schemaLink);
                                         }}
+                                        title="Schema Link"
                                     >
                                         <DataBaseIcon />
                                     </Button>
@@ -109,6 +112,7 @@ export const ServicesListItem: React.FC<ServicesListItemProps> = ({
                                         onClick={() => {
                                             onClickIcon(expectationLink);
                                         }}
+                                        title="Expectation Link"
                                     >
                                         <DBExpectation />
                                     </Button>
