@@ -11,12 +11,12 @@ public class ExpectedResponseMapper {
     public static ResponseDto map(ExpectedResponse expectedResponse) {
         ResponseDto responseDto = new ResponseDto();
         responseDto.setStatus(expectedResponse.getStatus());
-        if (responseDto.getHeaders() != null) {
+        if (expectedResponse.getHeaders() != null) {
             responseDto.setHeaders(new HashMap<>(expectedResponse.getHeaders()));
         } else {
             responseDto.setHeaders(new HashMap<>());
         }
-        if (responseDto.getBody() != null) {
+        if (expectedResponse.getResponseBody() != null) {
             responseDto.setBody((String) expectedResponse.getResponseBody());
         } else {
             responseDto.setBody(Strings.EMPTY);
