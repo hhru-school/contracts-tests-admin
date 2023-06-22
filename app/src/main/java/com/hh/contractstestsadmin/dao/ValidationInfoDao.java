@@ -1,6 +1,12 @@
 package com.hh.contractstestsadmin.dao;
 
-import com.hh.contractstestsadmin.model.*;
+import com.hh.contractstestsadmin.model.ContractTestError;
+import com.hh.contractstestsadmin.model.ErrorLevel;
+import com.hh.contractstestsadmin.model.ServiceRelation;
+import com.hh.contractstestsadmin.model.ErrorType;
+import com.hh.contractstestsadmin.model.Expectation;
+import com.hh.contractstestsadmin.model.Validation;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 

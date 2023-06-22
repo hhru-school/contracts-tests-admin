@@ -11,8 +11,17 @@ import com.hh.contractstestsadmin.dto.ValidationStatus;
 import com.hh.contractstestsadmin.dto.api.ValidationWithRelationsDto;
 import com.hh.contractstestsadmin.exception.ServiceNotFoundException;
 import com.hh.contractstestsadmin.exception.ValidationHistoryNotFoundException;
-import com.hh.contractstestsadmin.model.*;
+import com.hh.contractstestsadmin.model.ContractTestError;
+import com.hh.contractstestsadmin.model.ErrorLevel;
+import com.hh.contractstestsadmin.model.ErrorType;
+import com.hh.contractstestsadmin.model.Expectation;
+import com.hh.contractstestsadmin.model.Service;
+import com.hh.contractstestsadmin.model.ServiceRelation;
 import com.hh.contractstestsadmin.exception.ValidationResultRecordException;
+
+import com.hh.contractstestsadmin.exception.ValidationResultRecordException;
+import com.hh.contractstestsadmin.model.ServiceType;
+import com.hh.contractstestsadmin.model.Validation;
 import com.hh.contractstestsadmin.service.builder.ValidationBuilder;
 import com.hh.contractstestsadmin.service.mapper.ExpectationMapper;
 import com.hh.contractstestsadmin.service.mapper.ValidationMapper;
