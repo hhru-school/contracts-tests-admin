@@ -2,6 +2,8 @@ FROM maven AS build
 WORKDIR /cdc-test-app
 COPY pom.xml ./pom.xml
 COPY ./app/pom.xml ./app/pom.xml
+COPY ./app/lib/contract-tests-jclient-1.0.6-SNAPSHOT.jar ./app/lib/contract-tests-jclient-1.0.6-SNAPSHOT.jar
+COPY ./app/lib/validation-1.0.14-SNAPSHOT.jar ./app/lib/validation-1.0.14-SNAPSHOT.jar
 RUN mvn -f pom.xml dependency:go-offline -B
 COPY . .
 RUN mvn -f pom.xml clean package -T 4C

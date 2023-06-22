@@ -64,5 +64,4 @@ public class ValidationMetaInfoDto {
   public void setErrorCount(Integer errorCount) {
     this.errorCount = errorCount;
   }
-
 }

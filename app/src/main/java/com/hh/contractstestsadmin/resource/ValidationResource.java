@@ -111,9 +111,13 @@ public class ValidationResource {
       @PathParam("validationId") Long validationId
   ) {
     try {
-      return Response.ok(standValidationService.getValidatorReport(standName, validationId)).build();
-    } catch (ValidationHistoryNotFoundException exception) {
-      return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessageDto(exception.getMessage())).build();
+      return Response.ok(standValidationService.getValidatorReport(standName, validationId))
+              .header("Content-Disposition", "attachment")
+              .build();
+    } catch (ValidationHistoryNotFoundException | StandNotFoundException e) {
+      LOG.error("Not found validation report with standName: {} and validationId: {} ", standName, validationId, e);
+
+      return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessageDto(e.getMessage())).build();
     } catch (Exception exception) {
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessageDto(exception.getMessage())).build();
     }

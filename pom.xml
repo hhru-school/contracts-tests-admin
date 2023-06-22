@@ -21,6 +21,10 @@
         <minio.version>8.5.2</minio.version>
         <maven.surefire.plugin>3.0.0</maven.surefire.plugin>
         <swagger.version>1.6.10</swagger.version>
+        <contract.validator.version>1.0.14-SNAPSHOT</contract.validator.version>
+        <contract.tests.jclient.version>1.0.6-SNAPSHOT</contract.tests.jclient.version>
+        <swagger.request.validator.version>2.35.1</swagger.request.validator.version>
+        <maven-artifact.version>3.9.2</maven-artifact.version>
     </properties>
 
     <dependencyManagement>
@@ -46,6 +50,31 @@
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-jersey2-jaxrs</artifactId>
                 <version>${swagger.version}</version>
+            </dependency>
+            <!--dependency>
+                <groupId>ru.hh.contract.validator</groupId>
+                <artifactId>contract-validator-service</artifactId>
+                <version>${contract.validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.hh.contract.validator</groupId>
+                <artifactId>validation</artifactId>
+                <version>${contract.validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.hh.contract-tests</groupId>
+                <artifactId>contract-tests-jclient</artifactId>
+                <version>${contract.tests.jclient.version}</version>
+            </dependency-->
+            <dependency>
+                <groupId>com.atlassian.oai</groupId>
+                <artifactId>swagger-request-validator-core</artifactId>
+                <version>${swagger.request.validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-artifact</artifactId>
+                <version>${maven-artifact.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

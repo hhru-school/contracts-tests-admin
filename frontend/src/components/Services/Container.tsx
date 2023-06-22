@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import {
     Col,
     Container,
@@ -9,6 +9,7 @@ import {
     Row,
     TabContent,
     TabPane,
+    Input,
 } from 'reactstrap';
 import { Loader } from 'components/Loader';
 import { ApiResponse, StandServicesInfo } from './types/ApiResponse';
@@ -27,13 +28,21 @@ export type ServicesContainerProps = {
 
 export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName }) => {
     const [activeTab, setActiveTab] = useState<keyof StandServicesInfo>('stand');
+    const [searchServices, setSearchServices] = useState('');
 
     const { isLoading, isValidating, data } = useSWR<ApiResponse>(
         standName ? `/api/stands/${standName}` : null,
         getServicesList,
     );
-
+    const handleSearchServices = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchServices(e.target.value);
+    };
     const pendingPage = !data || !standName || isLoading || isValidating;
+
+    //(Object.keys(data.services) as (keyof StandServicesInfo)[]).filter((item )=> item.stand
+    //const filteredResults = data?.services.filter((item) =>
+    //item.toLowerCase().includes(input.toLowerCase())
+    //);
 
     if (pendingPage) {
         return (
@@ -50,12 +59,33 @@ export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName 
     if (data.isRelease) {
         return (
             <Container fluid>
+                <Input
+                    className="mb-3"
+                    type="text"
+                    value={searchServices}
+                    onChange={handleSearchServices}
+                    placeholder="Введите название сервиса"
+                />
+
                 <Row>
                     <Col>
                         <ListGroup>
-                            {data.services.release.map((serviceItem, idx) => (
-                                <ServicesListItem key={serviceItem.name + idx} {...serviceItem} />
-                            ))}
+                            {data.services.release.map((serviceItem, idx) => {
+                                if (
+                                    serviceItem.name
+                                        .toLowerCase()
+                                        .includes(searchServices.toLowerCase())
+                                ) {
+                                    return (
+                                        <ServicesListItem
+                                            key={serviceItem.name + idx}
+                                            {...serviceItem}
+                                        />
+                                    );
+                                } else {
+                                    return null;
+                                }
+                            })}
                         </ListGroup>
                     </Col>
                 </Row>
@@ -66,6 +96,14 @@ export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName 
     // если стенд не релизный, то отображаем вкладки выбора типа сервисов ("из стенда", "из релиза")
     return (
         <Container fluid>
+            <Input
+                className="mb-3"
+                type="text"
+                value={searchServices}
+                onChange={handleSearchServices}
+                placeholder="Введите название сервиса"
+            />
+
             <Nav tabs>
                 {(Object.keys(data.services) as (keyof StandServicesInfo)[]).map((serviceType) => (
                     <NavItem key={serviceType}>
@@ -85,12 +123,22 @@ export const ServicesContainer: React.FC<ServicesContainerProps> = ({ standName 
                         <Row>
                             <Col>
                                 <ListGroup>
-                                    {servicesList.map((serviceItem, idx) => (
-                                        <ServicesListItem
-                                            key={serviceItem.name + idx}
-                                            {...serviceItem}
-                                        />
-                                    ))}
+                                    {servicesList.map((serviceItem, idx) => {
+                                        if (
+                                            serviceItem.name
+                                                .toLowerCase()
+                                                .includes(searchServices.toLowerCase())
+                                        ) {
+                                            return (
+                                                <ServicesListItem
+                                                    key={serviceItem.name + idx}
+                                                    {...serviceItem}
+                                                />
+                                            );
+                                        } else {
+                                            return null;
+                                        }
+                                    })}
                                 </ListGroup>
                             </Col>
                         </Row>

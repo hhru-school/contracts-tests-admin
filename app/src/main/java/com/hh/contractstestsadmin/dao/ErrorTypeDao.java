@@ -93,7 +93,7 @@ public class ErrorTypeDao {
 
   public List<ErrorType> getAllErrorTypes() {
     Session session = sessionFactory.getCurrentSession();
-    return session.createQuery("select e from ErrorType e", ErrorType.class).getResultList();
+    return session.createQuery("select e from ErrorType e ORDER BY e.errorKey", ErrorType.class).getResultList();
   }
 
 }

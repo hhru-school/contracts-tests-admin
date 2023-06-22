@@ -3,16 +3,11 @@ package com.hh.contractstestsadmin.dto;
 public enum ValidationStatus {
   IN_PROGRESS,
   SUCCESS,
-  FAILED,
-  CANCELLED;
+  FAILED;
 
-  public static ValidationStatus getValidationStatus(int errorCount) {
-    if (errorCount > 0) {
-      return ValidationStatus.FAILED;
-    }
-    if (errorCount == 0) {
-      return ValidationStatus.SUCCESS;
-    }
-    return ValidationStatus.CANCELLED;
+  public static ValidationStatus getValidationStatus(long errorCount) {
+    return errorCount > 0
+            ? ValidationStatus.FAILED
+            : ValidationStatus.SUCCESS;
   }
 }
