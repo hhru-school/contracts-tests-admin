@@ -25,6 +25,6 @@ export type ServicesRelation = {
         version: string;
         expectationLink: string;
     };
-    wrongExpectationCount: number;
+    failedRequestPathCount: number;
     errorCount: number;
 };

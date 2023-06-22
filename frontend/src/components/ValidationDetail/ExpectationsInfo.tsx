@@ -15,7 +15,7 @@ import useSWR from 'swr';
 import { getExpectationsInfo } from './api';
 import { ExpectationsResponse } from './types/ExpectationsResponse';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { atelierLakesideLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 export type ExpectationsInfoProps = {
     standName: string;
@@ -53,6 +53,7 @@ export const ExpectationsInfo: React.FC<ExpectationsInfoProps> = ({
                     requestPath,
                     requestBody,
                     responseBody,
+                    queryParams,
                     errors,
                     requestHeaders,
                     responseHeaders,
@@ -63,15 +64,15 @@ export const ExpectationsInfo: React.FC<ExpectationsInfoProps> = ({
                         </AccordionHeader>
                         <AccordionBody accordionId={id.toString()}>
                             <Row>
-                                <Col md={6} className="border b-2 p-5">
+                                <Col md={6} className="border">
                                     Request:
                                 </Col>
-                                <Col md={6} className="border b-2 p-5">
+                                <Col md={6} className="border">
                                     Response:
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={6} className="border b-2 p-5">
+                                <Col md={6} className="border b-2 p-2">
                                     <div>
                                         <strong>Headers: </strong>
                                         {Object.entries(requestHeaders).map(([key, value]) => (
@@ -81,13 +82,24 @@ export const ExpectationsInfo: React.FC<ExpectationsInfoProps> = ({
                                         ))}
                                     </div>
                                     <div>
+                                        <strong>QueryParams: </strong>
+                                        {Object.entries(queryParams).map(([key, value]) => (
+                                            <div>
+                                                "{key}" : "[{value.join(',')}]"
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div>
                                         <strong>Body:</strong>
-                                        <SyntaxHighlighter language="json" style={docco}>
-                                            {requestBody as string}
+                                        <SyntaxHighlighter
+                                            language="json"
+                                            style={atelierLakesideLight}
+                                        >
+                                            {requestBody}
                                         </SyntaxHighlighter>
                                     </div>
                                 </Col>
-                                <Col className="border b-2 p-5" md={6}>
+                                <Col className="border b-2 p-2" md={6}>
                                     <div>
                                         <strong>Headers: </strong>
                                         {Object.entries(responseHeaders).map(([key, value]) => (
@@ -98,8 +110,11 @@ export const ExpectationsInfo: React.FC<ExpectationsInfoProps> = ({
                                     </div>
                                     <div>
                                         <strong>Body:</strong>
-                                        <SyntaxHighlighter language="json" style={docco}>
-                                            {responseBody as string}
+                                        <SyntaxHighlighter
+                                            language="json"
+                                            style={atelierLakesideLight}
+                                        >
+                                            {responseBody}
                                         </SyntaxHighlighter>
                                     </div>
                                 </Col>
@@ -115,6 +130,15 @@ export const ExpectationsInfo: React.FC<ExpectationsInfoProps> = ({
                                             <div>
                                                 <small>Error level:{error.errorLevel}</small>
                                                 <p>comment: {error.comment}</p>
+                                            </div>
+                                            <div>
+                                                <p>Error message:</p>
+                                                <SyntaxHighlighter
+                                                    language="json"
+                                                    style={atelierLakesideLight}
+                                                >
+                                                    {error.message}
+                                                </SyntaxHighlighter>
                                             </div>
                                         </ListGroupItemText>
                                     </ListGroupItem>

@@ -17,7 +17,7 @@ export const ValidationDetail: React.FC<ValidationDetailProps> = ({ relationsLis
     return (
         // @ts-expect-error
         <Accordion open={open} toggle={toggle}>
-            {relationsList.map(({ producer, consumer, wrongExpectationCount, errorCount }) => {
+            {relationsList.map(({ producer, consumer, failedRequestPathCount, errorCount }) => {
                 const uniqueItemId = producer.id + '-' + consumer.id;
                 return (
                     <AccordionItem key={uniqueItemId}>
@@ -25,7 +25,7 @@ export const ValidationDetail: React.FC<ValidationDetailProps> = ({ relationsLis
                             <ServicesList
                                 producer={producer}
                                 consumer={consumer}
-                                wrongExpectaionCount={wrongExpectationCount}
+                                failedRequestPathCount={failedRequestPathCount}
                                 errorCount={errorCount}
                             />
                         </AccordionHeader>
