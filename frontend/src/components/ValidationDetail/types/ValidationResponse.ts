@@ -11,20 +11,23 @@ export type ValidationResponse = {
 };
 
 export type ServicesRelation = {
-    producer: {
-        id: number;
-        name: string;
-        isRelease: boolean;
-        version: string;
-        schemaLink: string;
-    };
-    consumer: {
-        id: number;
-        name: string;
-        isRelease: false;
-        version: string;
-        expectationLink: string;
-    };
+    producer: ProducerService;
+    consumer: ConsumerService;
     failedRequestPathCount: number;
     errorCount: number;
+};
+
+export type ServiceType = {
+    id: number;
+    name: string;
+    release: boolean;
+    version: string;
+};
+
+export type ProducerService = ServiceType & {
+    schemaLink: string;
+};
+
+export type ConsumerService = ServiceType & {
+    expectationLink: string;
 };
