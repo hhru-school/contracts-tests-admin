@@ -1,5 +1,5 @@
 {
-  "serviceName" : "service2",
+  "serviceName" : "service11",
   "expectations" : [ {
     "expectedRequest" : {
       "method" : "GET",
@@ -16,7 +16,7 @@
       "headers" : {
         "Content-Type" : [ "application/json" ]
       },
-      "responseBody" : "{\"deviceId\":123,\"deviceToken\":\"null\",\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":\"null\",\"deviceMode\":null,\"ownerUserId\":12300,\"atLeastOnceUsedByRegisteredUser\":false,\"uuid\":null}"
+      "responseBody" : "{\"deviceId\":\"123\",\"deviceToken\":\"null\",\"registrationTime\":null,\"lastVisitTime\":null,\"active\":true,\"deviceOsType\":\"null\",\"deviceMode\":null,\"ownerUserId\":12300,\"atLeastOnceUsedByRegisteredUser\":false,\"uuid\":null}"
     },
     "producerName" : "mobile-notifier",
     "testInfo" : "SendOpenLinkPushToDeviceTest.testAddUtmParamsToLinkUrl()",
