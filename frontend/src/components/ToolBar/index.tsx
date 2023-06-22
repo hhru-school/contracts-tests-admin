@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import React, { useState, KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
+import React, { useState, KeyboardEvent, ChangeEvent, MouseEvent, useEffect } from 'react';
 import { ListGroup, ListGroupItem, Input, Button, Alert } from 'reactstrap';
 import { HandleKeys } from './types/HandleKeys';
 import { Stand } from './types/Stand';
@@ -16,6 +16,13 @@ export const ToolBar = () => {
     const { isLoading, data, error } = useSWR<Stand[]>(
         selectedItem.length >= 3 ? `/api/stands?search=${selectedItem}` : '/api/stands',
     );
+    useEffect(() => {
+        const stName = localStorage.getItem('standName');
+        if (stName) {
+            setSelectedItem(stName);
+            setStandName(stName);
+        }
+    }, []);
 
     if (error) {
         return <Alert color="danger"> Cant load data {error.message} </Alert>;
@@ -40,6 +47,7 @@ export const ToolBar = () => {
         setShowList(true);
         if (filteredData.includes(e.target.value)) {
             setStandName(e.target.value);
+            localStorage.setItem('standName', e.target.value);
         }
     };
     const handleHover = (item: string) => {
@@ -54,6 +62,7 @@ export const ToolBar = () => {
         setCurrentPositionInList(0);
         if (filteredData.includes(item)) {
             setStandName(item);
+            localStorage.setItem('standName', item);
         }
     };
     const handleSelect = (item: MouseEvent<HTMLElement>) => {
@@ -74,6 +83,7 @@ export const ToolBar = () => {
             setShowList(false);
             if (filteredData.includes(element)) {
                 setStandName(element);
+                localStorage.setItem('standName', element);
             }
         } else if (event.key === HandleKeys.ArrowDown) {
             let curIndex = currentPositionInList;
