@@ -32,7 +32,7 @@ public class ValidationBuilder {
             .map(this::buildServicesRelationDto)
             .toList()
     );
-    validationWithRelationsDto.setErrorCount(serviceRelations.size());
+
     return validationWithRelationsDto;
   }
 
