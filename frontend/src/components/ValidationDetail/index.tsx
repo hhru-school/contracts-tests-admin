@@ -33,7 +33,6 @@ export const ValidationDetail: React.FC<ValidationDetailProps> = ({ relationsLis
                             {open === uniqueItemId && (
                                 <ExpectationsInfo
                                     standName={standName}
-                                    validationId={1}
                                     consumerId={consumer.id}
                                     producerId={producer.id}
                                 />

@@ -1,4 +1,4 @@
-//@ts-nocheck
+// @ts-nocheck
 import { Loader } from 'components/Loader';
 import {
     AccordionBody,
@@ -16,20 +16,20 @@ import { getExpectationsInfo } from './api';
 import { ExpectationsResponse } from './types/ExpectationsResponse';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atelierLakesideLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { useParams } from 'react-router-dom';
 
 export type ExpectationsInfoProps = {
     standName: string;
-    validationId: number;
     consumerId: number;
     producerId: number;
 };
 
 export const ExpectationsInfo: React.FC<ExpectationsInfoProps> = ({
     standName,
-    validationId,
     consumerId,
     producerId,
 }) => {
+    const { validationId } = useParams();
     const { isLoading, isValidating, data } = useSWR<ExpectationsResponse>(
         standName
             ? `/api/stands/${standName}/validations/${validationId}/expectations?consumerId=${consumerId}&producerId=${producerId}`
